@@ -9,7 +9,7 @@
         <ul>
           <!--1st-->
           Modifier
-          <li><a target="blank" href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/Final/TIL_java_final_modifier.html">Final</a></li>
+          <li><a target="_blank" href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/Final/TIL_java_final_modifier.html">Final</a></li>
           <!--2nd-->
         </ul>
       </li>
