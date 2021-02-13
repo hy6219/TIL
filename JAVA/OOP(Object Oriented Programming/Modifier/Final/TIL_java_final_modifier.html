@@ -38,6 +38,13 @@
         text-decoration: underline;
         padding:5px;
     }
+    .codes
+    {
+        width:30%;
+        height:10%;
+        background-color: paleturquoise;
+        padding:10px;
+    }
 </style>
 <body>
     <header><h1 class="til-fin"><span class="topic">Final Modifier + System.out.println(obj)</span></h1></header>
@@ -103,9 +110,11 @@
                 </p>
                 <div class="codes">
                     public static String valueOf(Object obj) {
+                        <p>
                         return (obj == null) ? "null" : obj.toString();
+                    </p>
                         }
-                </div>
+                    </div>
                 </li>
                 <li>String valueOf() calls <strong class="sub">"toString()"</strong>
                 <p>
@@ -113,7 +122,9 @@
                 </p>
                 <div class="codes">
                     public String toString() {
+                        <p>
                         return getClass().getName() + "@" + Integer.toHexString(hashCode());
+                    </p>
                     }
                 </div>
                 <div class="override">
