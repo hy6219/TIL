@@ -57,6 +57,10 @@
         border:2px dashed orangered;
         border-radius:2px;
     }
+    .in
+    {
+        text-indent:5%;
+    }
 </style>
 <body>
     <header><h1><span class="topic">[JAVA/OOP]Access Modifier</span></h1></header>
@@ -132,9 +136,9 @@
 <p>	}</p>
 <p>	Time(Time tt)</p>
 <p>	{</p>
-<p>		this.hour=tt.hour;</p>
-<p>		this.min=tt.min;</p>
-<p>		this.sec=tt.sec;</p>
+<p class="in">		this.hour=tt.hour;</p>
+<p class="in">		this.min=tt.min;</p>
+<p class="in">		this.sec=tt.sec;</p>
 <p>	}</p>
 <p>	/*</p>
 <p>	 * setters</p>
@@ -149,60 +153,60 @@
 <p>	{</p>
 <p>		if(hour<0 ||hour>23)</p>
 <p>		{</p>
-<p>			return;</p>
+<p class="in">			return;</p>
 <p>		}</p>
 <p>		else</p>
 <p>		{</p>
-<p>			this.hour=hour;</p>
+<p class="in">			this.hour=hour;</p>
 <p>		}</p>
 <p>	}</p>
 <p>	public void SetMin(int min)</p>
 <p>	{</p>
 <p>		if(min<0 ||min>59)</p>
 <p>		{</p>
-<p>			return;</p>
+<p class="in">			return;</p>
 <p>		}</p>
 <p>		else</p>
 <p>		{</p>
-<p>			this.min=min;</p>
+<p  class="in">			this.min=min;</p>
 <p>		}</p>
 <p>	}</p>
 <p>	public void SetSec(int sec)</p>
 <p>	{</p>
 <p>		if(sec<0 ||sec>59)</p>
 <p>		{</p>
-<p>			return;</p>
+<p  class="in">			return;</p>
 <p>		}</p>
 <p>		else</p>
 <p>		{</p>
-<p>			this.sec=sec;</p>
+<p  class="in">			this.sec=sec;</p>
 <p>		}</p>
 <p>	}</p>
 <p>	public void SetTime(Time obj)</p>
 <p>	{</p>
-<p>		(this).SetHour(obj.hour);</p>
-<p>		(this).SetMin(obj.min);</p>
-<p>		(this).SetSec(obj.sec);</p>
+<p  class="in">		(this).SetHour(obj.hour);</p>
+<p  class="in">		(this).SetMin(obj.min);</p>
+<p  class="in">		(this).SetSec(obj.sec);</p>
 <p>	}</p>
 <p>	/*</p>
 <p>	 * getters</p>
 <p>	 */</p>
 <p>	public int GetHour()</p>
 <p>	{</p>
-<p>		return hour;</p>
+<p class="in">		return hour;</p>
 <p>	}</p>
 <p>	public int GetMin()</p>
 <p>	{</p>
-<p>		return min;</p>
+<p  class="in">		return min;</p>
 <p>	}</p>
 <p>	public int GetSec()</p>
 <p>	{</p>
-<p>		return sec;</p>
+<p  class="in">		return sec;</p>
 <p>	}</p>
 <p>	@Override</p>
 <p>	public String toString()</p>
 <p>	{</p>
-<p>		return hour+" : "+min+" : "+sec;</p>
+<p class="in">		return hour+" : "+min+" : "+sec;</p>
 <p>	}</p>
 <p>}</p>
 <p></p>
@@ -210,9 +214,9 @@
 <p></p>
 <p>	public static void main(String[] args) {</p>
 <p>		// TODO Auto-generated method stub</p>
-<p>		Time t=new Time(16,40,10);</p>
-<p>		t.SetTime(t);</p>
-<p>		System.out.println(t);</p>
+<p class="in">		Time t=new Time(16,40,10);</p>
+<p class="in">		t.SetTime(t);</p>
+<p class="in">		System.out.println(t);</p>
 <p>	}</p>
 <p></p>
 <p>}</p>
