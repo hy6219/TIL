@@ -1,4 +1,4 @@
-<span><a href="https://github.com/hy6219/TIL-Today-I-Learned-"style="text-decoration:none;"><h1>:books:&nbsp;TIL(Today I Learned)</h1></a></span>
+<span><a href="https://github.com/hy6219/TIL-Today-I-Learned-"style="text-decoration:none"><h1>:books:&nbsp;TIL(Today I Learned)</h1></a></span>
 <u></u>
 <p>
 </p>
