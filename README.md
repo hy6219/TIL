@@ -36,6 +36,9 @@
 			<li>
 			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/Polymorphism_refVar_casting.html"target="_blank">Reference Variable Casting&nbsp;참조변수 형변환(casting)</a>
 			</li>
+			<li>
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Operator_instanceof/Polymorphism_instanceof.html"target="_blank">instanceof operator</a>
+			</li>
 		</ul>
 	</li><!--polymorphism-->
 	<!--3rd-->
