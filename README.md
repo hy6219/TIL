@@ -31,6 +31,9 @@
 		<ul>
 			<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/Concept/Polymorphism.html"target="_blank">Basic concept of <strong>Polymorphism(다형성)</strong></a>
 			</li>
+			<li>
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/Polymorphism_refVar_casting.html"target="_blank">Reference Variable Casting</a>
+			</li>
 		</ul>
 	</li><!--polymorphism-->
 	<!--3rd-->
@@ -40,4 +43,4 @@
       </li><!--OOP END-->
     </ol><!--JAVA END-->
   </li>
-</ol>
+</ol><!--All END-->
