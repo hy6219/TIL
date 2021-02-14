@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>[JAVA/OOP]Operator_instanceof</title>
+</head>
+<style>
+    *
+    {
+        font-family: 'Roboto Mono', monospace;
+        line-height: 1.5;
+    }
+    .til-fin
+    {
+        margin-left:10px;
+    }
+    .topic
+    {
+        padding:5px;
+        background-color: rgb(255,192,190);
+    }
+    .ref,.c_Name
+    {
+        padding:5px;
+        width:5%;
+        background-color:yellow;
+        color:orangered;
+        font-size: bold;
+        border:2px dashed red;
+        border-radius:2px;
+    }
+    .codes
+    {
+        width:50%;
+        height:10%;
+        background-color: paleturquoise;
+        padding:10px;
+    }
+    .img
+    {
+        margin:5px;
+    }
+</style>
+<body>
+    <header><h1 class="til-fin"><span class="topic">[JAVA/OOP]instanceof</span></h1></header>
+    <div class="usage">
+        <div class="guide"><h5>How to use <strong>'instanceof' operator</strong>?</h5></div>
+        <p>
+            <div><span class="ref">[Reference Variable]</span>&nbsp;<span class="imp">instanceof</span>&nbsp;
+            <span class="c_Name">[Class Name]</span></div>
+        </p>
+    </div>
+    <div class="meaning">
+        <div class="return">
+            <ul>
+                return <strong>boolean</strong> value
+                <li>true
+                    <ul>
+                        <li>
+                            can do cast
+                        </li>
+                    </ul>
+                </li>
+                <li>false
+                    <ul>
+                        <li>
+                            can't do cast
+                            <p>
+                                Example#1
+                            </p>
+                            <div class="codes">
+                                <p>Parent p=new Parent();</p>
+                                <p>Child c=new Child();</p>
+                                <p>p instanceof Child (X)</p>
+                                <p>c instanceof Parent (O)</p>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="img">
+            <img width="70%"height="60%"src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Operator_instanceof/Operator_instanceof.jpg?raw=true"/>
+        </div>
+    </div>
+
+</body>
+</html>
