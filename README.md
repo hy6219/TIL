@@ -1,4 +1,4 @@
-:books:<span><h1><strong>TIL(Today I Learned)</strong></h1></span>
+:books:<span><h1>TIL(Today I Learned)</h1></span>
 <u></u>
 <p>
 </p>
