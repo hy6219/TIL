@@ -35,12 +35,14 @@ public class CastingTest1 {
 		
 		System.out.println("f1");
 		f1.water();
+		
 	//	System.out.println("f2");
 	//	f2.water(); java.lang.NullPointerException
 		
 		System.out.println("Parent<=Child: 형변환 생략 가능");
 		car=f1;
 		car.drive();
+		//car.water(); car는 Parent class car의 메서드에만 접근 가능!
 		System.out.println("Parent=>Child: 형변환 생략 불가");
 		System.out.println("f2");
 		f2=(FireEngine)car;
