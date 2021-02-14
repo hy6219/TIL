@@ -12,7 +12,7 @@
           <!--1st-->
           	<ol type="1">
 	   <li><!--1st-->
-		Modifier
+		Modifier&nbsp;제어자
 		<ul>
 		<li><a  href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/Final/TIL_java_final_modifier.html"target="_blank">Final</a></li>
           		<li><a  href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/AccessModifier/java_access_modifier.html"target="_blank">Basic of access modifier</a>
@@ -27,12 +27,12 @@
          	 </li><!--modifier-->
 		<!--2nd-->
 	<li>
-		Polymorphism, one of OOP characteristics
+		Polymorphism, one of OOP characteristics&nbsp;다형성: OOP의 특성 중 한 가지
 		<ul>
 			<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/Concept/Polymorphism.html"target="_blank">Basic concept of <strong>Polymorphism(다형성)</strong></a>
 			</li>
 			<li>
-			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/Polymorphism_refVar_casting.html"target="_blank">Reference Variable Casting</a>
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/Polymorphism_refVar_casting.html"target="_blank">Reference Variable Casting&nbsp;참조변수 형변환(casting)</a>
 			</li>
 		</ul>
 	</li><!--polymorphism-->
