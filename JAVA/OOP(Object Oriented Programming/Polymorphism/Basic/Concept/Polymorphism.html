@@ -65,6 +65,25 @@
         height:30%;
         margin:5%;
     }
+    .kp
+    {
+        padding:5px;
+        margin:15px;
+        width:20%;
+        height:10%;
+    }
+    .wrong
+    {
+        background-color:red;
+        color:white;
+        border:2px dashed yellow;
+        border-radius:2px;
+    }
+    .correct
+    {
+        background-color:#61FE2F;
+        color:black;
+    }
 </style>
 <body>
     <header><h1 class="til-fin"><span class="topic">Polymorphism</span></h1></header>
@@ -153,6 +172,13 @@
                         </div>
                         <img class="img" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/Concept/polymorphism_basic.jpg?raw=true"/>
                         <img class="img" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/Concept/Polymorphism_assign.jpg?raw=true"/>
+                    </p>
+                    <p>
+                        <h2 class="highlight2">KEYPOINT! WARNING!</h2>
+                        <div class="kp correct">Parent p=new Child();(OK!)</div>
+                        <div class="kp wrong">Child c=new Parent();(NO!!)
+                            <h5>*Because Child has <strong><u>MORE MEMBERS/METHODS</u></strong></h5>
+                        </div>
                     </p>
                 </div>
                 <div class="access">
