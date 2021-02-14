@@ -1,4 +1,5 @@
 <h1><strong>TIL(Today I Learned)</strong></h1>
+<u></u>
 <p>
 </p>
 <ol type="A">
@@ -32,10 +33,10 @@
 			</li>
 		</ul>
 	</li><!--polymorphism-->
+	<!--3rd-->
           </ul>
-          <!--2nd-->
           </ol>
-        </ul>
-      </li>
+        </ul><!--OOP-->
+      </li><!--OOP END-->
     </ol>
   </li>
