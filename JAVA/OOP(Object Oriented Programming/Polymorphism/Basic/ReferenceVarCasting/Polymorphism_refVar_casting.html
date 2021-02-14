@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <title>[JAVA/OOP]Reference Variable Casting</title>
+</head>
+<style>
+    *
+    {
+        font-family: 'Roboto Mono', monospace;
+        line-height: 1.5;
+    }
+    .til-fin
+    {
+        margin-left:10px;
+    }
+    .topic
+    {
+        padding:5px;
+        background-color: rgb(255,192,190);
+    }
+    .in
+    {
+        text-indent:5%;
+    }
+    .highlight
+    {
+        color:orangered;
+        text-decoration: underline;
+    }
+    .codes
+    {
+        width:50%;
+        height:10%;
+        background-color: paleturquoise;
+        padding:10px;
+    }
+    .resizing
+    {
+        width:70%;
+        height:50%;
+        margin:10px;
+    }
+</style>
+<body>
+    <header><h1 class="til-fin"><span class="topic">[JAVA/OOP]Reference Variable Casting</span></h1></header>
+    <div class="KeyPoint">
+        <h2>When we can use <strong class="highlight">"Reference Variable Casting"</strong>?</h2>
+        <div class="in"><li>Classes are in <strong class="highlight">"Inheritance relationship"</strong></li></div>
+    </div>
+    <div class="Exp">
+        <p>
+            <a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/CastingTest1.java"
+            target="_blank">Show codes(CastingTest1.java)</a>
+        </p>
+        <div class="codes">
+            <p>package class_oop_referenceVar_casting;</p>
+
+            <p>class Car</p>
+            <p>{</p>
+            <p class="in">	String color;</p>
+            <p class="in">	int door;</p>
+            <p></p>
+            <p class="in">	void drive()</p>
+            <p class="in">	{</p>
+            <p class="in">		//운전</p>
+            <p class="in">		System.out.println("Let's Drive!");</p>
+            <p class="in">	}</p>
+            <p class="in">	void stop()</p>
+            <p class="in">	{</p>
+            <p class="in">		//정지</p>
+            <p class="in">		System.out.println("STOP!!");</p>
+            <p class="in">	}</p>
+            <p class="in">}</p>
+            <p class="in">class FireEngine extends Car</p>
+            <p class="in">{</p>
+            <p class="in">	void water()</p>
+            <p class="in">	{</p>
+            <p class="in">		System.out.println("WATER!!");</p>
+            <p class="in">	}</p>
+            <p class="in">}</p>
+            <p class="in">public class CastingTest1 {</p>
+            <p class="in"></p>
+            <p class="in">	public static void main(String[] args){</p> 
+            <p class="in">		// TODO Auto-generated method stub</p>
+            <p class="in">		Car car=null;//Parent class</p>
+            <p class="in">		//child1(fireengine)</p>
+            <p class="in">		FireEngine f1=new FireEngine();</p>
+            <p class="in">		FireEngine f2=null;//for casting</p>
+            <p class="in">		car=f1;</p>
+            <p class="in">		car.drive();</p>
+            <p class="in">		f2=(FireEngine)car;</p>
+            <p class="in">		f2.water();</p>
+            <p class="in">		System.out.println("Child class가 멤버변수가 더 많기 때문에"</p>
+            <p class="in">				+ "Parent class가 Child class가 되고 싶을 때에만"</p>
+            <p class="in">				+ " casting해야할 필요!");</p>
+            <p class="in">	}</p>
+            <p class="in"></p>
+            <p class="in">}</p>
+
+        </div>
+        <ol>
+            <li>
+                HOW?
+                <ul>
+                    <li>Parent p=(new Child());</li>
+                    <li>Child c=(Child)(new Parent());</li>
+                </ul>
+            </li>
+            <li>
+                WHY?
+                <ul>
+                    CHILD CLASS can access everything <strong class="highlight">WHENEVER</strong> they need!
+                </ul>
+                <p>
+                    <img class="resizing"src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/ReferenceVarCasting/ReferenceVarCasting.jpg?raw=true"/>
+                </p>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>
