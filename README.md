@@ -1,5 +1,6 @@
 <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
+<span>You can check it on <a href="https://www.notion.so/TIL-Today-I-Learned-88bcde57be0b401fa3502f5fbc4a74f6"target="_blank">Here!</a></span>
 <p>
 </p>
 <ol type="A">
