@@ -81,5 +81,9 @@ public class CaptionTV extends TV{
 			return;
 		}
 	}
+	static void caption()
+	{
+		System.out.println("caption");
+	}
 
 }
