@@ -21,6 +21,8 @@
 	</p>
           </li>
           <!--2nd-->
+          Polymorphism, one of OOP characteristics
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/Basic/Concept/Polymorphism.html"target="_blank"></a>Basic concept of <strong>Polymorphism(다형성)</strong></li>
         </ul>
       </li>
     </ol>
