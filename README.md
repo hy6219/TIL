@@ -1,7 +1,7 @@
 <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
 ![version](	/github/last-commit/:hy6219/:TIL-Today-I-Learned-)
-![License](	/github/license/:hy6219/:TIL-Today-I-Learned-)
+![license](	/github/license/:hy6219/:TIL-Today-I-Learned-)
 <p>
 </p>
 <ol type="A">
