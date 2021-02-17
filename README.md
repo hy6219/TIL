@@ -1,7 +1,6 @@
 <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
-<!--<div class="notion">You can check it on <a href="https://www.notion.so/TIL-Today-I-Learned-88bcde57be0b401fa3502f5fbc4a74f6">Here!</a></div>
-<u></u>-->
+https://img.shields.io/badge/version-last--updated-blue
 <p>
 </p>
 <ol type="A">
