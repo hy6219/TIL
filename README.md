@@ -1,6 +1,6 @@
 <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
-![version](https://img.shields.io/badge/version-last--updated-blue)
+![version](https://img.shields.io/badge/version-last--updated-blue)&nbsp;![license](/github/license/:user/:repo)
 <p>
 </p>
 <ol type="A">
