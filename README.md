@@ -1,6 +1,6 @@
 <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
-<span>![version](	https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
+<span>![version](	https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)</span><span>![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
 <p>
 </p>
 <ol type="A">
