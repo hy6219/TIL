@@ -45,7 +45,7 @@
 			   </a>
 			</li>
 			<li>
-			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/RefVar_Instance_Connection/Polymorphism_connection.html" target="_target">
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/PolyArgs/Polymorphism_polyargs.html" target="_target">
 				Polymorphism on arguments
 			    </a>
 			</li>
