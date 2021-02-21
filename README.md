@@ -53,6 +53,11 @@
 			        Polymorphism on parent reference type object array
 			     </a>
 			</li>
+			<li>
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/abstract_class/Polymorphism_abstract_class.html"target="_blank">
+			        Polymorphism on abstact class & array
+			     </a>
+			</li>
 		</ul>
 	</li><!--polymorphism-->
 	<!--3rd-->
