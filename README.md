@@ -63,9 +63,13 @@
 	<!--3rd-->
 	<li>
 	   Multi Inheritance
-	   <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Interface/multiInherit/Multi_Inherit.html" target="_blank">
+	   <ul>
+		<li>
+			<a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Interface/multiInherit/Multi_Inherit.html" target="_blank">
 				Basic of multi-inheritance(다중 상속 개념(자바))
 	   </a>
+		</li>
+	   </ul>
 	</li>
 	<!--4th-->
           </ul>
