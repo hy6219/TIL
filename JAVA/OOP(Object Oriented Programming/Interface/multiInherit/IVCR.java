@@ -3,11 +3,11 @@ package interface_multi_inherit;
 public interface IVCR {
 	/**
 	 * 
-	 * µû·Î ÆÄÀÏÀ» ¸¸µç ÀÌÀ¯´Â
-	 * ÀÚ¹Ù¿¡¼­´Â 
+	 * ë”°ë¡œ íŒŒì¼ì„ ë§Œë“  ì´ìœ ëŠ”
+	 * ìë°”ì—ì„œëŠ” 
 	 * https://resup.tistory.com/16
-	 * ¿Í °°ÀÌ public Å¬·¡½ºÀÇ ÀÌ¸§ÀÌ ÆÄÀÏ°ú
-	 * ´Ù¸£¸é °¢ÀÚÀÇ ÆÄÀÏ »ı¼ºÀ» ¿ä±¸ÇÏ±â ¶§¹®!
+	 * ì™€ ê°™ì´ public í´ë˜ìŠ¤ì˜ ì´ë¦„ì´ íŒŒì¼ê³¼
+	 * ë‹¤ë¥´ë©´ ê°ìì˜ íŒŒì¼ ìƒì„±ì„ ìš”êµ¬í•˜ê¸° ë•Œë¬¸!
 	 */
 	public abstract void play();
 	//public (abstract) void stop();
