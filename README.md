@@ -62,15 +62,21 @@
 	</li><!--polymorphism-->
 	<!--3rd-->
 	<li>
-	   Multi Inheritance
+	   Interface
 	   <ul>
 		<li>
 			<a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Interface/multiInherit/Multi_Inherit.html" target="_blank">
 				Basic of multi-inheritance(다중 상속 개념(자바))
 	   </a>
 		</li>
+		<li>
+			<a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Interface/iPolymorphism/Interface_Polymorphism.html
+" target="_blank">
+				인터페이스의 다형성 개념
+	   </a>
+		</li>
 	   </ul>
-	</li><!--multi inheritance-->
+	</li><!--Interface-->
 	<!--4th-->
           </ul>
       </li><!--OOP END-->
