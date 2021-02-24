@@ -11,8 +11,8 @@ class TV {
 	}
 	public void channelUp()
 	{
-		++channel;//channel++;¸¦ ÇÏÁö ¾Ê´Â ÀÌÀ¯:
-		//channelÀ» ¹İÈ¯ ÈÄ channel++¼öÇà
+		++channel;//channel++;ë¥¼ í•˜ì§€ ì•ŠëŠ” ì´ìœ :
+		//channelì„ ë°˜í™˜ í›„ channel++ìˆ˜í–‰
 	}
 	public void channelDown()
 	{
