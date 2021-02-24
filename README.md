@@ -1,4 +1,4 @@
-<span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
+    <span><h1>:books:&nbsp;TIL(Today I Learned)&nbsp;:computer:</h1></span>
 <u></u>
 <span>![Activity](https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)&nbsp;&nbsp;![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
 <p>
@@ -70,11 +70,9 @@
 	   </a>
 		</li>
 	   </ul>
-	</li>
+	</li><!--multi inheritance-->
 	<!--4th-->
           </ul>
-          </ol>
-        </ul><!--OOP-->
       </li><!--OOP END-->
      <!--System_in-->
      <li>
