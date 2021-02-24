@@ -44,7 +44,7 @@
 			   </a>
 			</li>
 			<li>
-			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/PolyArgs/Polymorphism_polyargs.html" target="_target">
+			    <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Polymorphism/PolyArgs/Polymorphism_polyargs.html" target="_blank">
 				Polymorphism on arguments
 			    </a>
 			</li>
@@ -61,10 +61,22 @@
 		</ul>
 	</li><!--polymorphism-->
 	<!--3rd-->
+	<li>
+	   Multi Inheritance
+	   <a href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Interface/multiInherit/Multi_Inherit.html" target="_blank">
+				Basic of multi-inheritance(다중 상속 개념(자바))
+	   </a>
+	</li>
+	<!--4th-->
           </ul>
           </ol>
         </ul><!--OOP-->
       </li><!--OOP END-->
+     <!--System_in-->
+     <li>
+	System_input
+     </li>
+     <!--System_in END-->
     </ol><!--JAVA END-->
   </li>
 </ol><!--All END-->
