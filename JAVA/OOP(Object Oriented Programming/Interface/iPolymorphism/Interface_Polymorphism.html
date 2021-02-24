@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet"href="Interface_Polymorphism.css">
+    <title>[JAVA]인터페이스의 다형성</title>
+</head>
+<body>
+    <header><h1 class="til-fin"><span class="topic">[JAVA]인터페이스의 다형성</span></h1></header>
+    <div class="char">
+        <div class="highlight"><h3><strong>인터페이스의 다형성 특징</strong></h3></div>
+        <ol type="A">
+            <li>
+                <h5>Situation</h5>
+                <p></p>
+                <div class="codes">
+                    <p>class Child1 implements Parent</p>
+                    <p>{</p>
+                    <p class="in">    ...</p>
+                    <p>}</p>
+                </div>
+                <p></p>
+                <div class="codes">
+                    <p>class Child2 implements Parent</p>
+                    <p>{</p>
+                    <p class="in">    ...</p>
+                    <p>}</p>
+                </div>
+            </li>
+            <li>
+                <ol type="1">
+                    <li>
+                        <div class="exp">Reference Variable & Instance</div>
+                        
+                        <div class="codes2">
+                            <p><strong class="highlight2">[Interface]Parent</strong> p=new <strong class="highlight2">[Class]Child1()</strong>;</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="exp">Return Type</div>
+                        
+                        <div class="codes2">
+                            <p>public Parent method()</p>
+                            <p>{</p>
+                            <p class="in">    ...</p>
+                            <p class="in">    return <strong class="highlight2">new Child2();</strong></p>
+                            <p class="in">    /**</p>
+                            <p class="in">    * Or </p>
+                            <p class="in">    * Parent p=new Child2();</p>
+                            <p class="in">    * return p;</p>
+                            <p class="in">    */</p>
+                            <p>}</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="exp">arguments(parameter)-파라미터로 해당 인터페이스가 구현된 <strong class="highlight3">클래스</strong> 인스턴스를 전달</div>
+                        
+                        <div class="codes2">
+                            <p>public class Child3 implements Parent</p>
+                            <p>{</p>
+                            <p class="in">    void attack(Parent p)</p>
+                            <p class="in">    {</p>
+                            <p class="in2">        ...</p>
+                            <p class="in">    }</p>
+                            <p class="in">    public static void main(String[] args)</p>
+                            <p class="in">    {</p>
+                            <p class="in2">        Child3 c1=new Child3();</p>
+                            <p class="in2">        <span class="highlight3">c1.attack(new Child3());</span></p>
+                            <p class="in">    }</p>
+                            <p>}</p>
+                        </div>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>

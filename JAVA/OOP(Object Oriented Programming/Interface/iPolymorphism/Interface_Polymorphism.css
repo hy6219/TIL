@@ -1,0 +1,56 @@
+*
+{
+    font-family: 'Roboto Mono', monospace;
+    line-height: 3;
+}
+
+.til-fin
+{
+    margin-left:10px;
+}
+.topic
+{
+    padding:5px;
+    background-color: rgb(255,192,190);
+}
+.codes
+{
+    width:30%;
+    background-color: paleturquoise;
+    padding:10px;
+}
+.in
+{
+    text-indent:5%;
+}
+.codes2
+{
+    width:50%;
+    background-color:palegoldenrod;
+    padding:10px;
+}
+.in2
+{
+    text-indent:10%;
+}
+.highlight
+{
+    background-color:orangered;
+    color:white;
+    width:18%;
+    padding:5px;
+}
+.highlight2
+{
+    border:3px dashed orangered;
+    border-radius:3px;
+    color:orangered;
+    padding:5px;
+}
+.highlight3
+{
+    background-color:greenyellow;
+    color:orangered;
+    padding:5px;
+    text-decoration: underline;
+}
