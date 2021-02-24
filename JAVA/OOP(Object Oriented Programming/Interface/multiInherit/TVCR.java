@@ -2,15 +2,15 @@ package interface_multi_inherit;
 
 public class TVCR extends TV implements IVCR{
 
-	//³ª¸ÓÁö 1°³ Å¬·¡½º´Â Æ÷ÇÔ½ÃÅ°°í, ±× 1°³ Å¬·¡½º¿¡
-	//Á¸ÀçÇÏ´Â ¸Þ¼­µå´Â ÀÎÅÍÆäÀÌ½º(IVCR)·Î »©±â
-	//±× 1°³ Å¬·¡½ºÀÇ ¸â¹öº¯¼ö¸¦ »ç¿ëÇÏ±â À§ÇØ
-	//Æ÷ÇÔ°ü°è·Î½á °´Ã¼ »ý¼º
+	//ë‚˜ë¨¸ì§€ 1ê°œ í´ëž˜ìŠ¤ëŠ” í¬í•¨ì‹œí‚¤ê³ , ê·¸ 1ê°œ í´ëž˜ìŠ¤ì—
+	//ì¡´ìž¬í•˜ëŠ” ë©”ì„œë“œëŠ” ì¸í„°íŽ˜ì´ìŠ¤(IVCR)ë¡œ ë¹¼ê¸°
+	//ê·¸ 1ê°œ í´ëž˜ìŠ¤ì˜ ë©¤ë²„ë³€ìˆ˜ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´
+	//í¬í•¨ê´€ê³„ë¡œì¨ ê°ì²´ ìƒì„±
 	/**
-	 * Æ÷ÇÔ°ü°è+»ó¼Ó+ÀÎÅÍÆäÀÌ½º ±¸Çö
-	 * -->ÀÎÅÍÆäÀÌ½º¿¡¼­ ±¸ÇöµÈ ¸Þ¼­µå¸¦ ¸ÞÀÎ¿¡¼­ ¿À¹ö·ÎµùÇÒ °æ¿ì,
-	 * ¿ø·¡ ÀÖ´ø 1°³ Å¬·¡½ºÀÇ ¸Þ¼­µå¸¦ È£ÃâÇÏ¸é¼­
-	 * °»½ÅµÇ¹Ç·Î ¿ëÀÌ!
+	 * í¬í•¨ê´€ê³„+ìƒì†+ì¸í„°íŽ˜ì´ìŠ¤ êµ¬í˜„
+	 * -->ì¸í„°íŽ˜ì´ìŠ¤ì—ì„œ êµ¬í˜„ëœ ë©”ì„œë“œë¥¼ ë©”ì¸ì—ì„œ ì˜¤ë²„ë¡œë”©í•  ê²½ìš°,
+	 * ì›ëž˜ ìžˆë˜ 1ê°œ í´ëž˜ìŠ¤ì˜ ë©”ì„œë“œë¥¼ í˜¸ì¶œí•˜ë©´ì„œ
+	 * ê°±ì‹ ë˜ë¯€ë¡œ ìš©ì´!
 	 */
 	VCR v=new VCR();
 	public static void main(String[] args) {
