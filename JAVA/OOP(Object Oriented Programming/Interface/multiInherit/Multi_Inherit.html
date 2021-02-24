@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet"href="Multi_Inherit.css">
+    <title>[JAVA]다중상속 개념 정리</title>
+</head>
+<body>
+    <header><h1 class="til-fin"><span class="topic">[JAVA/OOP]다중상속 개념 정리</span></h1></header>
+    <div class="char">
+        <h5><strong>다중상속</strong>이 <strong>충돌</strong>을 일으킬 수 있는 이유</h5>
+        <div class="ex">
+            <span class="par1">
+                <p>int x;</p>
+                <p>int method(){Content: A}</p>
+            </span>
+            <span class="par1">
+                <p>int x;</p>
+                <p>int method(){Content: B}</p>
+            </span>
+        </div>
+        <div class="clearfix"></div>
+        <ol>
+           이 상황 속에서, 
+            <li>Child class, <strong>멤버 변수나 메서드를 선택함에 있어서 혼동</strong>을 겪을 수 있음!</li>
+        </ol>
+    </div>
+    <div class="jav">
+        <h3>SO <span class="highlight">CAN JAVA CAN HELP MULTI INHERITANCE</span>?</h3>
+        <div class="ans">
+            <ol>
+                <li>Class: "NO(compare with c++: can do)"</li>
+                <li>Interface: "CAN DO"
+                    <ol type="a">
+                        <li>
+                            <ul>
+                                <li>조상 클래스 中 비중 높은 클래스 → 상속(extends)</li>
+                                <li>나머지 1개 클래스: 내부에 멤버로 포함</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li>조상 클래스 中 비중 높은 클래스 → 상속(extends)</li>
+                                <li>나머지 1개 클래스: 인터페이스로 구현</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul>
+                                <li>조상 클래스 中 비중 높은 클래스 → 상속(extends)</li>
+                                <li>나머지 1개 클래스: 인터페이스로 구현+내부에 멤버로 포함</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </li>
+                <li>
+                    <a href="https://github.com/hy6219/TIL-Today-I-Learned-/tree/main/JAVA/OOP(Object%20Oriented%20Programming/Interface/multiInherit"
+                    target="_blank">Show example</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

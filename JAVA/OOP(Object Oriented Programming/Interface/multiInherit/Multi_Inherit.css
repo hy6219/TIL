@@ -1,0 +1,33 @@
+*
+{
+    font-family: 'Roboto Mono', monospace;
+    line-height: 1.5;
+}
+.til-fin
+{
+    margin-left:10px;
+}
+.topic
+{
+    padding:5px;
+    background-color: rgb(255,192,190);
+}
+.par1
+{
+    border:3px solid orange;
+    padding:5px;
+    float:left;
+    margin:3%;
+}
+.clearfix::after
+{
+    content:"";
+    display:table;
+    clear:both;
+}
+.highlight
+{
+    background-color:orangered;
+    color:white;
+    padding:5px;
+}
