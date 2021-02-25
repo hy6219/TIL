@@ -3,12 +3,13 @@ package com.test01;
 /**
  * 
  * @author gs813
+ *ë‘ ê°œ ë½‘ì•„ì„œ ë”í•˜ê¸°
+
  *
- *
- *Á¤¼ö ¹è¿­ numbers°¡ ÁÖ¾îÁý´Ï´Ù. 
- *numbers¿¡¼­ ¼­·Î ´Ù¸¥ ÀÎµ¦½º¿¡ ÀÖ´Â µÎ °³ÀÇ ¼ö¸¦ »Ì¾Æ 
- *´õÇØ¼­ ¸¸µé ¼ö ÀÖ´Â ¸ðµç ¼ö¸¦ ¹è¿­¿¡ 
- *¿À¸§Â÷¼øÀ¸·Î ´ã¾Æ return ÇÏµµ·Ï solution ÇÔ¼ö¸¦ ¿Ï¼ºÇØÁÖ¼¼¿ä.
+ *ì •ìˆ˜ ë°°ì—´ numbersê°€ ì£¼ì–´ì§‘ë‹ˆë‹¤. 
+ *numbersì—ì„œ ì„œë¡œ ë‹¤ë¥¸ ì¸ë±ìŠ¤ì— ìžˆëŠ” ë‘ ê°œì˜ ìˆ˜ë¥¼ ë½‘ì•„ 
+ *ë”í•´ì„œ ë§Œë“¤ ìˆ˜ ìžˆëŠ” ëª¨ë“  ìˆ˜ë¥¼ ë°°ì—´ì— 
+ *ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ë‹´ì•„ return í•˜ë„ë¡ solution í•¨ìˆ˜ë¥¼ ì™„ì„±í•´ì£¼ì„¸ìš”.
  */
 class  solution
 {
@@ -21,9 +22,9 @@ class  solution
 		  for(int i=0;i<numbers.length-1;i++)
 		  {
 			  /*
-			   * ÀÎÅØ½º¿¡ °ªÀ» ³Ö¾î Ã£¾Æ°¡¹Ç·Î
-			   * ÃÖ´ñ°ªÀ» cnt·Î ³Ñ°Ü¾ß °ÚÀ½
-			   * Á¤·Ä ÈÄ °¡Àå Å« µÎ°ªÀ» ÃÖ´ë·Î »ï±â!
+			   * ì¸í…ìŠ¤ì— ê°’ì„ ë„£ì–´ ì°¾ì•„ê°€ë¯€ë¡œ
+			   * ìµœëŒ“ê°’ì„ cntë¡œ ë„˜ê²¨ì•¼ ê² ìŒ
+			   * ì •ë ¬ í›„ ê°€ìž¥ í° ë‘ê°’ì„ ìµœëŒ€ë¡œ ì‚¼ê¸°!
 			   */
 			  //a=numbers[i];
 			  for(int j=i+1;j<numbers.length;j++)
@@ -57,10 +58,10 @@ class  solution
 	    	   * 2+3, 2+4
 	    	   * 3+4
 	    	   * 
-	    	   * ==>4+3+2+1+0=0~(length-1) ÇÕ Å©±â Á¤µµ!(Ã³À½¿¡´Â 
-	    	   * ÀÌ·¸°Ô ÇØ¼­ temp¹è¿­ Å©±â¸¦ ÀâÀ¸·Á ÇßÁö¸¸ ¸Ç À§Ã³·³
-	    	   * ÃÖ´ëÇÕÅ©±â+1ÀÌ °¡Àå ¾ÈÁ¤ÀûÀÌ°í ´Ù¸¥ Å×ÄÉ¿¡µµ
-	    	   * ¸ÂÀ½!)
+	    	   * ==>4+3+2+1+0=0~(length-1) í•© í¬ê¸° ì •ë„!(ì²˜ìŒì—ëŠ” 
+	    	   * ì´ë ‡ê²Œ í•´ì„œ tempë°°ì—´ í¬ê¸°ë¥¼ ìž¡ìœ¼ë ¤ í–ˆì§€ë§Œ ë§¨ ìœ„ì²˜ëŸ¼
+	    	   * ìµœëŒ€í•©í¬ê¸°+1ì´ ê°€ìž¥ ì•ˆì •ì ì´ê³  ë‹¤ë¥¸ í…Œì¼€ì—ë„
+	    	   * ë§žìŒ!)
 	    	   */
 	    	  
 	      }
@@ -91,11 +92,11 @@ public class twoSum {
 		// TODO Auto-generated method stub
 
 		/**
-		 * input: 0~100 °ª-->ÃÖ´ë 200
-		 * ³» »ý°¢: ¹è¿­À» ¸¸µé°í °ª¿¡ ÇØ´çµÇ´Â ÀÎµ¦½º¸¦ Áõ°¡½ÃÅ°±â
-		 * ÃÊ±âÈ­´Â 1·Î!
-		 * 2,1,3,4,1 ÀÔ·Â
-		 * 2,3,4,5,6,7 Ãâ·Â
+		 * input: 0~100 ê°’-->ìµœëŒ€ 200
+		 * ë‚´ ìƒê°: ë°°ì—´ì„ ë§Œë“¤ê³  ê°’ì— í•´ë‹¹ë˜ëŠ” ì¸ë±ìŠ¤ë¥¼ ì¦ê°€ì‹œí‚¤ê¸°
+		 * ì´ˆê¸°í™”ëŠ” 1ë¡œ!
+		 * 2,1,3,4,1 ìž…ë ¥
+		 * 2,3,4,5,6,7 ì¶œë ¥
 		 */
 		solution s=new solution();
 		int[] numbers= {2,1,3,4,1};
