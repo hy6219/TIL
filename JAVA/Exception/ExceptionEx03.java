@@ -1,5 +1,7 @@
 package com.exception02;
-
+/**
+try-catch 수행 원리
+*/
 public class ExceptionEx03 {
 
 	public static void main(String[] args) {
