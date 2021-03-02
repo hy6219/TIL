@@ -78,6 +78,14 @@
 	   </ul>
 	</li><!--Interface-->
 	<!--4th-->
+	<li>
+		InnerClass
+		<ul>
+		<li>
+		<a href="https://hy6219.github.io/1_-TIL-%EB%82%B4%EB%B6%80%ED%81%B4%EB%9E%98%EC%8A%A4/"target="_blank">내부클래스의 핵심! 멤버처럼 사용된다!</a>
+		</li>
+		</ul>
+	</li>
           </ul>
       </li><!--OOP END-->
      <!--System_in-->
