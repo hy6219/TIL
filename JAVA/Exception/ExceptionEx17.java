@@ -33,10 +33,7 @@ public static void main(String[] args)
 	{
 		try
 		{
-			/**
-			 * 예외를 단순히 전달만 하지 않고,
-			 * 처리를 해주기 위하여 try-catch 블럭으로 감싸기
-			 */
+			
 			throw new Exception("고의로 예외 발생");
 		}
 		catch(Exception e)
@@ -46,7 +43,7 @@ public static void main(String[] args)
 	}
 
 ]
-*/
+**/
 public class ExceptionEx17 {
 
 	public static void main(String[] args) {
