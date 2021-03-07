@@ -27,18 +27,5 @@ int x, y;
 	 * 
 	 * 상속관계가 없는 다른 클래스에서 호출 가능
 	 */
-	public Object clone()
-	{
-		Object obj = null;
-		
-		try
-		{
-			obj = super.clone();
-		}
-		catch(CloneNotSupportedException e)
-		{
-			
-		}
-		return obj;
-	}
+	
 }
