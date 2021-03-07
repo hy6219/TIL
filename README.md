@@ -16,7 +16,7 @@
 		Modifier&nbsp;제어자
 		<ul>
 		<li><a  href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/Final/TIL_java_final_modifier.html"target="_blank">Final</a>
-			<span>자손클래스에서 오버라이딩 하는 메서드의 제어자<strong>>=</strong>부모(조상)클래스에서 정의된 메서드의 제어자</span></li>
+			<div>자손클래스에서 오버라이딩 하는 메서드의 제어자<strong>>=</strong>부모(조상)클래스에서 정의된 메서드의 제어자</div></li>
           		<li><a  href="https://hy6219.github.io/TIL-Today-I-Learned-/JAVA/OOP(Object%20Oriented%20Programming/Modifier/AccessModifier/java_access_modifier.html"target="_blank">Basic of access modifier</a>
 		<p>---More Codes---</p>
 		<p>
