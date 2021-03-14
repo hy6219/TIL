@@ -1,4 +1,4 @@
-package com.lang.method;
+package com.lang.math;
 import static java.lang.Math.*;
 import static java.lang.System.*;
 
@@ -41,7 +41,10 @@ public class trigonometrical_function {
 		
 		out.println("Math.pow(val, n) : val^n");
 		out.printf("4.5^2:  Math.pow(%5.2f, 2)= %5.2f\n", 4.5,pow(4.5,2));
+		out.printf("E^2:  Math.pow(%5.2f, 2)= %5.2f\n", E,pow(E,2));
 		
+		out.println("Math.exp(double power): E^power");
+		out.printf("E^2:  Math.exp(2)= %5.2f\n", exp(2));
 		out.println("=============================================================");
 		
 		out.println("삼각함수");
@@ -69,7 +72,7 @@ public class trigonometrical_function {
 		out.printf("밑변 : %f, 옆면: %f, 빗변 :%f\n", a, under, st);
 		out.printf("toRadians(45): %f rad, PI/4: %f, (check==check2)?: %b\n", check, check2,
 				(check==check2));
-		out.printf("toRadians(45) == 45/180.0 * PI ? %b\n", toRadians(45) == ((45/180.0)*PI));//true
+		out.printf("toRadians(45) == 45/180.0 * PI ?? %b\n", toRadians(45) == ((45/180.0)*PI));//true
 		out.printf("st * cos(PI/4) : %f, st * cos(toRadians(PI/4)): %f, "
 				+ "(under==under2)?: %b\n", under, under2,(under==under2));
 		out.printf("tan(각도): %f\n", 
