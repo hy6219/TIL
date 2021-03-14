@@ -8,35 +8,35 @@ public class trigonometrical_function {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		/*
-		 * »ï°¢ÇÔ¼ö¿Í Áö¼ö, ·Î±×
+		 * ì‚¼ê°í•¨ìˆ˜ì™€ ì§€ìˆ˜, ë¡œê·¸
 		 */
 		
 		int x1 = 1, y1 = 1, x2 = 2, y2 = 2;
 		
 		/*
 		 * double(double)
-		 * Á¦°ö±Ù °è»ê
+		 * ì œê³±ê·¼ ê³„ì‚°
 		 */
-		out.println("Áö¼öÇÔ¼ö-Á¦°ö±Ù");
+		out.println("ì§€ìˆ˜í•¨ìˆ˜-ì œê³±ê·¼");
 		out.println("=============================================================");
-		out.println("Math.sqrt() : Á¦°ö±Ù");
-		out.printf("4.5ÀÇ Á¦°ö±Ù Math.sqrt(%5.2f)= %5.2f\n", 4.5,sqrt(4.5));//double¹ÝÈ¯
+		out.println("Math.sqrt() : ì œê³±ê·¼");
+		out.printf("4.5ì˜ ì œê³±ê·¼ Math.sqrt(%5.2f)= %5.2f\n", 4.5,sqrt(4.5));//doubleë°˜í™˜
 		/*
 		 * double(double)
-		 * 2Á¦°ö±Ù ÀÌ»ó: pow(a,1.0/n.0)
+		 * 2ì œê³±ê·¼ ì´ìƒ: pow(a,1.0/n.0)
 		 */
-		out.println("Math.pow(val, 1.0/n.0) : nÁ¦°ö±Ù");
+		out.println("Math.pow(val, 1.0/n.0) : nì œê³±ê·¼");
 		
-		out.printf("4.5ÀÚ±âÀÚ½Å Math.pow(%5.2f, 1.0/1.0)= %5.2f\n", 4.5,pow(4.5,1.0/1.0));
-		out.printf("4.5ÀÇ Á¦°ö±Ù Math.pow(%5.2f, 1.0/2.0)= %5.2f\n", 4.5,pow(4.5,1.0/2.0));
-		out.printf("4.5ÀÇ 3Á¦°ö±Ù Math.pow(%5.2f, 1.0/3.0)= %5.2f\n", 4.5,pow(4.5,1.0/3.0));
-		out.printf("4.5ÀÇ 4Á¦°ö±Ù Math.pow(%5.2f, 1.0/4.0)= %5.2f\n", 4.5,pow(4.5,1.0/4.0));
-		out.printf("4.5ÀÇ 5Á¦°ö±Ù Math.pow(%5.2f, 1.0/5.0)= %5.2f\n", 4.5,pow(4.5,1.0/5.0));
+		out.printf("4.5ìžê¸°ìžì‹  Math.pow(%5.2f, 1.0/1.0)= %5.2f\n", 4.5,pow(4.5,1.0/1.0));
+		out.printf("4.5ì˜ ì œê³±ê·¼ Math.pow(%5.2f, 1.0/2.0)= %5.2f\n", 4.5,pow(4.5,1.0/2.0));
+		out.printf("4.5ì˜ 3ì œê³±ê·¼ Math.pow(%5.2f, 1.0/3.0)= %5.2f\n", 4.5,pow(4.5,1.0/3.0));
+		out.printf("4.5ì˜ 4ì œê³±ê·¼ Math.pow(%5.2f, 1.0/4.0)= %5.2f\n", 4.5,pow(4.5,1.0/4.0));
+		out.printf("4.5ì˜ 5ì œê³±ê·¼ Math.pow(%5.2f, 1.0/5.0)= %5.2f\n", 4.5,pow(4.5,1.0/5.0));
 		/*
-		 * Math.cbrt()-->¼¼Á¦°ö±Ù
+		 * Math.cbrt()-->ì„¸ì œê³±ê·¼
 		 */
-		out.println("Math.cbrt() : 3Á¦°ö±Ù");
-		out.printf("4.5ÀÇ 3Á¦°ö±Ù Math.cbrt(%5.2f)= %5.2f\n", 4.5,cbrt(4.5));
+		out.println("Math.cbrt() : 3ì œê³±ê·¼");
+		out.printf("4.5ì˜ 3ì œê³±ê·¼ Math.cbrt(%5.2f)= %5.2f\n", 4.5,cbrt(4.5));
 		
 		
 		out.println("Math.pow(val, n) : val^n");
@@ -44,15 +44,15 @@ public class trigonometrical_function {
 		
 		out.println("=============================================================");
 		
-		out.println("»ï°¢ÇÔ¼ö");
+		out.println("ì‚¼ê°í•¨ìˆ˜");
 		
-		final double st = sqrt((pow(x2-x1, 2))+ pow(y2-y1,2));//(x1,y1)-(x2,y2)°£ ¼±ºÐ°Å¸®
-		double a = st * sin(PI/4);//Á÷°¢ÀÌµîº¯ »ï°¢Çü ¸¸µé·Á°í ÇÏ´Â °Í! 
+		final double st = sqrt((pow(x2-x1, 2))+ pow(y2-y1,2));//(x1,y1)-(x2,y2)ê°„ ì„ ë¶„ê±°ë¦¬
+		double a = st * sin(PI/4);//ì§ê°ì´ë“±ë³€ ì‚¼ê°í˜• ë§Œë“¤ë ¤ê³  í•˜ëŠ” ê²ƒ! 
 		/*
 		 * 			|
 		 *        / |
 		 *       /  |
-		 *      /___| Áß¿¡¼­ ¹Øº¯ ¸»°í | ÀÌºÎºÐ!
+		 *      /___| ì¤‘ì—ì„œ ë°‘ë³€ ë§ê³  | ì´ë¶€ë¶„!
 		 */
 		
 		double under = st * cos(PI/4);
@@ -60,52 +60,52 @@ public class trigonometrical_function {
 		 *  public static double toRadians(double angdeg) {
         return angdeg / 180.0 * PI;
     }
-    radian = (°¢µµ/180µµ(=pi)) * PI;
+    radian = (ê°ë„/180ë„(=pi)) * PI;
 		 */
 		double under2 = st * cos(toRadians(PI/4));
 		double check  = toRadians(PI/4);
 		double check2 = PI/4;
 		
-		out.printf("¹Øº¯ : %f, ¿·¸é: %f, ºøº¯ :%f\n", a, under, st);
+		out.printf("ë°‘ë³€ : %f, ì˜†ë©´: %f, ë¹—ë³€ :%f\n", a, under, st);
 		out.printf("toRadians(45): %f rad, PI/4: %f, (check==check2)?: %b\n", check, check2,
 				(check==check2));
-		out.printf("toRadians(45) == 45/180.0 * PI ?? %b\n", toRadians(45) == ((45/180.0)*PI));//true
+		out.printf("toRadians(45) == 45/180.0 * PI ? %b\n", toRadians(45) == ((45/180.0)*PI));//true
 		out.printf("st * cos(PI/4) : %f, st * cos(toRadians(PI/4)): %f, "
 				+ "(under==under2)?: %b\n", under, under2,(under==under2));
-		out.printf("tan(°¢µµ): %f\n", 
+		out.printf("tan(ê°ë„): %f\n", 
 				check2,tan(check2));
-		out.printf("µÎÁ¡ »çÀÌÀÇ »ó´ëÀû À§Ä¡ atan2(¹Øº¯(%5.2f), ºøº¯(%5.2f)): %f\n", 
-				a,st,atan2(a,st));//¿ªÅºÁ¨Æ®
+		out.printf("ë‘ì  ì‚¬ì´ì˜ ìƒëŒ€ì  ìœ„ì¹˜ atan2(ë°‘ë³€(%5.2f), ë¹—ë³€(%5.2f)): %f\n", 
+				a,st,atan2(a,st));//ì—­íƒ„ì  íŠ¸
 		
 		out.println("=============================================================");
 		
-		out.println("·Î±×ÇÔ¼ö");
+		out.println("ë¡œê·¸í•¨ìˆ˜");
 		
-		out.printf("log10(10): %f\n", log10(10));//log¹Ø(°ª) -->10À» ¹ØÀ¸·Î ÇÏ´Â 10ÀÇ ·Î±×//1
-		out.printf("log(10): %f\n", log(10));//ÀÚ¿¬·Î±× ln(°ª)
+		out.printf("log10(10): %f\n", log10(10));//logë°‘(ê°’) -->10ì„ ë°‘ìœ¼ë¡œ í•˜ëŠ” 10ì˜ ë¡œê·¸//1
+		out.printf("log(10): %f\n", log(10));//ìžì—°ë¡œê·¸ ln(ê°’)
 		out.printf("log(E): %f\n", log(E));//1
 		/*
-		 * ÇÔ¼ö(¼ö, ¹Ø)-->¹ØÀ» 2³ª e ÀÌ¿ÜÀÇ °ªÀ¸·Î ¹Ù²Ù¾î ÁøÇà °¡´É
-		 * ÇÔ¼ö(¹Ø, ¼ö)
+		 * í•¨ìˆ˜(ìˆ˜, ë°‘)-->ë°‘ì„ 2ë‚˜ e ì´ì™¸ì˜ ê°’ìœ¼ë¡œ ë°”ê¾¸ì–´ ì§„í–‰ ê°€ëŠ¥
+		 * í•¨ìˆ˜(ë°‘, ìˆ˜)
 		 */
-		out.printf("¹ØÀÌ 10ÀÌ³ª e°¡ ¾Æ´Ñ °æ¿ì, ¸Þ¼­µå¸¦ ¸¸µé¾î¼­ »ç¿ë\n");
-		out.printf("y=¹ØÀ» 2·ÎÇÏ´Â 2ÀÇ ·Î±×ÇÔ¼ö: %f\n", Log(2,2));
-		out.printf("y=¹ØÀ» 2·ÎÇÏ´Â 2ÀÇ ·Î±×ÇÔ¼ö2: %f\n", Log2(2,2));
-		out.printf("y=¹ØÀ» 4·ÎÇÏ´Â 2ÀÇ ·Î±×ÇÔ¼ö: %f\n", Log(4,2));
-		out.printf("y=¹ØÀ» 4·ÎÇÏ´Â 2ÀÇ ·Î±×ÇÔ¼ö2: %f\n", Log2(2,4));
-		out.println("y=¹ØÀ» 6À¸·Î ÇÏ´Â 6ÀÇ ·Î±×ÇÔ¼ö:"+String.format("%5.3f",Log(6,6)));//1.000
+		out.printf("ë°‘ì´ 10ì´ë‚˜ eê°€ ì•„ë‹Œ ê²½ìš°, ë©”ì„œë“œë¥¼ ë§Œë“¤ì–´ì„œ ì‚¬ìš©\n");
+		out.printf("y=ë°‘ì„ 2ë¡œí•˜ëŠ” 2ì˜ ë¡œê·¸í•¨ìˆ˜: %f\n", Log(2,2));
+		out.printf("y=ë°‘ì„ 2ë¡œí•˜ëŠ” 2ì˜ ë¡œê·¸í•¨ìˆ˜2: %f\n", Log2(2,2));
+		out.printf("y=ë°‘ì„ 4ë¡œí•˜ëŠ” 2ì˜ ë¡œê·¸í•¨ìˆ˜: %f\n", Log(4,2));
+		out.printf("y=ë°‘ì„ 4ë¡œí•˜ëŠ” 2ì˜ ë¡œê·¸í•¨ìˆ˜2: %f\n", Log2(2,4));
+		out.println("y=ë°‘ì„ 6ìœ¼ë¡œ í•˜ëŠ” 6ì˜ ë¡œê·¸í•¨ìˆ˜:"+String.format("%5.3f",Log(6,6)));//1.000
 		
 		/*
-		 * ¹ØÀÌ ´Ù¸¥ Áö¼ö°£ Ç¥Çö °¡´ÉÇÑ °ªÀÇ ÀÚ¸®¼ö ±¸ÇÏ±â
+		 * ë°‘ì´ ë‹¤ë¥¸ ì§€ìˆ˜ê°„ í‘œí˜„ ê°€ëŠ¥í•œ ê°’ì˜ ìžë¦¬ìˆ˜ êµ¬í•˜ê¸°
 		 * 
-		 * [sample #1] y= 24 * log10(2) -->yÀÇ ÀÇ¹Ì : 24ÀÚ¸®ÀÇ 2Áø¼ö·Î Ç¥Çö °¡´ÉÇÑ 10Áø¼öÀÇ ÀÚ¸®¼ö
-		 * [sample #2] y= 24 * Log2(5) -->yÀÇ ÀÇ¹Ì : 24ÀÚ¸®ÀÇ 5Áø¼ö·Î Ç¥Çö °¡´ÉÇÑ 2Áø¼öÀÇ ÀÚ¸®¼ö
+		 * [sample #1] y= 24 * log10(2) -->yì˜ ì˜ë¯¸ : 24ìžë¦¬ì˜ 2ì§„ìˆ˜ë¡œ í‘œí˜„ ê°€ëŠ¥í•œ 10ì§„ìˆ˜ì˜ ìžë¦¬ìˆ˜
+		 * [sample #2] y= 24 * Log2(5) -->yì˜ ì˜ë¯¸ : 24ìžë¦¬ì˜ 5ì§„ìˆ˜ë¡œ í‘œí˜„ ê°€ëŠ¥í•œ 2ì§„ìˆ˜ì˜ ìžë¦¬ìˆ˜
 		 */
-		out.printf("¹ØÀÌ ´Ù¸¥ Áö¼ö°£ Ç¥Çö °¡´ÉÇÑ °ªÀÇ ÀÚ¸®¼ö ±¸ÇÏ±â\n");
+		out.printf("ë°‘ì´ ë‹¤ë¥¸ ì§€ìˆ˜ê°„ í‘œí˜„ ê°€ëŠ¥í•œ ê°’ì˜ ìžë¦¬ìˆ˜ êµ¬í•˜ê¸°\n");
 		double Digit_y1 = floor(24 * log10(2));
-		out.printf("24ÀÚ¸®ÀÇ 2Áø¼ö ==> %.0fÀÚ¸®ÀÇ 10Áø¼ö Ç¥Çö °¡´É\n", Digit_y1);//7ÀÚ¸®
+		out.printf("24ìžë¦¬ì˜ 2ì§„ìˆ˜ ==> %.0fìžë¦¬ì˜ 10ì§„ìˆ˜ í‘œí˜„ ê°€ëŠ¥\n", Digit_y1);//7ìžë¦¬
 		double Digit_y2 = floor(24 * Log(2,5));
-		out.printf("24ÀÚ¸®ÀÇ 5Áø¼ö ==> %.0fÀÚ¸®ÀÇ 2Áø¼ö Ç¥Çö °¡´É\n", Digit_y2);//55ÀÚ¸®
+		out.printf("24ìžë¦¬ì˜ 5ì§„ìˆ˜ ==> %.0fìžë¦¬ì˜ 2ì§„ìˆ˜ í‘œí˜„ ê°€ëŠ¥\n", Digit_y2);//55ìžë¦¬
 		
 	}
 	
