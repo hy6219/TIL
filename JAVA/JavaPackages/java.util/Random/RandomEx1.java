@@ -10,7 +10,7 @@ public class RandomEx1 {
 		 * public Random()
 		 * {
 		 * 		this(System.currentTimeMillis());
-		 * -->Random(long seed) È£Ãâ
+		 * -->Random(long seed) í˜¸ì¶œ
 		 * }
 		 */
 		Random r1 = new Random();
@@ -22,10 +22,11 @@ public class RandomEx1 {
 		
 		/*
 		 * public Random(long seed)
+		 * seed: ìœ í•œí•œ í•œê³„ì—ì„œ ëŒì•„ê°€ëŠ” íŒ¨í„´ì„ ì •í•´ë†“ëŠ”ê²ƒì´ë¼ ìƒê°
 		 */
-		r2		  = new Random(6).nextDouble();//0~6 »çÀÌ ³­¼ö
-		double r4 = new Random(6).nextDouble();//0~6»çÀÌÀÇ ³­¼ö
-		//r2, r4´Â Á¾ÀÚ°ªÀÌ °°À¸¹Ç·Î °ªÀÌ °°À»°Í
+		r2		  = new Random().nextDouble() * 6;//0~6 ì‚¬ì´ ë‚œìˆ˜
+		double r4 = new Random().nextDouble() * 6;//0~6ì‚¬ì´ì˜ ë‚œìˆ˜
+		//r2, r4ëŠ” ì¢…ìê°’ì´ ê°™ìœ¼ë¯€ë¡œ ê°’ì´ ê°™ì„ê²ƒ
 		System.out.println("r2: "+r2+", r4: "+r4);
 		//r2: 0.7307886238322471, r4: 0.7307886238322471
 		
@@ -37,14 +38,14 @@ public class RandomEx1 {
 		 * 2)int nextInt()
 		 * 3)double nextDouble()
 		 * 4)float nextFloat()
-		 * -->boolean.int.double.float Å¸ÀÔÀÇ ³­¼ö¸¦ ¹İÈ¯
+		 * -->boolean.int.double.float íƒ€ì…ì˜ ë‚œìˆ˜ë¥¼ ë°˜í™˜
 		 * ([0,1))
 		 */
 		
 		/*
 		 * double nextGaussian()
-		 * -Æò±ÕÀÌ 0ÀÌ°í Ç¥ÁØÆíÂ÷¤¿°¡ 1.0ÀÎ °¡¿ì½Ã¾È ºĞÆ÷¿¡ µû¸¥
-		 * double ÇüÀÇ ³­¼ö ¹İÈ¯
+		 * -í‰ê· ì´ 0ì´ê³  í‘œì¤€í¸ì°¨ã…ê°€ 1.0ì¸ ê°€ìš°ì‹œì•ˆ ë¶„í¬ì— ë”°ë¥¸
+		 * double í˜•ì˜ ë‚œìˆ˜ ë°˜í™˜
 		 */
 		
 		double gau = new Random().nextGaussian();
