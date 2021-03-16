@@ -28,7 +28,7 @@ public class RandomEx1 {
 		double r4 = new Random().nextDouble() * 6;//0~6사이의 난수
 		//r2, r4는 종자값이 같으므로 값이 같을것
 		System.out.println("r2: "+r2+", r4: "+r4);
-		//r2: 0.7307886238322471, r4: 0.7307886238322471
+		//r2: 4.274229891960178, r4: 5.6182119388495835
 		
 		System.out.println(r2 == r4);//true
 		
