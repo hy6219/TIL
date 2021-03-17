@@ -5,12 +5,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class ScannerEx2 {
-	//cmd∑Œ test
+	//cmd¬∑√é test
 
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(new File("C:\\Users\\gs813\\OneDrive\\πŸ≈¡ »≠∏È"
-				+ "\\ScannerTest.txt"));
+		Scanner sc = new Scanner(new File("ScannerTest.txt"));
 		int sum = 0 ;
 		int cnt = 0 ;
 		
