@@ -4,24 +4,23 @@ import java.io.File;
 import java.util.Scanner;
 
 public class ScannerEx3 {
-//cmd·Î ¼öÇà!
+//cmdë¡œ ìˆ˜í–‰!
 	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(new File("C:\\Users\\gs813\\OneDrive\\¹ÙÅÁ È­¸é"
-				+ "\\ScannerTest2.txt"));
+		Scanner sc = new Scanner(new File("ScannerTest2.txt"));
 		int cnt = 0 ;
 		int totalSum = 0 ;
 		
 		while(sc.hasNextLine())
 		{
 			String line = sc.nextLine();
-			Scanner sc2 = new Scanner(line).useDelimiter(", ");//±¸ºĞÀÚ·Î ÀĞ¾î¿À±â
-			//°¢ ¹®ÀÚ ¾Õ °ø¹é Á¦°Å
+			Scanner sc2 = new Scanner(line).useDelimiter(", ");//êµ¬ë¶„ìë¡œ ì½ì–´ì˜¤ê¸°
+			//ê° ë¬¸ì ì• ê³µë°± ì œê±°
 			int sum = 0;
 			
 			while(sc2.hasNextInt())
 			{
-				//ÀÌÁ¦´Â ±¸ºĞÀÚ°¡ ¾øÀ¸´Ï ¼ıÀÚ¸¸ ÀÖÀ»°Í
+				//ì´ì œëŠ” êµ¬ë¶„ìê°€ ì—†ìœ¼ë‹ˆ ìˆ«ìë§Œ ìˆì„ê²ƒ
 				sum += sc2.nextInt();
 			}
 			System.out.println(line+", sum= "+sum);
