@@ -32,7 +32,7 @@ class Time
 	 * parameter or local value can't use access modifier
 	 */
 	
-	public void SetHour(int hour)
+	public void setHour(int hour)
 	{
 		if(hour<0 ||hour>23)
 		{
@@ -43,7 +43,7 @@ class Time
 			this.hour=hour;
 		}
 	}
-	public void SetMin(int min)
+	public void setMin(int min)
 	{
 		if(min<0 ||min>59)
 		{
@@ -54,7 +54,7 @@ class Time
 			this.min=min;
 		}
 	}
-	public void SetSec(int sec)
+	public void setSec(int sec)
 	{
 		if(sec<0 ||sec>59)
 		{
@@ -65,7 +65,7 @@ class Time
 			this.sec=sec;
 		}
 	}
-	public void SetTime(Time obj)
+	public void setTime(Time obj)
 	{
 		(this).SetHour(obj.hour);
 		(this).SetMin(obj.min);
@@ -74,15 +74,15 @@ class Time
 	/*
 	 * getters
 	 */
-	public int GetHour()
+	public int getHour()
 	{
 		return hour;
 	}
-	public int GetMin()
+	public int getMin()
 	{
 		return min;
 	}
-	public int GetSec()
+	public int getSec()
 	{
 		return sec;
 	}
@@ -98,7 +98,7 @@ public class TimeTest {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Time t=new Time(16,40,10);
-		t.SetTime(t);
+		t.setTime(t);
 		System.out.println(t);
 	}
 
