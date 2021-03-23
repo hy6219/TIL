@@ -1,0 +1,153 @@
+﻿---
+
+
+---
+
+<h1 id="calendar-클래스와-date-클래스에-intro">Calendar 클래스와 Date 클래스에 Intro!</h1>
+<ul>
+<li>Date 클래스 : 날짜 및 시간에 대하여 제공하는 기능이 미흡</li>
+<li>Calendar 클래스 : Date 클래스보다는 낫지만,<br>
+그래도 부족 → java.time  패키지 등장!</li>
+</ul>
+<h1 id="calendar-cal--calendar.getinstance">Calendar cal = Calendar.getInstance()</h1>
+<ol>
+<li>
+<p>getInstance()를 사용하는 이유<br>
+Calendar는 추상 클래스이기 때문(★getInstance() 메서드가 static인<br>
+이유이기도!)</p>
+</li>
+<li>
+<p>getInstance() 메서드가 static인 이유</p>
+</li>
+</ol>
+<pre class=" language-java"><code class="prism  language-java">	<span class="token keyword">public</span> <span class="token keyword">static</span> Calendar <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">createCalendar</span><span class="token punctuation">(</span>TimeZone<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        Locale<span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span>Locale<span class="token punctuation">.</span>Category<span class="token punctuation">.</span>FORMAT<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> Calendar <span class="token function">createCalendar</span><span class="token punctuation">(</span>TimeZone zone<span class="token punctuation">,</span>
+                                           Locale aLocale<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+		        <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">(</span>생략<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+</code></pre>
+<p>(1) Calendar 클래스는 “추상 클래스”!</p>
+<p>→ static이 아니라면, 객체를 생성할 수 없음!<br>
+<strong>(★주의★ abstract와 static 예약어를 동시에 사용할 수 없는 것이라,<br>
+이 경우에서는 전혀 관련없음!)</strong></p>
+<p>(2) Calendar 내부에서 호출하는 메서드는 static 메서드인데, 인스턴스 변수도 존재하지 않기 때문!</p>
+<ol start="3">
+<li>Calendar.getInstance()의 국가에 따른 작동!</li>
+</ol>
+<pre class=" language-java"><code class="prism  language-java">Calendar cal <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>(1) (국가 == “태국”)?<br>
+BuddhistCalendar 인스턴스 : GregorianCalendar 인스턴스</p>
+<p>(2) GregorianCalendar : 윤년 개념을 포함하는 날짜 및 시간 클래스로,</p>
+<p>"그레고리력"을 기반으로 함! (Calendar의 자손클래스!)</p>
+<ol start="4">
+<li>getInstance()로 인스턴스를 반환하는 이유</li>
+</ol>
+<ul>
+<li>최소한의 변경으로 프로그램이 동작하도록 하기 위함</li>
+</ul>
+<h1 id="calendar-to-date">Calendar to Date!</h1>
+<pre class=" language-java"><code class="prism  language-java">		Calendar cal <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Date d1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span>cal<span class="token punctuation">.</span><span class="token function">getTimeInMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Calendar to Date: Calendar-"</span><span class="token operator">+</span>
+							cal<span class="token operator">+</span><span class="token string">",\nDate - "</span><span class="token operator">+</span>d1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>Calendar 인스턴스는 현재 한국이기 때문에, 그레고리력의 모든 속성을</p>
+<p>보여줄 수 있고, 이를 Date로 변환하게 되면</p>
+<p>“요일 월 일 시: 분 : 초 [Locale(KST)] 연도” 형식으로 반환!</p>
+<p>★Date 인스턴스 = new Date(Calendar 인스턴스.getTimeInMillis());로 변환하는 이유: Date 생성자 내부에는 long 타입이 들어가야 하기 때문!</p>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/CalendarToDate.PNG?raw=true" alt="Calendar 클래스를 Date 클래스로 변환하기"></p>
+<h1 id="date-to-calendar">Date to Calendar</h1>
+<pre class=" language-java"><code class="prism  language-java">		 <span class="token comment">//2.Date 인스턴스를 Calendar 인스턴스로 변환하기</span>
+		Date d <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Calendar cal <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		cal<span class="token punctuation">.</span><span class="token function">setTime</span><span class="token punctuation">(</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Date to Calendar: Calendar-"</span><span class="token operator">+</span>
+				cal<span class="token operator">+</span><span class="token string">",\nDate - "</span><span class="token operator">+</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p>★ Calendar 인스턴스.setTime(Date 인스턴스)로 변환해줄 수 있음</p>
+<p>반환은 Calendar to Date와 동일!</p>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/DateToCalendar.PNG?raw=true" alt="Date 클래스를 Calendar 클래스로 변환하기"></p>
+<h1 id="calendar-인스턴스.getfield">Calendar 인스턴스.get(field)</h1>
+<p>어떤 날짜나 연도 등에 대한 정보를 Calendar 인스턴스를 통해 얻고</p>
+<p>싶은 경우, 꼭!! get 메서드로 받아서 반환시켜줘야 한다!! 그렇지 않으면</p>
+<p>기본설정된 값이 반환/이용될 수 있다!(예: Calendar.YEAR만</p>
+<p>System.out.println()으로 출력하면, 1을 출력)</p>
+<p>★ field 변수들은 static 변수로 구성되어 있음(Calendar 클래스)</p>
+<h1 id="calendar-인스턴스.-getactualmaximumfield">Calendar 인스턴스. getActualMaximum(field)</h1>
+<p>field의 최댓값을 구할 수 있음</p>
+<p>(응용)- 이번달의 마지막날 구하기</p>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"이달의 마지막날: getActualMaximum(Calendar.DATE)--&gt;"</span><span class="token operator">+</span>
+					today<span class="token punctuation">.</span><span class="token function">getActualMaximum</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>DATE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//31</span>
+</code></pre>
+<h1 id="calendar.year---이-해의-연도">Calendar.YEAR - 이 해의 연도</h1>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"올해-Calendar.YEAR(get): "</span><span class="token operator">+</span>today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>YEAR<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.YEAR.PNG?raw=true" alt="Calendar.YEAR"></p>
+<h1 id="calendar.month--이번-달">Calendar.MONTH- 이번 달</h1>
+<p>0~ 11의 값을 반환하고, 0이 1월!!</p>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> mon <span class="token operator">=</span> today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>MONTH<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"몇월-get(Calendar.MONTH+1): "</span><span class="token operator">+</span> mon<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.MONTH.PNG?raw=true" alt="Calendar.MONTH + 1"></p>
+<h1 id="calendar.-week_of_year-calendar.-week_of_month">Calendar.	WEEK_OF_YEAR, Calendar. WEEK_OF_MONTH</h1>
+<ul>
+<li>Calendar.WEEK_OF_YEAR: 이번 해의 몇 번째 주인지 출력</li>
+<li>Calendar.WEEK_OF_MONTH: 이번 달의 몇 번째 주인지 출력</li>
+</ul>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.WEEK_OF_YEAR%28MONTH%29.PNG?raw=true" alt="enter image description here"></p>
+<h1 id="calendar.day_of_year">Calendar.DAY_OF_YEAR</h1>
+<p>이번 해의 몇번째 일인지 반환</p>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"이 해의 몇번째 주- get(Calendar.WEEK_OF_YEAR): "</span><span class="token operator">+</span> today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>WEEK_OF_YEAR<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.DATE,Calendar.DAY_OF_YEAR%28MONTH%29.PNG?raw=true" alt="Calendar.DAY_OF_YEAR"></p>
+<h1 id="calendar.date-calendar.day_of_month">Calendar.DATE ==Calendar.DAY_OF_MONTH</h1>
+<p>몇일인지 반환</p>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"이 달의 몇일 get(Calendar.DATE): "</span><span class="token operator">+</span>
+						today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>DATE<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">", get(Calendar.DAY_OF_MONTH): "</span><span class="token operator">+</span>
+						today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>DAY_OF_MONTH<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.DATE,Calendar.DAY_OF_YEAR%28MONTH%29.PNG?raw=true" alt="Calendar.DATE, Calendar.DAY_OF_MONTH"></p>
+<h1 id="calendar.day_of_week-calendar.day_of_week_in_month">Calendar.DAY_OF_WEEK, Calendar.DAY_OF_WEEK_IN_MONTH</h1>
+<ul>
+<li>Calendar.DAY_OF_WEEK: 일요일부터 토요일까지를 1~7로 반환</li>
+<li>Calendar.DAY_OF_WEEK_IN_MONTH: 이번달에 이번 요일이 몇번째로 찾아온 것인지 반환</li>
+</ul>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"요일(1:일요일 ~ 7:토요일)-get(Calendar.DAY_OF_WEEK):"</span><span class="token operator">+</span>
+						today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>DAY_OF_WEEK<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//3-화요일</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"이달의 몇번째 요일 -get(Calendar.DAY_OF_WEEK_IN_MONTH): "</span><span class="token operator">+</span>
+						today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>DAY_OF_WEEK_IN_MONTH<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar.DAY_OF_WEEK%28IN_MONTH%29.PNG?raw=true" alt="enter image description here"></p>
+<h3 id="calendar.am_pm-calendar.hour-calendar.hour_of_day-calendar.minute-calendar.second-calendar.millisecond-타임존">Calendar.AM_PM, Calendar.HOUR, Calendar.HOUR_OF_DAY, Calendar.MINUTE, Calendar.SECOND, Calendar.MILLISECOND, 타임존</h3>
+<ul>
+<li>Calendar.AM_PM: 오전, 오후 구분 (0 - 오전, 1 - 오후)</li>
+<li>Calendar.HOUR: 0~11로 시를 표현</li>
+<li>Calendar.HOUR_OF_DAY: 0~23으로 시를 표현</li>
+<li>Calendar.MINUTE,Calendar.SECOND: 0-59의 수로 각각 분, 초를 표현</li>
+<li>Calendar.MILLISECOND: 0~ 999의 수로 밀리초를 표현</li>
+<li>타임존(Timezone): GMT(그리니치 평균 시; Greenich Mean Time)를 기준으로 시간을 나타내는 동일 지역(한국 : +9)</li>
+</ul>
+<pre class=" language-java"><code class="prism  language-java">Calendar today <span class="token operator">=</span> Calendar<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"TimeZone(-12~+12): "</span><span class="token operator">+</span>today<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>Calendar<span class="token punctuation">.</span>ZONE_OFFSET<span class="token punctuation">)</span><span class="token operator">/</span>
+				<span class="token punctuation">(</span><span class="token number">60</span><span class="token operator">*</span><span class="token number">60</span><span class="token operator">*</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//ms 를 시 단위로 변경하기 위함</span>
+</code></pre>
+<p><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/Calendar_%EC%8B%9C%EB%B6%84%EC%B4%88.PNG?raw=true" alt="enter image description here"></p>
+
