@@ -99,8 +99,8 @@
 	<ul>
 	   <li><a target="_blank" href="https://hy6219.github.io/1_-TIL-Java-%EB%82%A0%EC%A7%9C%EC%99%80-%EC%8B%9C%EA%B0%84_Calendar-%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80-Date%ED%81%B4%EB%9E%98%EC%8A%A4/">
 		Calendar 클래스 및 Date 클래스에 대한 상세</a></li>
-	   <li><a target="_blank" href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JAVA/Calendar_Date/%5BTIL%5DJava-%EB%82%A0%EC%A7%9C%EC%99%80%20%EC%8B%9C%EA%B0%84_Calendar%20%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80%20Date%ED%81%B4%EB%9E%98%EC%8A%A4.md">
-		동일 내용에 대한 TIL 저장소 내 정리</a></li>
+	   <li><a target="_blank" href="https://hy6219.github.io/2_-TIL-Calendar.set/">
+		Calendar 클래스의 set메서드를 이용한 시간 지정</a></li>
 	</ul>
      </li>
     </ol><!--JAVA END-->
