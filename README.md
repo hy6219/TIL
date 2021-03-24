@@ -103,13 +103,13 @@
 		Calendar 클래스의 set메서드를 이용한 시간 지정</a></li>
 	   <li><a target="_blank" href="https://hy6219.github.io/3_-TIL-Calendar-roll(field,-diff)%EB%A9%94%EC%84%9C%EB%93%9C/">
 		Calendar 클래스의 roll 메서드-말일에 대한 roll</a></li>
-	    <ul>
+	    <li>
 	         숫자, 날짜 형식화
 		<ol>
 		   <li><a target="_blank" href="https://hy6219.github.io/1_-TIL-%EC%88%AB%EC%9E%90%ED%8F%AC%EB%A7%B7-DecimalFormat-%ED%81%B4%EB%9E%98%EC%8A%A4/">
 		DecimalFormat 클래스를 이용한 숫자 및 형식화된 문자열 간 변환</a></li>
 		</ol>
-	    </ul>
+	    </li>
 	</ul>
      </li>
     </ol><!--JAVA END-->
