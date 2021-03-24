@@ -114,6 +114,8 @@
 		ChoiceFormat을 이용한 값에 대한 기준틀 구축 or 마련하기</a></li>
 		   <li><a target="_blank" href="https://hy6219.github.io/2_-TIL-MessageFormat/">
 		MessageFormat을 정해진 입력 양식틀에 대해서 형식화하기</a></li>
+		   <li><a target="_blank" href="https://hy6219.github.io/3_MessageFormat%EC%9D%98-%ED%8A%B9%EB%B3%84%ED%95%9C-%EC%9D%91%EC%9A%A9/">
+		MessageFormat을 이용하여 하나의 행으로 Object 배열을 추출함으로써 DB의 경우 등에 녹여내보기</a></li>
 		</ol>
 	    </li>
 	</ul>
