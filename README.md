@@ -110,6 +110,8 @@
 		DecimalFormat 클래스를 이용한 숫자 및 형식화된 문자열 간 변환</a></li>
 		   <li><a target="_blank" href="https://hy6219.github.io/2_-TIL-DateFormat-SimpleDateFormat-%ED%81%B4%EB%9E%98%EC%8A%A4/">
 		SimpleDateFormat 클래스를 이용한 날짜 및 형식화된 문자열 간 변환</a></li>
+		   <li><a target="_blank" href="https://hy6219.github.io/1_-TIL-ChoiceFormat-%EC%84%A0%ED%83%9D%EB%B2%94%EC%A3%BC%EC%97%90-%EC%86%8D%ED%95%98%EB%8A%94-%EA%B0%92%EC%9D%84-%EB%AC%B8%EC%9E%90%EC%97%B4%EB%A1%9C-%EB%B3%80%ED%99%98/">
+		ChoiceFormat을 이용한 값에 대한 기준틀 구축 or 마련하기</a></li>
 		</ol>
 	    </li>
 	</ul>
