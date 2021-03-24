@@ -108,6 +108,8 @@
 		<ol>
 		   <li><a target="_blank" href="https://hy6219.github.io/1_-TIL-%EC%88%AB%EC%9E%90%ED%8F%AC%EB%A7%B7-DecimalFormat-%ED%81%B4%EB%9E%98%EC%8A%A4/">
 		DecimalFormat 클래스를 이용한 숫자 및 형식화된 문자열 간 변환</a></li>
+		   <li><a target="_blank" href="https://hy6219.github.io/2_-TIL-DateFormat-SimpleDateFormat-%ED%81%B4%EB%9E%98%EC%8A%A4/">
+		SimpleDateFormat 클래스를 이용한 날짜 및 형식화된 문자열 간 변환</a></li>
 		</ol>
 	    </li>
 	</ul>
