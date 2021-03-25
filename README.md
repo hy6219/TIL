@@ -120,6 +120,15 @@
 	    </li>
 	</ul>
      </li>
+<!--Date END-->
+<!--Collection FrameWork-->
+     <li>
+	Collection FrameWork
+	<ul>
+	   <li><a href = "https://hy6219.github.io/3_-TIL-HashSet%EA%B3%BC-%EA%B4%80%EB%A0%A8%EB%90%9C-%EA%B0%9C%EB%85%90-%EB%8F%99%EB%93%B1%EC%84%B1,-%EB%8F%99%EC%9D%BC%EC%84%B1/" target="_blank">
+		hashset과 관련된 개념 동등성, 동일성-hashCode() 오버라이딩 시 준수해야 할 사항</a></li>
+	</ul>
+     </li>
     </ol><!--JAVA END-->
   </li>
 </ol><!--All END-->
