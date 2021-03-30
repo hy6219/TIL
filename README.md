@@ -131,6 +131,18 @@
      </li>
     </ol><!--JAVA END-->
   </li>
+   <!--git 공부-->
+   <li>
+       git
+        <ul>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/%EA%B9%83%EC%9C%BC%EB%A1%9C%20%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20%EA%B2%83.md">
+		깃으로 할 수 있는 것
+	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/InstallGit/%EA%B9%83%20%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0.md">
+		윈도우, 우분투에 깃 설치하기
+	</a></li>
+         </ul>
+    </li>
 </ol><!--All END-->
 
 
