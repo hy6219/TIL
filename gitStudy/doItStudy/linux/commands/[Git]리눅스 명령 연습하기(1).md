@@ -99,6 +99,7 @@
 - ls -l ; ls long
 (1) 파일유형+파일 퍼미션 - 포함된 파일 수 -소유자-그룹-파일크기-수정시간(mtime)-파일명 출력
 
+
 ![ls -l](https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/linux/commands/ls/ls%20-l.png?raw=true)
 
 
