@@ -28,9 +28,7 @@
 
 ![cd [directory]](https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/linux/commands/cd/cd%20directory%20-%20directory%EB%A1%9C%20%EC%9D%B4%EB%8F%99.PNG?raw=true)
 
-- cd 
-  cd ~
-  cd $HOME    : HOME 디렉토리로(/home/[user name]) 이동
+- cd : HOME 디렉토리로(/home/[user name]) 이동
   
  ![cd ](https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/linux/commands/cd/cd%20%ED%99%88%EB%94%94%EB%A0%89%ED%86%A0%EB%A6%AC%EB%A1%9C%20%EC%9D%B4%EB%8F%992.PNG?raw=true)
 
