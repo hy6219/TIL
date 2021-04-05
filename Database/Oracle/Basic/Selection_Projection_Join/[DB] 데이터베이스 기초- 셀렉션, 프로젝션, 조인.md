@@ -25,4 +25,4 @@
 
 - 다른 두 테이블이, 어떠한 한 컬럼에 대해서 동일한 맥락/값을 갖고 있을 때 **합치게** 되어 하나의 테이블로 만드는 개념
 
-![조인](https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Selection_Projection_Join/%EC%A1%B0%EC%9D%B8.png?raw=true)
+![조인]()
