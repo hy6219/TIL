@@ -20,16 +20,16 @@ a. 역할
     - html에 스타일(css)를 적용하기 위해서 html의 특정 요소를 선택하는 
     사인
 
-    ```html
+```html
     <div>
     	<h1>제목..</h1>
     	<p>본문..</p>
     </div>
-    ```
+ ```
 
-아래는 위의 html 문서를 꾸며주는 css 파일을 보여줍니다.
 
-    ```css
+
+```css
     h1{
     	color: red;
     }
@@ -37,7 +37,7 @@ a. 역할
     p{
     	color: blue;
     }
-    ```
+ ```
 
 2. 속성(Properties)과 값(Value)
 
