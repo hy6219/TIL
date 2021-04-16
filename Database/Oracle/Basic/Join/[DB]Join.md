@@ -413,7 +413,7 @@ FROM 테이블1 NATURAL JOIN 테이블2;--컬럼3이 자동으로 컬럼명과 �
 --인식되어 등가조인됨
 ```
 
-간단하게 동일한 테이블로 EMP와 DEPT 테이블을 이용해서 이번에는 JOIN~ON이나 JOIN~USING을 사용하지 않고 NATURAL JOIN을 FROM 절에 툭! 놓으면 자동으로 데이터 의미로도, 컬럼명으로도 동일한 컬럼을 자동으로 인식하여 등가조인해준다!
+간단하게 동일한 테이블로 EMP와 DEPT 테이블을 이용해서 이번에는 JOIN ON이나 JOIN USING을 사용하지 않고 NATURAL JOIN을 FROM 절에 툭! 놓으면 자동으로 데이터 의미로도, 컬럼명으로도 동일한 컬럼을 자동으로 인식하여 등가조인해준다!
 
 ```sql
 SELECT E.EMPNO, E.ENAME, E.JOB, E.MGR,
