@@ -1,0 +1,874 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>알고리즘 복잡도 분석</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="5a4c8109-fa06-42ac-887b-92df724101ff" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">알고리즘 복잡도 분석</h1></header><div class="page-body"><p id="03ad2ffe-72fb-492d-870f-9ef071f6aecc" class="">일반적으로 알고리즘의 복잡도를 분석하고자 할 때, 시간 복잡도를 많이 보기 때문에, 이에 대해서 살펴보자!</p><p id="28a510d4-093a-47d8-8725-e151cb96758c" class="">
+</p><p id="d89cd615-73d3-4ac0-9b69-3319d6d85268" class="">그에 앞서서, 복잡도에는 효율성 면에서 분류될 수 있는 복잡도에 대해서 알아보자</p><p id="d15a5eb9-3603-4623-8849-5051e922f811" class="">
+</p><h2 id="02d2a135-93af-4e78-a580-2b3a3d06a5c7" class="">I. 효율성 면에서 복잡도의 분류</h2><p id="4575494a-bf11-423f-891a-0824e39f5232" class="">
+</p><ol id="c7c0c2af-993b-444a-8367-102343cf07f2" class="block-color-blue_background numbered-list" start="1"><li><strong><mark class="highlight-blue">최악의 복잡도 Worst Case Complexity</mark></strong></li></ol><ol id="38f05b2b-d957-481a-a6bf-37c7760ddd4c" class="block-color-blue_background numbered-list" start="2"><li><mark class="highlight-blue"><strong>평균적인 복잡도 Average Case Complexity</strong></mark></li></ol><ol id="546306f3-dcdb-4626-a497-6dac9c626fbe" class="block-color-blue_background numbered-list" start="3"><li><strong><mark class="highlight-blue">최선의 복잡도 Best Case Complexity</mark></strong></li></ol><p id="797b413f-392f-44b2-a0a5-bfb88db53414" class="">
+</p><p id="937c31a8-b01f-451d-9f92-02a301e69b95" class="">각각에 대해서 조금 더 이해해보자!</p><p id="d153c1b8-d145-42d7-b21d-a9e730eb6981" class="">
+</p><h3 id="36e85a62-aaec-4783-8952-3deb8c3c8cee" class="block-color-red_background">🌟<mark class="highlight-red">최악의 복잡도, Worst Case Complexity</mark>🌟</h3><p id="631d95cb-6cf6-477f-90b2-6c6110e62509" class="">
+</p><ul id="96f6a832-b9a4-4f2b-ab44-3067af7018d0" class="bulleted-list"><li>입력크기 n에 대한 문제를 풀 때, <strong><mark class="highlight-orange">최악의 성능</mark></strong>을 내는 복잡도</li></ul><ul id="d1a546c1-9521-4573-a9c2-abfa6b611653" class="bulleted-list"><li>알고리즘 실행 시간의 상한을 계산( ➡️ Big-O, Theta 표기법이 관련있을 것으로 생각됨!)</li></ul><ul id="9e3998d9-7e26-498f-aa57-9fe6614dec78" class="bulleted-list"><li><mark class="highlight-orange"><strong>가장 많이 사용하는 분석방법!</strong></mark></li></ul><p id="b54167e1-19d1-4127-abe0-97508b1986d0" class="">
+</p><h3 id="dcdc79f3-a41f-4292-ab92-bb0478dab613" class="">평균적인 복잡도, Average Case Complexity</h3><p id="28943b82-3657-4fe7-b80e-48c485c2dafc" class="">
+</p><ul id="fe380685-f72d-4fb2-9640-aaf319fa58a9" class="bulleted-list"><li>평균적인 성능을 내는 복잡도</li></ul><ul id="93a9f758-d8ad-443a-a1c1-614413921863" class="bulleted-list"><li>가능한 모든 입력에 대한 실행 시간을 계산하여 그 평균을 계산</li></ul><p id="72687b97-6f10-45fd-b3c0-b1ef7d47ec50" class="">
+</p><h3 id="bd595a4f-a565-4320-8028-6c9ad1c40a34" class="">최선의 복잡도, Best Case Complexity</h3><p id="23eb8527-b96c-4be3-9773-ee3a8d087fe7" class="">
+</p><ul id="b3254b7f-df60-4a28-97f6-37e7f34d98d7" class="bulleted-list"><li>최선의 성능을 내는 복잡도</li></ul><p id="293ee6b5-86c4-4d92-9b78-d2a12e3d6c3f" class="">
+</p><hr id="6454ca5e-d37f-42fe-80ba-c20deb48345c"/><p id="1e2ca56f-a4a7-4f25-8fd4-2a10b83fced5" class="">이번에는 시간 복잡도에 대해서 살펴보도록 하자</p><p id="5bfbdd69-f72c-4c3f-9352-2880ddb20fa4" class="">
+</p><h2 id="8db00948-7956-45c1-a424-bc0c6d45dec5" class="block-color-red_background">🌟<mark class="highlight-red">II. 시간 복잡도</mark></h2><p id="6ff14409-c72f-45f5-a271-baa5ffa88e00" class="">
+</p><ul id="42aada07-a8e8-48b7-acf2-560c8557916d" class="bulleted-list"><li>시간 복잡도의 종류(아래로 내려갈 수록, 시간이 증가)</li></ul><div id="b9bbbab0-e4db-4964-aaa2-5f14e05da432" class="collection-content"><h4 class="collection-title">시간 복잡도의 종류</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>이름</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>표기법</th></tr></thead><tbody><tr id="3e8c4af1-45d6-43b0-974d-7ad1665f0631"><td class="cell-title"><a href="https://www.notion.so/constant-3e8c4af145d643b0974d7ad1665f0631">상수(constant) 시간</a></td><td class="cell-[Gzm">O(1)</td></tr><tr id="532b02fd-39b8-4cb6-9061-abfc1aef82a7"><td class="cell-title"><a href="https://www.notion.so/Logarithmic-532b02fd39b84cb69061abfc1aef82a7">로그(Logarithmic) 시간</a></td><td class="cell-[Gzm">O(logn)</td></tr><tr id="b789f160-a45e-4a0a-971d-c2f7e13d48c4"><td class="cell-title"><a href="https://www.notion.so/linear-b789f160a45e4a0a971dc2f7e13d48c4">선형(linear) 시간</a></td><td class="cell-[Gzm">O(n)</td></tr><tr id="0720d992-c8c3-4e33-96a8-b22851159eea"><td class="cell-title"><a href="https://www.notion.so/N-LogN-N-N-0720d992c8c34e3396a8b22851159eea">N LogN(N 로그 N)시간</a></td><td class="cell-[Gzm">O(nlogn)</td></tr><tr id="ed7ede65-de8d-40c3-a70f-88b36fe6d764"><td class="cell-title"><a href="https://www.notion.so/quadratic-ed7ede65de8d40c3a70f88b36fe6d764">이차(quadratic) 시간</a></td><td class="cell-[Gzm">O(n^2)</td></tr><tr id="5c522564-1231-4536-b2f5-e5f9e35f4267"><td class="cell-title"><a href="https://www.notion.so/polynomial-5c52256412314536b2f5e5f9e35f4267">다항(polynomial) 시간</a></td><td class="cell-[Gzm">O(n^c)(c &gt; 1, c=const)</td></tr><tr id="bc9e035b-e432-4945-9dec-832d0f77edb4"><td class="cell-title"><a href="https://www.notion.so/exponential-bc9e035be43249459dec832d0f77edb4">지수(exponential) 시간</a></td><td class="cell-[Gzm">O(c^m) (c &gt; 1, c= const)</td></tr><tr id="f8d5ca1f-d0ba-493e-b203-54d63023da55"><td class="cell-title"><a href="https://www.notion.so/factorial-n-n-N-power-N-f8d5ca1fd0ba493eb20354d63023da55">계승(factorial) 또는 n의 n승(N-power-N) 시간</a></td><td class="cell-[Gzm">O(n!) 또는 O(n^n)</td></tr></tbody></table></div><p id="4b7deae4-46f8-40d6-8360-2bb318cee834" class="">
+</p><p id="53e56fd2-4adb-45e6-b3a3-2614b1458b51" class="block-color-red_background">🌟정리🌟</p><p id="ac239e99-acc9-4d3c-9ef5-2e41b2e5c637" class="block-color-red_background"><mark class="highlight-teal"><strong>상수 &lt; 로그</strong></mark> &lt;<strong><mark class="highlight-red"> 선형 &lt; nlogn </mark></strong>&lt;<strong><mark class="highlight-orange"> 이차 &lt; 다항</mark></strong> &lt; <mark class="highlight-purple"><strong>지수 &lt; 계승 또는 n의 n승</strong></mark></p><p id="e316cb88-97c6-49fa-bbfa-2e21b9c73659" class="">
+</p><p id="a9bb6121-dc7d-44e2-9c6d-ebef35e0c12f" class="">색상을 다르게 하여 표시한 이유는, 색상이 바뀌는 시점에서 하나의 chunk 처럼 구획되어 복잡해지는 것으로 볼 수 있기 때문이다!</p><p id="0174bd70-1231-4a53-851a-4da28ad06941" class="">
+</p><p id="b0207ce8-aadb-4d11-a1fd-e1afcdf44d48" class="">처음에는 n의 0 승 등 복잡도가 없었지만, 선형을 기준으로 하나의 chunk가 nlogn과 함께 형성될 수 있는 등 특징으로 묶여질 수 있기 때문에 위와 같이 끊어서 보았다</p><p id="dd475f31-bdcc-406f-b81a-b6dd8cfd68bf" class="">
+</p><p id="b21fd81d-def9-45a7-819c-dea0e7d3b4db" class="">다음은 시간 복잡도의 증가율을 살펴보자</p><p id="2df86e5a-5ec1-44f3-8371-f7a5ac430f01" class="">
+</p><hr id="032cfd35-e030-4619-ad8a-f8013a4a8bde"/><ul id="0ab0ec96-dede-418f-8416-449445bf3979" class="bulleted-list"><li>시간복잡도의 증가율시간복잡도의 증가율</li></ul><figure id="8a65c71d-ba72-4898-aec9-2f9b2b08be32"><div class="source"><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Asymptotic%20Analysis/TimeComplexity/Time%20Complexity%20Inc%20Ratio.html">https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Asymptotic%20Analysis/TimeComplexity/Time%20Complexity%20Inc%20Ratio.html</a></div></figure><p id="c64dbd49-04e6-4cda-92ea-c96ecfd25271" class="">
+</p><p id="68e39f57-92e9-413b-8645-e14818562f79" class="">위는 참고만 하도록 하고, 데이터가 커질수록 각 시간 복잡도가 어떻게 변화하는지만 확인해보자</p><p id="17b19461-a39b-419a-8072-58f04de6d629" class="">
+</p><h3 id="24ab3031-f3cd-499d-a22e-0c5d9e037ac7" class="">III-II. 시간 복잡도의 종류</h3><p id="c10ee958-585d-492c-809b-0096a60f095d" class="">
+</p><ol id="c744a8a4-1d3a-472a-bc42-1718f396399a" class="numbered-list" start="1"><li>상수시간 O(1)</li></ol><ul id="a1becafe-29e2-40d7-a380-d6dfaf34514f" class="bulleted-list"><li>입력 크기와 상관없이 결과를 고정된(상수) 시간에 계산</li></ul><p id="e26d59a5-2bef-4d46-9a90-a34a50a5a46b" class="">
+</p><p id="b98fae88-3055-447e-8712-c5e9beda8969" class="">(예시)</p><ul id="86d7b05f-15d1-4b34-96ab-b8c371074f7d" class="bulleted-list"><li>배열의 N번째 요소에 접근</li></ul><ul id="b7f8523f-c2e7-43ef-87a2-568d7fd22495" class="bulleted-list"><li>스택에 넣고 빼기</li></ul><ul id="e7c1e9e3-ab8b-461d-80f9-d33d829a7c21" class="bulleted-list"><li>큐에 삽입하고 삭제하기</li></ul><ul id="aa470b4d-d917-4311-a72e-3da054dd6c03" class="bulleted-list"><li>해시 테이블의 원소에 접근하기</li></ul><p id="ce0c2794-82ce-47ec-a83d-4db889ea15bf" class="">
+</p><p id="149ecf6f-7b84-4e5d-88ef-e3eb4e6e00a9" class="">
+</p><p id="c7558697-a94c-4441-b4f1-6e3dafc0f0c6" class="">2. 선형시간 O(n)</p><ul id="c14f6332-321f-40dd-a9a1-d35e24d99b4d" class="bulleted-list"><li>알고리즘 실행 시간 ∝ 입력크기 n</li></ul><p id="39fccde2-9ed4-4c40-bf42-478d764e18b6" class="">
+</p><p id="dcf754f8-4b1c-45cd-a22c-dd79149dee2a" class="">(예시)</p><ul id="3d36f3b3-ccb1-47b6-b26e-64f9f3ef1e46" class="bulleted-list"><li>배열에서 원소 검색, 최솟값 찾기, 최댓값 찾기 등의 연산</li></ul><ul id="286a7bcf-3a66-40c3-a213-f4a25be49b77" class="bulleted-list"><li>연결 리스트에서 순회(traversal), 최솟값 찾기, 최댓값 찾기(단, 모든 노드를 방문하게 되는 경우 ≥ O(n)</li></ul><p id="15079803-01f0-4eb0-aa42-952adb94e459" class="">
+</p><p id="76689fe5-4867-4387-a635-69420733b737" class="">
+</p><p id="5d73642a-77d0-4c02-8d47-d2d471f43cd4" class="">3. 로그시간O(logn)</p><p id="b68135d6-dd31-42d3-b956-3ba2082bf9f7" class="">
+</p><ul id="4ff1043a-fe0b-4cf8-b389-d446e52ee881" class="bulleted-list"><li>알고리즘 실행 시간 ∝ log(입력크기 n)</li></ul><ul id="8722429d-008b-454c-8b32-d1759cdecb6c" class="bulleted-list"><li>알고리즘의 각 단계에서 입력의 상당 부분(절반)을 방문하지 않고 지나감</li></ul><p id="25537cb1-1ba8-44b6-a968-27e5f0dcf28c" class="">
+</p><p id="754bd3ee-e567-46df-b206-fd94f0d30bf7" class="">(예시)</p><ul id="70f6a621-de1a-4831-af2d-3f31b1b97053" class="bulleted-list"><li>이진 검색(binary search) 알고리즘</li></ul><p id="74d3af92-a0e7-407e-aed0-4673d133ad84" class="">
+</p><p id="85130928-3e6a-4945-b59b-a35b5d5f7519" class="">4. N 로그 N 시간 O(nlogn)</p><p id="8a0e2f12-8aaa-44a5-a6f3-38ac83d735fe" class="">
+</p><ul id="dc0e7e91-87ff-4fc7-8250-c3d9ad068908" class="bulleted-list"><li>알고리즘 실행 시간 ∝ 입력크기 n * log(입력크기 n)</li></ul><ul id="8f0ed740-ad39-4806-85bb-cb1caade8e08" class="bulleted-list"><li>입력을 절반 혹은 일부 비율로 나눌 때마다 각 부분을 독립적으로 처리</li></ul><p id="ab1209f7-8c95-4d1e-89be-3b8e9005bca9" class="">➡️ ∝분할정복</p><p id="114bf90f-870f-4ecd-8060-2245e72812e9" class="">
+</p><p id="9fa8a2cc-d602-40a5-88d1-7d82aab35f19" class="">(예시)</p><ul id="ef916579-3a51-45c1-8ff8-5e511700edd7" class="bulleted-list"><li>병합정렬</li></ul><ul id="5abe63e2-93a6-4793-b7f5-f4d96cb0421a" class="bulleted-list"><li>퀵정렬의 평균적인 성능(최악: <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span>)</li></ul><ul id="05ed5ba5-2755-42f4-8cd4-52efb6070bc1" class="bulleted-list"><li>힙 정렬</li></ul><p id="c6da652a-70d7-45bd-870c-88e49c946af2" class="">
+</p><p id="c16c6372-83ef-48a9-a64f-b8a8c42dfc55" class="">5. 이차시간 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="ecdaaccf-13ed-473f-bd6b-39fbb0edf080" class="">
+</p><ul id="828d158b-a78e-4ccb-8506-4936dc7d01d8" class="bulleted-list"><li>알고리즘 실행 시간 ∝ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>입력크</mtext><msup><mtext>기</mtext><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">입력크기^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord hangul_fallback">입</span><span class="mord hangul_fallback">력</span><span class="mord hangul_fallback">크</span><span class="mord"><span class="mord hangul_fallback">기</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></li></ul><ul id="4330843b-d0ad-4462-b7ab-e7392085345d" class="bulleted-list"><li>각 원소를 다른 모든 원소와 비교</li></ul><p id="a0c3eb22-7867-43f6-9784-c7c90a6bc1ef" class="">
+</p><p id="a5aeaf9a-f9fc-4865-bf20-6e5752f7bd1b" class="">(예시)</p><ul id="5d97d6b8-60eb-4f4a-9faa-ba113d0601fe" class="bulleted-list"><li>버블정렬</li></ul><ul id="862dcfd2-ddda-4138-b47c-dfc5020ac091" class="bulleted-list"><li>선택정렬</li></ul><ul id="ca4b29be-2cbc-4dee-be87-0c03589c2897" class="bulleted-list"><li>삽입정렬</li></ul><p id="dc39becd-5386-483f-942d-45cbd0e7b91b" class="">
+</p><p id="bef4cb3e-8fe3-4919-a83b-01ca4725071a" class="">6. 지수 시간 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><ul id="2bef36ec-722f-451c-b225-d6551b292bdf" class="bulleted-list"><li>입력 데이터의 원소들로 만들 수 있는 모든 부분 집합 생성</li></ul><p id="f5ed6357-53a6-4449-9c7f-bba4f065f325" class="">
+</p><p id="3b777114-f12b-4e4d-b25c-46c7d14b411e" class="">7. 계승 시간 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">!</mo><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n!)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">!</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><ul id="0d8f87cd-8964-4a45-9c6c-9744f24befdd" class="bulleted-list"><li>입력 데이터의 원소들로 만들 수 있는 모든 순열을 생성</li></ul><p id="22a012c7-93b1-4534-9bb0-01c4c8e70785" class="">
+</p><hr id="89a66943-26de-4ceb-9a47-7bbda26aec50"/><p id="9f055a9c-8f60-4263-a08d-66de5f118bfc" class="">
+</p><h3 id="08d672e4-15a0-4a39-b8cf-0eac2fcefd1e" class="block-color-red_background">🌟<mark class="highlight-red">IV. 알고리즘의 함수 실행 시간 도출</mark></h3><p id="937a3079-adc9-470a-b00a-9fb03f58e301" class="">
+</p><ol id="70028103-ec41-4ca1-920f-7664e59d4818" class="numbered-list" start="1"><li>상수 : 시간복잡도 O(1)</li></ol><ol id="c3b905f3-7d49-4b53-99b7-26372754fc6c" class="numbered-list" start="2"><li>반복문 : 반복문 실행 시간 = 반복문 내 구문의 실행 시간 * 반복 횟수! 
+ 각 반복문의 시간복잡도는 O(n)</li></ol><ol id="e2e6494d-4343-464a-8737-88972433aca4" class="numbered-list" start="3"><li>중첩 반복문: 시간복잡도 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mi>c</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^c) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> (c는 반복문의 갯수)</li></ol><ol id="abe6b7c7-49cb-4630-894e-d05fdbe8d67c" class="numbered-list" start="4"><li>연속 구문 : 연속된 구문의 실행시간을 모두 합하기</li></ol><ol id="cf4f144f-7302-4417-8b25-e53950a9602b" class="numbered-list" start="5"><li>if-else문 : if나 else 중 실행시간이 더 많이 걸리는 블록을 선택하고, 나머지는 무시</li></ol><ol id="43711bcd-e270-4037-8a6d-0d05fa2069a7" class="numbered-list" start="6"><li>로그 구문 : 각 반복마다 입력크기가 일정하게 감소</li></ol><p id="1c334db9-fc5f-4b40-8b49-33ae1074d3ce" class="">
+</p><hr id="30f93f74-298b-41b6-aa03-460c86210f3e"/><p id="7212f0d2-3bae-4503-8258-491fcbaed534" class="">
+</p><h3 id="80adb454-b7bc-4ece-825f-510afc47a33a" class="">V. 시간 복잡도 예제</h3><p id="0f8eef20-514b-4e3f-8df9-d92f1a98dc3b" class="">
+</p><p id="aabbcd98-c84b-4875-8990-899fe1722f60" class="">(1) </p><pre id="c3d4f9c0-b02c-42b4-92a5-ccceed3dc8c5" class="code"><code>int fun1(int n)
+{
+	int m = 0 ;
+	for(int i = 0 ; i &lt; n; i++)
+	{
+		m+=1;
+	}
+	return m;
+}</code></pre><p id="6f24b076-a338-48b0-bc3d-4a64e6662be7" class="">이 경우, for 반복문이 있기 때문에 시간 복잡도는 O(n)이 됩니다!</p><p id="675b5529-cf84-4190-b1fb-16230e08ceef" class="">
+</p><p id="0107a9f7-bae6-4f50-b1d6-597eeb6e53ce" class="">(2)</p><p id="f1d37068-f1d7-432d-ba9a-48412ca4aa35" class="">
+</p><pre id="658e7c28-8140-48cb-9e95-d12446b31cc1" class="code"><code>int fun2(int n)
+{
+	int i = 0, j = 0, m = 0 ;
+
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = 0; j &lt; n; j++)
+		{
+				m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="dd32f180-0f2a-4e17-9bbe-45de7f72dbf3" class="">
+</p><p id="bf06c610-6a07-4c4b-b98d-183169d40448" class="">이 경우, 중첩된 반복문을 사용하였고, (0,...,n-1)이 두번 반복되었기 때문에, 시간복잡도는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mi>c</mi></msup><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^c)=O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">c</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> (c = 2= 반복문 갯수)가 된다</p><p id="867fce0c-f0f3-4944-991c-df55f82f9be2" class="">
+</p><p id="8928b325-b09a-4ecc-9907-44ce7fc40279" class="">(3)</p><pre id="ec557044-6313-4553-ac06-3eb0db1779bb" class="code"><code>int fun3(int n)
+{
+	int i = 0 , j = 0, m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = 0 ; j &lt; i; j++)
+		{
+			m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="c3b2436b-5d97-40a3-9821-8f5b8a63ee27" class="">
+</p><p id="f247982d-4866-41cb-a784-b72980785468" class="">이 경우, 무조건 두 개의 반복문이 있다고 시간 복잡도를 접근하지 말고, 천천히 생각해보자</p><p id="f01c8384-5d73-4b6c-b96d-6d6effc6f004" class="">
+</p><p id="020f1ad7-2420-4027-b513-79dc779e0eee" class="">바깥쪽의 반복문은 0, 1, ..., n-1 번째까지 수행하고, 내부의 반복문은 </p><p id="4537efcd-189e-42db-acac-425ff84e2ee7" class="">
+</p><div id="851b289b-b74f-4cd6-8f28-97536a1205ca" class="collection-content"><h4 class="collection-title">예제 3번 설명 </h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th></tr></thead><tbody><tr id="99036572-5b61-40bd-a4bf-4c7bb8d2b624"><td class="cell-title"><a href="https://www.notion.so/0-990365725b6140bda4bf4c7bb8d2b624">0</a></td><td class="cell-HGhi">-</td></tr><tr id="aee158b8-55a3-4571-a1e7-939d8f334689"><td class="cell-title"><a href="https://www.notion.so/1-aee158b855a34571a1e7939d8f334689">1</a></td><td class="cell-HGhi">0</td></tr><tr id="76aba063-f508-4bf0-a8a9-61d11e3d8659"><td class="cell-title"><a href="https://www.notion.so/2-76aba063f5084bf0a8a961d11e3d8659">2</a></td><td class="cell-HGhi">0, 1</td></tr><tr id="1cc4c20c-cdd3-4e09-9a87-39abe027d68a"><td class="cell-title"><a href="https://www.notion.so/3-1cc4c20ccdd34e099a8739abe027d68a">3</a></td><td class="cell-HGhi">0, 1, 2</td></tr><tr id="5b0d1415-f5b5-40f5-8437-53c2abbdce1e"><td class="cell-title"><a href="https://www.notion.so/4-5b0d1415f5b540f5843753c2abbdce1e">4</a></td><td class="cell-HGhi">0, 1, 2, 3</td></tr><tr id="4ba85108-6e38-4049-8827-b1f731b304a3"><td class="cell-title"><a href="https://www.notion.so/4ba851086e3840498827b1f731b304a3">...</a></td><td class="cell-HGhi"></td></tr><tr id="f67daf72-a17b-4b8b-88c5-4d235c8501db"><td class="cell-title"><a href="https://www.notion.so/n-1-f67daf72a17b4b8b88c54d235c8501db">n-1</a></td><td class="cell-HGhi">0, 1, 2, ..., n-2 → 총 (n-1)번</td></tr></tbody></table></div><p id="54d3fdf4-7d54-4dbf-b7a6-3ff07be52169" class="">
+</p><p id="cb011511-e5e9-49df-8bd7-bf6a7796bccc" class="">와 같이 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>0</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mi>n</mi><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T=0+1+2+...+(n-2)+(n-1)+n=(n(n+1))/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span></span></span></span></span><span>﻿</span></span> 번,</p><p id="5055c210-24e5-4583-a0a3-b8ad3f3147f6" class="">
+</p><p id="cc2b6813-dc72-4729-952a-e9843ce3b5e7" class="">즉, <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O((n(n+1))/2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 의 시간 복잡도를 갖는다.</p><p id="ba7ccce2-8690-43e2-b6df-544c749f4191" class="">
+</p><p id="1326e20b-e628-4ccb-bb60-9f7501c6acaa" class="">이 때, c =3을 가정했을 때</p><p id="560345b6-dfc5-4634-a49f-7a7376533f63" class="">
+</p><p id="e2b12924-b3ee-4a0b-b22f-da0b68a2a994" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mn>0.5</mn><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mn>0.5</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">f(n)=0.5n^2+0.5n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span> , <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">g(n)=n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> 에 대해서</p><p id="0bcbc4ac-7ecb-4df1-814e-dfb2ef88a6df" class="">
+</p><p id="e1dd2cd2-2dd4-4c9d-a2ef-4fd8e60d9db7" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0.5</mn><msup><mi>n</mi><mn>2</mn></msup><mo>+</mo><mn>0.5</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">0.5n^2 + 0.5n </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span> ≤ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><msup><mi>n</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">3n^2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span></p><p id="e2d56837-1362-4fde-a1c7-b4176c6e430b" class="">↔️ 0 ≤ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2.5</mn><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mn>0.5</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">2.5n^2-0.5n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">.</span><span class="mord">5</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mord">.</span><span class="mord">5</span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></p><p id="1241fa75-2448-4f80-96bd-2363e5af70f1" class="">↔️ 0 ≤ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>5</mn><msup><mi>n</mi><mn>2</mn></msup><mo>−</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">5n^2-n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></span><span>﻿</span></span></p><p id="1466d7b9-b12e-4ff1-a5d9-b4c9a1d419b5" class="">↔️ 0 ≤ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo stretchy="false">(</mo><mn>5</mn><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">n(5n-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord">5</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span></p><p id="15eb5be3-b24e-42a6-bc63-de5b1406df4f" class="">↔️ n ≥ 0.2 에 대해서 f(n) ≤ cg(n) 성립</p><p id="ca48f17a-8dcb-444d-97e9-8c62ac8697eb" class="">
+</p><p id="cfd26f11-46db-4a9e-94a2-13d73dec9f5c" class="">∴ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2) </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 의 시간 복잡도를 가짐</p><p id="568e1f24-68c6-4ef8-8964-22bccfa1defb" class="">
+</p><p id="a34e4491-8362-4093-9fed-1c6715d35651" class="">(4)</p><pre id="028881d7-b03c-4f14-a2db-ef4b64f9f550" class="code"><code>int func4(int n)
+{
+	int i = 0, int m = 0;
+	i = 1;
+	while(i &lt; n)
+	{
+		m +=1;
+	 i *=2 ;
+	}
+	return m;
+}</code></pre><p id="4fc7f510-0f90-48bb-9242-cbc137385b5d" class="">while을 통해서 </p><ul id="506ed297-7463-4e30-aee1-f270d7b89c49" class="bulleted-list"><li>i= 0 → i =2</li></ul><ul id="98c8541c-363b-4973-bd3c-e06def860c0a" class="bulleted-list"><li>i = 2 → i =4</li></ul><ul id="e22c133c-2b72-4981-9653-9c8dc95e69d2" class="bulleted-list"><li>...</li></ul><ul id="e0757315-de22-4b5d-a80d-1bd297605d63" class="bulleted-list"><li>i = (n-1)/2 →i = (n-1)</li></ul><p id="67e28539-0ad8-44e7-9b0e-98e193528682" class="">
+</p><p id="185ee16c-7f19-4311-9163-53fa0e69b63f" class="">와 같이 문제 공간을 절반으로 줄였기 때문에 시간복잡도는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 이다</p><p id="12b7784d-eaaf-46b7-a6b3-d79d89d76e05" class="">
+</p><p id="737ac343-819f-4b70-bcf3-066946eb7b16" class="">(5)</p><pre id="4ad15a5d-7220-4b89-b867-a4dbc9f3c1d0" class="code"><code>int fun5(int n)
+{
+	int i = 0 , m = 0;
+	i = n;
+	while(i &gt; 0)
+	{
+		m +=1;
+		i/= 2;
+	}
+	return m;
+}</code></pre><p id="da8c27a7-b4ef-4d57-a56e-3272410b6d6d" class="">위의 경우</p><p id="88a1d79b-0d23-4cb0-9bff-ded2b37f034b" class="">
+</p><ul id="f0c43681-6404-41ac-a225-67bc1d6781b5" class="bulleted-list"><li>i = n ➡️ i = n/2</li></ul><ul id="9d8533c1-3120-4c62-9036-15c3e114c4ec" class="bulleted-list"><li>i = n/2 ➡️ i = n/4</li></ul><ul id="4540f06b-55f7-4c7e-9830-6250c603d995" class="bulleted-list"><li>i = n/4 ➡️ i = n/8</li></ul><p id="b5c16d2f-4d04-4dd1-b169-8f336f8f5b72" class="">...</p><p id="824f0b14-a3a4-47bb-bd6b-829520d9c1f5" class="">와 같이 점차 문제 공간을 절반씩 줄여나가고 있기 때문에 시간복잡도는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 이다</p><p id="e76de177-6f83-4cc3-8a50-89ae9a760d0d" class="">
+</p><p id="74955c50-f945-4696-ae02-555dcd6eddff" class="">(6)</p><pre id="25ebbd3b-f21c-4ce5-9ba4-0288443d8b1a" class="code"><code>int fun6(int n)
+{
+	int i = 0, j = 0 , k = 0 , m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = 0; j &lt; n; j++)
+		{
+				for(k = 0; k &lt; n; k++)
+				{
+					m+=1;
+				}
+		}
+	}
+	return m;
+}</code></pre><p id="7e90290e-291d-4fe1-8cb4-374fdf97ccd6" class="">위의 중첩된 반복문에서는 3개의 반복문이 n 의 복잡도를 갖고 있기 때문에</p><p id="3dfec847-1eaa-4e33-8771-85398579e921" class="">
+</p><p id="7b4d82ca-9697-4475-97b6-43c4fe73b9bb" class="">n * n * n= <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>n</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">n^3 </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> 에 해당되는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 의 시간복잡도를 지닌다</p><p id="987c414b-983d-46e4-b3ea-82218d9b2e03" class="">
+</p><p id="ce7dffe4-b770-474b-995e-9d255b7b24b1" class="">(7)</p><pre id="0f411556-5542-42e7-921d-29ef6e2e4685" class="code"><code>int fun7(int n)
+{
+	int i = 0, j = 0 , k = 0 , m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = 0 ; j &lt; n; j++)
+		{
+			m+=1;
+		}
+	}
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(k = 0 ; k &lt; n; k++)
+		{
+			m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="0ca13de4-1185-4d2c-9983-cf4445de8ffc" class="">
+</p><p id="acd2ac59-13e8-4c54-8377-423f6f7a8fc2" class="">이 경우, 위의 중첩된 반복문과 아래쪽의 중첩된 반복문 모두 동일한 방법으로 구성되었다. </p><p id="53f9ccd2-5edd-4ed0-a7ba-86edf853c688" class="">
+</p><p id="98f5b39e-dd53-4635-b956-8a1e65e8fa61" class="">두 반복문 모두, 바깥의 반복문과 내부의 반복문 모두 n번씩 수행하기 때문에 시간복잡도는</p><p id="a7f4891a-8c55-422f-86b6-4caec36d224c" class="">
+</p><p id="31eb1443-9b75-4ba8-bd3d-56fabdab27d3" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>g</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo>∗</mo><mi>n</mi><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(g(n))=O(n*n)=O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 이 된다</p><p id="3ad73904-d11f-414b-85de-235cd212907c" class="">
+</p><p id="c24b6e8a-169b-45c3-846c-e04f37c10ba2" class="">따라서 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mo>+</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo><mo>=</mo><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)+O(n^2)=O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 이 된다</p><p id="758302d3-ea6e-47b8-b60f-ab5b6b630684" class="">
+</p><p id="f73d0934-a3d9-4141-82e7-a6f505f1e5a0" class="">(8)</p><pre id="b7b7cb36-f650-4aa1-9b9d-fab041bb6623" class="code"><code>int fun8(int n)
+{
+	int i = 0, j = 0, m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = 0 ; j &lt; sqrt(n); j++)
+		{
+			m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="ee1fb6be-75f3-463c-a20d-5d8e115e75c4" class="">이 경우, n을 16으로 가정해보자</p><p id="2bcc379e-9d62-482f-9a84-d28dbe88b13d" class="">
+</p><div id="602ebc51-c769-4465-82d9-6c7b88ebd13f" class="collection-content"><h4 class="collection-title">예제 8번 접근</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>n</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th></tr></thead><tbody><tr id="dbd034c4-7665-4ddb-be8b-22572628afe9"><td class="cell-title"><a href="https://www.notion.so/16-4-dbd034c476654ddbbe8b22572628afe9">16 → 4</a></td><td class="cell-iI^:">0</td><td class="cell-s=NB">0, 1, 2, 3</td></tr><tr id="af9ae8eb-33b7-418f-8d4f-ff914180e4f6"><td class="cell-title"><a href="https://www.notion.so/4-2-af9ae8eb33b7418f8d4fff914180e4f6">4 → 2</a></td><td class="cell-iI^:">1</td><td class="cell-s=NB">0, 1</td></tr><tr id="4dab4460-5ff7-4db5-9a78-06f6f22d521e"><td class="cell-title"><a href="https://www.notion.so/4dab44605ff74db59a7806f6f22d521e">...</a></td><td class="cell-iI^:"></td><td class="cell-s=NB"></td></tr><tr id="f6cce430-efd3-4e98-b954-e3e98532bb81"><td class="cell-title"><a href="https://www.notion.so/f6cce430efd34e98b954e3e98532bb81">제목 없음</a></td><td class="cell-iI^:">n-1</td><td class="cell-s=NB">0, ..., sqrt(value)-1</td></tr></tbody></table></div><p id="35565853-fea2-41ce-97eb-f9ade146e92f" class="">➡️ O(n * n^(1/2))=O(n^(3/2)) 이 시간복잡도가 된다!</p><p id="a9e8b5c3-7ada-4ea4-91e6-527c727b8b11" class="">
+</p><p id="0af27a3b-1c28-46b6-a585-706f78d9a805" class="">
+</p><p id="ae21e43a-ed5d-4867-ba84-16855d4ac757" class="">(9)</p><pre id="6eda1289-5891-4254-a53c-2c15a00604bd" class="code"><code>int fun9(int n)
+{
+	int i = 0, j = 0, m = 0;
+	for(i = n; i &gt;0; i/=2)
+	{
+		for(j = 0; j &lt; i; j++)
+		{
+			m+=1;
+    }
+  }
+	return m;
+}</code></pre><p id="18dd982e-20bf-43e1-b0c5-770162952d55" class="">
+</p><p id="7a465732-bf3e-45f1-b3c0-32cd9736748d" class="">위의 경우를 표로 정리, 생각해보면 아래와 같다</p><p id="1e8c9de4-f14b-422b-af15-d6690d01f9b7" class="">
+</p><p id="a59f83ef-767d-41b4-a127-52c0cd7141fd" class="">n = 8로 가정해보자</p><p id="65b4a3aa-c7f9-4074-bb22-6165f04fda5b" class="">
+</p><div id="261e096b-2e7e-4bcd-8af9-6635bb97427d" class="collection-content"><h4 class="collection-title"></h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th></tr></thead><tbody><tr id="4c852c55-b92d-4a46-b69b-5d49b0918359"><td class="cell-title"><a href="https://www.notion.so/8-4c852c55b92d4a46b69b5d49b0918359">8</a></td><td class="cell-`=QN">0, 1, 2, ...,7</td></tr><tr id="2d9909cf-0fb9-460a-a745-730a9043db0a"><td class="cell-title"><a href="https://www.notion.so/4-2d9909cf0fb9460aa745730a9043db0a">4</a></td><td class="cell-`=QN">0, 1,2,3</td></tr><tr id="661dd96f-a792-4dbc-a3c4-62d2c4143b57"><td class="cell-title"><a href="https://www.notion.so/2-661dd96fa7924dbca3c462d2c4143b57">2</a></td><td class="cell-`=QN">0, 1</td></tr><tr id="03208698-eb38-4975-8506-b58210f14783"><td class="cell-title"><a href="https://www.notion.so/1-03208698eb3849758506b58210f14783">1</a></td><td class="cell-`=QN">0</td></tr></tbody></table></div><p id="2212fb56-2f69-4e32-8fa9-b936101f8525" class="">중첩반복문의 내부 반복문을 먼저 보면, 1/2 씩 횟수가 줄어드는 것을 볼 수 있고, 이를 나타내보면</p><p id="25ccdaeb-9874-45f2-91f9-7f89e27cc5a4" class="">
+</p><p id="99e36f06-be4d-4093-87ff-5b680b455bfc" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>+</mo><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn><mo>+</mo><mi>n</mi><mi mathvariant="normal">/</mi><mn>4</mn><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">n+ n/2 + n/4+...</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.10556em;vertical-align:0em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span></span></span></span></span><span>﻿</span></span>의 형태로 나타내어 지는 것을 볼 수 있다. 즉, f(n)=n/k(k는 양의 상수) 라고 볼 수 있는데,</p><p id="7d90a8ad-f476-4be9-bd6f-9f1c2037ac5d" class="">
+</p><p id="2a26a2dc-07db-4e9e-ba92-4ecf5928f4f5" class="">c = 3, g(n) = n, k = 64이면</p><p id="0479046e-901d-47a6-a24d-d07356fa7349" class="">
+</p><p id="2001cc04-ab5c-4df9-8fc5-ace618c08f44" class="">↔️ n/64 ≤  3n</p><p id="65645dec-28a8-4f1d-a55a-8a060f087ab9" class="">↔️ n ≥ 0 이면 cg(n)이 f(n)의 상한이 될 수 있기 때문에</p><p id="1bd3991a-bac7-4665-8cfb-b44ff3907595" class="">
+</p><p id="487da46c-d386-4445-9752-2f898989fe8e" class="">시간 복잡도는 O(n)이다</p><p id="50b13ca7-b372-4f4d-a79f-45dc68af2b7f" class="">
+</p><p id="7fed3008-b4f3-4e20-b1b3-6e704759bf8f" class="">(10)</p><pre id="f442f2da-bc6e-4428-bfe1-71d3e754038c" class="code"><code>int fun10(int n)
+{
+	int i = 0, j = 0, m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for( j = i ; j &gt; 0; j--)
+		{
+				m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="b0eddade-8eb0-4f27-9122-475dacfc2de7" class="">위의 경우,</p><div id="53391494-daa1-4883-814d-c9a8e57dd6cb" class="collection-content"><h4 class="collection-title">10번 접근</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th></tr></thead><tbody><tr id="b9480333-8e78-405c-ba4a-3f23897b0169"><td class="cell-title"><a href="https://www.notion.so/0-b94803338e78405cba4a3f23897b0169">0</a></td><td class="cell-iw&lt;Y">-</td></tr><tr id="8d58efb0-5f25-4a2f-96c0-06909b5b9343"><td class="cell-title"><a href="https://www.notion.so/1-8d58efb05f254a2f96c006909b5b9343">1</a></td><td class="cell-iw&lt;Y">1</td></tr><tr id="90565b69-1bf0-4e9a-9a05-9dea01d1892e"><td class="cell-title"><a href="https://www.notion.so/2-90565b691bf04e9a9a059dea01d1892e">2</a></td><td class="cell-iw&lt;Y">2, 1</td></tr><tr id="79020224-109e-4d88-8f05-311e109440b7"><td class="cell-title"><a href="https://www.notion.so/3-79020224109e4d888f05311e109440b7">3</a></td><td class="cell-iw&lt;Y">3, 2, 1</td></tr><tr id="8e866962-fd75-4083-95e9-964c4f646c27"><td class="cell-title"><a href="https://www.notion.so/8e866962fd75408395e9964c4f646c27">...</a></td><td class="cell-iw&lt;Y"></td></tr><tr id="26005afe-1b73-4017-85b8-add674f39f4b"><td class="cell-title"><a href="https://www.notion.so/n-1-26005afe1b73401785b8add674f39f4b">n-1</a></td><td class="cell-iw&lt;Y">n-1, n-2, ...,1</td></tr></tbody></table></div><p id="c2885358-8430-416f-a651-db076ed388f1" class="">으로 인해서 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>=</mo><mn>0</mn><mo>+</mo><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>=</mo><mo stretchy="false">(</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi>n</mi><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T= 0+1+2+...+(n-1)=((n-1)n)/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord mathdefault">n</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span></span></span></span></span><span>﻿</span></span></p><p id="3614b139-ad45-4fc3-8bbf-4fe4c1a23682" class="">
+</p><p id="0b0e7fb7-b730-405b-a5a6-8c67988b79ed" class="">즉, 시간복잡도는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 가 된다</p><p id="8bc1da23-459e-47f9-adfb-40f0d328442c" class="">
+</p><p id="b885daa9-0298-4bf5-ac89-44abd0aad794" class="block-color-yellow_background">(<mark class="highlight-red"><strong>11</strong></mark>) 🌟</p><pre id="36eac526-e769-4c48-b628-e9982e0cdae6" class="code"><code>int fun11(int n)
+{
+	int i = 0, j = 0 , k = 0 , m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(j = i ; j &lt; n; j++)
+		{
+			for(k = j + 1; k &lt; n; k++)
+			{
+				m+=1;
+			}
+		}
+	
+	return m;
+}</code></pre><p id="dc545eea-4ec8-4e47-aa86-f09e78df6461" class="">표를 통해 접근해보자</p><p id="c52cc97e-adba-42ec-9fa4-c4f24ec49a91" class="">
+</p><div id="fa8983b7-86b8-452c-a4d9-1fef38b77aa4" class="collection-content"><h4 class="collection-title">11번 접근방식</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>k</th></tr></thead><tbody><tr id="45c55984-8d06-4abc-99d0-370deb3ca5fa"><td class="cell-title"><a href="https://www.notion.so/0-45c559848d064abc99d0370deb3ca5fa">0</a></td><td class="cell-L[VM">0</td><td class="cell-kkg|">1,2,3,..., (n-1)</td></tr><tr id="663450c5-a70e-491a-9e05-52d743b91323"><td class="cell-title"><a href="https://www.notion.so/663450c5a70e491a9e0552d743b91323">제목 없음</a></td><td class="cell-L[VM">1</td><td class="cell-kkg|">2,3,4,...,(n-1)</td></tr><tr id="85cf1c2f-ec8b-4d94-9694-df3775ce6686"><td class="cell-title"><a href="https://www.notion.so/85cf1c2fec8b4d949694df3775ce6686">제목 없음</a></td><td class="cell-L[VM">...</td><td class="cell-kkg|"></td></tr><tr id="cf7cb060-a977-4145-8c0d-a0681d0e65eb"><td class="cell-title"><a href="https://www.notion.so/cf7cb060a97741458c0da0681d0e65eb">제목 없음</a></td><td class="cell-L[VM">n-1</td><td class="cell-kkg|">-</td></tr><tr id="e55f081c-5e94-492c-8dcb-05cf7f466e4a"><td class="cell-title"><a href="https://www.notion.so/1-e55f081c5e94492c8dcb05cf7f466e4a">1</a></td><td class="cell-L[VM">1</td><td class="cell-kkg|">2,3,4,...,(n-1)</td></tr><tr id="1b8d4d2d-0aef-4b0f-89a3-78831a4671c9"><td class="cell-title"><a href="https://www.notion.so/1b8d4d2d0aef4b0f89a378831a4671c9">제목 없음</a></td><td class="cell-L[VM">...</td><td class="cell-kkg|"></td></tr><tr id="2679f8bb-33b1-4533-82ff-584a6d189a8d"><td class="cell-title"><a href="https://www.notion.so/2679f8bb33b1453382ff584a6d189a8d">제목 없음</a></td><td class="cell-L[VM">n-1</td><td class="cell-kkg|">-</td></tr></tbody></table></div><p id="2658aae0-4c7a-45b1-9f44-9dfd6ae4a08b" class="">∴ <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>0</mn></msub><mo>=</mo><mi>i</mi><mtext>가</mtext><mn>0</mn><mtext>일때</mtext><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo>+</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><mn>1</mn><mo>=</mo><mi>n</mi><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex"> T_0=i가0일때=(n-1)+(n-2)+...+1=n(n-1)/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord hangul_fallback">가</span><span class="mord">0</span><span class="mord hangul_fallback">일</span><span class="mord hangul_fallback">때</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span></span></span></span></span><span>﻿</span></span></p><p id="92118ed9-1282-421a-9573-b8877899781f" class="">
+</p><p id="7a1b59e4-8449-4954-89d1-03405edf115f" class=""><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mn>1</mn></msub><mo>=</mo><mi>i</mi><mtext>가</mtext><mn>1</mn><mtext>일때</mtext><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>+</mo><mn>1</mn><mo>=</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>n</mi><mo>−</mo><mn>2</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">T_1=i가1일때=(n-2)+...+1=(n-1)(n-2)/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mord hangul_fallback">가</span><span class="mord">1</span><span class="mord hangul_fallback">일</span><span class="mord hangul_fallback">때</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">2</span></span></span></span></span><span>﻿</span></span></p><p id="2e41994e-c087-47fe-9d54-3c791395f5ba" class="">
+</p><p id="b12b8358-213d-457c-bf53-0710f2e7c740" class="">∴ 내부 복잡도가 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">T_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span>=[n(n-1)+(n-1)(n-2)+...+2*1]/2, 외부 복잡도는 (0,...,(n-2)) 이기 때문에</p><p id="0e5cf0f1-5143-4af4-85a4-61513b823e7f" class="">
+</p><p id="2a3dc7fd-1930-4d4f-ab66-8f50ddad4c99" class="">전체 복잡도는 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>T</mi><mi>t</mi></msub><mo>=</mo><msup><mi>n</mi><mn>3</mn></msup></mrow><annotation encoding="application/x-tex">T_t= n^3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">t</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span></span></span></span><span>﻿</span></span> </p><p id="fbfd6f15-d0d0-496d-9b02-77fdca4c206f" class="">
+</p><p id="40ee5251-8c6d-4860-bb78-a9bdc91ff6dd" class="">즉 <style>@import url('https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css')</style><span data-token-index="0" contenteditable="false" class="notion-text-equation-token" style="user-select:all;-webkit-user-select:all;-moz-user-select:all"><span></span><span><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>3</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span><span>﻿</span></span> 이 된다</p><p id="427f23b5-a169-40a1-9c32-8c7e23ce3433" class="">
+</p><p id="cbe19b85-855f-41c9-9c66-cc4aa3f4fe86" class="">
+</p><p id="79fccd94-42d6-48dd-8e26-8a8641fc80af" class="">(12)</p><pre id="53de2786-5417-4c78-a5b4-327d447edbfe" class="code"><code>int fun12(int n)
+{
+	int i = 0, j = 0 , m = 0;
+	for(i = 0 ; i &lt; n; i++)
+	{
+		for(; j &lt; n; j++)
+		{
+			m+=1;
+		}
+	}
+
+	return m;
+}</code></pre><p id="735def0a-7d64-42e2-b2a2-eb36cfb39094" class="">
+</p><p id="ce49e7b3-30e3-453a-bcbc-ec095338699a" class="">위의 경우에는</p><p id="1a435e3e-9794-423d-9324-8ce6ee337390" class="">
+</p><ul id="f80f28be-9a05-4979-a158-f8e69b70ed9f" class="bulleted-list"><li>i=0 ➡️ j= 0, 1,...,n-1</li></ul><ul id="964548e2-911e-479c-a95e-99940ae963ea" class="bulleted-list"><li>그런데 j를 초기화하지 않으므로 이로써 끝!</li></ul><p id="e01bc3be-9d7b-404c-8f5f-675943572dd7" class="">따라서 시간 복잡도는 O(n)!!</p><p id="53f9cce1-8a55-4774-8370-b2cb11f8a0f9" class="">
+</p><p id="9009416e-d773-47d3-9a06-7860309dfc4d" class="">(13)</p><pre id="5ab3c89a-90d9-41d3-aebe-ccf4f55d6321" class="code"><code>int fun13(int n)
+{
+	int i = 0, j = 0, m = 0;
+	for(i = 1; i &lt;= n; i *=2)
+	{
+		for(j = 0 ; j &lt;= i; j++)
+		{
+			m+=1;
+		}
+	}
+	return m;
+}</code></pre><p id="a2b3b408-14e5-473d-9fe6-b1d3734e7601" class="">
+</p><p id="e95d0337-ec28-48b1-bd8a-7aa8d57c6bcc" class="">표를 그려서 생각을 정리해보자</p><p id="55f4080e-0cc1-4aaa-8cc0-bfbf5ec86428" class="">
+</p><div id="56585f1e-579c-4e2f-af8d-3b74527bc655" class="collection-content"><h4 class="collection-title">13번 접근</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>i</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>j</th></tr></thead><tbody><tr id="8cacb30d-d5d0-4bc2-ac3b-72daa5eafe07"><td class="cell-title"><a href="https://www.notion.so/1-8cacb30dd5d04bc2ac3b72daa5eafe07">1</a></td><td class="cell-EWWN">0,1</td></tr><tr id="940a9a6d-424a-4d18-92ac-68b783bbe49b"><td class="cell-title"><a href="https://www.notion.so/2-940a9a6d424a4d1892ac68b783bbe49b">2</a></td><td class="cell-EWWN">0,1,2</td></tr><tr id="fe8ee745-63ec-4129-8399-777a356b0080"><td class="cell-title"><a href="https://www.notion.so/4-fe8ee74563ec41298399777a356b0080">4</a></td><td class="cell-EWWN">0,1,2,3,4</td></tr><tr id="5c622830-e53c-4447-9019-82ef5ca691c3"><td class="cell-title"><a href="https://www.notion.so/8-5c622830e53c4447901982ef5ca691c3">8</a></td><td class="cell-EWWN">0,1,2,3,...,8</td></tr><tr id="c12d4eec-7959-49a6-8f12-2800b289083b"><td class="cell-title"><a href="https://www.notion.so/c12d4eec795949a68f122800b289083b">..</a></td><td class="cell-EWWN"></td></tr><tr id="d2f86a3c-32da-4b2f-9949-e3d4c15aaaaa"><td class="cell-title"><a href="https://www.notion.so/n-d2f86a3c32da4b2f9949e3d4c15aaaaa">n</a></td><td class="cell-EWWN">0,...,n : n+1번</td></tr></tbody></table></div><p id="a97e018d-dd63-4fd0-bd1d-0209528ac7e2" class="">따라서 내부에서 i에 대해서 n+k 번 형태로 돌아가기 때문에 시간복잡도는 O(n)이다!</p></div></article></body></html>
