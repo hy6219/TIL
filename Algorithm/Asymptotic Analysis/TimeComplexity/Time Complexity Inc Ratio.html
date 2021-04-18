@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시간 복잡도의 증가율</title>
+    <link rel="stylesheet" href="./myCss.css">
+</head>
+<body>
+    <div class="table">
+        <table class="inc">
+            <tr>
+                <th rowspan="2">N</th>
+                <th colspan="7">함수 증가율(추정치)</th>
+            </tr>
+            <tr>
+                <th>O(1)</th>
+                <th>O(logn)</th>
+                <th>O(n)</th>
+                <th>O(nlogn)</th>
+                <th>O(n<sup>2</sup>)</th>
+                <th>O(n<sup>3</sup>)</th>
+                <th>O(2<sup>n</sup>)</th>
+            </tr>
+            <tr><!--1행-->
+                <th>10</th>
+                <th>1</th>
+                <th>3</th>
+                <th>10</th>
+                <th>30</th>
+                <th>10<sup>2</sup></th>
+                <th>10<sup>3</sup></th>
+                <th>10<sup>3</sup></th> 
+            </tr>
+            <tr><!--2행-->
+                <th>10<sup>2</sup></th>
+                <th>1</th>
+                <th>6</th>
+                <th>10<sup>2</sup></th>
+                <th>6*10<sup>2</sup></th>
+                <th>10<sup>4</sup></th>
+                <th>10<sup>6</sup></th>
+                <th>10<sup>30</sup></th> 
+            </tr>
+            <tr><!--3행-->
+                <th>10<sup>3</sup></th>
+                <th>1</th>
+                <th>9</th>
+                <th>10<sup>3</sup></th>
+                <th>9*10<sup>3</sup></th>
+                <th>10<sup>6</sup></th>
+                <th>10<sup>9</sup></th>
+                <th>10<sup>300</sup></th> 
+            </tr>
+            <tr><!--4행-->
+                <th>10<sup>4</sup></th>
+                <th>1</th>
+                <th>13</th>
+                <th>10<sup>4</sup></th>
+                <th>13*10<sup>4</sup></th>
+                <th>10<sup>8</sup></th>
+                <th>10<sup>12</sup></th>
+                <th>10<sup>3000</sup></th> 
+            </tr>
+            <tr><!--5행-->
+                <th>10<sup>5</sup></th>
+                <th>1</th>
+                <th>16</th>
+                <th>10<sup>5</sup></th> 
+                <th>16*10<sup>5</sup></th>
+                <th>10<sup>10</sup></th>
+                <th>10<sup>15</sup></th>
+                <th>10<sup>30000</sup></th>
+                
+            </tr>
+            <tr><!--6행-->
+                <th>10<sup>6</sup></th>
+                <th>1</th>
+                <th>19</th>
+                <th>10<sup>6</sup></th>
+                <th>19*10<sup>6</sup></th>
+                <th>10<sup>12</sup></th>
+                <th>10<sup>18</sup></th>
+                <th>10<sup>300000</sup></th> 
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+*
+{
+    margin:0px;
+}
+.table
+{
+    width:620px;
+    margin:auto;
+}
+.inc
+{
+    padding:0;
+    border:3px solid salmon;
+}
+.table th
+{
+    border:1px solid black;
+    padding:3px 10px;
+}
