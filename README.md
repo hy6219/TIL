@@ -142,7 +142,16 @@
 		윈도우, 우분투에 깃 설치하기
 	</a></li>
          </ul>
-    </li>
+    </li><!--git -->
+<!--알고리즘 공부-->
+   <li>
+       Algorithm
+        <ul>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Asymptotic Analysis/알고리즘에 대한 점근적 분석.html" target="_blank">
+		알고리즘에 대한 점근적 분석
+	</a></li>
+         </ul>
+    </li><!--git -->
 </ol><!--All END-->
 
 
