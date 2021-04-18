@@ -153,6 +153,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Algorithm_Time_Complexity/알고리즘 복잡도 분석.html" target="_blank">
 		알고리즘 복잡도 분석
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Algorithm_Time_Complexity/마스터 정리 Master Theorem.html" target="_blank">
+		알고리즘 마스터정리 Master Theorem
+	</a></li>
          </ul>
     </li><!--git -->
 </ol><!--All END-->
