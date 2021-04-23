@@ -132,12 +132,12 @@
     </ol><!--JAVA END-->
 <!--jsp servlet 공부-->
    <li>
-       git
+       JSP SERVLET
         <ul>
-	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/Overview.md">
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/Basic/Overview.md">
 		JSP Servlet 개요
 	</a></li>
-	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/클라이언트가 서버에 서비스를 요청하는 방식.md">
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/Basic/%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EA%B0%80%20%EC%84%9C%EB%B2%84%EC%97%90%20%EC%84%9C%EB%B9%84%EC%8A%A4%EB%A5%BC%20%EC%9A%94%EC%B2%AD%ED%95%98%EB%8A%94%20%EB%B0%A9%EC%8B%9D.md">
 		클라이언트가 서버에 서비스를 요청하는 방식
 	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/서블릿 기본 구조.html">
