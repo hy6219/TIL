@@ -130,6 +130,21 @@
 	</ul>
      </li>
     </ol><!--JAVA END-->
+<!--jsp servlet 공부-->
+   <li>
+       git
+        <ul>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/Overview.md">
+		JSP Servlet 개요
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/클라이언트가 서버에 서비스를 요청하는 방식.md">
+		클라이언트가 서버에 서비스를 요청하는 방식
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/서블릿 기본 구조.html">
+		서블릿 기본 구조
+	</a></li>
+         </ul>
+    </li><!--jsp servlet -->
   </li>
    <!--git 공부-->
    <li>
@@ -157,7 +172,7 @@
 		알고리즘 마스터정리 Master Theorem
 	</a></li>
          </ul>
-    </li><!--git -->
+    </li><!--알고리즘 -->
 </ol><!--All END-->
 
 
