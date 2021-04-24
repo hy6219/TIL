@@ -705,7 +705,7 @@ import javax.servlet.http.HttpServletResponse;
 </p><p id="f229ce7f-69ea-4ee2-a785-130a0ad88bb9" class="">⚠️ 하나의 서블릿 내에 get 방식, post 방식에 따라 서로 다른 기능을 제공해야 하는 경우는, doGet 메서드와 doPost 메서드 모두 오버라이딩해야 함!</p><p id="fa0023fb-943a-4616-ab75-0041ca782edb" class="">
 </p><p id="0fc4600f-b1bb-41bd-b007-8700e2737ec0" class="">
 </p><p id="762e2840-68cd-4ed7-bc92-56ca174ae82e" class="block-color-yellow_background">4. <mark class="highlight-blue"><strong>응답 객체</strong></mark>에 <mark class="highlight-red"><strong>콘텐트 타입 지정</strong></mark>하기</p><p id="45a94386-a83e-417f-9a65-31e98efe1e72" class="">
-</p><pre id="60fa08b0-3d8e-4bc4-a2d6-c1748a24274f" class="code"><code>HttpServletResponse 객체.setContentType(&quot;콘텐트 타입(txt/html)&quot;);
+</p><pre id="60fa08b0-3d8e-4bc4-a2d6-c1748a24274f" class="code"><code>HttpServletResponse 객체.setContentType(&quot;콘텐트 타입(text/html)&quot;);
 
 예) response.setContentType(&quot;txt/html&quot;);</code></pre><ul id="63a435a0-acee-4984-b7b4-bfbbb0bccbdd" class="bulleted-list"><li>서블릿에서는 setContentType()메서드를 이용해서 클라이언트에게 응답할 페이지에 대한 환경설정을 해주어야 하는데,</li></ul><p id="e4ed578e-14b1-472d-a514-acdd7e95f447" class=""><div class="indented"><p id="7b4192e6-04cd-404f-a055-29ace7e08b86" class="">위의 코드에서는 &quot;txt/html&quot; 로 설정해둠으로써, text나 html로 부여주겠다는 의미를 나타냄</p><p id="1e8aab22-afee-4e40-845b-0a5d45c6f8c0" class="">
 </p></div></p><ul id="d20f073a-be7e-4afc-ace8-b97949d31ef9" class="bulleted-list"><li>서블릿에는 main 메서드가 있는 클래스에서 실행하지 않고, 웹 서버가 실행을 해주는 방식</li></ul><p id="ef8119f6-02bd-44d3-b10f-e01d3e61a06a" class="">
