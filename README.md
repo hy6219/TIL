@@ -143,6 +143,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/서블릿 기본 구조.html">
 		서블릿 기본 구조
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/서블릿 동작 원리와 라이프 사이클.html">
+		서블릿 동작 원리와 라이프 사이클
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
