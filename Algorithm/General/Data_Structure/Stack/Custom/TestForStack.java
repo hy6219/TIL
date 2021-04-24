@@ -1,6 +1,6 @@
 package com.stack;
 
-public class Run {
+public class TestForStack {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
