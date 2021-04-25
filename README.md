@@ -174,9 +174,11 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Algorithm_Time_Complexity/마스터 정리 Master Theorem.html" target="_blank">
 		알고리즘 마스터정리 Master Theorem
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/General/Data_Structure/스택과_큐_덱.html" target="_blank">
+		[자료구조]스택, 큐, 덱
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
 </ol><!--All END-->
-
 
 
