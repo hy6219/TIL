@@ -1,0 +1,938 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>스택과 큐, 덱</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7ece5a92-8788-4425-831a-fc1102983bb4" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💚</span></div><h1 class="page-title">스택과 큐, 덱</h1></header><div class="page-body"><ul id="eccfa0c7-5193-4e2a-bdf9-132e330132c8" class="bulleted-list"><li>데이터를 <span style="border-bottom:0.05em solid"><mark class="highlight-red"><strong>일시적으로 저장</strong></mark></span>하기 위해 사용하는 구조!</li></ul><h2 id="5d6d1ec1-383c-4399-9995-4c9908173e5c" class="">1. 스택</h2><p id="12d83ddd-571a-4ad9-a4d3-778219290b2c" class="block-color-yellow_background">📌<mark class="highlight-blue"><strong>First In Last Out!</strong></mark>📌</p><p id="ec30e317-bf87-4163-89db-7c40aeb1ce73" class="">
+</p><ul id="08ab3ade-5918-4f82-8ac7-943eaf1b22a8" class="bulleted-list"><li>데이터의 입력, 출력 순서는 <mark class="highlight-orange_background"><strong>후입선출!(Last In First Out = First In Last Out)</strong></mark></li></ul><p id="28fbfd4d-6e58-485b-8348-7f6d8b3ee028" class="">
+</p><figure id="f2887041-5387-4bd1-8328-ecf1341c5f0b" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Stack/%EC%8A%A4%ED%83%9D.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Stack/%EC%8A%A4%ED%83%9D.png?raw=true"/></a><figcaption>스택 구조 및 원리 요약</figcaption></figure><ul id="7c6766aa-485e-4d52-bd89-c9236261e5c3" class="block-color-yellow_background bulleted-list"><li><strong>스택의 </strong><mark class="highlight-purple"><strong>상단은 &quot;top=꼭대기&quot;</strong></mark><strong>, </strong><mark class="highlight-teal"><strong>하단은 &quot;bottom=바닥&quot;</strong></mark></li></ul><ul id="fc88a0f1-044e-4867-8589-220a758388ef" class="bulleted-list"><li>상단에서 요소를 추가할 때에는<mark class="highlight-red"><strong> push=쌓기</strong></mark></li></ul><ul id="72d81101-3488-4c73-8191-663cdcd9d053" class="bulleted-list"><li>상단에서 요소를 빼낼 때에는 <mark class="highlight-red"><strong>pop</strong></mark></li></ul><ul id="cff8a8f5-220a-4404-ae49-a0fcffe726a5" class="bulleted-list"><li>스택에서 기본적으로 구현된 메서드는 다양하지만, 자주 사용하는 몇가지만 추려보면, 아래와 같다</li></ul><p id="258f7c55-455d-4db2-a1f5-7b2a007cdf97" class="">
+</p><p id="5552e964-2f5e-4587-aeba-ee8eab4760b9" class="">1) push : 상단에서 요소를 추가</p><p id="eb50f23e-cde3-4bed-8e26-f516cf4c048b" class="">
+</p><p id="86d9640a-d406-48ac-bd03-9ae75ec28490" class="">2) pop  : 상단에서 요소를 빼내기</p><p id="f2f85a31-e1b3-42c6-99cb-e72f0aee56a8" class="">
+</p><p id="0a3a82d8-2ceb-4bf3-9b35-1fc0e5ff3cde" class="">3) peek : 상단의 요소를 알아보기</p><p id="3f883f8a-07a6-4081-8051-43654c9795c5" class="">
+</p><p id="7629b364-1e55-44f3-9eff-dc5eb72fb83a" class="">4) indexOf : 매개변수로 전달된 값과 일치하는 인덱스를 반환(단, 전달된 값이 여러번 나오는 경우, 마지막 인덱스와 인접한 인덱스를 반환)</p><p id="906ce4d3-9184-4376-a36f-73d2e92a1bf3" class="">
+</p><p id="1e111ac8-7740-41e4-ac69-565b43d11ee6" class="">5) isEmpty: 스택이 비어있는지 반환</p><p id="d459e6a2-6707-469b-b537-d24bda090df1" class="">
+</p><p id="69451bf6-a708-4401-8fd5-f910a5901a52" class="">6) isFull : 스택이 꽉 차있는지 반환</p><p id="dccd811a-677d-4679-afc7-cb40d941d111" class="">
+</p><p id="85560e0e-a9fe-4b66-9f50-0147d7124165" class="">7) size : 스택에 데이터가 얼마나 차있는지 확인</p><p id="eb15db35-9ea8-40dc-a527-178418bc7a6e" class="">
+</p><p id="54a15816-357b-41e8-9e17-c8fc4d43fdb3" class="">8) capacity: 스택의 용량을 확인</p><p id="95ff7720-09c7-483c-b0c3-44a7cb81c493" class="">
+</p><p id="ebc7d5b1-b18e-4dc2-832d-fcad6c5cbe2a" class="">9) get : 매개변수로 전달된 인덱스의 값을 반환</p><p id="c6625050-9c93-4523-8aea-0d9b52fa359b" class="">
+</p><ul id="5bdfa82f-322d-4142-af3a-1dff93ca9ea9" class="bulleted-list"><li>스택의 본체는 아래와 같이 구성되어 있다</li></ul><p id="4ad024f5-8fdd-49b9-b660-055d7d28d31e" class="">
+</p><pre id="32d5925e-0d6b-48e8-a33c-db863d4a79f6" class="code"><code>public MyStack{
+	//스택 본체
+  private Object[] stack;
+ //capacity
+	private int capacity;
+//pointer
+	private int pointer;
+}</code></pre><p id="a78e67f1-b5bf-4b91-b3ea-c382269f7bae" class="">
+</p><p id="9f67b503-765b-4675-ba9b-7b9fcd75fae0" class="">즉, 스택을 이해하기 쉽게 배열로 접근해보면, 포인터를 이용해서 연산할 수 있기 때문에,</p><p id="0800fd4c-2437-4326-a458-23cc285a5182" class="">
+</p><p id="cb6b59fb-28b3-45fa-9f67-4d2eaee06384" class="">포인터 변수를 이용해준다면, 번거로운 데이터 수정을 하지 않아도 된다(아니라면, LinkedList를 </p><p id="73954486-8b0e-4bd9-8aae-07cdafc6fd89" class="">
+</p><p id="72a76e7d-e6ab-4972-8d35-ec892516716e" class="">이용하거나, 깊은 복사를 하는 등 의 작업을 따로 메서드를 만들어 관리해주는 것도 고려될 수 있다)</p><p id="da7e8910-e027-4d41-9789-c8c1c90a8b2e" class="">
+</p><p id="475789dc-8f8e-43a3-8ff7-919cfa639877" class="">지금은, 배열을 이용해서 , 위의 스택의 대략적인 기능을 살려보면, 아래와 같이, 커스텀하여 사용</p><p id="6568dfd4-37df-4374-8593-b7566c968be2" class="">
+</p><p id="cfcb4cf5-7f84-4129-9ec3-07eee5c69a78" class="">해볼 수 있을 것이다</p><p id="1ba2c7de-92ce-4579-9d84-ae716357a3c2" class="">
+</p><p id="a7784af3-f021-420c-92a6-38064dfa5d9e" class="">
+</p><pre id="b612ddb3-51c9-4205-920e-7a79cddd9d8b" class="code"><code>package com.stack.generics;
+
+
+/*
+ * The generic class GenericStack&lt;E&gt;.EmptyStackException may not subclass java.lang.Throwable
+ * 제네릭을 이용한 클래스에서는 throwable을 이용한 예외발생이 어려움
+ * 
+ */
+public class GenericStack&lt;E&gt; {
+	//스택본체
+	private Object[] stack;
+	//스택 포인터
+	private int pointer;
+	//스택 용량
+	private int capacity;
+	
+	//생성자
+	public GenericStack(int capacity){
+		this.capacity = capacity;
+		stack = new Object[capacity];
+	}
+	//capacity
+	public int capacity() {
+		return capacity;
+	}
+	//isFull
+	public boolean isFull() {
+		return pointer&gt;=capacity;
+	}
+	//isEmpty
+	public boolean isEmpty() {
+		return pointer &lt;= 0;
+	}
+	//size
+	public int size() {
+		return pointer;
+	}
+	//clear
+	public void clear() {
+		pointer = 0;
+	}
+	//push
+	public void push(E x) {
+		if(pointer &gt;= capacity) {
+			System.out.println(&quot;OverFlow 발생&quot;);
+			System.exit(0);
+		}else
+		{
+			stack[pointer++] = x;
+		}
+	}
+
+	//pop
+	public E pop() {
+		if(pointer &lt;= 0) {
+			System.out.println(&quot;ERROR! 빈 스택입니다!&quot;);
+			System.exit(0);
+		}
+		Object obj = stack[--pointer];
+		E e = (E)obj;
+		return e;
+	}
+	
+	//peek
+	public E peek() {
+		Object obj = stack[pointer-1];
+		E e =(E) obj;
+		return e;
+	}
+	//get index
+	public int indexOf(E e) {
+		if(pointer &lt;= 0) {
+			System.out.println(&quot;ERROR! 빈 스택입니다!&quot;);
+			System.exit(0);
+		}
+		//반절씩 나눠서 앞에서 찾으면 바로 종료
+		int i = 0;
+		final int limit = capacity;
+		while(i &lt; limit/2) {
+			if(stack[i]==e) {
+				return i;
+			}
+			i++;
+		}
+		
+		while(i &lt; limit) {
+			if(stack[i]==e) {
+				return i;
+			}
+			i++;
+		}
+		//못찾았으면 -1 반환
+		return -1;
+	}
+	
+	//get
+	public E get(int index) {
+		
+		Object obj = stack[index];
+		E      e   = (E)obj;
+		if(pointer &lt;= 0) {
+			System.out.println(&quot;ERROR! 빈 스택입니다!&quot;);
+			System.exit(0);
+		}
+		return e;
+	}
+}</code></pre><p id="d391ada9-e144-4bbc-9fd7-24c3cdd62b84" class="">
+</p><p id="1a5c7a2c-4360-4d16-bf3f-635917b392c5" class="">
+</p><h2 id="daa77bca-aa8e-497f-ad6f-815fa95a6c57" class="">2. 큐</h2><figure id="6d015469-4e86-4c2f-8ef7-65532d633585" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Queue_Deque/%ED%81%90.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Queue_Deque/%ED%81%90.png?raw=true"/></a><figcaption>Queue</figcaption></figure><p id="bc919729-f90d-4988-8710-8638b3d772f4" class="">
+</p><ul id="bba8637f-b441-45eb-b706-a2c08961ad19" class="bulleted-list"><li>먼저 넣은 데이터가 먼저  나가는 선입선출!(First In First Out = Last In Last Out)</li></ul><ul id="e03c6a4f-f867-4c36-99a8-fdf637e157be" class="bulleted-list"><li>스택과 넣고 뺄때 작업을 부르는 것 비교</li></ul><ul id="5c4e9230-544a-4ddc-9095-c876de3930c4" class="bulleted-list"><li>큐는 생성자가 없어서, PriorityQueue나 LinkedList 등을 이용하여 생성해주어야 함(컬렉션)</li></ul><p id="d1d50456-701e-4361-adec-dae7573a0fb1" class="">
+</p><div id="08d53e90-b041-47d0-9c33-74a757e2d2ec" class="collection-content"><h4 class="collection-title">스택 vs 큐</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>비교 기준</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>스택</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>큐</th></tr></thead><tbody><tr id="4853f504-f7d1-4df3-a4af-c63853318071"><td class="cell-title"><a href="https://www.notion.so/4853f504f7d14df3a4afc63853318071">데이터 입출력 순서</a></td><td class="cell-mEOM">후입선출(Last In First Out)</td><td class="cell-\m]J">선입선출(First In First Out)</td></tr><tr id="94da78dc-0add-4cf9-827d-a8ce7862e8a9"><td class="cell-title"><a href="https://www.notion.so/94da78dc0add4cf9827da8ce7862e8a9">데이터 넣을 때 부르는 이름(자바 컬렉션 메서드)</a></td><td class="cell-mEOM">쌓기 push(push, add)</td><td class="cell-\m]J">인큐 Enque(offer, add)</td></tr><tr id="0824323c-6644-4f03-871e-993cccae3ed3"><td class="cell-title"><a href="https://www.notion.so/0824323c66444f03871e993cccae3ed3">데이터 뺄때 부르는 이름(자바 컬렉션 메서드)</a></td><td class="cell-mEOM">빼기(pop)</td><td class="cell-\m]J">디큐 Dequeue(poll)</td></tr><tr id="9b967c1f-8a40-42c6-aadb-a14eed1446ad"><td class="cell-title"><a href="https://www.notion.so/9b967c1f8a4042c6aadba14eed1446ad">상단(데이터를 넣는 곳)</a></td><td class="cell-mEOM">top</td><td class="cell-\m]J">front</td></tr><tr id="0408c495-da2f-467e-8172-a6934eab5902"><td class="cell-title"><a href="https://www.notion.so/0408c495da2f467e8172a6934eab5902">하단(데이터를 빼내는 곳)</a></td><td class="cell-mEOM">bottom</td><td class="cell-\m]J">rear</td></tr></tbody></table></div><p id="aeb10623-577b-48c8-9dc7-08b595cc338a" class="">
+</p><ul id="59564e48-bb48-4c10-8a22-fc159ece6309" class="bulleted-list"><li>기본적으로 배열 자료구조를 이용한다면, 아래와 같은 구조를 이용한다고 이해할 수 있다!</li></ul><p id="db890d40-e024-48de-8946-000d7b731014" class="">
+</p><pre id="d551793b-0320-4883-b865-936169ff0803" class="code"><code>public class MyQueue{
+	//큐 몸통
+	private Object[] obj;
+  //용량
+	private int capacity;
+	//현재 데이터수
+	private int num;
+}</code></pre><p id="2efc9357-7230-4891-831b-42cfd71aa60e" class="">
+</p><p id="9d9df4bd-d19d-4557-a3ab-b32365633641" class="">앞서 스택과 다르게, 앞에서부터 빼내야 하기 때문에, 실제 시작 인덱스에 대해서 값이 변경되어야 하기 때문에, 깊은 복사 혹은 반복문을 이용한 값의 이동 , 배열 크기 조정 등이 실제로 꼭! 필요해진다!</p><p id="fc06f6f0-94e1-4233-887f-dc5b66e1c306" class="">
+</p><p id="08ef80f8-ac3d-4929-970b-ea0263ca53d2" class="">하!지!만! 링 버퍼(Ring Buffer)를 이용하면! 조금 더 효율적으로 구조를 구성해볼 수 있다!</p><p id="dad48f15-bd7e-4345-8b54-6ec7ed12b7fe" class="">
+</p><hr id="04ea1009-d34c-4542-aee4-8c9c911e1502"/><h3 id="663c6981-bfbf-4c34-832b-0d3623e9afda" class="">링 버퍼 Ring Buffer</h3><p id="2f15edfa-07e6-44fc-aa07-5332713ed865" class="">
+</p><figure id="3a424f04-6e05-47e1-b7a1-6bb3060332d2" class="image"><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Circular_Buffer_Animation.gif/600px-Circular_Buffer_Animation.gif"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Circular_Buffer_Animation.gif/600px-Circular_Buffer_Animation.gif"/></a><figcaption>Ring Buffer</figcaption></figure><ul id="43781adb-2f67-4400-8da4-6a5682d0a89a" class="bulleted-list"><li>배열의 처음과 끝이 연결된 구조!</li></ul><ul id="b2f1f9d3-7cd9-4d5b-9dc3-3dc63c9eb36e" class="bulleted-list"><li>Circular Linked List가 생각나는 구조!</li></ul><hr id="91ac6ae6-de9f-4f43-b93f-66822737bb83"/><p id="e3bbf1ad-faa7-47b7-8669-ee82faa14132" class="">이러한 링 버퍼를 이용했을 때, 큐에서 논리적으로 어떤 요소가 첫번째이고, 마지막인지를 구별하는 것이 바로 front 와 rear 이다!</p><p id="41b08f7d-37c2-46eb-9305-8c02e63b0098" class="">
+</p><p id="40bdcbc8-ac3e-49de-a97b-ea27cba4a2eb" class="">⚠️ 앞서 일반적인 큐 구조였다면 복잡도가 O(n) ➡️ 링 버퍼를 이용한 큐 구조를 통해서 복잡도 O(1)</p><p id="e950c29a-57f7-4834-a0c6-785b83848f57" class="">
+</p><ul id="3d56cbc1-d020-476c-92f1-48fa215255ce" class="bulleted-list"><li>위에서 언급했던 기능 외, peek이나 isEmpty, isFull, size, capacity 등은 스택과 유사하니, 아래 제네릭을 이용한 링버퍼를 이용한 큐 구조로 정리해보자</li></ul><p id="0e46ed40-a381-45fe-84f3-3b33d15a0806" class="">
+</p><pre id="efd0b05d-ddab-411b-950d-2a3a3bcaee3a" class="code"><code>package com.queue.ringbuffer;
+
+public class MyQueue&lt;E&gt; {
+	//큐 본체
+	private Object[] queue;
+	//첫 번째 요소 커서
+	private int front;
+	//마지막 요소 커서
+	private int rear;
+	//큐의 용량
+	private int capacity;
+	//현재 데이터 수
+	private int num;
+	
+	//생성자
+	public MyQueue(int capacity) {
+		//데이터수, 처음, 마지막 초기화
+		num = front = rear= 0;
+		//용량=입력된 용량
+		this.capacity = capacity;
+		/*
+		 * 제네릭은 throwable 지원x 따라서 checked, unchecked를
+		 * 상속받아 사용 불가
+		 */
+		queue = new Object[capacity];
+	}
+	
+	//인큐
+	public E enque(E x) {
+		
+		if(num &gt;= capacity) {
+			System.out.println(&quot;Overflow Error&quot;);
+			System.exit(0);
+		}
+		queue[rear++]=x;//뒤에서 들어오니까 뒤의 인덱스를 늘려주기
+		num++;//데이터 늘려주기
+		/*
+		 * 결론적으로 보면, 스택의 포인터가 큐에서 세분류된것!
+		 */
+		return x;//나중에 어떤 값이 들어갔는지 보여주기 위함
+	}
+	
+	//디큐
+	public E dequeue() {
+		if(num &lt;= 0) {
+			System.out.println(&quot;no data!&quot;);
+			System.exit(0);
+		}
+		
+		Object deq = queue[front++];//앞에서 빠져나가면, 기존의 front 뒤의
+		//요소가 front가 되어야 하므로, front 포인터 증가
+		E e =(E)deq;
+		num--;//데이터는 하나 줄이기
+		
+		//front-인덱스 마지막이 맞물려지면, 즉, 마지막 인덱스를 초과하려 한다면,
+		//front를 0으로 다시 초기화
+		if(front == capacity) {
+			front = 0;
+		}
+		return e;
+	}
+	
+	//큐도 peek는 상단(front)
+	public E peek() {
+		if(num &lt;= 0) {
+			System.out.println(&quot;no data!&quot;);
+			System.exit(0);
+		}
+		
+		Object obj = queue[front];
+		E      e   = (E)obj;
+		return e;
+		
+	}
+	
+	//해당값과 일치하는 인덱스 반환
+	public int indexOf(E x) {
+		if(num &lt;= 0) {
+			System.out.println(&quot;no data!&quot;);
+			System.exit(0);
+		}
+		
+		//반절 쪼개어 접근,반환
+		int limit = num;
+		int i     = 0;
+		while(i &lt; limit/2) {
+			Object o    = queue[i];
+			E      comp = (E)o;
+			if(comp == x) {
+				return i;
+			}
+			i++;
+		}
+		
+		while(i &lt; limit) {
+			Object o2    = queue[i];
+			E      comp2 = (E)o2;
+			if(comp2 == x) {
+				return i;
+			}
+			i++;
+		}
+		//그래도 못찾았다면 -1 반환
+		return -1;
+	}
+	//큐에 데이터가 얼마나 들었는지 반환
+	public int size() {
+		return num;
+	}
+	//큐 용량
+	public int capacity() {
+		return capacity;
+	}
+	//큐가 비어있는지
+	public boolean isEmpty() {
+		return num&lt;=0;
+	}
+	
+	//큐가 꽉차있는지
+	public boolean isFull() {
+		return num==capacity;
+	}
+	
+	//큐 비우기
+	public void clear() {
+		num=front=rear=0;
+	}
+	//+큐 안의 모든 데이터를 프런트 -&gt;리어 순으로 출력
+	public void dump() {
+		if(num &lt;= 0) {
+			System.out.println(&quot;no data!&quot;);
+			System.exit(0);
+		}
+		System.out.print(&quot;[&quot;);
+		for(int i = 0 ; i &lt; num; i++) {
+			System.out.print(queue[(i+front)%capacity]+&quot; &quot;);
+			//capacity로 나눈 나머지를 통해서 한 바퀴만 출력!
+		}
+		System.out.println(&quot;]&quot;);
+	}
+	//get
+	public E get(int index) {
+		if(num &lt;= 0) {
+			System.out.println(&quot;no data!&quot;);
+			System.exit(0);
+		}
+		
+		return (E)queue[front+index];
+	}
+}</code></pre><p id="7a3db30b-4054-4f1b-a1d7-ad23b538c229" class="">
+</p><h2 id="b5ecf700-7d17-4bf3-a143-4cb4144bfe3e" class="">3. 덱 Deque</h2><figure id="ec7450d8-c656-477e-9e24-641fbb1d3a8f" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Queue_Deque/%EB%8D%B1.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Queue_Deque/%EB%8D%B1.png?raw=true"/></a><figcaption>Deque</figcaption></figure><ul id="82a1bce9-c47c-4cdc-b0cd-b1f35d4db982" class="bulleted-list"><li>양방향에서 넣고 뺄 수 있는 구조</li></ul><ul id="40bd4361-2bf6-45c8-9560-2f45c5e6d0f5" class="bulleted-list"><li>메서드의 접미사에 따라서, 구분하기 쉽도록, 기존에 알고 있던 상단을 Last, 하단을 First로 생각</li></ul><ul id="5b3c3902-63aa-4a7c-a299-a03ff690cb8f" class="bulleted-list"><li>컬렉션에서 큐의 메서드와 다른 점은 Last에서 작업하는지, First에서 작업하는지에 따라 접미사처럼 붙는 메서드명이 달라진다는 점이다</li></ul><p id="f6a65ce2-e32f-4493-891f-22ea040581bb" class="">
+</p><p id="57601566-1972-4e0b-a3b0-80fd119ee150" class="">1) pollFirst : 하단에서 빼내기</p><p id="292800f3-ae2d-4b02-a326-b864ffdccc18" class="">
+</p><p id="0214120c-ed47-4f22-8461-d4cb4f52d683" class="">2) pollLast : 상단에서 빼내기</p><p id="45137d3c-8a6d-4115-b6ad-0b08bc12619d" class="">
+</p><p id="06409b76-5044-435c-beb9-ea15a6475d1d" class="">3) offerFirst : 하단에서 넣기</p><p id="662ca49e-570b-42e6-b64b-f3ee66bacb2a" class="">
+</p><p id="fac06760-89d8-4ca4-bff7-927dfc959bc2" class="">4) offerLast : 상단에서 넣기</p><p id="56e6c919-2261-4745-9284-27c8bcc0f1d6" class="">
+</p><p id="4c52af5a-9520-4c42-8c46-47a9c2084331" class="">5) peekFirst : 하단에서 가장 가까운 요소 찾기</p><p id="7c70f4ee-d261-4ebb-90cc-aa0919d6207a" class="">
+</p><p id="8da01658-d073-4d7c-a5d7-da13ed6235a7" class="">6) peekLast : 상단에서 가장 가까운 요소 찾기</p><p id="94ee2560-0a59-4ee0-ab1e-6cbde1adbd20" class="">
+</p><p id="a6718bd6-9392-4084-9450-8962c5624ebd" class="">
+</p></div></article></body></html>
