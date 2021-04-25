@@ -1,0 +1,921 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>트리구조</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="b0239785-81cc-4c88-8b35-9d962696e398" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">트리구조</h1></header><div class="page-body"><ul id="c7173dcd-74e5-4feb-8b7d-586384a6e622" class="bulleted-list"><li>데이터 사이의 계층 관계를 나타내는 자료구조</li></ul><p id="27f6082c-bb3e-4aef-a015-d345e5ae1f74" class="">
+</p><figure id="643800ff-c1a3-4cb5-bb29-f97ab7e1fe4c" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0.png?raw=true"><img style="width:1056px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0.png?raw=true"/></a><figcaption>Tree Structure</figcaption></figure><p id="d9611874-62c8-4e29-89bf-d7ca0ff4863f" class="">위릐 그림은 트리 구조에 대한 골격, 개념을 모두 담아 그린 그림이다!(그림에 탁월한 소질은 없어서 양해부탁드립니다.. 😅)</p><p id="5903689c-4b7a-4519-8724-3c2823cc7a77" class="">
+</p><p id="7715a9d7-21cf-4160-8b49-b1c0bfee14a0" class="">기본적으로, 트리구조는</p><p id="e28aabed-fc06-43f2-a969-6f2122b6d4c7" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="d6d09f92-dc59-46cb-87c3-2963a8db679f"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">노드, 가지</div></figure><p id="4035503d-06b2-4ef4-902e-009dc47f1d92" class="">
+</p><p id="06ee977b-dad9-4138-b4b4-fec374c41888" class="">두 개 요소를 기본으로 확장시켜서 아래와 같이 정리해볼 수 있다</p><p id="19f19e55-6aa4-4a0d-9c63-50b976149a78" class="">
+</p><ul id="1f435197-f32f-46ee-bdb6-c5eae1451701" class="bulleted-list"><li>(부모 노드 , 자식노드) &amp;&amp; (조상노드, 자손노드) &amp;&amp; 형제/자매노드</li></ul><p id="c81eef99-31eb-4a08-aab7-21db038f1a1b" class="">
+</p><p id="73e5e442-1efe-4602-96fc-947e71ff3690" class="">| 로 가지를 표시해보겠다!</p><p id="e5bc3624-df83-4e25-a569-c208ea50fc1a" class="">
+</p><p id="af88dbb2-ef99-4244-a047-e20d2cbfdc9e" class="">
+</p><hr id="65650f71-e96c-4385-829d-cdc25daa3d94"/><p id="85ebd4e1-720c-4520-8f01-b32ffd134741" class="">노드 1</p><p id="566e8de3-9734-401a-9238-872710c23858" class="">|</p><p id="d4f62e5f-517e-46e2-ae2b-db08f16e2a08" class="">노드2</p><p id="d42409c2-faee-4d93-b768-45e681284b4e" class="">|</p><p id="926b4819-072a-48fe-8db7-2976c24e69a0" class="">노드3 노드4</p><p id="dde48b0d-fc9b-4b0c-9f14-9f084fd5fc31" class="">
+</p><p id="1b6ea35b-4a2e-4863-8868-d6e6f45cfd15" class="">위와 같은 구조로 있을 때, </p><p id="36c4bae9-7a18-4415-bcc4-efb8b1a056c5" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="73523c30-825b-4796-954c-32828c9820fe"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">노드 1- 노드 3, 노드4 간의 관계: 
+
+노드 1이 조상노드
+
+노드 3, 노드 4가 자손노드</div></figure><p id="7a975dd2-a156-431b-8dfb-ae613eb894b9" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1b13c411-b4b4-44b2-82f9-f5181eca1e50"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">노드 2- 노드 3, 노드 4 간의 관계
+
+노드 2가 부모노드
+
+노드 3, 노드 4가 자손노드</div></figure><p id="8573b985-e91c-4998-b965-124cece8711c" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="cce94478-3a38-4a7f-850a-8f8b285b151e"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">노드 3과 노드 4가 서로에게 형제, 자매 노드</div></figure><p id="af750313-0d90-4799-b583-4af5def43ada" class="">
+</p><p id="150283b3-fbd6-44ff-b513-b868708c9542" class="">라고 볼 수 있다!</p><p id="be293972-387e-4c7b-9c06-d3dfca56a5d6" class="">
+</p><ul id="0cba8ee9-e7ba-48df-9b03-8d58f4c0d279" class="bulleted-list"><li>리프 노드 : 가장 하단에 위치한 노드(=terminal node =external node)! 더 이상 하단 방향으로 가지가 없는 노드
+</li></ul><ul id="d71c80fe-4c45-4b8a-bbd9-622108027dc2" class="bulleted-list"><li>안쪽 노드(iinternal/ non-terminal node) : 리프 노드를 제외한 노드
+</li></ul><ul id="ab35870f-5d7b-47dd-b3a5-d209243b1a03" class="bulleted-list"><li>루트노드: 가장 상단에 위치하는 최상단 노드
+</li></ul><ul id="625b684c-b225-4a10-b138-161944b12d60" class="bulleted-list"><li>레벨 : 루트 노드를 기준으로 얼마나 떨어져 있는 지를 나타내는 수치(루트레벨은 0)
+</li></ul><ul id="eb36c542-a914-42ce-bf10-c26a57060099" class="bulleted-list"><li>숲(Forest) : 루트 노드를 제외하고! 루트노드의 자식 노드를 대상으로 그룹화될 수 있는 그룹의 수
+</li></ul><ul id="bbd9c97a-de08-42a8-8f07-56083fc33e36" class="bulleted-list"><li>차수(degree) :  노드가 갖는 자식의 수
+</li></ul><ul id="c0d996ef-ee0e-4aa4-bb9d-cf1774f4ce03" class="bulleted-list"><li>높이 : 루트노드부터 가장 멀리 떨어진 리프 노드까지의 거리 == 레벨의 최댓값
+</li></ul><p id="e42ca76e-d942-4b8c-900e-f0fd8fda7b7e" class="">**참고- 트리의 종류 **</p><p id="2b470cf1-d00e-4ef3-a234-4c718d87e446" class="">
+</p><ul id="fee6fbd7-a71b-405c-9e72-8dbe7195f65f" class="bulleted-list"><li>서브 트리 : 루트노드로부터 가지로 뻗어나간 노드들 중 특정 노드를 루트로 하고, 그 자손으로 이루어진 트리 -예) 왼쪽 서브 트리, 오른쪽 서브 트리
+</li></ul><ul id="0feb1768-40a3-45a6-bb76-38188299bf7a" class="bulleted-list"><li>널 트리 : 노드, 가지가 없는 트리</li></ul><p id="c0081e08-b62c-439b-b651-fea6d200dcc4" class="">
+</p><ul id="2a1aea47-564e-4865-8fed-244107cbc30b" class="bulleted-list"><li>형제 노드의 순서 유무에 따라 순서가 있다면 순서 트리, 없다면 무순서 트리</li></ul><p id="c166667f-2dfc-4f14-ba77-c24fc7122435" class="">
+</p><p id="f353af10-fba6-4f71-9e0f-0b976b9071ff" class="">
+</p><h2 id="765c791d-e638-4397-930b-09ee976995fb" class="">순서 트리 탐색</h2><p id="5833ffc3-7086-4c2a-93c4-612961b8ce69" class="">
+</p><figure id="877e645a-a92d-49b9-8e23-af20a8e987e1" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0-%EC%9D%B4%EC%A7%84%ED%8A%B8%EB%A6%AC%EC%9D%98%20Traversal.png?raw=true"><img style="width:1008px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0-%EC%9D%B4%EC%A7%84%ED%8A%B8%EB%A6%AC%EC%9D%98%20Traversal.png?raw=true"/></a><figcaption>Traversal</figcaption></figure><p id="ad76cbd2-8b6c-431d-b7a6-40338841bd2e" class="">트리 구조에서 가장 중요한 순서 트리 탐색과 관련하여</p><p id="aa1f8a88-52a3-44d4-a4c6-c70af0da92e3" class="">
+</p><p id="92be620e-cdb6-4699-a8c1-e12ef822c8e0" class="">Traversal(운행법)을 보도록 하자! 위의 그림은 운행법을 간단히 나타내고 있는데,</p><p id="d12015d7-780a-40bd-bd90-95e05b72fb78" class="">
+</p><p id="3388a2d3-8813-4678-be30-87b53b1f7cd2" class="">나중에 계산식을 스택과 연동하는 경우, 중요해질 수식 표기법과 매치시키면 아래와 같다</p><p id="73929657-be6e-4ba0-a49e-d1544f518277" class="">
+</p><p id="67853a5f-b3e3-4e09-abcd-f4797e5587a3" class="">(운행법- 수식표기법)</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="527365c0-addb-41bf-af55-2567cfcd70fe"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Preorder - Prefix</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f58fd819-03df-4746-99c8-67d9b0514b87"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Inorder-Infix</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f923bfc9-b9fd-4603-aefc-20b955106218"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">Postorder-Postfix</div></figure><p id="d5d09729-6960-431a-ac12-779b2978676c" class="">
+</p><p id="09d1094a-54fb-4940-9e32-613ddb8fae4f" class="">
+</p><p id="e23b8030-2371-42b4-a83d-72593328ce8c" class="">각각의 특징을 정리해보면,</p><p id="8d2d1946-848e-4575-98b6-6aa7a2fbb10d" class="">
+</p><ol id="83bc9e41-360b-452c-94b7-54f614852490" class="block-color-yellow_background numbered-list" start="1"><li><strong><mark class="highlight-orange">전위순회(Preorder) : 부모노드-왼쪽 자식 노드 - 오른쪽 자식 노드</mark></strong></li></ol><ol id="f8539eb5-8194-4cb1-a69c-eb4b5e2e6327" class="block-color-yellow_background numbered-list" start="2"><li><mark class="highlight-orange"><strong>중위순회(Inorder)  : 왼쪽 자식 노드- 부모노드-오른쪽 자식노드</strong></mark></li></ol><ol id="214b268e-c294-481e-815d-0a8da952055e" class="block-color-yellow_background numbered-list" start="3"><li><strong><mark class="highlight-orange">후위순회(Postorder) : 왼쪽 자식 노드 - 오른쪽 자식노드 - 부모노드</mark></strong></li></ol><p id="9afc7c3d-6f96-4d82-8e03-d1a87207d05e" class="">
+</p><p id="c3158172-237d-4cde-a321-3f3125c3a103" class="">로 정리된다</p><p id="6ec3a20e-48ff-482f-b72a-85385f31888f" class="">
+</p><p id="f1dd4e59-7865-4f95-9e98-414744340bc6" class="">특징별로 외우기 쉽게 정리해보면,</p><p id="18515f2b-2af6-4eae-8164-edfa485b764c" class="">
+</p><ol id="ca87cc08-060f-40d1-bc3a-860b7b32eb8b" class="block-color-yellow_background numbered-list" start="1"><li><mark class="highlight-orange"><strong>전위순회 : 부모레벨부터 자식레벨 순으로</strong></mark></li></ol><ol id="e7890303-7ba1-4679-a0f8-9666e2002a32" class="block-color-yellow_background numbered-list" start="2"><li><mark class="highlight-orange"><strong>중위순회: 부모노드를 기준으로 좌우로 순서대로 매치</strong></mark></li></ol><ol id="56825128-5bd4-42d8-ab43-189fbaeb40be" class="block-color-yellow_background numbered-list" start="3"><li><strong><mark class="highlight-orange">후위순회: 자식노드레벨부터 부모노드레벨 순으로</mark></strong></li></ol><p id="0fb5d98d-3668-4394-a372-1b06a680b780" class="">
+</p><p id="7f273a1a-b1a5-4601-87e4-745ef4720721" class="">순서가 정해짐을 알 수 있다!</p><p id="01ae94cc-4fde-467e-b10c-04e96b24c291" class="">
+</p><hr id="c41139df-d292-4512-b534-4b9d53bc6806"/><h3 id="34ec4950-c01b-4f5f-ab35-2d4a6d6185f1" class="">순서트리의 노드를 스캔하는 방법</h3><p id="06da476f-d0f8-4aad-85e7-adcc771bda55" class="">
+</p><h3 id="b6a73fd5-0490-4b54-a214-ea299542ff95" class="">너비 우선 탐색 BFS; Breadth-First Search &amp;&amp;깊이 우선 탐색 DFS; Depth-First Search</h3><p id="9c4ac03e-ca21-4786-91dc-5220627a2c66" class="">
+</p><figure id="19c9dee1-d5cd-4d1a-8c65-904ed9ab6241" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/BFS_DFS.png?raw=true"><img style="width:912px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/BFS_DFS.png?raw=true"/></a><figcaption>BFS와 DFS-본 그림자료는 <a href="https://en.wikipedia.org/wiki/Breadth-first_search">원본</a>을 수정하였습니다!</figcaption></figure><p id="b873ae7e-dec4-4b18-8af5-84e5bf0c5b56" class="">
+</p><ul id="c0d9416b-aec3-4a11-a5bb-817f840ed0e9" class="bulleted-list"><li>너비 우선 탐색 BFS: 루트노드 레벨부터 리프 노드 레벨까지 각 레벨별로 순차적으로 진행
+-전위 순회 방법(Preorder)</li></ul><ul id="fae1a5e7-0591-405c-a06d-c6d2f343b9ea" class="bulleted-list"><li>깊이 우선 탐색 DFS: 리프 노드까지 탐색하는 것을 우선순위로 하는 탐색
+-일단 리프부터 가서 리프부터 위쪽으로 올라오면서 탐색</li></ul><p id="3e0beaba-e121-4667-b062-ae2deb94d302" class="">      - 중위 순회(Inorder), 후위 순회(Postorder)</p><p id="51c1454d-d3c8-48c8-99b9-981e0d9bdce9" class="">
+</p><h2 id="96be8ef7-92f6-4e25-9a19-a5a743352037" class="">이진 트리와 이진 검색 트리</h2><h3 id="3190fc79-85a3-4725-9891-821e06d36a94" class="">이진 트리</h3><p id="5fdb5025-072e-4abd-814d-4f69d692dcc5" class="">
+</p><ol id="55db8edb-e00c-45d9-9c18-de7645606971" class="numbered-list" start="1"><li>이진 트리 : 노드가 왼쪽 자식 노드와 오른쪽 자식 노드로 갖춰진 트리
+
+: 자식 노드 ≤ 2개</li></ol><ol id="e9d730c7-fcef-4151-921c-ca69270c0b1a" class="numbered-list" start="2"><li>완전 이진 트리</li></ol><p id="3758233e-03cd-4d5f-8a08-3350d96a0430" class="">
+</p><ul id="2d88e3e2-a8e8-4ce7-ac30-81d195f7766f" class="bulleted-list"><li>루트부터 노드가 하향식으로 채워져 있음</li></ul><ul id="bca71fcf-6c6c-410b-8b12-f77a37c69424" class="bulleted-list"><li>같은 레벨에서는 왼쪽부터 오른쪽 순으로 노드가 채워져 있음</li></ul><p id="807dfb20-ecd4-4b25-ae35-774490a98e52" class="">
+</p><p id="57aed47e-2a6b-4b26-b82b-06ca26a4b57e" class="">⚠️<mark class="highlight-blue"><strong><em>참고</em></strong></mark><mark class="highlight-blue"><strong> </strong></mark>⚠️</p><ul id="0428f59a-340f-4f90-b681-955971ebb09f" class="bulleted-list"><li>높이 k 인 완전 이진 트리가 가질 수 있는 노드의 최댓값 = 2^(k+1) -1 개</li></ul><ul id="4c926543-d3b7-4b1f-a7ea-b4779841b3f5" class="bulleted-list"><li>n 개의 노드를 저장할 수 있는 완전이진트리의 높이  =logn(밑이 2가 생략된 이유=컴퓨터는 2진수이기 때문)</li></ul><p id="15cf76cc-ad7c-4a7f-907c-4153500229ed" class="">
+</p><hr id="d66fddce-5f28-45dd-ba19-345b036b611d"/><h3 id="81be355e-e7fb-4666-a437-702e516365c1" class="block-color-yellow_background">🌟<mark class="highlight-red">이진 검색 트리</mark>🌟</h3><p id="14e25737-d9e9-410c-889f-89486cff5f80" class="">
+</p><p id="4b6fdf58-6f90-46d2-88da-9f17d2fac714" class="">이진 트리가 아래의 조건을 만족하는 경우 이진검색트리로써 존재할 수 있다</p><p id="690dae07-e670-4c59-9f1e-e1ef9f72763e" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="eea15e17-55a5-46b9-8c0e-293cedd74f1b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">1. 특정 노드N을 기준으로 왼쪽 서브 트리의 모든 키 값 ≤ 특정 노드 N의 키 값</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="0f7ee75d-8c4f-4bf7-8970-d96d027f799b"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">2.(특정 노드N을 기준으로 생각했을 때) 오른쪽 서브 트리 노드의 키 값 &gt; 특정 노드 N의 키 값</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ae450a06-f2bd-43c7-9237-630e818d3bcf"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%">3. 같은 키 값을 갖는 노드는 없음</div></figure><p id="96827081-d108-4485-a8eb-3cde5484d289" class="">
+</p><p id="a32c77e2-5bf7-4e39-b3fe-d29d9883fa63" class="">쉽게 정리하면 <mark class="highlight-teal"><strong>왼쪽 ➡️ 오른쪽 순서로 훑었을 때, 왼쪽부터 오름차순으로 정렬</strong></mark>하면 이진 검색 트리라고 할 수 있다는 것!</p><p id="0eb9e9ea-3c63-40e1-ade8-1c8dff5d5a2b" class="">
+</p><figure id="13214f13-4bba-48bc-9590-44535cde27f0" class="image"><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Binary_search_tree.svg/270px-Binary_search_tree.svg.png"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Binary_search_tree.svg/270px-Binary_search_tree.svg.png"/></a><figcaption><a href="https://en.wikipedia.org/wiki/Binary_search_tree">Binary Search Tree</a></figcaption></figure><p id="71c8bcf4-ffb5-4dca-92ff-977775f0a136" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 멤버필드</strong></mark>🌟</p><ul id="4cea5de3-32bc-4377-9364-d93a21f40b62" class="bulleted-list"><li>Key, Value 값으로 관리됨!(BinaryTree&lt;K,V&gt;)</li></ul><ol id="9f3d6fd0-5b8c-4917-93c0-6f811d1772e9" class="numbered-list" start="1"><li>노드 클래스를 만들어서 노드를 생성하는 단위체 만들기</li></ol><pre id="51e201c3-e776-4274-8f09-ac623ef0e615" class="code"><code>class Node&lt;K,V&gt;{
+	//키값
+	K key;
+ //값 
+  V value;
+  //왼쪽 자식 노드
+  Node&lt;K,V&gt; left;
+  //오른쪽 자식 노드
+	Node&lt;K,V&gt; right;
+}</code></pre><p id="1e522aeb-71b9-470c-b620-9d3d2375a92a" class="">
+</p><p id="99624220-c7d2-45db-a8ab-2dbfec6d7fa3" class="">2. 루트 노드</p><p id="55eabaaf-b6e3-4bb9-a067-7c55386fe6c1" class="">
+</p><p id="e51b0d4c-f358-4f97-885e-206775ec55e7" class="">3. 비교자(순서 정렬을 위한 목적 大)</p><p id="fd6d1ff8-3fae-433b-8ef5-73117e46e13b" class="">
+</p><p id="e804e14b-1a9c-4852-878a-02e492118bd3" class="">
+</p><p id="b94c9ea1-e453-4e0c-a7a0-dc0552327d38" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 생성자</strong></mark>🌟</p><ul id="577562d6-17f6-47bb-a4ad-2214a3048f5f" class="bulleted-list"><li>자연 순서에 따라 키값을 비교하기 위한 생성자</li></ul><ul id="946bee1c-f3a5-4e37-8801-147a1ae35609" class="bulleted-list"><li>comparator로 키값을 비교하기 위한 생성자</li></ul><p id="cbdb92e8-94a8-4a3e-a790-4e959e802265" class="">
+</p><pre id="a17e9f3a-811e-47c5-b5ab-54f41121433c" class="code"><code>//클래스 생성자, 메서드 준비
+	//1.생성자
+	//1-1. 자연 순서에 따라 키값을 비교
+	public BinarySearchTree() {
+		root =null;
+		// TODO Auto-generated constructor stub
+	}
+	//1-2. 비교자로 키값 비교
+	public BinarySearchTree(Comparator&lt;? super K&gt; c) {
+		this();
+		comparator = c;
+	}</code></pre><p id="5c177737-d956-4519-aab2-ceb2624822b6" class="">
+</p><p id="e031d15d-5267-454d-95fe-9ec708806fd2" class="">
+</p><p id="1d2602a0-6524-448a-a273-1b9bfb9e4a79" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 메서드-두 키값을 비교하는 메서드</strong></mark>🌟</p><ul id="dc66a90b-45c7-4c49-bcad-de20bde82ab3" class="bulleted-list"><li>자연 순서에 따라 키값을 비교하기 위한 생성자</li></ul><ul id="9a9a7502-d1d0-4fba-8c12-93b2cc40e709" class="bulleted-list"><li>비교자가 설정되어 있는 지에 따라서 비교</li></ul><ul id="e4ff00ee-66e6-4044-a505-4f844fea3dd3" class="bulleted-list"><li>비교자가 비어져 있을 때에는 기본적인 비교자 기능을 하는 comparable을 지원</li></ul><ul id="214c4f25-a563-4778-9096-8cd6584325e2" class="bulleted-list"><li>사용자가 보다 복잡한 정렬을 위한 비교자를 설정했을 때에는 이에 기능적으로 맞는 comparator 지원</li></ul><pre id="c8495c00-b4fd-473b-a411-7b9042da6dbd" class="code"><code>//2-1두 개의 키값을 비교하는 메서드
+	//비교자가 설정되어 있는 지에 따라서 비교(기본은 오름차순)
+	public int comp(K k1, K k2) {
+		return (comparator == null)?((Comparable&lt;K&gt;)k1).compareTo(k2):
+			comparator.compare(k1, k2);
+	}</code></pre><p id="f1147b55-8487-470a-bdc2-3aa504c1254f" class="">
+</p><p id="978a27db-acc6-49f4-b87d-8fe8d29de980" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 메서드-키값으로 검색하는 메서드</strong></mark>🌟</p><ul id="edf6f9ff-86be-4f5b-965c-d3ec6a128282" class="bulleted-list"><li>이진 검색 트리 조건을 기반으로 해서, 어떤 키값이 매개변수로 들어 왔을 때,</li></ul><p id="03a7dcfb-f0a1-4e07-87f5-248572da357c" class="">
+</p><p id="98c8d854-aa5e-4444-88c6-c1d73256efc1" class="">기본적으로</p><p id="eaa7afbb-7f21-4c45-93f9-76e485dc0c49" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="985f9277-f660-4343-89d9-25483c9970be"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><strong><mark class="highlight-orange">매개변수로 받은 Key 값 &gt;</mark></strong> 특정 노드 N의 키값 ➡️<mark class="highlight-orange"><strong> 오른쪽</strong></mark> 서브 트리로!</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="923364d4-37ca-43b6-bdb7-9926cd0a881a"><div style="font-size:1.5em"><span class="icon">📌</span></div><div style="width:100%"><mark class="highlight-pink"><strong>매개변수로 받은 Key 값 &lt; </strong></mark>특정 노드 N의 키값 ➡️ <mark class="highlight-pink"><strong>왼쪽</strong></mark> 서브 트리로!</div></figure><p id="dfed4fc7-8995-4c1d-a6f0-fe7a9c6cf27c" class="">
+</p><p id="4ea0e8d7-f73d-4cd1-a62a-58655ab54597" class="">위와 같은 규칙이 반복된다</p><p id="52be942f-6665-4e64-a104-8e08db73c330" class="">
+</p><p id="439a141c-8e08-4fc6-afc6-fac884c68d90" class="">정리하면, 아래의 순서로 보다 체계화시킬 수 있다!</p><p id="7a61e4a5-16cb-4e32-bb93-67639b658b5e" class="">
+</p><ol id="fcb6434e-44a1-4b22-8658-a47a5a2b23fc" class="numbered-list" start="1"><li>루트부터 검색진행(이 때, 위의 규칙에서 선택한 노드를 p로 명명)</li></ol><ol id="2e64d2ef-3a5a-4261-af4e-b3f2c681f9b8" class="numbered-list" start="2"><li>p==null ➡️ 검색 실패(선택할 선택지가 없음)</li></ol><ol id="4b745edc-5795-4eb9-8fb1-398c4cac6446" class="numbered-list" start="3"><li>검색하는 값 key와 선택한 노드 p의 키값을 비교
+- 매개변수 Key 값 == 노드 p의 키값 ➡️ 검색 성공(검색 종료)
+- 매개변수 Key 값 &gt; 노드 p의 키값 ➡️ 오른쪽 자식 노드 대입(오른쪽으로 검색 진행)
+- 매개변수 Key 값 &lt; 노드 p의 키값 ➡️ 왼쪽 자식 노드 대입(왼쪽으로 검색 진행)</li></ol><p id="c27977e3-4475-4b5b-bb2f-8d912c1c9cf7" class="">
+</p><p id="30419023-ee15-457a-81ed-9aca06317bd4" class="">
+</p><p id="eacbe4fe-b21f-40c7-8a42-14e8908c388a" class="">이를 순서대로 작성해보면, 아래와 같이 가시화할 수 있다!</p><p id="d192a79b-8e8b-4044-b26e-a2cf4dd49889" class="">
+</p><pre id="8cce50b6-3bc6-46d6-88cc-3630b6212266" class="code"><code>//2-2.키값으로 검색하는 search 메서드
+	public V search(K key) {
+		//특정 노드를 기준을 잡기(시작은 root)
+		Node&lt;K,V&gt; p = root;
+		
+		while(true) {
+			//1.p가 비어져 있다면, 더이상 비교할 것이 없어서 종료
+			if(p==null) {
+				return null;
+			}
+			//노드의 키값과 p의 키값 비교
+			int comp = comp(key,p.getKey());
+			//0인가?
+			if(comp == 0) {
+				//찾았다!
+				return p.getVal();
+			}else if(comp &lt; 0) {
+				//p노드의 키값이 더 큰 경우 오른쪽 자식 노드로!
+				p = p.right;
+			}else {
+				//p노드의 키값이 더 작은 경우 왼쪽 자식 노드로!
+				p = p.left;
+			}
+		}
+	}</code></pre><p id="4fc5bcfb-fc2c-4c78-a3b1-e4990c71fbc5" class="">
+</p><p id="fea25390-b45a-413f-ab9b-2799bfa52153" class="">
+</p><p id="c7325c64-7664-4e2f-a4cc-38f1530c33ec" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 메서드-노드를 추가하는 메서드</strong></mark>🌟</p><ul id="3340e2b9-e295-4b43-a50b-a6973f57d84e" class="bulleted-list"><li>이진 검색 트리 조건을 기반으로 해서, 어떤 노드가 삽입 될 때,</li></ul><p id="02bf0082-7a39-40eb-8c04-e3a2a2092774" class="">
+</p><ol id="b92b1538-d9af-4a83-97a7-436ba64976e1" class="numbered-list" start="1"><li>노드 n 선택</li></ol><ol id="12273063-68a7-4e50-b61e-eada5d2444f6" class="numbered-list" start="2"><li> 매개변수로 전달된 key값과 노드n의 키값 비교
+ -(기존에 존재했다면 겹치면 안되므로) 삽입 실패(종료)
+ -매개변수 key 값 &lt; 노드 n 키값 -&gt;매개변수 key값에 대한 노드가 왼쪽 자식 노드로
+  ↔️[왼쪽 자식노드가 있다면, 노드 n을 왼쪽 자식 노드로 이동]
+-매개변수 key 값 &gt; 노드 n 키값-&gt;매개변수 key 값에 대한 노드가 오른쪽 자식 노드로
+  ↔️[오른쪽 자식노드가 있다면, 노드 n을 오른쪽 자식 노드로 이동]</li></ol><p id="ef7e0b89-7749-4d6f-b91b-32c317115973" class="">
+</p><p id="f9bd40dd-135f-46bd-bdae-0a75ea457022" class="">위와 같은 절차로 추가한다!</p><p id="43bd8df3-0e20-4d80-8b37-4c73ecaa0682" class="">
+</p><p id="3e9c39f5-31c1-4c3a-b23d-cdc39200e807" class="">단, 메서드를 조금 분화시켜서, 서브트리 내에서 삽입하고 실질적 역할을 하는 몸체 메서드에서 상황에 따라 아래처럼 처리해주도록 하자!</p><ul id="b30e0610-b6bd-4c7b-b078-4dc08bec5604" class="bulleted-list"><li>루트노드가 비어있으면, 루트노드를 생성만 해주기</li></ul><ul id="8c0925ec-8eaf-4cc4-ad68-a8cff3557cd1" class="bulleted-list"><li>비어있지 않으면 노드를 추가(서브트리를 이용)</li></ul><p id="6b072f2c-3650-46d4-a2bf-185d2e7098aa" class="">
+</p><pre id="0ad0ce1e-1981-4042-9825-f29ac3c4587e" class="code"><code>//2-3-1.특정 노드 n을 루트로 하는 서브트리에 노드 삽입
+	public void addNode(Node&lt;K,V&gt; node, K key, V value) {
+		//node: 특정노드
+		int comp = comp(key, node.getKey());
+		
+		//0이면 검색 실패(중복x)
+		if(comp == 0) {
+			return;
+		}else if(comp &lt; 0) {
+			//특정노드(이 상황에서는 루트로 된)이 더 큰경우 왼쪽자식노드로!(비어있다면)
+			if(node.left == null) {
+				node.left = new Node&lt;K,V&gt;(key,value,null,null);
+				//아직 자식노드가 없으므로  해당 매개변수값은 null
+				
+			}else {
+				//채워져 있다면, 기존 특정 노드(이상황은 루트)를
+				//왼쪽 서브트리로 이동시키기
+				addNode(node.left,key,value);
+			}
+		}else {
+			//특정노드가 작은 경우 삽입될 노드가 오른쪽으로 이동!
+			if(node.right==null) {
+				//오른쪽 비어져 있으면 오른쪽에 넣기
+				node.right=new Node&lt;K,V&gt;(key,value,null,null);
+			}else {
+				//채워져 있다면 오른쪽 서브트리로!
+				addNode(node.right,key,value);
+			}
+		}
+	}
+	
+	//2-3-2 몸통!
+	public void add(K key, V value) {
+		//루트노드 존재하지 않으면 생성
+		if(root == null) {
+			root = new Node&lt;K,V&gt;(key,value,null,null);
+		}else {
+			// 루트노드부터 시작해서 작업 시작!
+			addNode(root,key,value);
+		}
+	}</code></pre><p id="ccdae04e-a0b2-4843-9ac8-0489d392a211" class="">
+</p><p id="a70dd357-526b-4bec-a581-eff795e8fe74" class="">
+</p><p id="6b90e1b4-c3c7-4619-8e9d-261afef14097" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 메서드-노드를 삭제하는 메서드</strong></mark>🌟</p><ul id="471f3fa9-11dc-4c21-9944-f8ff4c2def6b" class="bulleted-list"><li>어떤 노드가 삭제 될 때,</li></ul><p id="ba83d413-4de5-418d-bc8f-482ad4c8c1ef" class="">(1) 자식 노드가 없다면</p><ol id="b07c2921-d023-4bb9-9aa9-6b2bac09b2d5" class="numbered-list" start="1"><li>삭제할 노드 == 부모노드의 왼쪽 자식 ➡️ 부모의 왼쪽 포인터 = null</li></ol><ol id="48936cef-62ad-4a7b-84b9-526a20d40f31" class="numbered-list" start="2"><li>삭제할 노드 == 부모노드의 오른쪽 자식 ➡️ 부모의 오른쪽 포인터 = null</li></ol><p id="82b0d2f0-0381-40a3-aa2c-a612d5a615a4" class="">
+</p><p id="4c941619-6e1d-45c1-a136-0c4f3bdaa5e9" class="">(2) 자식 노드가 1개라면,</p><ul id="b610da25-ec5e-4921-9bbf-3d2e0607aab5" class="bulleted-list"><li>삭제할 노드D == 부모노드의 왼쪽 or 오른쪽 자식 노드 ➡️ 부모의 왼쪽 혹은 오른쪽 포인터가 D의 자식을 가리키도록 하기 </li></ul><p id="2d750da7-891b-4db9-9748-fefafc6c794b" class="">
+</p><p id="fdfc2832-e3e0-4061-9c46-251465737780" class="">라고 정립해볼 수 있지만, 여기서 더 체계화하면,</p><p id="0a09d469-4f27-4ec7-8c88-c9a17d98ac92" class="">
+</p><ol id="c112139b-df8a-493d-b185-efefd5a51680" class="numbered-list" start="1"><li>삭제할 노드의 왼쪽 서브 트리에서 키 값이 가장 큰 노드 A 검색(이진 검색 트리의 특성상!)</li></ol><ol id="568d912f-14a6-4e44-8910-2660578701fc" class="numbered-list" start="2"><li>노드 A를 삭제 위치로 옮기기(키, value 복사!)</li></ol><ol id="a6701a49-64e0-40ff-bc58-e287fc6161ca" class="numbered-list" start="3"><li>옮긴 노드A가 원래 있던 노드 삭제
+- 옮기기 전에 자식노드가 없었다면, 해당 노드의 포인터를 NULL로 비워줌(1)
+-옮기기 전에 자식노드가 있었다면, (2)에 따라 실행해주기</li></ol><p id="3ecf583c-876c-4647-ba57-72dcb6220a45" class="">
+</p><p id="0c62d805-96f0-46d1-8cb9-9068dbcfa26c" class="">와 같이 정리해볼 수 있다!</p><p id="b0237835-d3e1-4e80-97fa-661cea0f98ec" class="">
+</p><pre id="890a3b1f-eeb9-4eb7-8835-1dafad2ee83c" class="code"><code>//2-4.특정 노드 삭제
+	//키값이 key인 노드 삭제
+	public boolean remove(K key) {
+		//스캔 중인 노드
+		Node&lt;K,V&gt; p = root;
+		//p의 부모노드
+		Node&lt;K,V&gt; parent =null;
+		//p가 부모노드의 왼쪽 자식 노드인지 판단(이진검색트리 특성)
+		boolean isLeftChild = true;
+		//부모 노드-왼쪽, 오른쪽 노드 관계 정립
+		//a.자식노드가 없는 경우
+		while(true) {
+			//진행할 필요가 없는 경우
+			if(p == null) {
+				return false;
+			}
+			int comp = comp(key, p.getKey());//특정 노드를 삭제하기 위한 비교
+			if(comp == 0) {
+				//검색 성공
+				break;
+			}else {
+				//부모노드 설정
+				parent = p;
+				if(comp &lt; 0) {
+					//스캔한 노드의 키값이 더 크다면, key에 대한 노드는 왼쪽에!
+					isLeftChild= true;
+					p = p.left;
+				}else {
+					//오른쪽 서브트리로!
+					isLeftChild=false;
+					p=p.right;
+				}
+			}
+		}
+		
+		//b자식노드가 1개인 경우
+		//0왼쪽 자식 노드가 없다면
+		if(p.left == null) {
+			if(p == root) {
+				//루트노드는 오른쪽 자식 노드로 설정!
+				root = p.right;
+			}else if(isLeftChild) {
+				//p의 왼쪽 자식은 없는데
+				//p가 루트노드의 왼쪽 자식인 경우
+				//부모의 왼쪽 포인터가 p의 오른쪽 자식을 가리킴!(왼쪽이 없어서!)
+				parent.left =p.right;
+			}else {
+				//p의 왼쪽 자식은 없는데,
+				//p가 루트노드의 오른쪽 자식인 경우
+				//부모의 오른쪽 포인터가 p의 오른쪽 자식을 가리킴
+				parent.right=p.right;
+			}
+		}else if(p.right ==null) {
+			//1.p의 오른쪽이 비었을 때
+			//-&gt; p가 루트가 아닌 경우, 부모노드 포인터와 
+			//p의 왼쪽 자식을 연결!
+			if(p==root) {
+				root=p.left;
+			}else if(isLeftChild) {
+				parent.left=p.left;
+			}else {
+				parent.right=p.left;
+			}
+		}else {
+			//c자식노드가 2개인 경우
+			parent = p;
+			
+			//왼쪽 서브트리에서 가장 큰 값 찾기
+			Node&lt;K,V&gt; left = p.left;
+			isLeftChild = true;
+			
+			while(left.right!=null) {
+				//가장 큰 값 찾기
+				parent = left;
+				left = left.right;
+				isLeftChild = false;
+			}
+			
+			//left의 키,데이터 값을 p로!
+			p.key=left.key;
+			p.value=left.value;
+			
+			//left 삭제하는데, 포인터 연결
+			if(isLeftChild) {
+				parent.left=left.left;
+			}else {
+				parent.right=left.left;
+			}
+			
+		}
+		return true;
+	}</code></pre><p id="68b92df8-b57f-4d19-884d-a980c94cc2de" class="">
+</p><p id="edc50ab8-d53a-4ef2-97c3-59459e61556c" class="">
+</p><p id="9144f1fc-c823-4806-bb64-4200051d6c2c" class="">🌟<mark class="highlight-red"><strong>BinaryTree 클래스 메서드-모든 노드를 출력하는 메서드</strong></mark>🌟</p><ul id="07338274-cbcf-483a-a833-f739a29535d3" class="bulleted-list"><li>왼쪽과 오른쪽 서브 트리에 대해서 재귀적으로 접근하여 출력</li></ul><pre id="7bf36dc0-dfa2-4b28-be39-fa9997bcc2f0" class="code"><code>//2-5. 모든 노드 출력(재귀적으로!)-inorder
+	public void prtSubTree(Node node) {
+		if(node != null) {
+			prtSubTree(node.left);
+			System.out.println(node.key+&quot; &quot;+node.value);
+			prtSubTree(node.right);
+		}
+	}
+	
+	public void prt() {
+		prtSubTree(root);//루트노드부터!
+	}</code></pre></div></article></body></html>
