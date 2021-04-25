@@ -177,6 +177,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/General/Data_Structure/스택과_큐_덱.html" target="_blank">
 		[자료구조]스택, 큐, 덱
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/General/Data_Structure/Tree/트리구조.html" target="_blank">
+		[자료구조]트리구조
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
 </ol><!--All END-->
