@@ -192,6 +192,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/Structure/블록 레벨(Block level) 요소와 인라인(Inline) 요소.html" target="_blank">
 		[HTML]블록 레벨(Block level) 요소와 인라인(Inline) 요소
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/Structure/메타데이터-MIME Type, BASE.html" target="_blank">
+		[HTML]메타데이터-MIME Type, BASE
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
