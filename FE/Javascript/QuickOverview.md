@@ -281,3 +281,12 @@ html 등을 이용해서 더 나은 방식으로 접근하자!
  10. 객체나 배열.forEach : 객체나 배열의 각 요소에 접근하여 동작
 
 https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Set/forEach
+
+--------------------------------------------------------------------------------------------------------
+
+[JSON 에러 정리]
+Unexpected token , in JSON at position 21 at JSON.parse (<anonymous>) 에러
+
+1.JSON.parse 메서드의 매개변수로 전달된 string을 확인
+2.JSON.stringify 메서드 사용하였을 경우, 위치의 적절성 판단
+3.1,2를 비교하여 1에서 사용된 배열에  필요할 경우 const를 let으로 변경
