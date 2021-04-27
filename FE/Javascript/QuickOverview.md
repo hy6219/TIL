@@ -288,5 +288,7 @@ https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Se
 Unexpected token , in JSON at position 21 at JSON.parse (<anonymous>) 에러
 
 1.JSON.parse 메서드의 매개변수로 전달된 string을 확인
+
 2.JSON.stringify 메서드 사용하였을 경우, 위치의 적절성 판단
+
 3.1,2를 비교하여 1에서 사용된 배열에  필요할 경우 const를 let으로 변경
