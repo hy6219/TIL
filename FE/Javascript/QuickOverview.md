@@ -277,3 +277,7 @@ html 등을 이용해서 더 나은 방식으로 접근하자!
 존재하던 클래스명을 인지하는 데에 효과적(btn clicked으로 클래스가
  기존의 btn 외에 clicked가 추가되어도 clicked를 붙이고 떼는 
  작업이 용이)
+ 
+ 10. 객체나 배열.forEach : 객체나 배열의 각 요소에 접근하여 동작
+
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Set/forEach
