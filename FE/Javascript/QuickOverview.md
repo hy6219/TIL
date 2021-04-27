@@ -57,7 +57,13 @@
 
 → 데이터를 전달할 때, 자바스크립트가 다룰 수 있도록, object 로 바꿔주는 기능
 
-6. index05.js
+→ Object와 String 간 변환을 가능하게 해줌
+
+- .stringify(object) : 객체를 string으로
+
+- .parse(string) : string을 객체로
+
+6. 
 
 - 브라우저가 가지고 있는 자바스크립트도 object(쉽게 말해서 DOM)에
 넣을 수 있음
