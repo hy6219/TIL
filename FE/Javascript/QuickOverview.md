@@ -1,4 +1,4 @@
-## js 파일 정리
+## js 짧고 굵은 기본 개념 Quck Check_Update_27.04.2021
 
 1. let과 const의 차이, 시판 책에서 나오는 var를 붙이는 것의 문제점 확인
 - let : 변수
