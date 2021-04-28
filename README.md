@@ -213,6 +213,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/Structure/메타데이터-MIME Type, BASE.html" target="_blank">
 		[HTML]메타데이터-MIME Type, BASE
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/body 태그 내 구조 개념.html" target="_blank">
+		[HTML]텍스트에 대한 블록, 인라인 요소 그리고 HTML5 시멘틱 구조
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
