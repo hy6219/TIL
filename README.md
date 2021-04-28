@@ -143,6 +143,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/[DB]제약조건.html" target="_blank">
 		DB-제약조건
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/[DB]서브쿼리.html" target="_blank">
+		DB-서브쿼리
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
