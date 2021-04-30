@@ -222,6 +222,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/[HTML]멀티미디어 태그.html" target="_blank">
 		[HTML]멀티미디어 태그
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/table/표를 나타내는 태그.html" target="_blank">
+		[HTML]표를 나타내는 태그
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
