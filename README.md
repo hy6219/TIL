@@ -164,6 +164,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/서블릿 동작 원리와 라이프 사이클.html">
 		서블릿 동작 원리와 라이프 사이클
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/[JSP]서블릿 컨테이너의 JSP 파일 실행 과정 && JSP 태그와 지시자.html">
+		서블릿 컨테이너의 JSP 파일 실행 과정 && JSP 태그와 지시자
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
