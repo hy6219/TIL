@@ -1,0 +1,837 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>JSP 내장 객체</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0dd1d6c5-414b-4e35-9bd6-429c2044d178" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💚</span></div><h1 class="page-title">JSP 내장 객체</h1></header><div class="page-body"><ul id="0c975590-7d0d-4956-acba-2acb1ccd03ef" class="bulleted-list"><li>서블릿 컨테이너가 JSP가 서블릿 파일로 변환될 때, 서블릿 객체가 자동으로 생성해주기 때문에, 우리는 바로 사용이 가능!</li></ul><ul id="ef1dcccb-046f-4773-aa16-ab20d96ea0cd" class="bulleted-list"><li>서블릿 컨테이너가 만든 서블릿 위치 : eclipse\web_workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\work\Catalina\localhost\jsp-study\org\apache\jsp</li></ul><ul id="449705d3-5f89-44e5-b595-b900ebb483d8" class="bulleted-list"><li>_jspService() 내부에서 객체화됨!</li></ul><ul id="d5bf332d-e971-453d-820c-cf5bf9a00056" class="bulleted-list"><li>jsp의 내장객체 종류</li></ul><div id="e7007f28-b842-4d55-a927-145ff1377b66" class="collection-content"><h4 class="collection-title">jsp 내장 객체 종류</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>내장 객체 분류</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>내장객체</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>클래스</th></tr></thead><tbody><tr id="ff835b32-9249-4cf0-8641-928210958e4c"><td class="cell-title"><a href="https://www.notion.so/ff835b3292494cf08641928210958e4c">입출력 관련 객체</a></td><td class="cell-bZfO">request</td><td class="cell-VZd`">javax.servlet.http.HttpServletRequest</td></tr><tr id="e2ef2f23-a02d-4cb7-a481-af0efecc963f"><td class="cell-title"><a href="https://www.notion.so/e2ef2f23a02d4cb7a481af0efecc963f">입출력 관련 객체</a></td><td class="cell-bZfO">response</td><td class="cell-VZd`">javax.servlet.http.HttpServletResponse</td></tr><tr id="b06c520d-f019-4572-b4fa-b91664376da7"><td class="cell-title"><a href="https://www.notion.so/b06c520df0194572b4fab91664376da7">입출력 관련 객체</a></td><td class="cell-bZfO">out</td><td class="cell-VZd`">javax.servlet.jsp.JspWriter</td></tr><tr id="2c90c6d8-4f2c-473b-a787-f544ae5a6931"><td class="cell-title"><a href="https://www.notion.so/2c90c6d84f2c473ba787f544ae5a6931">서블릿 관련 객체</a></td><td class="cell-bZfO">page</td><td class="cell-VZd`">java.lang.Object</td></tr><tr id="a7f65d58-1be7-4a36-874f-542a5913c558"><td class="cell-title"><a href="https://www.notion.so/a7f65d581be74a36874f542a5913c558">서블릿 관련 객체</a></td><td class="cell-bZfO">config</td><td class="cell-VZd`">javax.servlet.ServletConfig</td></tr><tr id="2d5a6888-0ea2-4192-8fad-80e33ad601e0"><td class="cell-title"><a href="https://www.notion.so/2d5a68880ea241928fad80e33ad601e0">외부 환경 정보를 제공하는 객체</a></td><td class="cell-bZfO">session</td><td class="cell-VZd`">javax.servlet.http.HttpSession</td></tr><tr id="058d36eb-0928-454a-b386-2d0e32c7e91c"><td class="cell-title"><a href="https://www.notion.so/058d36eb0928454ab3862d0e32c7e91c">외부 환경 정보를 제공하는 객체</a></td><td class="cell-bZfO">application</td><td class="cell-VZd`">javax.servlet.ServletContext</td></tr><tr id="ad2ebe83-d4f3-4fb6-b8c9-9c9c45c39972"><td class="cell-title"><a href="https://www.notion.so/ad2ebe83d4f34fb6b8c99c9c45c39972">외부 환경 정보를 제공하는 객체</a></td><td class="cell-bZfO">pageContext</td><td class="cell-VZd`">javax.servlet.jsp.PageContext</td></tr><tr id="5b3124e5-6fe1-4db2-8ad6-15a2f4269f39"><td class="cell-title"><a href="https://www.notion.so/5b3124e56fe14db28ad615a2f4269f39">예외 관련 객체</a></td><td class="cell-bZfO">exception</td><td class="cell-VZd`">-JSP 페이지가 에러 페이지로 지정되면 만들어짐!</td></tr></tbody></table></div><p id="873511ee-1ed7-47fe-a4df-999354e8025f" class="">
+</p><p id="b612850d-144a-44f0-b8f0-7c56128db7ad" class="">I. 입출력 관련 객체</p><ol id="7dd42872-7b04-4862-ae91-f7699f7b474e" class="numbered-list" start="1"><li><mark class="highlight-orange"><strong>out 내장 객체</strong></mark>(JspWriter 클래스의 객체!)</li></ol><ul id="e291a4d7-5c85-4751-803d-2f8df71d45fd" class="bulleted-list"><li><mark class="highlight-red"><span style="border-bottom:0.05em solid"><strong>서버 ▶️ 클라이언트 로 열려있는 출력 스트림</strong></span></mark></li></ul><ul id="e163ecd5-af12-4f80-855d-81ef75cc829c" class="bulleted-list"><li>JSP 실행 결과를 클라이언트의 브라우저로 출력할 때 가장 효과적으로 사용할 수 있는 객체</li></ul><ul id="c3e64893-7de4-46ff-80d4-f3d2a2d6dc2a" class="bulleted-list"><li>더이상 서블릿에서처럼 아래와 같은 객체를 생성하여 사용하지 않아도 됨!</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2c5e912a-b2b3-41de-83dc-1da0637ea011"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">PrinterWriter out = response.getWrtier();</div></figure><p id="826c1bfa-0f44-4dcf-abc8-1a47ea3d93b6" class="">
+</p><p id="ba48260f-0694-498a-875a-399fd38d0ca3" class="">2. request 내장 객체</p><ul id="bb5c4381-3595-4cad-bb72-626c5b0a7f92" class="bulleted-list"><li>클라이언트 ▶️ 서버로 전송되는 데이터를 알 수 있도록 해주는 객체</li></ul><p id="c6425155-0ee9-41c5-abe1-872520353d89" class="">
+</p><p id="d22cf91e-f320-48f1-80eb-03489524e02e" class="">(1)</p><div id="003bfd65-93f3-4d0b-8158-5195d4df653b" class="collection-content"><h4 class="collection-title">request 내장 객체를 통해서 브라우저 요청시  요청에 대한 정보를 알 수 있도록 도와주는 메서드들</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>이름</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>설명</th></tr></thead><tbody><tr id="bfba6f79-474a-4408-a6a5-09e7c89ac28f"><td class="cell-title"><a href="https://www.notion.so/getContextPath-bfba6f79474a4408a6a509e7c89ac28f">getContextPath()</a></td><td class="cell-~SQJ">JSP 페이지가 속한 웹 애플리케이션의 컨택스트 패스를 구함</td></tr><tr id="1861cb6d-d5c2-4e23-8c69-0ad1c91aca14"><td class="cell-title"><a href="https://www.notion.so/getMethod-1861cb6dd5c24e238c690ad1c91aca14">getMethod()</a></td><td class="cell-~SQJ">요청방식이 GET 방식인지 POST 방식인지 알려줌</td></tr><tr id="9a153239-9cf3-43d2-81ee-1e557bbe4e61"><td class="cell-title"><a href="https://www.notion.so/getRequestURL-9a1532399cf343d281ee1e557bbe4e61">getRequestURL()</a></td><td class="cell-~SQJ">요청 URL을 구함</td></tr><tr id="b9f2379d-18f9-42c4-9b53-a5a718ac2bf3"><td class="cell-title"><a href="https://www.notion.so/getRequestURI-b9f2379d18f942c49b53a5a718ac2bf3">getRequestURI()</a></td><td class="cell-~SQJ">요청 URL에서 쿼리스트링을 제외한 부분을 구함
+[→ 서버정보+jsp요청 혹은 서블릿 요청 까지만]</td></tr><tr id="6aee5b37-008e-457f-b7c0-93717f0a7a52"><td class="cell-title"><a href="https://www.notion.so/getQueryString-6aee5b37008e457fb7c093717f0a7a52">getQueryString()</a></td><td class="cell-~SQJ">쿼리스트링을 구함</td></tr><tr id="6a80107d-6f79-480d-adb9-b7533b139ed2"><td class="cell-title"><a href="https://www.notion.so/getSession-flag-6a80107d6f79480dadb9b7533b139ed2">getSession(flag)</a></td><td class="cell-~SQJ">요청 관련된 세션 객체를 구함</td></tr><tr id="d8932fa3-31b6-4e6d-b307-cfe10c3ba8db"><td class="cell-title"><a href="https://www.notion.so/getRequestDispatcher-path-d8932fa331b64e6db307cfe10c3ba8db">getRequestDispatcher(path)</a></td><td class="cell-~SQJ">지정 로컬 URL에 대한 RequestDispatcher 객체를 구함</td></tr><tr id="7584c2b9-ba09-4e5c-b625-fcfafb4b1242"><td class="cell-title"><a href="https://www.notion.so/getRemoteHost-7584c2b9ba094e5cb625fcfafb4b1242">getRemoteHost()</a></td><td class="cell-~SQJ">요청한 호스트의 완전한 이름을 구함</td></tr><tr id="8a7e263c-0e01-48c9-851a-5df1a1c29029"><td class="cell-title"><a href="https://www.notion.so/getRemoteAddr-8a7e263c0e0148c9851a5df1a1c29029">getRemoteAddr()</a></td><td class="cell-~SQJ">요청한 호스트의 네트워크 주소를 구함</td></tr><tr id="05ae60de-d3ae-4c0c-924b-fe6058eb6425"><td class="cell-title"><a href="https://www.notion.so/getRemoteUser-05ae60ded3ae4c0c924bfe6058eb6425">getRemoteUser()</a></td><td class="cell-~SQJ">요청한 사용자의 이름을 구함</td></tr><tr id="9085a42e-cf01-422f-ada2-4c3f29aa821c"><td class="cell-title"><a href="https://www.notion.so/getSession-9085a42ecf01422fada24c3f29aa821c">getSession()</a></td><td class="cell-~SQJ">세션 객체를 구함</td></tr><tr id="9d941a72-d488-460a-ba98-c8f4f58797ea"><td class="cell-title"><a href="https://www.notion.so/getServerName-9d941a72d488460aba98c8f4f58797ea">getServerName()</a></td><td class="cell-~SQJ">서버의 이름을 구함</td></tr><tr id="49adf376-4992-4410-9f9f-cf55717a6245"><td class="cell-title"><a href="https://www.notion.so/getProtocol-49adf376499244109f9fcf55717a6245">getProtocol()</a></td><td class="cell-~SQJ">사용 중인 프로토콜을 알려줌</td></tr></tbody></table></div><pre id="0cb3e9c3-062e-4261-8b3c-a0bcb7238b42" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Server Info&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;%=&quot;&lt;p&gt;컨텍스트 패스: &quot;+request.getContextPath()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청 방식: &quot;+request.getMethod()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청 URL: &quot;+request.getRequestURL()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청 URI: &quot;+request.getRequestURI()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;쿼리스트링: &quot;+request.getQueryString()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;Login.jsp 로컬  RequestDispacher 객체: &quot;+request.getRequestDispatcher(&quot;Login.jsp&quot;)+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청한 호스트의 완전한 이름: &quot;+request.getRemoteHost()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청한 호스트의 네트워크 주소: &quot;+request.getRemoteAddr()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;요청한 사용자의 이름: &quot;+request.getRemoteUser()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;세션: &quot;+request.getSession()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;서버이름: &quot;+request.getServerName()+&quot;&lt;/p&gt;&quot; %&gt;
+	&lt;%=&quot;&lt;p&gt;프로토콜: &quot;+request.getProtocol()+&quot;&lt;/p&gt;&quot; %&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><figure id="1dd91e72-d98e-4987-b6b2-cf30443a8f76" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/jsp%20request%20%EB%82%B4%EC%9E%A5%EA%B0%9D%EC%B2%B4-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%9A%94%EC%B2%AD%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%A0%95%EB%B3%B4%EB%A5%BC%20%EC%95%8C%EB%A0%A4%EC%A3%BC%EB%8A%94%20%EB%A9%94%EC%84%9C%EB%93%9C.PNG?raw=true"><img style="width:864px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/jsp%20request%20%EB%82%B4%EC%9E%A5%EA%B0%9D%EC%B2%B4-%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80%20%EC%9A%94%EC%B2%AD%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%A0%95%EB%B3%B4%EB%A5%BC%20%EC%95%8C%EB%A0%A4%EC%A3%BC%EB%8A%94%20%EB%A9%94%EC%84%9C%EB%93%9C.PNG?raw=true"/></a></figure><p id="de45a0a3-79c0-423e-b961-8c3a773ab310" class="">(2) request 객체의 요청 파라미터 관련 메서드</p><div id="da6c89c5-cb45-4023-b2f0-c58e9c794654" class="collection-content"><h4 class="collection-title">request 객체의 요청 파라미터 관련 메서드</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>메서드</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>설명</th></tr></thead><tbody><tr id="65065e21-9f27-44fe-83d1-ec0c5f81f162"><td class="cell-title"><a href="https://www.notion.so/getParameter-String-name-65065e219f2744fe83d1ec0c5f81f162">getParameter(String name)</a></td><td class="cell-=qh&lt;">html 문서에서 서버로 넘긴 name 속성 값을 파라미터로 넣기
+-지정한 이름의 파라미터가 여러개인 경우, 첫 번째 파라미터의 값을 구함
+-반환타입 : String</td></tr><tr id="d9cb5646-b1b6-44de-bfd4-32a3f0c07c36"><td class="cell-title"><a href="https://www.notion.so/getParameterValues-String-name-d9cb5646b1b644debfd432a3f0c07c36">getParameterValues(String name)</a></td><td class="cell-=qh&lt;">기본적인 동작 원리는 getParameter와 동일하나, 다중선택 등과 같이 여러개의 값을 받아오는 경우 해당됨
+(예 : 체크박스)(반환타입: String[])</td></tr><tr id="6931483e-42b3-4422-a066-1353abd6bf4c"><td class="cell-title"><a href="https://www.notion.so/getParameterNames-6931483e42b34422a0661353abd6bf4c">getParameterNames()</a></td><td class="cell-=qh&lt;">모든 파라미터의 이름을 구함</td></tr><tr id="938eb771-d9af-48c8-8a32-0c7d49e8d35c"><td class="cell-title"><a href="https://www.notion.so/setCharacterEncoding-String-Encoding-938eb771d9af48c88a320c7d49e8d35c">setCharacterEncoding(String Encoding)</a></td><td class="cell-=qh&lt;">POST 방식에 대한 인코딩 방식 설정</td></tr></tbody></table></div><p id="aa7ba021-e448-4958-b8f4-4b307af0e6c7" class="">
+</p><p id="05e6f0f4-da17-480b-b70c-60ae642eff1c" class="">3. response 내장 객체</p><ul id="f9fc305b-cce1-42cb-8fe9-4de00c5ca1b1" class="bulleted-list"><li>클라이언트에 대한 응답 처리</li></ul><ul id="fbce1d2c-03d9-4f01-ac18-c68b212ba726" class="bulleted-list"><li>response 객체의 기능 중 리다이렉트 기능(sendRedirect() 메서드)을 多 이용!</li></ul><figure id="81df12b0-26eb-4397-add8-553e6172004d"><div class="source"><a href="https://beginnersbook.com/2013/11/jsp-implicit-object-response-with-examples/">https://beginnersbook.com/2013/11/jsp-implicit-object-response-with-examples/</a></div></figure><div id="f9dceac2-5fa0-42e1-90bf-18bf28b79871" class="collection-content"><h4 class="collection-title">response 객체의 메서드</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>메서드명</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>설명</th></tr></thead><tbody><tr id="36e0a9a3-7728-4499-a9c5-7269303a563c"><td class="cell-title"><a href="https://www.notion.so/void-setContentType-String-type-36e0a9a377284499a9c57269303a563c">void setContentType(String type)</a></td><td class="cell-Dd]V">문자 인코딩 방식과 MIME Type 지정</td></tr><tr id="245262fb-adef-43e2-bf03-05c8ca96d762"><td class="cell-title"><a href="https://www.notion.so/void-sendRedirect-String-address-245262fbadef43e2bf0305c8ca96d762">void sendRedirect(String address)</a></td><td class="cell-Dd]V">새로운 JSP 페이지로 리다이렉트</td></tr><tr id="956be759-c8a4-478b-a152-38b6089763c6"><td class="cell-title"><a href="https://www.notion.so/void-addHeader-String-name-String-value-956be759c8a4478ba15238b6089763c6">void addHeader(String name, String value)</a></td><td class="cell-Dd]V">헤더(name)에 값(value) 추가</td></tr><tr id="b119905f-44ec-4c55-84e4-5c3bd90063c8"><td class="cell-title"><a href="https://www.notion.so/void-setHeader-String-name-String-value-b119905f44ec4c5584e45c3bd90063c8">void setHeader(String name, String value)</a></td><td class="cell-Dd]V">헤더(name)에 값(value) 지정</td></tr><tr id="5c3fba80-a985-4ab0-a4ef-c8a29187293d"><td class="cell-title"><a href="https://www.notion.so/boolean-containsHeader-String-name-5c3fba80a9854ab0a4efc8a29187293d">boolean containsHeader(String name)</a></td><td class="cell-Dd]V">name 헤더를 포함하면 true, 아니라면 false 반환</td></tr><tr id="f1ea18af-3422-426e-a4de-1fc79c588fc2"><td class="cell-title"><a href="https://www.notion.so/void-addCookie-Cookie-value-f1ea18af3422426ea4de1fc79c588fc2">void addCookie(Cookie value)</a></td><td class="cell-Dd]V">value 쿠키를 response에 추가</td></tr><tr id="12bb9d34-1dfb-4a3e-a3f0-131e5ea88532"><td class="cell-title"><a href="https://www.notion.so/void-sendError-int-status_code-String-msg-12bb9d341dfb4a3ea3f0131e5ea88532">void sendError(int status_code, String msg)</a></td><td class="cell-Dd]V">에러 메시지(msg)와 코드와 함께 에러 에러 반응을 전달</td></tr><tr id="6b46da2a-eede-4b48-b724-7f1bc41cd73c"><td class="cell-title"><a href="https://www.notion.so/boolean-isCommitted-6b46da2aeede4b48b7247f1bc41cd73c">boolean isCommitted()</a></td><td class="cell-Dd]V">클라이언트에게 http response가 전달되었는지 확인</td></tr><tr id="9b3cbdc7-3511-4ca6-bafc-e7d5bfbd161d"><td class="cell-title"><a href="https://www.notion.so/void-setStatus-int-status_code-9b3cbdc735114ca6bafce7d5bfbd161d">void setStatus(int status_code)</a></td><td class="cell-Dd]V">response.setStatus(404);와 같이 http response 코드 상태를 강제로 설정</td></tr></tbody></table></div><p id="2a849c42-4a75-4620-839c-7da8395804e9" class="">🍑 로그인 성공 실패에 따른 서로 다른 페이지 이동을 위해서 리다이렉트 기능을 사용하는 경우 多</p><p id="1990bb70-90e2-4190-9461-6f3eb5480bb1" class="">
+</p><p id="047f8865-85a2-4f9c-9e15-f28c2a2a6e0d" class="">로그인 성공, 실패에 따른 리다이렉트를 다음과 생각해볼 수 있다</p><figure id="18fd6e6e-3bb7-478f-b282-a282157bf052" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8%20%EB%B0%A9%EB%B2%95%EC%9C%BC%EB%A1%9C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94%20%EB%B0%A9%EC%8B%9D.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/%EB%A6%AC%EB%8B%A4%EC%9D%B4%EB%A0%89%ED%8A%B8%20%EB%B0%A9%EB%B2%95%EC%9C%BC%EB%A1%9C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%B2%98%EB%A6%AC%ED%95%98%EB%8A%94%20%EB%B0%A9%EC%8B%9D.png?raw=true"/></a><figcaption>response 객체로 리다이렉트하기-로그인</figcaption></figure><p id="2d5b1cb7-ff10-4b11-aea9-7157c4c6d428" class="">
+</p><p id="372b9ba3-cfc6-4fe6-80ff-d3a44fbdb995" class="">1) (지금은 DB연동없이 단순 값 비교만 하였지만) DB에 존재하는 값과 일치하는지 확인(회원 인증 절차 jsp 파일)</p><p id="1de43650-4807-48aa-acac-f0813a93c76f" class="">2-1) 일치한다면 메인 페이지로 리다이렉트[이때, java.net.URLEncoder 클래스의 encode 메서드로 인코딩이 깨지지 않게 하면서, 쿼리 스트링으로 실을 변수와 그 값을 넘겨줌]</p><p id="45c30ad3-d099-496c-a98a-4a357450dfa8" class="">2-2) 일치하지 않는다면, 로그인 페이지로 리다이렉트</p><p id="7b133a6d-17ea-40fe-abcc-b44b4beb5143" class="">
+</p><ul id="84227a05-ea57-4a95-a25d-df95dba4fea4" class="bulleted-list"><li>로그인 페이지</li></ul><pre id="da7b1235-bc57-47fd-b9f6-091be3ede976" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Login Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;form action=&quot;testLogin.jsp&quot; method=&quot;post&quot;&gt;
+		&lt;div class=&quot;id&quot;&gt;
+			&lt;label for=&quot;id&quot;&gt;id: &lt;/label&gt;
+			&lt;input type=&quot;text&quot; name=&quot;id&quot; id=&quot;id&quot;placeholder=&quot;아이디&quot;&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;pw&quot;&gt;
+			&lt;label for=&quot;pw&quot;&gt;pw: &lt;/label&gt;
+			&lt;input type=&quot;password&quot; name=&quot;pw&quot; id=&quot;pw&quot;placeholder=&quot;비밀번호&quot;&gt;
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;input type=&quot;submit&quot; value=&quot;로그인&quot;&gt;
+		&lt;/div&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><ul id="26fc1245-f34c-412b-bfd1-034fe988269b" class="bulleted-list"><li>회원 인증 절차 jsp 파일</li></ul><pre id="e1ce7663-44c6-41db-9d28-c766f0c02e17" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ page import=&quot;java.net.URLEncoder&quot; %&gt;
+&lt;%!
+	//id
+	String id = &quot;&quot;;
+	//pw
+	String pw = &quot;&quot;;
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;로그인세션&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;%
+		//response 객체에 실어서 보낼 사용자의 이름
+		String name =&quot;지수&quot;;
+		request.setCharacterEncoding(&quot;UTF-8&quot;);
+		id = request.getParameter(&quot;id&quot;);
+		pw = request.getParameter(&quot;pw&quot;);
+		
+		if(id.equals(&quot;js&quot;) &amp;&amp; pw.equals(&quot;pw&quot;)){
+			response.sendRedirect(&quot;main.jsp?name=&quot;+
+			URLEncoder.encode(name,&quot;UTF-8&quot;));
+		}else{
+			response.sendRedirect(&quot;loginForm.jsp&quot;);
+		}
+		
+		
+	%&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><ul id="831f95a7-0b69-4461-9db1-b854975dd967" class="bulleted-list"><li>메인 페이지</li></ul><pre id="81b2319d-c1f9-4e8f-88fe-e5ff601e0acf" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Main Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;%=request.getParameter(&quot;name&quot;)+&quot;님 안녕하세요!&lt;br&gt;&quot;+
+	&quot;저희 홈페이지에 방문해 주셔서 감사합니다!&lt;br&gt; 즐거운 시간 되세요!&lt;br&gt;&quot;%&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><hr id="2aeeff63-8c72-4a85-86a9-499c2fac2216"/><h3 id="f0407c77-233e-4cab-b582-5004f2da1705" class="">JSP 에서 다른 페이지로 이동하기 위한 방법</h3><p id="0d440961-a517-4044-8548-d2f46e087c0a" class="">
+</p><ol id="81a6420d-870c-4a8d-86d2-7e8954b0d139" class="numbered-list" start="1"><li>리다이렉트 방식 - response.sendRedirect(&quot;리다이렉트 할 url&quot;)</li></ol><ol id="6b2df180-ea07-4751-91a9-af5d73afe5a2" class="numbered-list" start="2"><li>포워드 방식</li></ol><hr id="4e339310-a184-4a53-9cb9-a88053d1b9a2"/><ol id="d3114664-6090-463c-87a1-b72c2d6b012d" class="numbered-list" start="1"><li>리다이렉트 방식 : 브라우저의 URL을 변경하도록 하여 페이지를 이동</li></ol><ul id="ebfc476b-17ce-4a8e-9e50-d90fbdceace4" class="bulleted-list"><li>request, response 객체가 유지되지 않음</li></ul><ul id="274aba9d-9eb7-4598-926d-cb871668e8bc" class="bulleted-list"><li>위의 로그인 예시에서 확인해 본 것처럼, 리다이렉트 메서드에 기술했던 URL이 쿼리 스트링과 함께 나타남</li></ul><ul id="de51fb28-81e5-45c4-8012-2336547e4859" class="bulleted-list"><li>한글 인코딩 처리를 위하여 java.net.URLEncoder 클래스의 encode 메서드로 처리해주어야 함!</li></ul><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="35567feb-d7cf-4e27-b534-658188f0ad6c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">response.sendRedirect(&quot;main.jsp?name=&quot;+
+			URLEncoder.encode(name,&quot;UTF-8&quot;));</div></figure><p id="0b5ebfe8-e4ca-4485-8430-c0910396e83a" class="">
+</p><p id="2501d3c6-f3cf-4a04-9053-85f414729fa4" class="">2. 포워드 방식 : requestDispatcher 객체로 접근</p><ul id="657ebe8f-531b-4aab-b2e2-b73440aef776" class="bulleted-list"><li>requestDispatcher 객체=request.getRequestDispatcher(&quot;URL&quot;) 로 생성 가능</li></ul><ul id="c1fd4e6b-3b9d-4481-a72e-a63b0b0800e8" class="bulleted-list"><li>포워드 방식: requestDispatcher 객체.forward() 를 통하여 getRequestDispatcher 메서드로 전달된 URL, 즉 페이지로 이동됨</li></ul><ul id="ed9ee095-d3f1-4222-a283-cc71c8c9ed96" class="bulleted-list"><li>서버 상에서 페이지가 이동됨</li></ul><ul id="e1b1e34f-a88e-4446-afc6-1a1dac64bc1c" class="bulleted-list"><li>URL 변경 ❌</li></ul><ul id="137101c5-8954-4e8a-a372-d3858cd47ff2" class="bulleted-list"><li>request, response 유지된 채 이동됨 ▶️ request.setAttribute(name,value); 로 데이터를 전송(쿼리 스트링 형태로 전달 ❌) &amp;&amp; 이동된 페이지에서는 getAttribute(name)으로 속성 값을 얻어와서 사용 가능!
+-단, getAttribute는 Object 형으로 반환되므로, 적절히 캐스팅해주어야 함!</li></ul><ul id="5fa2e2af-5390-46ad-9615-495befa1e929" class="bulleted-list"><li>한글 인코딩을 위한 별다른 처리가 필요 ❌</li></ul><figure id="58a1a88f-7897-48fe-bc7f-c2b5294dd6e1" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/%ED%8F%AC%EC%9B%8C%EB%94%A9%20%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0.png?raw=true"><img style="width:816px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/%ED%8F%AC%EC%9B%8C%EB%94%A9%20%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%95%98%EA%B8%B0.png?raw=true"/></a></figure><ul id="b929044b-8320-467e-a79e-a05a9de7c40e" class="bulleted-list"><li>로그인 포맷 페이지 -LoginForm.jsp</li></ul><pre id="b6e4ccb4-767c-4035-9acc-850b4e63e9c9" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Login Page&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;form action=&quot;testLogin.jsp&quot; method=&quot;post&quot;&gt;
+		&lt;div class=&quot;id&quot;&gt;
+			&lt;label for=&quot;id&quot;&gt;id: &lt;/label&gt;
+			&lt;input type=&quot;text&quot; name=&quot;id&quot; id=&quot;id&quot;placeholder=&quot;아이디&quot;&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;pw&quot;&gt;
+			&lt;label for=&quot;pw&quot;&gt;pw: &lt;/label&gt;
+			&lt;input type=&quot;password&quot; name=&quot;pw&quot; id=&quot;pw&quot;placeholder=&quot;비밀번호&quot;&gt;
+		&lt;/div&gt;
+		&lt;div class=&quot;age&quot;&gt;
+			&lt;label for=&quot;age&quot;&gt;나이: &lt;/label&gt;
+			&lt;input type=&quot;number&quot; name=&quot;age&quot; id=&quot;age&quot;placeholder=&quot;나이&quot;&gt;
+		&lt;/div&gt;
+		&lt;div&gt;
+			&lt;input type=&quot;submit&quot; value=&quot;로그인&quot;&gt;
+		&lt;/div&gt;
+	&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><ul id="f4dd7217-0c24-496c-8ae3-363bdf1d0838" class="bulleted-list"><li>나이 기준에 따른 처리 - testLogin.jsp</li></ul><pre id="18c8baf5-98da-4ba3-8824-87370fc504b8" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+ &lt;%!
+	//id
+	String id = &quot;&quot;;
+	//pw
+	String pw = &quot;&quot;;
+	//age
+	int age = 0;
+ %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Forward Login&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;%
+		request.setCharacterEncoding(&quot;UTF-8&quot;);
+		id = request.getParameter(&quot;id&quot;);
+		pw = request.getParameter(&quot;pw&quot;);
+		age = Integer.valueOf(request.getParameter(&quot;age&quot;));
+		
+		if(age &lt; 19){
+			%&gt;
+			&lt;script type=&quot;text/javascript&quot;&gt;
+				alert(`19세 미만이므로 입장 불가`);
+				history.go(-1);
+			&lt;/script&gt;
+			&lt;% 
+		}
+		else{
+			request.setAttribute(&quot;name&quot;, &quot;지수&quot;);
+			RequestDispatcher dispatcher=
+					request.getRequestDispatcher(&quot;Result.jsp&quot;);
+			dispatcher.forward(request, response);
+		}
+		%&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="efe6f992-83a6-4553-8964-20ea6b2b6b00" class="">
+</p><ul id="27d78ce2-d85d-4fd3-aa2b-c82bec597c7c" class="bulleted-list"><li>로그인 성공 시 서버상 작동되는 페이지- Result.jsp</li></ul><pre id="c3c339ac-9b32-4b5d-bf15-4cd4da7b09b1" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%--get attribute --%&gt;
+&lt;%
+//선언문에서는 메서드를 사용할 수 없지만 스크립트릿에서는 사용할 수 있으므로! 
+//이를 이용
+	String id = request.getParameter(&quot;id&quot;);
+	String pw = request.getParameter(&quot;pw&quot;);
+	int   age = Integer.valueOf(request.getParameter(&quot;age&quot;));
+	//서버에서 보낸 값 받기
+	String name = (String)request.getAttribute(&quot;name&quot;);
+%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Forward&lt;/title&gt;
+&lt;/head&gt;
+&lt;body bgcolor=tomato&gt;
+	forward 방식으로 이동된 페이지&lt;br&gt;
+	나이 : &lt;%=age %&gt;
+	이름 : &lt;%=name %&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="8d529a61-2c9e-4138-be5a-74fe1ded2943" class="">
+</p><p id="c1006c4e-ebb4-4995-95d5-8a08d1ae4631" class="">[history 객체의 속성과 메서드]</p><div id="ee037891-f00a-4599-9685-612a6d6399ef" class="collection-content"><h4 class="collection-title">history 객체의 속성</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>속성</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>내용</th></tr></thead><tbody><tr id="89862515-3bef-4d62-a01b-ec3f82244ebb"><td class="cell-title"><a href="https://www.notion.so/length-898625153bef4d62a01bec3f82244ebb">length</a></td><td class="cell-_cX}">브라우저의 history 목록에 저장된 URL의 갯수</td></tr></tbody></table></div><p id="6f186d5e-72e1-4f01-8b2a-cf769842b013" class="">
+</p><div id="ba511891-77b9-464d-acd8-e81814742589" class="collection-content"><h4 class="collection-title">history 객체의 메서드</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>메서드</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>내용</th></tr></thead><tbody><tr id="d0796d03-5ca4-4129-b3d5-38343cb38063"><td class="cell-title"><a href="https://www.notion.so/back-d0796d035ca44129b3d538343cb38063">back()</a></td><td class="cell-A@eP">한 단계 전 URL로 이동</td></tr><tr id="e5741a91-e1af-46f3-83fe-7125e8348d2f"><td class="cell-title"><a href="https://www.notion.so/forward-e5741a91e1af46f383fe7125e8348d2f">forward()</a></td><td class="cell-A@eP">한 단계 뒤 URL로 이동</td></tr><tr id="f9bd6861-6565-4acd-8f50-c9e6fcf4d043"><td class="cell-title"><a href="https://www.notion.so/go-f9bd686165654acd8f50c9e6fcf4d043">go()</a></td><td class="cell-A@eP">지정된 단계의 URL로 이동
+-history.go(-1): 한단계 전 URL로 이동 == history.back()</td></tr></tbody></table></div><p id="3f79205b-7352-4ecf-9efa-706eab9047fb" class="">
+</p><hr id="1c03fed8-358c-4904-8cf0-a6e25a6e4ccc"/><p id="d11a5722-28d7-475c-9eeb-6a6ef3885b33" class="">4. application 내장 객체</p><ul id="42697f63-6fd1-4d85-b92c-a44a8a84e9d9" class="bulleted-list"><li>하나의 웹 애플리케이션 안에서 자원을 공유</li></ul><ul id="be4e88e3-e671-44e4-aa34-c5121ffe4f1b" class="bulleted-list"><li>하나의 웹 애플리케이션을 관리</li></ul><p id="1e421bef-d45c-412a-9ce3-5d4c6fc79747" class="">
+</p><p id="1999efe0-96b3-4a24-8bbc-bbf2f2c2a64b" class="">▶️ </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="297d4bdd-8e57-4ab1-9105-dcc7c137dc1c"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">application.setAttribute(속성,값)</div></figure><p id="19285e78-4c43-40d7-b524-6eec33df70bb" class="">은 application 객체 내부에 속성이 저장되고, 이 속성-값이 모든 JSP 페이지 내에서 공통적으로 사용될 수 있게 됨</p><p id="7164acfe-3fdc-43a3-b693-28c208ae686a" class="">
+</p><ul id="d6e5cc30-a011-4a8c-8d1e-3490c92db95d" class="bulleted-list"><li>javax.servlet.ServletContext 인터페이스를 구현한 객체</li></ul><ul id="fb0ad661-7e54-4d05-9bfa-cb96039c6781" class="bulleted-list"><li>웹 애플리케이션 당 하나만 생성됨</li></ul><ul id="dd2a21ab-1443-4ea4-b21d-582fec6cc949" class="bulleted-list"><li>서블릿 컨테이너 정보 제공, 서블릿 컨테이너에게 로그 처리를 요청 등..</li></ul><p id="9fb44092-87fe-4538-b69e-2410dc367236" class="">
+</p><div id="4281c114-4c32-463c-8cd4-f375da9c2d45" class="collection-content"><h4 class="collection-title">application 객체의 메서드</h4><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>메서드</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>설명</th></tr></thead><tbody><tr id="88cf8d28-ae01-4b65-b7ec-a83e798d8fd8"><td class="cell-title"><a href="https://www.notion.so/getServerInfo-88cf8d28ae014b65b7eca83e798d8fd8">getServerInfo()</a></td><td class="cell-al|e">컨테이너 이름과 버전 반환</td></tr><tr id="8c379e53-c79d-4900-835e-8b0e37d063bc"><td class="cell-title"><a href="https://www.notion.so/getContextPath-8c379e53c79d4900835e8b0e37d063bc">getContextPath()</a></td><td class="cell-al|e">웹 애플리케이션의 URL 경로 중 컨텍스트 패스명 반환</td></tr><tr id="ad0af111-54b1-4fa3-97e5-18750fb04557"><td class="cell-title"><a href="https://www.notion.so/getRealPath-jsp-ad0af11154b14fa397e518750fb04557">getRealPath(jsp)</a></td><td class="cell-al|e">JSP 파일의 실제 경로 반환</td></tr><tr id="3ca54c7f-5b88-4a43-b9e0-84add387de04"><td class="cell-title"><a href="https://www.notion.so/getMimeType-filename-3ca54c7f5b884a43b9e084add387de04">getMimeType(filename)</a></td><td class="cell-al|e">지정된 파일의 MIME 타입 반환</td></tr><tr id="0e1591e4-3990-48f7-9ac0-ae6bf48de29e"><td class="cell-title"><a href="https://www.notion.so/log-message-0e1591e4399048f79ac0ae6bf48de29e">log(message)</a></td><td class="cell-al|e">지정된 message의 로그를 저장</td></tr></tbody></table></div><figure id="d0961371-e24b-4a86-b21c-c3a63737c121" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/application%20%EA%B0%9D%EC%B2%B4.PNG?raw=true"><img style="width:1056px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/application%20%EA%B0%9D%EC%B2%B4.PNG?raw=true"/></a></figure><figure id="0c99ae8a-18ae-4fb3-8d7e-800364b0c506" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/application-log.PNG?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/builtInObject/application-log.PNG?raw=true"/></a></figure><hr id="7edcd86d-3e02-462f-bed6-fdc72bab33d1"/><p id="2fb0db01-6f6f-461b-8b26-3361b35f1b36" class="block-color-orange_background"><mark class="highlight-red"><strong>📌 내장 객체의 영역 📌</strong></mark></p><ul id="b22159f1-f115-4719-a5f1-db0e3c3b04dd" class="bulleted-list"><li>객체의 유효기간!!</li></ul><p id="a762a2c0-4fc2-40ad-82d8-2e6e100fb126" class="block-color-yellow_background"><mark class="highlight-purple"><strong>page 영역 &lt; request 영역 &lt; session 영역 &lt; application 영역</strong></mark></p><p id="c36bf2da-134d-4ec2-bb92-9c2d003652b7" class="">
+</p><ol id="8cd8fc9d-b7c2-4f0b-a07b-70e16d95174a" class="numbered-list" start="1"><li>page 영역</li></ol><ul id="0b09c2b0-2a81-47aa-a19d-0a186ca0ad64" class="bulleted-list"><li>하나의 JSP 페이지를 처리할 때 사용되는 영역</li></ul><ul id="e52c2945-7a38-427d-947e-ec8c51bbcfec" class="bulleted-list"><li>한 번의 클라이언트 요청에 하나의 JSP 페이지를 범위로 가짐(해당되는 pageContext 내장객체를 할당받음)</li></ul><p id="b88857f2-2324-4d02-8cb4-8f711a208144" class="">
+</p><p id="8dfc9e11-c3bb-4866-be69-911f38e4c582" class="">2. request 영역</p><ul id="465402e8-5743-4604-b87b-fd2500ec4894" class="bulleted-list"><li>하나의 요청을 처리할 때 사용되는 영역</li></ul><ul id="f873daed-59fd-446f-a98e-40fa252d3353" class="bulleted-list"><li>하나의 요청을 처리하는 데 사용되는 모든 JSP 페이지</li></ul><ul id="8ae390ae-4189-4ae5-9359-2ff7cb0afe70" class="bulleted-list"><li>브라우저가 요청을 할 때마다 새로운 request 내장 객체가 생성되고, 매번 새로운 request 영역이 생성됨</li></ul><p id="b5007f7f-ce81-4a09-9a7c-95c291a62c0b" class="">
+</p><p id="1d6f728c-a2a2-40e5-a1ec-25d9bb2c5e53" class="">3. session 영역</p><ul id="318a34ad-9fe4-4380-bf2a-be15867adc56" class="bulleted-list"><li>웹 브라우저를 닫기 전까지 페이지를 이동하더라도 사용자의 정보를 잃지 않고 서버에 보관할 수 있도록 하는 객체</li></ul><p id="f4183428-8ec2-46b8-9102-dac12063d889" class="">
+</p><p id="e98e86b5-43c2-4e4b-9bc3-21022df19332" class="">4. application 영역</p><ul id="983a385a-b599-46cb-aaa5-f3719f497ae6" class="bulleted-list"><li>하나의 웹 애플리케이션과 관련된 모든 페이지, 그 페이지에 대한 요청, 세션을 모두 포함</li></ul><ul id="456cb5cc-1616-4325-9b79-741d034aff43" class="bulleted-list"><li>하나의 웹 애플리케이션에 존재하는 모든 JSP 페이지는 하나의 application 내장 객체를 공유함
+(application 내장 객체는 application 영역에 포함됨)</li></ul><p id="d97bc184-de2d-4d6e-842c-6cfea7dd5cb5" class="">
+</p><p id="3dba2764-f630-43af-bc41-1b6ef9d7e5e4" class=""><em>내장객체에서 사용할 수 있는 메서드 추가!!</em></p><ul id="d8ca9ebf-bb5b-43fb-b663-378fde542f5c" class="bulleted-list"><li>getAttributeNames(): 현재 객체에 관련된 모든 속성의 이름을 추출함</li></ul><ul id="7c84bae0-f341-423a-a420-17dd1829a31c" class="bulleted-list"><li>removeAttribute(name) : 매개변수로 전달된 속성의 값을 제거</li></ul><ul id="5cdd4385-5f3b-4cc3-9abc-c39e11d021cd" class="bulleted-list"><li>리턴값은 Object 타입!</li></ul><p id="cb5890e0-0f8f-4d62-8e0e-bbca2eb47297" class="">
+</p></div></article></body></html>
