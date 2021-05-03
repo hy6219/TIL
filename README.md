@@ -231,6 +231,15 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/form/양식관련태그.html" target="_blank">
 		[HTML] 양식 관련 태그
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
+		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]연산자.html" target="_blank">
+		[VanillaJS-ES6] 연산자
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]함수.html" target="_blank">
+		[VanillaJS-ES6] 함수에 대해서
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
