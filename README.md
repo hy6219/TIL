@@ -246,6 +246,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]함수.html" target="_blank">
 		[VanillaJS-ES6] 함수에 대해서
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]배열.html" target="_blank">
+		[VanillaJS-ES6] 배열
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
