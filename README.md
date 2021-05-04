@@ -249,6 +249,12 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]배열.html" target="_blank">
 		[VanillaJS-ES6] 배열
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]객체.html" target="_blank">
+		[VanillaJS-ES6] 객체
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]반복문.html" target="_blank">
+		[VanillaJS-ES6] 반복문
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
