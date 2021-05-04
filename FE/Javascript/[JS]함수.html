@@ -676,6 +676,15 @@ console.log(`3+5=${adder(3,5)}`);//3+5=8</code></pre><ul id="2bd0c991-7e46-459d-
 }</code></pre><p id="9d931fd6-4cfc-45d6-9d10-a973e404a99c" class="">
 </p><p id="5b038add-6195-428c-b479-12c6b2d1fa95" class="">2. 익명 함수</p><ul id="85505f0e-51a3-4adc-b8b4-da0ef81342e9" class="bulleted-list"><li>변수에 함수를 할당</li></ul><pre id="8b2e02a2-5cc5-4995-bdc3-10bbe35845c0" class="code"><code>const 혹은 let 함수명 = function(~){
 	//code
-}</code></pre><p id="a9b76796-0fa6-4826-9d9b-da3414d8d67b" class="">
-</p><ul id="c940f166-5ee5-4bd1-b8e3-7d7e1ec0e62b" class="bulleted-list"><li>여기에서 function(~){} 부분이 바로 &quot;함수 리터럴&quot;!!</li></ul><p id="616acd44-14ff-4487-a294-ae7156270d8a" class="">3. 화살표 함수</p><ul id="94771f62-ee13-451d-9c81-80fd97475af1" class="bulleted-list"><li>위에서 정리한 부분 확인하기!</li></ul><p id="ee60938e-5967-40ef-a02b-9308899c61de" class="">
+}</code></pre><p id="c1ba17f9-9b1d-4c6a-bd84-e10f54f15525" class="">3. 리터럴 함수</p><ul id="d25f4d3c-00cb-4be0-9492-32cb952a74c8" class="bulleted-list"><li>익명 함수와의 차이점은 값(리터럴)로써 함수를 사용할 수 있다는 점!</li></ul><pre id="1824e7a9-c767-4229-9e06-e12c54252ac4" class="code"><code>function func03(){
+	prn(function(msg){
+		alert(msg);
+ });
+}
+
+function prn(literal){
+	alert(literal);
+	literal(&quot;안녕하세요! 리터럴입니다!&quot;);
+}</code></pre><ul id="616acd44-14ff-4487-a294-ae7156270d8a" class="bulleted-list"><li>확인해보면, literal 매개변수에는 func03의 function(msg){~}가 그대로 들어가고, </li></ul><ul id="696593dc-674d-42fc-a1ff-7999f10ed302" class="bulleted-list"><li>그 이후에는 literal 매개변수를 마치 함수처럼 사용하여 msg 매개변수에 &quot;안녕하세요! 리터럴입니다!&quot;를 넣어서 알람을 준다!</li></ul><figure id="45035daf-ec4b-4081-807f-f8ca34872c95" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/FE/Javascript/%EB%A6%AC%ED%84%B0%EB%9F%B4%ED%95%A8%EC%88%98.gif?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/FE/Javascript/%EB%A6%AC%ED%84%B0%EB%9F%B4%ED%95%A8%EC%88%98.gif?raw=true"/></a><figcaption>리터럴 함수</figcaption></figure><p id="855af764-610f-4028-b493-8371200994ff" class="">
+</p><p id="002d0b4c-956f-4ed2-9267-92076aa5493b" class="">4. 화살표 함수</p><ul id="94771f62-ee13-451d-9c81-80fd97475af1" class="bulleted-list"><li>위에서 정리한 부분 확인하기!</li></ul><p id="ee60938e-5967-40ef-a02b-9308899c61de" class="">
 </p></div></article></body></html>
