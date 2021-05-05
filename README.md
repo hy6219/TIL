@@ -170,6 +170,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/builtInObject/JSP 내장 객체.html">
 		JSP 내장 객체
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/쿠키와 세션.html">
+		쿠키와 세션
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
