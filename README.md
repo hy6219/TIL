@@ -258,6 +258,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]반복문.html" target="_blank">
 		[VanillaJS-ES6] 반복문
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/프로토타입과 클래스.html" target="_blank">
+		[VanillaJS-ES6] 프로토타입과 클래스
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
