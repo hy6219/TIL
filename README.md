@@ -261,6 +261,30 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/프로토타입과 클래스.html" target="_blank">
 		[VanillaJS-ES6] 프로토타입과 클래스
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/삼항연산자.html" target="_blank">
+		[VanillaJS-ES6] 삼항 연산자
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/Truth and Falsy.html" target="_blank">
+		[VanillaJS-ES6] Truth and Falsy
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/단축 평가 논리 계산법(Short-circuit evaluation).html" target="_blank">
+		[VanillaJS-ES6] 단축 평가 논리 계산법(Short-circuit evaluation)
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/함수의 기본 파라미터.html" target="_blank">
+		[VanillaJS-ES6] 함수의 기본 파라미터
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/조건문 더 스마트하게 쓰기.html" target="_blank">
+		[VanillaJS-ES6] 조건문 더 스마트하게 쓰기
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/비구조화 할당(=구조 분해).html" target="_blank">
+		[VanillaJS-ES6] 비구조화 할당(=구조 분해)
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/spread와 rest.html" target="_blank">
+		[VanillaJS-ES6] spread와 rest
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/scope.html" target="_blank">
+		[VanillaJS-ES6] scope
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
