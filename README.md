@@ -173,6 +173,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/Basic/쿠키와 세션.html">
 		쿠키와 세션
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/자바 빈과 액션태그.html">
+		자바 빈과 액션태그
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
