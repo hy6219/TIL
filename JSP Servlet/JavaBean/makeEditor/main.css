@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+body{
+	margin:0;
+	padding:0;
+}
+header{
+	margin-left:30px;
+}
+h1{
+	font-size:30px;
+	width:300px;
+	margin:auto;
+}
+table{
+	width:800px;
+	margin:auto;
+	border:2px solid black;
+	border-radius:10px;
+}
+th{
+	background-color:gray;
+}
+
+td{
+	border:1px solid black;
+}
+.btn{
+	margin:auto;
+	width:150px;
+	padding:10px;
+}
