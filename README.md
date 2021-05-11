@@ -243,6 +243,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/CSS/CSS 초기화 및 Emmet 문법.html" target="_blank">
 		[CSS] CSS 초기화 및 Emmet 문법
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/CSS/Basic/CSS_선택자.html" target="_blank">
+		[CSS] CSS 선택자
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
