@@ -7,7 +7,7 @@
 <title>로그인</title>
 </head>
 <body>
-	<form action="login.jsp" method="post">
+	<form action="Login.jsp" method="post">
 		<div class="id">
 			<label> 아이디:
 				<input type="text" name="id" required>
