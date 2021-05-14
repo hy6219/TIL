@@ -179,6 +179,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/[JSP]EL과 JSTL.html">
 		EL(Expression Language) & JSTL(JSP Standard Tag Library)
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/[JSP]JDBC.md">
+		JDBC
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
