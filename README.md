@@ -146,6 +146,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/[DB]서브쿼리.html" target="_blank">
 		DB-서브쿼리
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/9d625801ed3e861d1f6991b40bca9d0b3dcb20a5/Database/Oracle/Basic/%5BSQL%5DINSERT,UPDATE,DELETE.md" target="_blank">
+		DB-DML(INSERT, UPDATE, DELETE)
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
