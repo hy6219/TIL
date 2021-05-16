@@ -149,6 +149,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/9d625801ed3e861d1f6991b40bca9d0b3dcb20a5/Database/Oracle/Basic/%5BSQL%5DINSERT,UPDATE,DELETE.md" target="_blank">
 		DB-DML(INSERT, UPDATE, DELETE)
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/8549a27be935fc32ae867d8447eeae6f7da233d2/Database/Oracle/Basic/%5BDB%5D%ED%8A%B8%EB%9E%9C%EC%9E%AD%EC%85%98%EC%9D%98%20%EC%9D%B4%ED%95%B4.md" target="_blank">
+		DB-트랜잭션의 개념, 특징, TCL 및 락
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
