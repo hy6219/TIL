@@ -161,6 +161,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/privs/데이터베이스_사용자,권한,롤관리.html" target="_blank">
 		DB-데이터베이스_사용자,권한,롤관리
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/PLSQL/PLSQL 기초.html" target="_blank">
+		DB-PLSQL 기초
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
