@@ -321,6 +321,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/jQuery/[jQuery]DOM객체 선택자.html" target="_blank">
 		[jQuery] DOM 객체 선택자
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/jQuery/jQuery-탐색선택자.html" target="_blank">
+		[jQuery] 탐색 선택자
+	</a></li>
          </ul>
     </li><!--FE -->
 </ol><!--All END-->
