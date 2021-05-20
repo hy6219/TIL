@@ -164,6 +164,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/PLSQL/PLSQL 기초.html" target="_blank">
 		DB-PLSQL 기초
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/PLSQL/PLSQL-레코드와 컬렉션.html" target="_blank">
+		DB-PLSQL 레코드 &amp; 컬렉션(연관배열)
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
