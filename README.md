@@ -170,6 +170,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/PLSQL/cursor_exception/[PLSQL]커서와 예외처리.html" target="_blank">
 		DB-PLSQL 커서와 예외처리
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/PLSQL/storedSubProgram/[PLSQL]저장 서브프로그램.html" target="_blank">
+		DB-PLSQL 저장 서브 프로그램
+	</a></li>
          </ul>
     </li><!--database -->
 <!--jsp servlet 공부-->
