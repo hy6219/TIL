@@ -209,6 +209,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/4631a1819fb3760156be931d6b8307d438819ab5/JSP%20Servlet/%5BJSP%5DJDBC.md">
 		JDBC
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/[JSP 서블릿] 데이터베이스 커넥션풀 DBCP.html">
+		데이터베이스 커넥션풀
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
