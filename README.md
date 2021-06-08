@@ -212,9 +212,6 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/[JSP 서블릿] 데이터베이스 커넥션풀 DBCP.html">
 		데이터베이스 커넥션풀
 	</a></li>
-	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/javax.naming.NameNotFoundException 에러와 함께 java.lang.NullPointerException이 뜨는 경우.html">
-		데이터베이스 커넥션풀 lookup을 이용한 DataSource 연결 시 나타나는 NameNotFoundException(Root by Null Pointer Exception)
-	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
@@ -287,6 +284,9 @@
 	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/CSS/Basic/CSS 단위.html" target="_blank">
 		[CSS] CSS 단위
+	</a></li>
+	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/CSS/Basic/CSS 크기, 여백, 색상 속성.html" target="_blank">
+		[CSS] CSS 속성- 크기, 여백, 색상
 	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
