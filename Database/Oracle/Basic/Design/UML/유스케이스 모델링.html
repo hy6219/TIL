@@ -1,0 +1,645 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>유스케이스 모델링</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4a936bcf-e49e-4605-af42-044fd2a505e9" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">✅</span></div><h1 class="page-title">유스케이스 모델링</h1></header><div class="page-body"><ul id="507b428c-0f63-47e0-85df-8ffe9b9f2215" class="bulleted-list"><li>이벤트 및 반응 방식 시스템 개발에 효율적인 기능적 모델링 방법(블랙박스 모델링 방법 중 하나) ▶️ <mark class="highlight-pink"><strong>동적(행위) 다이어그램</strong></mark></li></ul><ul id="f4aefd04-3298-4d00-a641-bd9904836565" class="bulleted-list"><li>시스템 기능을 사용하는 사용자와 <mark class="highlight-pink"><strong>시스템 간 교류</strong></mark>를 표현한 것</li></ul><ul id="55dd3621-f251-4fd5-93bc-7bd7b60ea71f" class="bulleted-list"><li>사용자 관점에서 시스템의 요구사항(행동)을 설계하는 것</li></ul><ul id="fbc23864-1ab0-4fa8-a590-bad0793a3cf5" class="bulleted-list"><li>초기 요구사항 분석부터 마지막 시험, 배치 등 전 공정에서 사용할 수 있는 수단</li></ul><ul id="663e41d5-dea6-425b-9d34-c6e0822fb0a1" class="bulleted-list"><li>시스템이 해야할 일(Use Case)와 그 행동을 해야 하는 사용자(Actor)를 함께 표현</li></ul><ul id="831e2347-e93d-4885-9685-ba780299b5f5" class="bulleted-list"><li>액터와 유스케이스, 관계로 구성</li></ul><p id="47d129d3-63d8-4227-8f54-2b01128afac0" class="">(예시- source: <a href="https://www.edrawmax.com/article/use-case-diagram-examples.html">https://www.edrawmax.com/article/use-case-diagram-examples.html</a>)</p><figure id="deef6992-804f-4c1c-91e5-921f0404ef0b" class="image"><a href="https://images.edrawmax.com/examples/use-case-diagram-examples/example2.jpg"><img src="https://images.edrawmax.com/examples/use-case-diagram-examples/example2.jpg"/></a></figure><p id="8d7ddb68-32b5-4dca-8f1a-8cfa7a9b88b5" class="">
+</p><p id="081aa498-9527-4ee3-a6aa-8727c984a4e8" class="">🌺 액터 Actor 🌺</p><p id="44dd4d8c-cd3f-4f83-919a-b9fbc556205a" class="">위의 유스케이스 예시에서 졸라맨(? 사람?) 모형이 바로 &quot;액터&quot;!!</p><ul id="6b1111f2-625c-44b2-bc48-86e1f7bfc27d" class="bulleted-list"><li>시스템과 상호작용을 하는 시스템 외부 존재</li></ul><ul id="5a85094a-98b6-4901-b824-7038ebf3bce0" class="bulleted-list"><li>개발 대상에 따라 달라질 수 있고, 시스템 관점에서 바라본 사용자의 역할을 의미해야 함!(예: 회원, 비회원)</li></ul><ul id="6198ddcd-0542-41a5-bfb6-f17d0ec5344c" class="bulleted-list"><li>시스템 외부에 존재해야 함</li></ul><p id="6134c75e-d2d2-4b4d-b800-6f90f5134f88" class="">
+</p><p id="0aadced4-764d-4af6-8185-a6a046aa080c" class="">🌟 상자모양은 &quot;시스템(System Boundary)&quot;을 의미하는데, 이 상자를 안그리는 경우가 있는데, 꼭!! 그려야 한다!(액터와의 경계를 표시하기 위함)</p><p id="96e384be-a8db-47b0-b174-631a23989cca" class="">
+</p><p id="0c0df817-c535-409b-9ffb-6e309613ca53" class="">🌺 유스케이스 Use Case 🌺</p><ul id="14981ca7-ea6c-44a7-9c92-261e05453d0c" class="bulleted-list"><li>개발 대상이 되는 시스템이 제공하는 개별적인 기능</li></ul><ul id="6ad0201f-492d-485c-88e1-a655d74b9d76" class="bulleted-list"><li>시스템 동작 하나의 <mark class="highlight-yellow_background"><strong>사용자가 인지할 수 있는</strong></mark>(눈에 보이는) 하나의 기능 단위  ▶️ 사용자가 인지할 수 없는 기능은 그리지 말것!!</li></ul><ul id="7b9f96c3-4094-4bf9-b1e0-92b1b1c27a90" class="bulleted-list"><li>동그란 타원형태로 그려짐!</li></ul><p id="1e1aca78-b057-470f-bcdd-8a37991e122b" class="">예) 도서 대출 신청, 신착 도서 등록</p><p id="98259bfc-d300-4dc1-bb02-1a86eb921fb4" class="">
+</p><ul id="b9013a4f-53af-4d84-8884-9fd2e6eaaa8b" class="bulleted-list"><li>구체적이어야 함!(따라서 입출금과 이체라는 유스케이스가 있다면, 입금 출금 이체 의 3 개의 유스케이스로 보다 구체화해야 할 필요성이 있음!)
+- 그렇다고 다양항 세부상황을 모두 그릴 필요는 없다!( 예: 엘리베이터 사용자는 위 혹은 아래로 이동할 수 있는데 이를 &#x27;위쪽 엘리베이터 요청&#x27;, &#x27;아래쪽 엘리베이터 요청&#x27;으로 유스케이스를 구체적으로 적을 필요는 🚫</li></ul><p id="4c01958a-ee86-401a-a6a5-068a60bc16a3" class="">[이 경우, 엘리베이터 사용자 ▶️ 엘리베이터 요청 이 보다 적절]</p><p id="a860a7c2-c86b-4408-a94b-d8890601b3f1" class="">그리고 이를 클래스 다이어그램에서도 연결시키면, 여러 유스케이스와 연결되는 어떤 유스케이스가 있다면 관계를 표시하지 않고 따로 독립적으로 두는 것이 보다 나은 경우도 있다!</p><p id="94169be7-8982-451a-af40-cb93795a212e" class="">
+</p><p id="1c56fed1-ef4c-408f-a11a-bd7cc5075731" class="">🌟 단순히 액터와 유스케이스간에만 관계가 국한되지 않고, 유스케이스와 유스케이스 간에도 관계가 형성될 수 있다!!</p><p id="308cdf4f-13fd-412f-af56-df78bd553c1a" class="">
+</p><p id="ba5f686e-9fc6-4eda-b14d-d00634d83d37" class="">🌺 유스케이스 다이어그램의 관계 종류 🌺</p><ul id="8bbc1d4b-1a77-4381-b3e0-42f40fd2fb05" class="bulleted-list"><li>유스케이스에서도 시간의 흐름이 존재할 수 있음</li></ul><ul id="cfa0ceb7-ecf0-49ac-8e1c-c26542f7c119" class="bulleted-list"><li>기능분류 혹은 주요 필수 기능에 따라 독립적인 유스케이스로도 분리 가능</li></ul><ul id="1b7b8780-1baf-4647-a515-ae15a2e5c6c4" class="bulleted-list"><li>유스케이스 하나는 항상 동일한 기능을 제시해야 함!(예: 관리자의 회원관리는 정보수정 등으로 같은 흐름이지만, 회원 등록은 외부에서 등록하는 것이기 때문에 관리자의 회원관리 기능이 아니라고 보는 것이 보다 적합하다!</li></ul><p id="848ebdac-3270-429b-8969-a0652099d641" class="">-액터와 제품조회, 제품주문, 주문결제 유스케이스가 있는데, 유스케이스 나열을 &quot;제품조회&quot; &quot;제품주문&quot; &quot;주문결제&quot; 순으로 나열한 경우</p><ol id="30150d6a-09b3-46a1-ad28-d39bde452e7a" class="numbered-list" start="1"><li>연관 관계 - 꼭! 액터와 유스관계간에서만 그려져야 한다!!</li></ol><ul id="472ec7e3-a714-442c-bb05-86f37fbd35b6" class="bulleted-list"><li><mark class="highlight-yellow_background"><strong>유스케이스와 액터 간 상호작용</strong></mark>을 의미</li></ul><ul id="378e69e2-1882-4b0b-886a-7ff9ae844119" class="bulleted-list"><li>실선으로 표시되며, 방향성을 가짐</li></ul><p id="00b36b29-7671-4da1-a616-7bb7437cbf98" class="">🌻 연관 관계의 방향성 🌻</p><ul id="2a299563-b95d-450b-9225-ada75368456d" class="bulleted-list"><li>연관 관계의 방향성은 화살표의 끝(end)가 액터를 가리키는지 , 유스케이스를 가리키는지에 따라 크게는 2개 타입, 세분화하면 3개 타입으로 나눌 수 있다</li></ul><p id="408eae66-dc55-46c4-8eeb-4c9b2398da22" class="">
+</p><ol id="76064fa9-fb91-454d-a225-253e4cb0452c" class="numbered-list" start="1"><li>액터 ➡️ 유스케이스</li></ol><ul id="0412a95e-42de-4dc1-8420-5e71a89364c8" class="bulleted-list"><li>화살표의 끝이 유스케이스에 닿는 방향성을  &quot;<strong>활성화</strong>&quot; 방향성이라 명명할 수 있다!!<mark class="highlight-red_background"><strong>(화살표의 start=액터)</strong></mark></li></ul><p id="4e60849b-1911-4067-ba80-5c464c1186f0" class="">
+</p><p id="e99a1cfd-e435-4fea-b534-7bbec1738b08" class="">2. 유스케이스 ➡️ 액터</p><ul id="e5e051f2-1b33-45a5-9662-cb103f0ce4d6" class="bulleted-list"><li>화살표의 끝이 액터에 닿는 방향성을 &quot;<strong>수행결과 통보</strong>&quot;, &quot;<strong>외부 서비스 요청</strong>&quot; 방향성 이라하는데 액터 입장에서 &quot;수동적&quot;이지 않은가?<mark class="highlight-red_background"><strong>(화살표의 start=유스케이스)</strong></mark></li></ul><ul id="1009064e-19e9-4c9e-aada-907cadd3fbae" class="bulleted-list"><li>수행결과 통보  : 유스케이스 결과가 액터에게 통보됨</li></ul><ul id="d021e888-e08c-4210-b1f6-b2f082abad94" class="bulleted-list"><li>외부 서비스 요청 : 외부 시스템에 서비스 실행을 요청</li></ul><p id="8eda684a-ea07-49dd-a47c-2836d4c4cd60" class="">
+</p><hr id="a14b0b06-f7ac-482b-a216-4fc22289604b"/><p id="c1f14b91-9d70-4355-9d5a-a3994623a7e8" class="">2. 포함관계 - <mark class="highlight-red_background"><strong>반드시 </strong></mark>해야 하는 관계(포인트는 화살표의 start 가 어떻게 되는지!! ▶️ 확장관계에서도 start!! UML은 start!)</p><ul id="b213e0d1-8036-4b55-a895-1232f8b65fc9" class="bulleted-list"><li>화살표의 end와 start에 따라 필요조건같은 관계가 요구되는, 선택-필수 관계가 존재하는 관계!</li></ul><ul id="f80c321c-b3bd-4dc3-bd9e-49c74607402d" class="bulleted-list"><li>화살표의 start 부분은 end가<mark class="highlight-red"><strong> 반드시</strong></mark> 필요한 필수 관계(기본 유스케이스)</li></ul><ul id="df49130d-8ad6-45a7-8966-58003e19f328" class="bulleted-list"><li>화살표의 end부분은 굳이 start가 필요없는 선택 관계(포함 유스케이스)</li></ul><figure id="010111bc-c7dc-46c3-8d03-cfdc728a645d" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%ED%8F%AC%ED%95%A8%EA%B4%80%EA%B3%84.png?raw=true"><img style="width:672px" src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%ED%8F%AC%ED%95%A8%EA%B4%80%EA%B3%84.png?raw=true"/></a><figcaption>UML-유스케이스 포함관계</figcaption></figure><p id="0a931b48-b77f-4c8e-8046-b5a6f484049b" class="">🌟 관계를 이을 때에는 , 점선과 함께 include 라는 스테레오 타입이 필요하다!</p><p id="ca294cfb-b4b5-4a6a-8839-d6e6134fd385" class="">🌟 포함 유스케이스가 여러 유스케이스에서도 <mark class="highlight-pink_background"><strong>재사용</strong></mark>된다면 그 효율성이 증가될 것!</p><p id="03fd7771-edb9-425c-8e14-7c2932aed7e9" class="">
+</p><p id="92ff2f25-f1f3-4882-866d-c6068fb243a1" class="">3. 확장 관계 - <mark class="highlight-red_background"><strong>선택적</strong></mark>으로 할 수 있는 관계</p><ul id="081cb176-f561-4d90-ba7f-25f20dfdc1f1" class="bulleted-list"><li>Extension Points: 사용자가 어떤 선택을 하는지를 나타냄(생략하고 나타내기도 함!)</li></ul><ul id="be548cd4-b9d2-4556-b7b0-3f912c4363bf" class="bulleted-list"><li>&lt;&lt;extend&gt;&gt; 스테레오타입과 점선을 이용</li></ul><figure id="bf191d2b-b4fa-4d13-97b0-9e003d634bed" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%ED%99%95%EC%9E%A5%EA%B4%80%EA%B3%84.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%ED%99%95%EC%9E%A5%EA%B4%80%EA%B3%84.png?raw=true"/></a><figcaption>UML 유스케이스 - 확장관계</figcaption></figure><p id="c5c968d4-246e-4a91-b8b3-96ad29d9a047" class="">역시, 이 부분에서도 start입장을 봐야하는데, 파일업로드의 입장에서 end인 게시판등록을 하는데에 꼭 필수적인 것이 아니기 때문에 선택적인 관계인 &quot;확장관계&quot;에 해당된다!</p><p id="4459419f-1726-4153-8ed6-82290c9656ee" class="">
+</p><p id="b7d04bd3-8793-4fff-91b0-86d982314985" class="">4. 일반화 관계</p><ul id="0627b0f1-2466-49f4-afef-19468d7ffda7" class="bulleted-list"><li>유사한 유스케이스들 또는 액터들을 추상화한 하나의 유스케이스로 그룹핑하여 이해도를 높인 관계</li></ul><figure id="353dd70e-7775-4103-854a-f285741fa356" class="image"><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%EC%9D%BC%EB%B0%98%ED%99%94%EA%B4%80%EA%B3%84.png?raw=true"><img src="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Database/Oracle/Basic/Design/UML/%EC%9C%A0%EC%8A%A4%EC%BC%80%EC%9D%B4%EC%8A%A4-%EC%9D%BC%EB%B0%98%ED%99%94%EA%B4%80%EA%B3%84.png?raw=true"/></a><figcaption>UML 유스케이스 - 일반화 관계</figcaption></figure><p id="4976e4de-9423-43c1-8ef3-d0313b0ff3a9" class="">상속관계같기도 하다!</p><p id="ed566eea-eb55-438f-a2c3-e30576b6e969" class="">(예) &lt;결제 관련 업무 기술서&gt;</p><ul id="0f2f1093-6cf0-4663-b950-c42c78639a23" class="bulleted-list"><li>상품 결제 시 카드 결제를 통해 할 수 있다</li></ul><ul id="e12a08a4-c4a0-4295-b508-58ee60c5802e" class="bulleted-list"><li>상품 결제 시 온라인 송금을 통해 결제할 수 있다</li></ul><ul id="765409a8-28e4-4ae8-b936-d32c487813ed" class="bulleted-list"><li>상품 결제 시 휴대폰 결제를 통해 결제할 수 있다</li></ul><p id="abebcb49-ed3f-497c-bdc3-92e8c34eafc3" class="">▶️ 상품 결제 ⊃ 카드결제, 온라인 송금, 휴대폰 결제</p><p id="6722ad7e-6203-4590-80d8-4973a2b69c08" class="">그렇기 때문에 카드렬제와 온라인 송금, 휴대폰 결제를 묶어서 상품 결제에 상속받도록 할 수 있다!</p><p id="1b7998fb-f79a-45b2-a164-170daeabfd7c" class="">
+</p><p id="4080b0ca-2315-4d86-9b45-8beb8579acb1" class="">🌟 유스케이스 다이어그램 수업 실습</p><p id="78548f8f-8d5e-4eea-927e-613c522652a8" class="">
+</p><p id="1d8f9ecc-4264-426d-acfc-bce1d1570e14" class="">1) 액터 식별</p><p id="c13ea155-a927-4e41-9439-eb5f96f36603" class="">2) 유스케이스 식별</p><p id="709f0d7f-dfb1-4981-be64-6e1d8800bb9d" class="">3) 유스케이스 다이어그램 작성</p><p id="8c34f113-e8a3-4329-8ad0-803745637025" class="">
+</p><p id="a9ae9a8f-e052-497c-a822-7d7a0c91c964" class="">🌟 유스케이스 시나리오</p><p id="2da8b5e6-a3db-48a3-9f0c-a1db5517c7f5" class="">🌺 이벤트 흐름 🌺</p><ol id="1703375c-ad1a-4d06-bd87-f881448176fb" class="numbered-list" start="1"><li>기본흐름</li></ol><ul id="27639e90-d66d-4367-9c23-e4595ccb540c" class="bulleted-list"><li>아무것도 잘못된 것이 없다는 가정 하에 사용자의 자극에 시스템이 어떤식으로 동작할 지 기술</li></ul><p id="960f9471-6410-4343-b352-05841e740eeb" class="">
+</p><p id="17032051-74fd-4f32-ba15-9d06e08851d3" class="">2. 대안 흐름</p><ul id="3d327154-8e16-4690-a5c6-9dafd8ff1bd9" class="bulleted-list"><li>세부 상황 중 일부가 잘못되었을 경우를 고려한 흐름</li></ul><ul id="85efee2e-bd1b-4093-997c-b30cedc85db2" class="bulleted-list"><li>선택흐름 : 사용자 혹은 시스템에 의해 선택적으로 수행되는 흐름</li></ul><ul id="a5f7a369-1a2c-46c3-9930-d1fc57c12685" class="bulleted-list"><li>예외흐름: 시스템에서 발생하는 에러 등을 처리하기 위해 수행되는 흐름</li></ul><p id="5a116435-9d67-4c69-99db-584ed68eeb36" class="">
+</p><p id="d32b59e1-67e0-4a4a-8f4a-6a4850a3c42b" class="">유스케이스 설계 후 유스케이스 시나리오를 작성해야 한다!!</p><p id="42acd31f-fc8c-4449-b244-5d2a7da5cf64" class=""> </p></div></article></body></html>
