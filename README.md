@@ -218,6 +218,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/JSP Servlet/COS/fileUpload/COS라이브러리를 이용한 파일업로드 처리.html">
 		COS라이브러리를 이용한 파일 업로드
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/e4f3c4da44e87963a666cbc3101c91aeefa6e279/JSP%20Servlet/MVCPattern/%5Bjsp%20servlet%5DMVC%ED%8C%A8%ED%84%B4.md">
+		MVC(Model-View-Controller) 패턴
+	</a></li>
          </ul>
     </li><!--jsp servlet -->
   </li>
