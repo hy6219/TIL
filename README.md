@@ -300,6 +300,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6fe28910ba2e8ddc54f89974afb5c3644f8a7c8a/FE/CSS/Basic/Properties/%5BCSS%5DCSS%20%EA%B8%80%EC%9E%90%EC%86%8D%EC%84%B1.md" target="_blank">
 		[CSS] CSS 속성- 글자
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6d07e6b0650bff4b928a16396ef4039c08d59c9b/FE/CSS/Basic/Properties/%5BCSS%5D%EC%9A%94%EC%86%8C%EB%A5%BC%20%EC%88%98%ED%8F%89%EC%A0%95%EB%A0%AC%ED%95%98%EB%8A%94%20float.md" target="_blank">
+		[CSS] 요소를 수평정렬하는 float
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
