@@ -297,6 +297,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/CSS/Basic/CSS 크기, 여백, 색상 속성.html" target="_blank">
 		[CSS] CSS 속성- 크기, 여백, 색상
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6fe28910ba2e8ddc54f89974afb5c3644f8a7c8a/FE/CSS/Basic/Properties/%5BCSS%5DCSS%20%EA%B8%80%EC%9E%90%EC%86%8D%EC%84%B1.md" target="_blank">
+		[CSS] CSS 속성- 글자
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
