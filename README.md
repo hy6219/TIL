@@ -303,6 +303,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6d07e6b0650bff4b928a16396ef4039c08d59c9b/FE/CSS/Basic/Properties/%5BCSS%5D%EC%9A%94%EC%86%8C%EB%A5%BC%20%EC%88%98%ED%8F%89%EC%A0%95%EB%A0%AC%ED%95%98%EB%8A%94%20float.md" target="_blank">
 		[CSS] 요소를 수평정렬하는 float
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6cc97802f869c58a25e45dcd1c166fe58205f543/FE/CSS/Basic/Properties/%5BCSS%5D%EC%9C%84%EC%B9%98%EB%A5%BC%20%EB%82%98%ED%83%80%EB%82%B4%EB%8A%94%20position.md" target="_blank">
+		[CSS]위치를 나타내는 position
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
