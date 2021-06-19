@@ -306,6 +306,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/6cc97802f869c58a25e45dcd1c166fe58205f543/FE/CSS/Basic/Properties/%5BCSS%5D%EC%9C%84%EC%B9%98%EB%A5%BC%20%EB%82%98%ED%83%80%EB%82%B4%EB%8A%94%20position.md" target="_blank">
 		[CSS]위치를 나타내는 position
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/46f28a422b2db179edd8e4ba7799095275aefddd/FE/CSS/Basic/Properties/%5BCSS%5DBackground.md" target="_blank">
+		[CSS]배경을 나타내는 background
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
