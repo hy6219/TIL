@@ -318,6 +318,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/7361888c238d7927c3b39850e0c552884f9e3c3b/FE/CSS/transform/%5BCSS%5D%EC%A0%84%ED%99%98%EA%B3%BC%20%EB%B3%80%ED%99%98.md" target="_blank">
 		[CSS]전환과 변환 효과
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/FE/CSS/animation/%5BCSS%5D%EC%95%A0%EB%8B%88%EB%A9%94%EC%9D%B4%EC%85%98.md" target="_blank">
+		[CSS]화면을 더 아름답게 꾸며주는 효과, animation
+	</a></li>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/Javascript/[JS]변수와 상수, 변수의 타입.html" target="_blank">
 		[VanillaJS-ES6] 변수, 상수, 그리고 변수의 타입
 	</a></li>
