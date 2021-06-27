@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .typing {
+            display: none;
+        }
+
+        .typing-position {
+            display: inline-block;
+            margin: 10px;
+            font-size: 50px;
+            color: dodgerblue;
+            animation: cursor 0.3s infinite steps(11);
+        }
+
+        @keyframes cursor {
+            0% {
+                border-right: 3px solid white;
+            }
+
+            50% {
+                border-right: 3px solid pink;
+            }
+
+            100% {
+                border-right: 3px solid white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="typing">Carpe Diem!</div>
+    <div class="typing-position"></div>
+    <script>
+        //복사본 인덱스 < 원본 길이->한글짜씩 붙여주기
+
+        //복사본 인덱스
+        let cpIdx = 0;
+        //원본
+        let origin = document.querySelector(".typing").innerHTML;
+        //복사될 위치
+        let clone = document.querySelector(".typing-position");
+        //복사본 길이
+        const size = origin.length;
+        let i = 1;
+        origin = origin.split("");
+        //   console.log(origin);
+
+        function typingMotion() {
+            if (cpIdx < origin.length) {
+                clone.innerHTML += origin[cpIdx++];
+                console.log(`now: [${clone.innerHTML}]`);
+                //cpIdx++;
+            } else {
+                deleteType();
+
+            }
+        }
+
+        function deleteType() {
+            setTimeout(function () {
+                while (i <= origin.length) {
+                    let trans;
+                    trans = clone.innerHTML.substring(0, clone.innerHTML.length - 1);
+                    clone.innerHTML = trans;
+                    console.log(trans);
+                    i++;
+                }
+            }, 1000);
+            i = 1;
+            cpIdx = 0;
+        }
+
+        function init() {
+            setInterval(typingMotion, 1000);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
