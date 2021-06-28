@@ -258,6 +258,9 @@
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/General/Data_Structure/Tree/트리구조.html" target="_blank">
 		[자료구조]트리구조
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/%5B%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%5D%EB%B0%B0%EC%97%B4.md" target="_blank">
+		[자료구조]배열
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
