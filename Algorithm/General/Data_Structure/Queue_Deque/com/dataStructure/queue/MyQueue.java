@@ -5,7 +5,7 @@ import java.lang.reflect.Array;
 public class MyQueue {
     int[] queue;
     int  pointer=0;
-
+    int rear =0;
     public MyQueue(){
         queue=new int[10000];
     }
@@ -27,12 +27,12 @@ public class MyQueue {
 
     //rear
     public int peek() throws ArrayIndexOutOfBoundsException {
-        return queue[0];
+        return queue[rear];
     }
     //dequeue
     public int poll() throws ArrayIndexOutOfBoundsException{
         pointer--;
-        return queue[0];
+        return queue[rear++];
     }
     //empty
     public boolean isEmpty(){
