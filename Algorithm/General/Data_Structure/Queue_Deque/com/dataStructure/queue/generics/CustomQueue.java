@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 public class CustomQueue<E> {
     E[] queue;
     int pointer = 0;
+    int rear =0;
 
     public CustomQueue(){
         queue= (E[])new Object[1000];
@@ -31,12 +32,12 @@ public class CustomQueue<E> {
 
     //데이터를 빼는 곳 rear
     public E peek() throws ArrayIndexOutOfBoundsException{
-        return queue[0];
+        return queue[rear];
     }
     //dequeue
     public E poll() throws ArrayIndexOutOfBoundsException{
         pointer--;
-        return queue[0];
+        return queue[rear++];//실제로 없애지 않고 포인터를 이용
     }
     //remove
     public E remove(int idx) throws ArrayIndexOutOfBoundsException{
