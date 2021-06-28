@@ -1,58 +1,36 @@
 package com.dataStructure.queue.generics;
 
-public class CustomQueue<E> {
-    E[] queue;
-    int pointer = 0;
+public class GenericQueueTest {
+    public static void main(String[] args){
+        //큐 인터페이스를 이용하지 않고 직접 구현한 것이라서 linkedList로 구현체를 만들지 않았습니다
+        CustomQueue<String> customQueue = new CustomQueue<>();
 
-    public CustomQueue(){
-        queue= (E[])new Object[1000];
-    }
-    //enqueue
-    public boolean offer(E item) throws ArrayIndexOutOfBoundsException{
-        queue[pointer++]=item;
-        return true;
-    }
+        System.out.println("isEmpty?: "+customQueue.isEmpty());//isEmpty?: true
+        System.out.println("size: "+customQueue.size());//size: 0
 
-    //size
-    public int size() throws ArrayIndexOutOfBoundsException{
-        return pointer;
-    }
-    //isEmpty
-    public boolean isEmpty(){
-        return pointer==0;
-    }
+        customQueue.offer("Hello Queue!");
+        customQueue.offer("Make Custom Queue using Generics!");
 
-    //데이터를 넣는 곳 front
-    public E front() throws ArrayIndexOutOfBoundsException{
-        return queue[pointer-1];
-    }
+        System.out.println(customQueue);//[Hello Queue!,Make Custom Queue using Generics!]
+        System.out.println("isEmpty?:"+ customQueue.isEmpty());//isEmpty?:false
+        System.out.println("size: "+customQueue.size());//size: 2
 
-    //데이터를 빼는 곳 rear
-    public E peek() throws ArrayIndexOutOfBoundsException{
-        return queue[0];
-    }
-    //dequeue
-    public E poll() throws ArrayIndexOutOfBoundsException{
-        pointer--;
-        return queue[0];
-    }
+        System.out.println("test remove");
+        customQueue.offer("test remove");
+        customQueue.offer("test");
 
-    //toString
-    @Override
-    public String toString(){
-        StringBuilder sb = new StringBuilder();
-        int size = size();
+        System.out.println(customQueue.remove(2));//특별히 추가한 특정 인덱스의 값 제거-test remove가 지워질것
+        //test remove
+        System.out.println(customQueue);//[Hello Queue!,Make Custom Queue using Generics!,test]
 
-        sb.append("[");
-        for(int i = 0 ; i < size; i++){
-            sb.append(queue[i]);
 
-            if(i!=size-1){
-                sb.append(",");
-            }
+        int sizeCurr= customQueue.size();
+
+        for(int i = 0 ; i < sizeCurr; i++){
+            customQueue.poll();
         }
-        sb.append("]");
+        System.out.println("isEmpty?: "+customQueue.isEmpty());//isEmpty?: true
+        System.out.println("size: "+customQueue.size());//size: 0
 
-        return sb.toString();
     }
 }
