@@ -19,10 +19,13 @@ public class GenericQueueTest {
         customQueue.offer("test remove");
         customQueue.offer("test");
 
+
         System.out.println(customQueue.remove(2));//특별히 추가한 특정 인덱스의 값 제거-test remove가 지워질것
         //test remove
         System.out.println(customQueue);//[Hello Queue!,Make Custom Queue using Generics!,test]
-
+        System.out.println("now, peek: "+customQueue.peek());//now, peek: Hello Queue!
+        System.out.println("now, poll: "+customQueue.poll());//now, poll: Hello Queue!
+        System.out.println("now, poll: "+customQueue.poll());//now, poll: Make Custom Queue using Generics!
 
         int sizeCurr= customQueue.size();
 
