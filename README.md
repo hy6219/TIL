@@ -387,6 +387,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Overview/%5B%EC%8A%A4%ED%94%84%EB%A7%81%5Dcannot%20resolve%20lombok.md" target="_blank">
 		[Spring] Spring initializer 세팅 등으로 인해 나타날 수 있는 cannot resolve lombok
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Overview/%5BSpring%5D%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%9C%EC%9D%B4%EC%97%90%EC%84%9C%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EC%B4%88%EA%B8%B0%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0!.md" target="_blank">
+		[Spring] 인텔리제이에서 Spring 초기 세팅하기!
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
