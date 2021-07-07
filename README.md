@@ -393,6 +393,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/%5BSpring%5D%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%9B%90%EB%A6%AC.md" target="_blank">
 		[Spring] 객체지향의 개념적 원리와 SOLID 설계원칙(객체지향 설계 5원칙)
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/%5BSpring%5DPOJO%20Java.md" target="_blank">
+		[Spring] POJO Java란?
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
