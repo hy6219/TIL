@@ -390,6 +390,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Overview/%5BSpring%5D%EC%9D%B8%ED%85%94%EB%A6%AC%EC%A0%9C%EC%9D%B4%EC%97%90%EC%84%9C%20%EC%8A%A4%ED%94%84%EB%A7%81%20%EC%B4%88%EA%B8%B0%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0!.md" target="_blank">
 		[Spring] 인텔리제이에서 Spring 초기 세팅하기!
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/%5BSpring%5D%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98%20%EC%9B%90%EB%A6%AC.md" target="_blank">
+		[Spring] 객체지향의 개념적 원리와 SOLID 설계원칙(객체지향 설계 5원칙)
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
