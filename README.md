@@ -396,6 +396,12 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/%5BSpring%5DPOJO%20Java.md" target="_blank">
 		[Spring] POJO Java란?
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%5BSpring%5D%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4%20overview.md" target="_blank">
+		[Spring] 디자인패턴
+	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EC%83%9D%EC%84%B1%ED%8C%A8%ED%84%B4/%EC%8B%B1%EA%B8%80%ED%86%A4%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%8B%B1%EA%B8%80%ED%86%A4%20%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4.md" target="_blank">
+		[Spring] 싱글톤 패턴이란?
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
