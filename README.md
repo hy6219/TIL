@@ -2,13 +2,13 @@
 <u></u>
 <span>![Activity](https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)&nbsp;&nbsp;![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
 <h2>Contents</h2>
-<a href="#1">Java</a>
-<a href="#2">Database</a>
-<a href="#3">JSP Servlet</a>
-<a href="#4">git</a>
-<a href="#5">Data structure & Algorithm</a>
-<a href="#6">HTML/CSS/JS</a>
-<a href="#7>Spring</a>
+<a href="#1" style="text-decoration:none;">Java</a><br/>
+<a href="#2" style="text-decoration:none;">Database</a><br/>
+<a href="#3" style="text-decoration:none;">JSP Servlet</a><br/>
+<a href="#4" style="text-decoration:none;">git</a><br/>
+<a href="#5" style="text-decoration:none;">Data structure & Algorithm</a><br/>
+<a href="#6" style="text-decoration:none;">HTML/CSS/JS</a><br/>
+<a href="#7" style="text-decoration:none;">Spring</a><br/>
 <u></u>
 <a id="#1">
 <ol type="A">
