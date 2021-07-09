@@ -2,15 +2,14 @@
 <u></u>
 <span>![Activity](https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)&nbsp;&nbsp;![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
 <h2>Contents</h2>
-<a href="#1" style="text-decoration:none;">Java</a><br/>
-<a href="#2" style="text-decoration:none;">Database</a><br/>
-<a href="#3" style="text-decoration:none;">JSP Servlet</a><br/>
-<a href="#4" style="text-decoration:none;">git</a><br/>
-<a href="#5" style="text-decoration:none;">Data structure & Algorithm</a><br/>
-<a href="#6" style="text-decoration:none;">HTML/CSS/JS</a><br/>
-<a href="#7" style="text-decoration:none;">Spring</a><br/>
+[Java](#Java)<br/>
+[Database](#Database)<br/>
+[JSP Servlet](#JSP Servlet)<br/>
+[git](#git)<br/>
+[Data structure & Algorithm](#Algorithm)<br/>
+[HTML/CSS/JS](#FE(HTML, CSS, JS))<br/>
+[Spring](#Spring)<br/>
 <u></u>
-<a id="#1">
 <ol type="A">
    <!--1st-->
   <li>
@@ -138,9 +137,7 @@
 	</ul>
      </li>
     </ol><!--JAVA END-->
-</a>
 <!--Database 공부-->
-<a id="#2">
    <li>
        Database
         <ul>
@@ -188,9 +185,7 @@
 	</a></li>
          </ul>
     </li><!--database -->
-</a>
 <!--jsp servlet 공부-->
-<a href="#3">
    <li>
        JSP SERVLET
         <ul>
@@ -238,8 +233,6 @@
 	</a></li>
          </ul>
     </li><!--jsp servlet -->
-</a>
-<a id="#4">
   </li>
    <!--git 공부-->
    <li>
@@ -253,9 +246,7 @@
 	</a></li>
          </ul>
     </li><!--git -->
-</a>
 <!--알고리즘 공부-->
-<a id="#5">
    <li>
        Algorithm
         <ul>
@@ -279,8 +270,6 @@
 	</a></li>
          </ul>
     </li><!--알고리즘 -->
-</a>
-<a id="#6">
     <!--FE 공부-->
    <li>
        FE(HTML, CSS, JS)
@@ -398,8 +387,6 @@
 	</a></li>
          </ul>
     </li><!--FE -->
-</a>
-<a id="#7">
    <!--Spring-->
   <li>
      Spring
@@ -424,7 +411,6 @@
 	</a></li>
      </ul>
   </li><!--spring-->
-</a>
 </ol><!--All END-->
 
 
