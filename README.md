@@ -2,18 +2,18 @@
 <u></u>
 <span>![Activity](https://img.shields.io/github/last-commit/hy6219/TIL-Today-I-Learned-)&nbsp;&nbsp;![License](https://img.shields.io/github/license/hy6219/TIL-Today-I-Learned-)</span>
 <h2>Contents</h2>
-[Java](#Java)<br/>
-[Database](#Database)<br/>
-[JSP Servlet](#JSP Servlet)<br/>
-[git](#git)<br/>
-[Data structure & Algorithm](#Algorithm)<br/>
-[HTML/CSS/JS](#FE(HTML, CSS, JS))<br/>
-[Spring](#Spring)<br/>
+[1. Java](#Java)<br/>
+[2. Database](#Database)<br/>
+[3. JSP Servlet](#JSP Servlet)<br/>
+[4. git](#git)<br/>
+[5. Data structure & Algorithm](#Algorithm)<br/>
+[6. HTML/CSS/JS](#FE(HTML, CSS, JS))<br/>
+[7. Spring](#Spring)<br/>
 <u></u>
 <ol type="A">
    <!--1st-->
   <li>
-    Java
+    ##Java
     <ol type="I">
       <li>OOP(Object Oriented Programming)
         <ul>
@@ -139,7 +139,7 @@
     </ol><!--JAVA END-->
 <!--Database 공부-->
    <li>
-       Database
+       ##Database
         <ul>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Database/Oracle/Basic/Selection_Projection_Join/[DB] 데이터베이스 기초- 셀렉션, 프로젝션, 조인.md" target="_blank">
 		DB-셀렉션, 프로젝션, 조인 개념
@@ -187,7 +187,7 @@
     </li><!--database -->
 <!--jsp servlet 공부-->
    <li>
-       JSP SERVLET
+       ##JSP SERVLET
         <ul>
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/JSP%20Servlet/Basic/Overview.md">
 		JSP Servlet 개요
@@ -236,7 +236,7 @@
   </li>
    <!--git 공부-->
    <li>
-       git
+       ##git
         <ul>
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/gitStudy/doItStudy/%EA%B9%83%EC%9C%BC%EB%A1%9C%20%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20%EA%B2%83.md">
 		깃으로 할 수 있는 것
@@ -248,7 +248,7 @@
     </li><!--git -->
 <!--알고리즘 공부-->
    <li>
-       Algorithm
+       ##Algorithm
         <ul>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/Algorithm/Asymptotic Analysis/알고리즘에 대한 점근적 분석.html" target="_blank">
 		알고리즘에 대한 점근적 분석
@@ -272,7 +272,7 @@
     </li><!--알고리즘 -->
     <!--FE 공부-->
    <li>
-       FE(HTML, CSS, JS)
+       ##FE(HTML, CSS, JS)
         <ul>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/Structure/주요 범위&메타데이터-html, head,body, title.html" target="_blank">
 		[HTML]주요 범위&메타데이터
@@ -389,7 +389,7 @@
     </li><!--FE -->
    <!--Spring-->
   <li>
-     Spring
+     ##Spring
      <ul>
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Overview/%5B%EC%8A%A4%ED%94%84%EB%A7%81%5Dcannot%20resolve%20lombok.md" target="_blank">
 		[Spring] Spring initializer 세팅 등으로 인해 나타날 수 있는 cannot resolve lombok
