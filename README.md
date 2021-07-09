@@ -271,8 +271,8 @@
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
-   <li>
-       ##FE(HTML, CSS, JS)
+   ##<li>
+       FE(HTML, CSS, JS)
         <ul>
 	<li><a href="https://hy6219.github.io/TIL-Today-I-Learned-/FE/HTML/Tags/Structure/주요 범위&메타데이터-html, head,body, title.html" target="_blank">
 		[HTML]주요 범위&메타데이터
@@ -388,8 +388,8 @@
          </ul>
     </li><!--FE -->
    <!--Spring-->
-  <li>
-     ##Spring
+  ##<li>
+     Spring
      <ul>
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Overview/%5B%EC%8A%A4%ED%94%84%EB%A7%81%5Dcannot%20resolve%20lombok.md" target="_blank">
 		[Spring] Spring initializer 세팅 등으로 인해 나타날 수 있는 cannot resolve lombok
