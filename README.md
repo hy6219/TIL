@@ -400,6 +400,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EC%83%9D%EC%84%B1%ED%8C%A8%ED%84%B4/%EC%8B%B1%EA%B8%80%ED%86%A4%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%8B%B1%EA%B8%80%ED%86%A4%20%EB%94%94%EC%9E%90%EC%9D%B8%20%ED%8C%A8%ED%84%B4.md" target="_blank">
 		[Spring] 싱글톤 패턴이란?
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EA%B5%AC%EC%A1%B0%ED%8C%A8%ED%84%B4/Adapter%20%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%96%B4%EB%8C%91%ED%84%B0%ED%8C%A8%ED%84%B4.md" target="_blank">
+		[Spring] 어댑터 패턴이란?
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
