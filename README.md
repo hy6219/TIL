@@ -403,6 +403,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EA%B5%AC%EC%A1%B0%ED%8C%A8%ED%84%B4/Adapter%20%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%96%B4%EB%8C%91%ED%84%B0%ED%8C%A8%ED%84%B4.md" target="_blank">
 		[Spring] 어댑터 패턴이란?
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EA%B5%AC%EC%A1%B0%ED%8C%A8%ED%84%B4/Proxy%ED%8C%A8%ED%84%B4/%5BSpring%5D%ED%94%84%EB%A1%9D%EC%8B%9C%ED%8C%A8%ED%84%B4.md" target="_blank">
+		[Spring] 프록시 패턴이란?
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
