@@ -415,6 +415,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%EA%B5%AC%EC%A1%B0%ED%8C%A8%ED%84%B4/Fascade%ED%8C%A8%ED%84%B4/%5BSpring%5D%ED%8D%BC%EC%82%AC%EB%93%9C%ED%8C%A8%ED%84%B4.md" target="_blank">
 		[Spring] 퍼사드 패턴이란?
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%ED%96%89%EC%9C%84%ED%8C%A8%ED%84%B4/%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4.md" target="_blank">
+		[Spring] 전략 패턴이란?
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
