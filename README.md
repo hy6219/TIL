@@ -418,6 +418,12 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/%EB%94%94%EC%9E%90%EC%9D%B8%ED%8C%A8%ED%84%B4/%ED%96%89%EC%9C%84%ED%8C%A8%ED%84%B4/%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4/%5BSpring%5D%EC%A0%84%EB%9E%B5%ED%8C%A8%ED%84%B4.md" target="_blank">
 		[Spring] 전략 패턴이란?
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/RESTFUL%20API/%5BSpring%5DREST%20Ful%20API.md" target="_blank">
+		[Spring] RESTFUL API란?
+	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/RESTFUL%20API/%5BSpring%5DURI%20%EC%84%A4%EA%B3%84%20%ED%8C%A8%ED%84%B4.md" target="_blank">
+		[Spring] URI 설계 패턴
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
