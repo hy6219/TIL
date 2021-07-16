@@ -427,6 +427,12 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/HTTP%20%ED%86%B5%EC%8B%A0%ED%94%84%EB%A1%9C%ED%86%A0%EC%BD%9C/%5BSpring%5DHTTP%ED%86%B5%EC%8B%A0%EA%B7%9C%EC%95%BD.md" target="_blank">
 		[Spring] HTTP 통신 프로토콜
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/API/%5BSpring%5DGET%20API.md" target="_blank">
+		[Spring] GET API 작성하기
+	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/API/%5BSpring%5DPost%20API%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.md" target="_blank">
+		[Spring] POST API 작성하기
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
