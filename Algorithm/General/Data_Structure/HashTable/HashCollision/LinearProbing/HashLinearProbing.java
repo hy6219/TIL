@@ -42,7 +42,6 @@ public class HashLinearProbing {
     public boolean saveData(String key, String value){
         Integer address = this.hashCode(key);
         //이미 슬롯이 만들어진 적이 있다면
-        //링크드 리스트를 순회
         if(this.hashTable[address]!=null){
           //현재 해쉬테이블의 주소값에 있는 키를 비교
             if(this.hashTable[address].key==key){
