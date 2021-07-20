@@ -436,6 +436,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/API/%5BSpring%5DPost%20API%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring] POST API 작성하기
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/API/%5BSpring%5DPUT%20API%20%EC%9E%91%EC%84%B1%ED%95%98%EA%B8%B0.md" target="_blank">
+		[Spring] PUT API 작성하기
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
