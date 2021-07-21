@@ -442,6 +442,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/API/%5BSpring%5DDELETE%20API.md" target="_blank">
 		[Spring] DELETE API 작성하기
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Response%EB%82%B4%EB%A0%A4%EC%A3%BC%EA%B8%B0/%5BSpring%5DResponse%EB%82%B4%EB%A0%A4%EC%A3%BC%EA%B8%B0.md" target="_blank">
+		[Spring] Response 내려주기 모범사례
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
