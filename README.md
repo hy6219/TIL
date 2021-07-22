@@ -448,6 +448,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/ObjectMapper/%5BSpring%5DObjectMapper%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80.md" target="_blank">
 		[Spring] ObjectMapper 모범사례
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/KeyPoint/%5BSpring%5D%EC%8A%A4%ED%94%84%EB%A7%81%EC%9D%98%20%ED%95%B5%EC%8B%AC%20%EB%A7%9B%EB%B3%B4%EA%B8%B0.md" target="_blank">
+		[Spring] 스프링의 핵심
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
