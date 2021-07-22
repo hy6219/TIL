@@ -445,6 +445,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/Response%EB%82%B4%EB%A0%A4%EC%A3%BC%EA%B8%B0/%5BSpring%5DResponse%EB%82%B4%EB%A0%A4%EC%A3%BC%EA%B8%B0.md" target="_blank">
 		[Spring] Response 내려주기 모범사례
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/ObjectMapper/%5BSpring%5DObjectMapper%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80.md" target="_blank">
+		[Spring] ObjectMapper 모범사례
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
