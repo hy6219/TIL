@@ -454,6 +454,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/KeyPoint/%EC%A0%9C%EC%96%B4%EC%9D%98%20%EC%97%AD%EC%A0%84%EA%B3%BC%20%EC%9D%98%EC%A1%B4%EC%84%B1%EC%A3%BC%EC%9E%85/%5BSpring%5DIoC%20and%20DI.md" target="_blank">
 		[Spring] 의존성 주입 DI(Dependency Injection)과 제어의 역전 IoC(Inversion Of Control)
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/KeyPoint/AOP/%5BSpring%5DAspect%20Oriented%20Programming.md" target="_blank">
+		[Spring] 로직을 주입하는 아주 유용한 AOP(Aspect Oriented Programming)
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
