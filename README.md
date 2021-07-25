@@ -262,6 +262,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/HashTable/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%5D%ED%95%B4%EC%89%AC%ED%85%8C%EC%9D%B4%EB%B8%94.md" target="_blank">
 		[자료구조]해쉬 테이블
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%5B%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%5D%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0_%EB%B3%B5%EC%8A%B5.md" target="_blank">
+		[자료구조]트리구조 복습
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
