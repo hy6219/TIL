@@ -265,6 +265,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Tree/%5B%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%5D%ED%8A%B8%EB%A6%AC%EA%B5%AC%EC%A1%B0_%EB%B3%B5%EC%8A%B5.md" target="_blank">
 		[자료구조]트리구조 복습
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Heap/%5B%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%5D%ED%9E%99.md" target="_blank">
+		[자료구조]힙(최대 힙을 중점적으로 공부)
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
