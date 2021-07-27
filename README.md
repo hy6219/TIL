@@ -271,6 +271,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/Sort/Basic/BubbleSort/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%A0%95%EB%A0%AC%5D%EB%B2%84%EB%B8%94%EC%A0%95%EB%A0%AC.md" target="_blank">
 		[알고리즘]버블정렬
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/Sort/Basic/SelectionSort/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%A0%95%EB%A0%AC%5D%EC%84%A0%ED%83%9D%EC%A0%95%EB%A0%AC.md" target="_blank">
+		[알고리즘]선택정렬
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
