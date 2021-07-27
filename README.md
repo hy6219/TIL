@@ -268,6 +268,9 @@
 	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/General/Data_Structure/Heap/%5B%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0%5D%ED%9E%99.md" target="_blank">
 		[자료구조]힙(최대 힙을 중점적으로 공부)
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Algorithm/Sort/Basic/BubbleSort/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%A0%95%EB%A0%AC%5D%EB%B2%84%EB%B8%94%EC%A0%95%EB%A0%AC.md" target="_blank">
+		[알고리즘]버블정렬
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
