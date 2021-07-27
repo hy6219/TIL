@@ -472,6 +472,9 @@
      	<li><a href="https://github.com/hy6219/TIL-Today-I-Learned-/blob/main/Spring/KeyPoint/AOP/%5BSpring%5DAspect%20Oriented%20Programming.md" target="_blank">
 		[Spring] 로직을 주입하는 아주 유용한 AOP(Aspect Oriented Programming)
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/%EC%97%AC%EB%9F%AC%EA%B0%80%EC%A7%80%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98/21-07-28-1_%5BSpring%5D%EC%97%AC%EB%9F%AC%EA%B0%80%EC%A7%80%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98.md" target="_blank">
+		[Spring] 스프링에서 사용되는 여러가지 어노테이션
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
