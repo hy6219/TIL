@@ -484,6 +484,9 @@
      	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Boot%20Validation/%5BSpring%5DSpring%20Boot%20Validation%20%EA%B8%B0%EB%B3%B8.md" target="_blank">
 		[Spring] 스프링부트에서 DTO 객체의 필드 검증-기본(Spring Boot Validation)
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Boot%20Validation/%5BSpring%5DSpring%20Boot%20Custom%20Validation.md" target="_blank">
+		[Spring] 패키지 내부에서의 재사용성 증대를 위한 커스텀 어노테이션 및 ConstraintValidator를 이용한 Custom Validation
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
