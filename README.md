@@ -481,6 +481,9 @@
      	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/%EC%97%AC%EB%9F%AC%EA%B0%80%EC%A7%80%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98/21-07-28-1_%5BSpring%5D%EC%97%AC%EB%9F%AC%EA%B0%80%EC%A7%80%20%EC%96%B4%EB%85%B8%ED%85%8C%EC%9D%B4%EC%85%98.md" target="_blank">
 		[Spring] 스프링에서 사용되는 여러가지 어노테이션
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Boot%20Validation/%5BSpring%5DSpring%20Boot%20Validation%20%EA%B8%B0%EB%B3%B8.md" target="_blank">
+		[Spring] 스프링부트에서 DTO 객체의 필드 검증-기본(Spring Boot Validation)
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
