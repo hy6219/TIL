@@ -487,6 +487,9 @@
      	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Boot%20Validation/%5BSpring%5DSpring%20Boot%20Custom%20Validation.md" target="_blank">
 		[Spring] 패키지 내부에서의 재사용성 증대를 위한 커스텀 어노테이션 및 ConstraintValidator를 이용한 Custom Validation
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Exception/%5BSpring%5DSpring%20Boot%20Exception-ControllerAdvice%2C%20RestControllerAdvice%2CExceptionHandler.md" target="_blank">
+		[Spring] 스프링 내부 기본적인 예외처리가 아닌, ControllerAdvice와 ExceptionHandler를 통한 전체 혹은 특정 예외 상황에 대한 예외처리-Spring Boot Exception
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
