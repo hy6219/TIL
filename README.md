@@ -490,6 +490,9 @@
      	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Exception/%5BSpring%5DSpring%20Boot%20Exception-ControllerAdvice%2C%20RestControllerAdvice%2CExceptionHandler.md" target="_blank">
 		[Spring] 스프링 내부 기본적인 예외처리가 아닌, ControllerAdvice와 ExceptionHandler를 통한 전체 혹은 특정 예외 상황에 대한 예외처리-Spring Boot Exception
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Validation%20%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80/%5BSpring%5DSpring%20Boot%20Validation%20%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80-dto%EC%99%80%20exceptionHandler%2CControllerAdvice%EB%A5%BC%20%ED%99%9C%EC%9A%A9.md" target="_blank">
+		[Spring] 스프링 부트 Validation 모범사례
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
