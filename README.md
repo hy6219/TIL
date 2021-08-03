@@ -493,6 +493,9 @@
      	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Validation%20%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80/%5BSpring%5DSpring%20Boot%20Validation%20%EB%AA%A8%EB%B2%94%EC%82%AC%EB%A1%80-dto%EC%99%80%20exceptionHandler%2CControllerAdvice%EB%A5%BC%20%ED%99%9C%EC%9A%A9.md" target="_blank">
 		[Spring] 스프링 부트 Validation 모범사례
 	</a></li>
+     	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20Interceptor%2C%20Filter/%5BSpring%5DSpring%20Filter%20%26%20Interceptor.md" target="_blank">
+		[Spring] 요청에 대한 전후 처리를 담당하지만 context 이용 차이가 있는 필터와 인터셉터에 대해서
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
