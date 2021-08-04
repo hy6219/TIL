@@ -499,6 +499,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20async/%5BSpring%5DSpring%20%EB%B9%84%EB%8F%99%EA%B8%B0%EC%B2%98%EB%A6%AC%20%EB%A7%9B%EB%B3%B4%EA%B8%B0.md" target="_blank">
 		[Spring] 스프링 비동기 처리하기
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DServer%20to%20Server%20%ED%86%B5%EC%8B%A0-RestTemplate01.GET%EC%9A%94%EC%B2%AD.md" target="_blank">
+		[Spring] 스프링 Server to Server 통신하기-RestTemplate-Get방식의 요청
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
