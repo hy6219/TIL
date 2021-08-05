@@ -502,6 +502,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DServer%20to%20Server%20%ED%86%B5%EC%8B%A0-RestTemplate01.GET%EC%9A%94%EC%B2%AD.md" target="_blank">
 		[Spring] 스프링 Server to Server 통신하기-RestTemplate-Get방식의 요청
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DServer%20to%20Server%20%ED%86%B5%EC%8B%A0-RestTemplate02.POST%EC%9A%94%EC%B2%AD.md" target="_blank">
+		[Spring] 스프링 Server to Server 통신하기-RestTemplate-Post방식의 요청
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
