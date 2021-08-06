@@ -505,6 +505,12 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DServer%20to%20Server%20%ED%86%B5%EC%8B%A0-RestTemplate02.POST%EC%9A%94%EC%B2%AD.md" target="_blank">
 		[Spring] 스프링 Server to Server 통신하기-RestTemplate-Post방식의 요청
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DServer%20to%20Server%20%ED%86%B5%EC%8B%A0-RestTemplate03.%ED%97%A4%EB%8D%94%EA%B0%92%20%EB%84%A3%EA%B8%B0.md" target="_blank">
+		[Spring] 스프링 Server to Server 통신하기-RestTemplate-헤더값 변경하기
+	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/%EC%8A%A4%ED%94%84%EB%A7%81%20%ED%94%84%EB%A1%9D%EC%8B%9C%20%EC%84%A4%EC%A0%95%20%EC%A4%91%20%EB%A7%8C%EB%82%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EA%B5%AC%ED%98%84%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EA%B4%80%EB%A0%A8%20%EC%97%90%EB%9F%AC.md" target="_blank">
+		[Spring Maven] Bean named 'proxy' is expected to be of type 'com.test06.MessageBeanImpl' but was actually of type 'com.sun.proxy.$Proxy4' 에러
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
