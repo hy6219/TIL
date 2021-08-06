@@ -511,6 +511,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/%EC%8A%A4%ED%94%84%EB%A7%81%20%ED%94%84%EB%A1%9D%EC%8B%9C%20%EC%84%A4%EC%A0%95%20%EC%A4%91%20%EB%A7%8C%EB%82%A0%20%EC%88%98%20%EC%9E%88%EB%8A%94%20%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%20%EA%B5%AC%ED%98%84%20%ED%81%B4%EB%9E%98%EC%8A%A4%20%EA%B4%80%EB%A0%A8%20%EC%97%90%EB%9F%AC.md" target="_blank">
 		[Spring Maven] Bean named 'proxy' is expected to be of type 'com.test06.MessageBeanImpl' but was actually of type 'com.sun.proxy.$Proxy4' 에러
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/RestTemplate/%5BSpring%5DRestTemplate%EC%9D%84%20%EC%82%AC%EC%9A%A9%ED%95%9C%20%EB%84%A4%EC%9D%B4%EB%B2%84%20%EA%B2%80%EC%83%89%20api%20%ED%99%9C%EC%9A%A9.md" target="_blank">
+		[Spring] RestTemplate 응용-네이버 검색 api
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
