@@ -523,6 +523,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JUnit5/%5BSpring%5Djacoco%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%ED%85%8C%EC%8A%A4%ED%8A%B8%20%EC%BB%A4%EB%B2%84%EB%A6%AC%EC%A7%80%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring] 테스트 커버리지 확인하기 with jacoco
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Swagger/%5BSpring%5DAPI%EC%97%90%20%EB%8C%80%ED%95%9C%20%EB%AC%B8%EC%84%9C%ED%99%94%EC%99%80%20%EB%8D%94%EB%B6%88%EC%96%B4%20API%20Tester%20%EA%B8%B0%EB%8A%A5%EA%B9%8C%EC%A7%80%EB%8F%84%20%EB%8F%84%EC%99%80%EC%A3%BC%EB%8A%94%20%EB%98%91%EB%98%91%ED%95%9C%20Swagger%20%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0.md" target="_blank">
+		[Spring] Swagger로 API 문서화하고, API TEST하는 편리한 생활
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
