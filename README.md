@@ -526,6 +526,12 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/Swagger/%5BSpring%5DAPI%EC%97%90%20%EB%8C%80%ED%95%9C%20%EB%AC%B8%EC%84%9C%ED%99%94%EC%99%80%20%EB%8D%94%EB%B6%88%EC%96%B4%20API%20Tester%20%EA%B8%B0%EB%8A%A5%EA%B9%8C%EC%A7%80%EB%8F%84%20%EB%8F%84%EC%99%80%EC%A3%BC%EB%8A%94%20%EB%98%91%EB%98%91%ED%95%9C%20Swagger%20%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring] Swagger로 API 문서화하고, API TEST하는 편리한 생활
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Overview/%5BSpring%5DJPA%EA%B0%9C%EB%85%90.md" target="_blank">
+		[Spring] ORM과 JPA, 하이버네이트, Spring Data JPA란 무엇인
+	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Lombok/%5BSpring%5DJPA%EB%A5%BC%20%EC%9C%84%ED%95%9C%20%EB%A1%AC%EB%B3%B5%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0.md" target="_blank">
+		[Spring] JPA 시작 전 롬복 살펴보기
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
