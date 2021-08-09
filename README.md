@@ -527,7 +527,7 @@
 		[Spring] Swagger로 API 문서화하고, API TEST하는 편리한 생활
 	</a></li>
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Overview/%5BSpring%5DJPA%EA%B0%9C%EB%85%90.md" target="_blank">
-		[Spring] ORM과 JPA, 하이버네이트, Spring Data JPA란 무엇인
+		[Spring] ORM과 JPA, 하이버네이트, Spring Data JPA란 무엇인가?
 	</a></li>
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Lombok/%5BSpring%5DJPA%EB%A5%BC%20%EC%9C%84%ED%95%9C%20%EB%A1%AC%EB%B3%B5%20%EC%82%B4%ED%8E%B4%EB%B3%B4%EA%B8%B0.md" target="_blank">
 		[Spring] JPA 시작 전 롬복 살펴보기
