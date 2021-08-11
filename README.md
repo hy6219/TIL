@@ -535,8 +535,11 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/H2%20settings/%5BSpring%20JPA%5DH2%20%EC%BD%98%EC%86%94%20%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring] H2 콘솔 준비하기
 	</a></li>
-  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BSpring%20JPA%5DJPA%20Repository%20Interface%20%EC%83%81%EC%84%B8.md" target="_blank">
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/JPA%20Repository%20Interface%20%EC%83%81%EC%84%B8.md" target="_blank">
 		[Spring] JPA-인메모리 db 사용에 따른 엔티티 등록과 레포지토리 만들기 -Overview
+	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BJPA%20ERROR%5DFailed%20to%20load%20ApplicationContext.md" target="_blank">
+		[Spring] JPA-인메모리 db 사용에 따라 나타날 수 있는 에러-java.lang.IllegalStateException: Failed to load ApplicationContext
 	</a></li>
      </ul>
   </li><!--spring-->
