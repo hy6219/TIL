@@ -187,7 +187,7 @@ spring:
       enabled: true
 spring.jpa.defer-datasource-initialization: true**
 #  datasource:
-#    url:jdbc:h2:mem:7cf6e91d-d5af-40f5-abbe-06a8f9e2f5ae
+#    url:url url url
 #  jpa:
 #    database-platform: org.hibernate.dialect.H2Dialect
 
