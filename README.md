@@ -541,6 +541,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BJPA%20ERROR%5DFailed%20to%20load%20ApplicationContext.md" target="_blank">
 		[Spring] JPA-인메모리 db 사용에 따라 나타날 수 있는 에러-java.lang.IllegalStateException: Failed to load ApplicationContext
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BSpring%20JPA%5DRepository%20Interface%20%EB%A9%94%EC%84%9C%EB%93%9C%20%EC%8B%A4%EC%8A%B5(1).md" target="_blank">
+		[Spring] JPA-Repository Interface 메서드(1)
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
