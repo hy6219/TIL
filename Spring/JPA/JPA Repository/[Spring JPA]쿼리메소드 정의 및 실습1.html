@@ -1,0 +1,1444 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쿼리메소드 정의 및 실습1</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8ac0f0e1-e612-42ef-a3d8-f9371c4bf820" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">쿼리메소드 정의 및 실습1</h1></header><div class="page-body"><nav id="d532cb42-403b-46ee-b249-3daedf6c6140" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0151c469-852c-4331-a224-7b2cdd7cfed7">01. name 속성에 따라 조회하는 쿼리 메서드 만들기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#648bc152-f1d7-410a-9f5b-dbf50c4146b7">01-1. 도메인 리턴타입으로 된 findByName 메서드</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#49a232b8-f9ae-4d91-b64e-727d172aa792">01-2. List&lt;도메인&gt; 반환타입의 메서드 findByName</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#898a46d5-8886-4cb7-97b3-7b2261493741">01-3.findById처럼 Optional 반환타입으로 된 메서드 findByName</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3ce7f79e-5770-41ac-84af-95b2a31d1092">01-4. Set&lt;도메인&gt;으로 된 반환타입 메서드 findByName</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#488f36f1-cdcc-45a3-997f-70c108e7ca4f">🌟 스프링에서 제공되는 쿼리 메서드 네이밍 Supported query method subject keywords</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8d61681d-68f9-4933-aab6-f247ec7e8df4">동일한 맥락에서 사용되는 <code>find,,,By</code>, <code>get...By</code> , <code>stream...By</code>, <code>read...By</code>, <code>query...By</code>, <code>search...By</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b51b01d8-febf-4b00-b7a9-5e104131b780"><code>count...By</code> 와 함께 키워드들을 조합해서 사용해보기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f237d139-ac28-47df-8b62-6a214a293798"><code>delete..By</code>, <code>remove...By</code> 네이밍</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6a5477fc-2cbf-45b0-927f-3af1afa9a605"><code>EndingWith</code>, <code>StartingWith</code>, <code>Containing</code> 패턴</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#68d08db1-e3e0-4cb7-8d19-230a0e5a0140"><code>Last&lt;number&gt;</code> 도 될까? ▶️ 존재하지 않는다!!</a></div></nav><p id="ae57312f-563d-412a-980f-e4a68c39b189" class="">
+</p><p id="11cfb3df-ba87-4fe0-bfd1-928ed0d926d3" class="">계속해서 지난 시간의 프로젝트를 이어나가도록 하자!</p><p id="e791a91d-8b0a-4fad-9fb7-f211eed9b86f" class="">
+</p><p id="7391a43c-d402-43e8-96c2-8af8b12a933f" class="">이번에는 기본적으로  상속을 통해 제공되는 메서드들 외에 직접 커스텀해보도록 하자</p><p id="980558e9-24e9-4fe4-ad34-702c4451c445" class="">🌟인텔리제이를 이용하게 되면 메서드명을 기본적인 컨벤션(CrudRepository등 참조)에 따라 지으면 추천되어 자동완성목록이 뜬다</p><p id="26d7b6c8-3298-4aa7-99eb-18446cfe10b5" class="">
+</p><h2 id="0151c469-852c-4331-a224-7b2cdd7cfed7" class="">01. name 속성에 따라 조회하는 쿼리 메서드 만들기</h2><h3 id="648bc152-f1d7-410a-9f5b-dbf50c4146b7" class="">01-1. 도메인 리턴타입으로 된 findByName 메서드</h3><p id="63f15752-ddc4-4ed9-93f8-484e9ddedcd0" class="">먼저 name 필드에 대해서 조회하는 메서드인 <code>findByName</code> 메서드를 UserRepository에 만들어주자</p><p id="72bb92e1-06ec-4096-9530-0a8ce3709246" class="">이의 반환타입은 User로 해주자</p><pre id="791654ca-f577-41b3-a7a7-821f4746c0cb" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    User findByName(String name);
+}</code></pre><p id="2d1d12bc-9938-4b50-8379-1bab4b15e0e1" class="">이번에는 UserRepositoryTest에 가서 직접 테스트해보자</p><pre id="4fdbb45a-288d-4ac4-a999-1d56dd920dfb" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void crud(){
+        User user=userRepository.findByName(&quot;steve&quot;);
+        System.out.println(user);
+    }
+
+}</code></pre><p id="40ac776a-099f-4a84-9871-7eb434f241f6" class="">그러면 위와 같이 존재하지 않는 name값으로 검색하면 null이 표시되고, 쿼리는 where 조건에 name으로 확인하는 것을 볼 수 있다</p><pre id="3b6cc423-0830-4fd0-b415-49cc3dbb7dfc" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+null</code></pre><p id="36c105fe-bf2b-43ea-b7a0-6fff26482b4f" class="">
+</p><p id="5ad6d9a3-6afc-4b7c-82f7-e6ed99c0a110" class="">그리고 아래처럼 특정 name값 &quot;martin&quot;으로 된 행이 2개인데, 이 경우 조회를 시도하면, 쿼리는 당연히 동일 구조를 보이지만 , 지금은 martin이라는 값이 2개 행으로 조회되어 에러를 보인다</p><pre id="69dedfc3-bc2d-4744-9c76-924a8b1f25aa" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void crud(){
+        User user=userRepository.findByName(&quot;martin&quot;);
+        System.out.println(user);
+    }
+
+}</code></pre><pre id="8084c838-dc41-4899-b756-1b0d3c389723" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+
+query did not return a unique result: 2; nested exception is javax.persistence.NonUniqueResultException: query did not return a unique result: 2
+org.springframework.dao.IncorrectResultSizeDataAccessException: query did not return a unique result: 2; nested exception is javax.persistence.NonUniqueResultException: query did not return a unique result: 2
+(생략)</code></pre><p id="b80f335b-48f9-4d51-9d71-40e893200047" class="">아래는 data.sql파일이다</p><pre id="9be1205e-2d48-4e77-a9e2-7a9af91d1422" class="code"><code>call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (1, &#x27;martin&#x27;, &#x27;martin@fastcampus.com&#x27;, now(), now());
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (2, &#x27;dennis&#x27;, &#x27;dennis@fastcampus.com&#x27;, now(), now());
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (3, &#x27;sophia&#x27;, &#x27;sophia@slowcampus.com&#x27;, now(), now());
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (4, &#x27;james&#x27;, &#x27;james@slowcampus.com&#x27;, now(), now());
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`) values (5, &#x27;martin&#x27;, &#x27;martin@another.com&#x27;, now(), now());</code></pre><p id="029a6ac6-e108-452d-b3b9-bea9a3e6e96c" class="">
+</p><p id="884606f1-17f3-42ef-9894-43dfdc1f62a3" class="">그리고 &quot;james&quot;처럼 name값에 대한 행이 단 1개인 경우 아래처럼 한 개행만 조회되는 것을 확인해볼 수 있다</p><pre id="79ae4c31-b8d7-41e1-832d-b9e74373e869" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void crud(){
+        User user=userRepository.findByName(&quot;james&quot;);
+        System.out.println(user);
+    }
+
+}</code></pre><pre id="0c79ebb1-a7c6-4ea3-b9d3-145511df1354" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-14 19:39:09.943, updatedAt=2021-08-14 19:39:09.943)</code></pre><p id="f8236c4c-cb3d-49ba-af26-15ea72da7cc6" class="">
+</p><h3 id="49a232b8-f9ae-4d91-b64e-727d172aa792" class="">01-2. List&lt;도메인&gt; 반환타입의 메서드 findByName</h3><p id="c3bc3997-ad0e-44ba-8a78-9870cbe138a0" class="">그러면 , 앞서 &quot;martin&quot;의 경우는 List로 받아주면 문제가 없겠다!</p><p id="53de1c96-e5f8-43a3-bd19-060e2503812d" class="">만들어보자!</p><p id="c0c47279-87d4-436f-a485-5d2a60d7dfc3" class="">생각해보면, User가 들어있는 List이므로 List&lt;User&gt;로 만들어주면 되겠다!</p><pre id="6fba458e-d40a-4998-a89b-0c4cf0b199c1" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //User findByName(String name);
+    List&lt;User&gt; findByName(String name);
+}</code></pre><p id="767008cc-aa3c-4853-900e-4db05b3297ba" class="">그러면 이제는 name값으로 조회되는 레코드 갯수가 여러개여도 에러도 안나고 확인할 수 있다</p><pre id="e3c5721c-46fe-4742-a026-3b6ccb87865e" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+[User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 19:43:02.317, updatedAt=2021-08-14 19:43:02.317), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-14 19:43:02.349, updatedAt=2021-08-14 19:43:02.349)]</code></pre><p id="4db7c605-0e6f-4ea8-8d33-e29097d2a125" class="">
+</p><h3 id="898a46d5-8886-4cb7-97b3-7b2261493741" class="">01-3.findById처럼 Optional 반환타입으로 된 메서드 findByName</h3><p id="5bc009e5-6511-49f7-91b2-246b2402959f" class="">이번에는 findById처럼 null이더라도 에러를 발생시키지 않고 비어있다고 알려주는 문구를 띄워주는 Optional을 생각해보자</p><pre id="9e9990fc-6535-4dd2-9071-ffa506d8085f" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //User findByName(String name);
+   // List&lt;User&gt; findByName(String name);
+    Optional&lt;User&gt; findByName(String name);
+}</code></pre><pre id="06fc2b15-697a-4cea-aa1b-7909ba360d6c" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 19:57:46.432, updatedAt=2021-08-14 19:57:46.432)</code></pre><p id="27d1afc1-faff-4a16-b386-9c19ddeca5d5" class="">그러면 위와 같이 존재하면 해당 레코드를 가져오지만</p><p id="ab59a5da-f74a-4c68-b135-60e244525f02" class="">martin과 같은 경우에는 2개 이상의 레코드인데 List&lt;Optional&lt;도메인&gt;&gt; 혹은 Optional&lt;List&lt;도메인&gt;&gt;등으로 변환하는 것은 불가능하기 때문에 2개 이상이 발견되었다는 문구를 확인해볼 수 있을 것이다</p><figure id="fab0c936-5dfd-45c3-9bb9-54ed1b71f905"><a href="https://stackoverflow.com/questions/52185052/optionallistt-for-empty-list-in-repository-layer-returns-optional-empty-ho" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Optional &gt; for Empty List in Repository Layer Returns Optional.empty . How do I change it to return Optional[[]]</div><div class="bookmark-description">I have a JPA Query like this. PersonRepository.java public Optional &gt; findByStatus(int status); PersonService.java System.out.println(&quot;Optional value is &quot;+findByStatus(1)); The output is Optional value is Optional.empty Now I changed my query PersonRepository.java public List findByStatus(int status); PersonService.java Optional &gt; optional = Optional.of(findByStatus(1)); System.out.println(&quot;Optional value is &quot;+optional); The output is Optional value is Optional[[]] In my database, there is no value for status 1 .</div></div><div class="bookmark-href"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=ec617d715196" class="icon bookmark-icon"/>https://stackoverflow.com/questions/52185052/optionallistt-for-empty-list-in-repository-layer-returns-optional-empty-ho</div></div><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" class="bookmark-image"/></a></figure><p id="572681f5-f1e5-4345-befa-ab8e77f7b7b7" class="">
+</p><h3 id="3ce7f79e-5770-41ac-84af-95b2a31d1092" class="">01-4. Set&lt;도메인&gt;으로 된 반환타입 메서드 findByName</h3><pre id="3e8d442b-cd40-44b9-9a8b-84f2d05ad0d9" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //User findByName(String name);
+   // List&lt;User&gt; findByName(String name);
+  //  Optional&lt;User&gt; findByName(String name);
+    Set&lt;User&gt; findByName(String name);
+}</code></pre><pre id="3778eeef-61b0-4f26-990c-1d183c392d2f" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+[User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 20:02:49.3, updatedAt=2021-08-14 20:02:49.3), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-14 20:02:49.32, updatedAt=2021-08-14 20:02:49.32)]</code></pre><p id="9450f2d9-7c76-4258-83c8-afccfb916a2f" class="">그러면 Set은 집합과 같은 구조이기 때문에 중복되지 않은 두 martin에 대한 레코드 값들이 고스란히 담겨지는 것을 확인해볼 수 있다</p><p id="c5a8b564-a5f8-489f-935a-df45fe45f154" class="">
+</p><p id="c7bcbdfc-7d14-4a4d-a35b-46ec9e3500ea" class="">🌟 즉, 쿼리메서드에서는 리턴타입을 고정시켜서 사용해야 하고!</p><p id="6fda70ee-43ab-4640-a001-4657942d52a3" class="">🌟 레코드가 1개 혹은 N개 존재하는 지에 따라 개발자가 정해준 리턴타입에 맞춰서 반환해주는데 그 과정(런타임 중)에서 에러가 발생할 수도 있다(스프링 데이터 JPA에서 적절히 랩핑해주는 것)</p><p id="9888ffde-c1c2-48ca-9b95-1e93371dfafa" class="">
+</p><h3 id="488f36f1-cdcc-45a3-997f-70c108e7ca4f" class="">🌟 스프링에서 제공되는 쿼리 메서드 네이밍 Supported query method subject keywords</h3><figure id="f3f340b7-b7ee-4506-9ff7-80c2185b4569"><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.query.method.subject" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Spring Data JPA - Reference Documentation</div><div class="bookmark-description">Due to the different inception dates of individual Spring Data modules, most of them carry different major and minor version numbers. The easiest way to find compatible ones is to rely on the Spring Data Release Train BOM that we ship with the compatible versions defined.</div></div><div class="bookmark-href"><img src="https://docs.spring.io/favicon.ico" class="icon bookmark-icon"/>https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#appendix.query.method.subject</div></div></a></figure><figure id="5642b67e-63a5-49c5-9095-71f80afe22f4" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%20%EC%A0%9C%EA%B3%B5%EB%90%98%EB%8A%94%20%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%84%9C%EB%93%9C%20naming.PNG?raw=true"><img style="width:1152px" src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%20%EC%A0%9C%EA%B3%B5%EB%90%98%EB%8A%94%20%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%84%9C%EB%93%9C%20naming.PNG?raw=true"/></a></figure><p id="0e92af37-91ac-4027-8fa8-d6f232d02d39" class="">공식문서에서 확인해보면,</p><ul id="15a54bdc-a312-453f-9c4a-a04bc39becfc" class="bulleted-list"><li><code>find..By</code>, <code>read...By</code>, <code>get...By</code>, <code>query...By</code>, <code>search...By</code>, <code>stream...By</code> 의 경우는 전형적인 repository 타입, 컬렉션 혹은 Streamable 서브타입 혹은 Page와 같은 래퍼를 반환해주는 일반적인 쿼리 메서드로 사용[이중에서 일반적으로 <code>find...By</code> 를 가장 많이 사용한다]</li></ul><ul id="71c27b55-0592-4e73-a6b9-8fd1143dc758" class="bulleted-list"><li><code>exists...By</code> 는 프로젝션, 즉 열단위로 검색해서 존재하면 boolean 타입으로 반환</li></ul><ul id="062dc08d-1f13-480e-9222-a53e85c676e4" class="bulleted-list"><li><code>count...By</code> 는 열 단위로 카운트하여 numeric 결과를 반환</li></ul><ul id="8201d858-fb5d-4ba3-a1fb-c00d3b7ef97d" class="bulleted-list"><li><code>delete...By</code>, <code>remove...By</code> 는 void 타입이든지 delete된 갯수로 반환이든지 삭제 쿼리 메서드 결과로써 제공</li></ul><ul id="4381be3a-b506-419e-8078-d3e875222b67" class="bulleted-list"><li><code>...First&lt;number&gt;...</code>, <code>...Top&lt;number&gt;...</code> 는 처음 조회된 결과로 제한</li></ul><ul id="50a4da70-ccae-47c5-a9ae-f0c4a63c986e" class="bulleted-list"><li><code>...Distinct...</code> 는 중복되지 않도록 결과를 보여줌</li></ul><p id="93614c64-7594-4050-b4f5-bcf8b5978bf0" class="">이라고 되어 있는 것을 확인해볼 수 있다</p><p id="a9a10c6f-c30b-42b2-a5c3-addf96588883" class="">
+</p><p id="f6bea047-be2f-44e4-bb4b-361821069deb" class="">find...By의 경우,  findUserBy 등 네이밍해주어도 되지만 지금 UserRepository를 보면</p><pre id="ba7503d4-3fc5-496c-8e4e-a4a42dd7bb5d" class="code"><code>public interface UserRepository extends JpaRepository&lt;User,Long&gt;</code></pre><p id="e322050f-634e-4908-bfe8-75967be542f4" class="">위와 같이 User 도메인을 명시해주었으므로 <code>findBy(User필드 관련-자동완성으로 확인가능)</code> 로 일반적으로 네이밍해주기도 한다!</p><p id="1bd76f28-d72e-4129-901c-87ac96ead8c6" class="">
+</p><p id="c36f3175-db18-4ac3-848a-6014d0d31f3f" class="">🌟 List로 반환되는 목적일 경우에는 <code>findUsersByEmail</code> 과 같은 형태가 추천될 수 있다</p><p id="7ab71abd-afee-4ad6-8356-d99afff02798" class="">🌟System.out.println은 인텔리제이에서 sout이라고 입력하면 나온다!</p><p id="5e9d03ed-880a-48c7-af7a-7fd34217767c" class="">
+</p><h3 id="8d61681d-68f9-4933-aab6-f247ec7e8df4" class="">동일한 맥락에서 사용되는 <code>find,,,By</code>, <code>get...By</code> , <code>stream...By</code>, <code>read...By</code>, <code>query...By</code>, <code>search...By</code></h3><pre id="2943f1e0-bc54-4fa3-a75d-c9a49a1fd167" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //List&lt;User&gt; findByName(String name);
+    User findByEmail(String email);
+    User getByEmail(String email);
+    User readByEmail(String email);
+    User queryByEmail(String email);
+    User searchByEmail(String email);
+    User streamByEmail(String email);
+    List&lt;User&gt; findUsersByEmail(String email);
+    List&lt;User&gt; findUsersByName(String name);
+}</code></pre><pre id="81a31570-b0dd-4207-99b1-2ade55fc7cb1" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.util.List;
+import java.util.Set;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void crud(){
+        User user1= new User(&quot;david&quot;,&quot;david@fastcampus.com&quot;);
+        User user2=new User(&quot;simons&quot;,&quot;simons@fastcampus.com&quot;);
+        User userInOne=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        userInOne.setEmail(&quot;update_email_martin@gmail.com&quot;);
+        List&lt;User&gt; res=userRepository.saveAll(Lists.newArrayList(user1,user2,userInOne));
+        System.out.println(&quot;inserted&amp;updated result: &quot;+res);
+    }
+
+    @Test
+    public void select(){
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findByEmail: &quot;+userRepository.findByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findUsersByEmail: &quot;+userRepository.findUsersByEmail(&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findUsersByName: &quot;+userRepository.findUsersByName(&quot;martin&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;searchByEmail: &quot;+userRepository.searchByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;streamByEmail: &quot;+userRepository.streamByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;getByEmail: &quot;+userRepository.getByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;queryByEmail: &quot;+userRepository.queryByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;readByEmail: &quot;+userRepository.readByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+    }
+
+}</code></pre><pre id="99722ee4-5dc2-421c-81a4-7d7fff3a267b" class="code"><code>===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+findByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+findUsersByEmail: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 22:40:33.323, updatedAt=2021-08-14 22:40:33.323)]
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+findUsersByName: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 22:40:33.323, updatedAt=2021-08-14 22:40:33.323), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-14 22:40:33.336, updatedAt=2021-08-14 22:40:33.336)]
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+searchByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+streamByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+getByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+queryByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+readByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:40:33.335, updatedAt=2021-08-14 22:40:33.335)
+===</code></pre><p id="0ecaeec1-81fd-46e5-9b3c-2e2ebe4e1256" class="">먼저 Users나 User가 끼는 findUsersByEmail이나 findUsersByName의 경우는 기본적으로 List로 반환한다는 점을 확인해볼 수 있다</p><p id="28fbc97b-a755-495d-acbe-8d6925ce5ffb" class="">
+</p><p id="aabe4c97-ea60-4bda-aeca-20415d356095" class="">그리고 문서에서 소개한 것처럼 나머지 <code>find,,,By</code>, <code>get...By</code> , <code>stream...By</code>, <code>read...By</code>, <code>query...By</code>, <code>search...By</code> 는 동일하게 where절 등을 이용해서 조회하는 기능을 지원해주는 것을 확인해볼 수 있었다</p><p id="9553d7be-f381-4641-a8c8-bdfe06537799" class="">
+</p><p id="82c8acd1-97a4-4e5a-95f3-3ba4d4191df0" class="">따라서 단순 조회가 목적이라면, 이 중에서 코드 가독성이 높다고 판단한 메서드 명을 채택해서 사용하면 된다</p><p id="f22d9b1b-91de-4488-b55e-aa1917e9cdb9" class="">
+</p><p id="5979e779-5c11-48a7-8cc9-b601c7736b45" class="">그리고 아래와 같이 findSomethingByEmail처럼 find와 By 사이에 엔티티와 관련없는 이름이 들어가더라도 User에 대한 레포지토리이고, 반환형과 파라미터값이 User 와 관련있으므로, 전혀 문제없이 동일하게 작동한다</p><p id="fb404f89-48c1-40ad-bd57-b0f9b93af89b" class="">
+</p><p id="150beb3b-840e-41d5-a28a-7412669b9790" class="">즉, find...By 형태에 맞기만 한다면, Something과 같은 부분은 구현체에서 무시가 되는 것이다! 이는 자유도가 제공되는 것을 의미하는데 , 이러한 만큼 잘못된 정보를 네이밍에 이용하지 않아야 한다는 경각심을 일깨워준다</p><pre id="be87f925-7dd9-47c2-a82e-f7168709a27e" class="code"><code>User findSomethingByEmail(String email);</code></pre><pre id="e7353354-f0bb-4bf6-b645-b28238b7ceda" class="code"><code>@Test
+    public void somethingSelect(){
+        System.out.println(&quot;findSomethingByEmail: &quot;+userRepository.findSomethingByEmail(&quot;dennis@fastcampus.com&quot;));
+    }</code></pre><pre id="d9efb078-e5a5-4982-a107-7f8267a5db77" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+findSomethingByEmail: User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 22:51:02.821, updatedAt=2021-08-14 22:51:02.821)</code></pre><p id="96731c29-6044-425c-935d-cbdfa733e344" class="">
+</p><p id="0dd78e64-8869-4c54-966a-4c4a7db82b33" class="">만약 <code>findByByName</code>이라고 실수로 메서드 명을 짓는다면 런타임 오류가 발생할 수 있다 ! 따라서 이러한 부분을 미연에 방지하기 위해서는 <code>사전에 이러한 쿼리 메서드들에 대해서는 사전 테스트를 단위/통합 테스트로 진행해야 좋다</code></p><p id="20655fbc-0243-4e30-8edb-e9b6c4081c7d" class="">
+</p><h3 id="b51b01d8-febf-4b00-b7a9-5e104131b780" class=""><code>count...By</code> 와 함께 키워드들을 조합해서 사용해보기</h3><figure id="85a661a7-cd74-4784-ab87-63068457f48f"><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Spring Data JPA - Reference Documentation</div><div class="bookmark-description">Due to the different inception dates of individual Spring Data modules, most of them carry different major and minor version numbers. The easiest way to find compatible ones is to rely on the Spring Data Release Train BOM that we ship with the compatible versions defined.</div></div><div class="bookmark-href"><img src="https://docs.spring.io/favicon.ico" class="icon bookmark-icon"/>https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation</div></div></a></figure><p id="1178bdc4-67cc-422b-9f97-a91e42f4f7d0" class="">이 문서는 쿼리에서 사용되는 예약어를 기반으로 작성된 키워드들을 나타낸 것이다(이음매라고 생각)</p><ul id="d02221d7-3e96-439d-9f33-8819bc854ad5" class="bulleted-list"><li>Distinct : 중복 x</li></ul><ul id="d1cf346f-34e4-4d8d-bb10-e8909017b964" class="bulleted-list"><li>And: 쿼리에서 AND</li></ul><ul id="ec63d3b7-f041-4b9f-8f5d-8b5c904286cb" class="bulleted-list"><li>Or : 쿼리에서 OR</li></ul><ul id="fe1e8fcc-30d1-494f-9fdd-9161d393bcfe" class="bulleted-list"><li>Is, Equals : =</li></ul><ul id="da342ba1-7bfa-40f0-bd20-09b2cfbd3bae" class="bulleted-list"><li>BETWEEN: BETWEEN A AND B</li></ul><ul id="1776b5de-f741-41c4-b050-2b5defef2878" class="bulleted-list"><li>LessThan: &lt;</li></ul><ul id="46e24c54-4e59-488b-bfd6-6234b96e3bdd" class="bulleted-list"><li>LessThanEqual: ≤</li></ul><ul id="68c2cda3-ce8c-477b-b9f3-ed8878338368" class="bulleted-list"><li>...생략</li></ul><ul id="6d510fae-ee7e-465c-b80b-76f17f475f1c" class="bulleted-list"><li>After: 날짜가 뒤의 날짜일때 !  x &gt; ?</li></ul><ul id="80ed0e8f-7f14-4a4e-9f5e-524c4788980d" class="bulleted-list"><li>Before: 날짜가 앞의 날짜일때 ! x &lt; ?</li></ul><ul id="2e663ede-7eaa-43fe-b7d8-71c74cbc179e" class="bulleted-list"><li>StartingWith : ~로 시작 (LIKE이용)</li></ul><ul id="d3668e4b-aaf1-4731-af42-d4acece27b18" class="bulleted-list"><li>EndsWith: ~로 끝(LIKE이용)</li></ul><ul id="da0a5627-47f9-473f-b177-4be5dda87531" class="bulleted-list"><li>Containing : ~를 포함(LIKE이용)</li></ul><ul id="b32772e0-5410-4076-b3e7-1d58f4ba6538" class="bulleted-list"><li>IgnoreCase: 대소문자 구분 x (대문자로 모두 변형해서 비교) 
+-where UPPER(x.firstname) = UPPER(?1)</li></ul><pre id="3e162918-32f8-46a4-b4be-8c2039c625f2" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //List&lt;User&gt; findByName(String name);
+    User findByEmail(String email);
+    User getByEmail(String email);
+    User readByEmail(String email);
+    User queryByEmail(String email);
+    User searchByEmail(String email);
+    User streamByEmail(String email);
+    List&lt;User&gt; findUsersByEmail(String email);
+    List&lt;User&gt; findUsersByName(String name);
+    User findSomethingByEmail(String email);
+
+    long countByName(String name);
+    long countByNameAndEmail(String name, String email);
+    long countByCreatedAtAfter(Date createdAt);
+
+}</code></pre><p id="4117ccc4-fe78-4d79-80cd-4c31c998bdbf" class="">문서에서 예시에 나온것과 유사하게 네이밍해서 사용해보았다</p><p id="d367a6a1-9eb6-44ad-bcdb-fc6e224d5b86" class="">먼저 이름으로 조회되는 행 수를 카운트하고</p><p id="b478979d-fa00-4d07-a3df-8b22328ad272" class="">이름과 이메일로 조회된 결과의 행수, 특정 일자 이후의 행 수를 카운트하였다</p><pre id="8f82ca49-d6d5-42a9-9e10-33446019ac19" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+
+    }</code></pre><pre id="56ee11ab-5dd8-4801-9fdf-cfd9680fc604" class="code"><code>---
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByName: 2
+---
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at&gt;?
+countByCreatedAtAfter: 5
+---
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+        and user0_.email=?
+countByNameAndEmail: 1</code></pre><p id="f8b41096-1dc0-4065-8e7c-2a37e879f1ac" class="">그 결과, 위와 같은 쿼리에서 각 조건이 적절하게 조합되고, COUNT 함수로 조건에 맞는 행수가 확인된 것을 볼 수 있다</p><p id="4604d4cb-b112-4460-912c-4e78077f71d6" class="">
+</p><h3 id="f237d139-ac28-47df-8b62-6a214a293798" class=""><code>delete..By</code>, <code>remove...By</code> 네이밍</h3><ul id="883eb955-329c-463f-bdcc-6a735644d6ef" class="bulleted-list"><li>일반적으로 JpaRepository인터페이스에서 제공되는 삭제 메서드를 많이 이용</li></ul><p id="82c147b9-3fe5-4602-bd19-0f9f487c8bf1" class="">
+</p><p id="0582bef4-cd7c-4639-abc2-26a814bf9a6b" class=""><code>...First&lt;숫자&gt;...</code>와  <code>...Top&lt;숫자&gt;...</code></p><p id="8a140bd8-4e29-4729-b4b6-baacd3fe7633" class="">둘 다 동일하게 처음 발견한 것 포함 몇개까지 보여줄지를 결정하는 것이다!</p><p id="5b3f9d46-7d54-4b0e-97a2-021ebb11c884" class="">다만, 선택은 각 팀별 선택의 자율성에 맡긴 네이밍!</p><pre id="c47c3bcc-c7a4-4de6-b738-d0206767a3fe" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //List&lt;User&gt; findByName(String name);
+    User findByEmail(String email);
+    User getByEmail(String email);
+    User readByEmail(String email);
+    User queryByEmail(String email);
+    User searchByEmail(String email);
+    User streamByEmail(String email);
+    List&lt;User&gt; findUsersByEmail(String email);
+    List&lt;User&gt; findUsersByName(String name);
+    User findSomethingByEmail(String email);
+
+    long countByName(String name);
+    long countByNameAndEmail(String name, String email);
+    long countByCreatedAtAfter(Date createdAt);
+
+    List&lt;User&gt; findFirst2UsersByName(String name);
+    List&lt;User&gt; findTop1ByName(String name);
+}</code></pre><pre id="ce96a095-cee3-4529-942e-fb5c173f543b" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+
+    }</code></pre><pre id="bcab1e3a-d364-4775-93d5-1b53e65807e5" class="code"><code>(생략)
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? limit ?
+findFirst2UsersByName: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 23:29:50.413, updatedAt=2021-08-14 23:29:50.413), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-14 23:29:50.435, updatedAt=2021-08-14 23:29:50.435)]
+---
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? limit ?
+findTop1ByName: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 23:29:50.413, updatedAt=2021-08-14 23:29:50.413)]</code></pre><p id="6adbaf35-5f1e-4137-a128-64c27e632118" class="">그 결과 먼저 첫번째는 martin이 2개 행을 갖는데 2개를 모두 가져와서 보여지게 되고, 두번째는 그 두개 중 한개만을 택해서 가져와서 보여주는 것을 확인할 수 있다</p><p id="629a527a-99f0-428b-808b-e55f1cf38b4c" class="">
+</p><p id="52bdd7de-890e-4a65-afc9-bde747a8d121" class="">그리고 만약 Top1과 같이 한개만 가져온다면, List보다 User로 받는 것이 보다 더 나은 선택일 수 있다</p><p id="bef1c7d5-d968-44c4-86d3-f1a48303e7c2" class="">
+</p><p id="5388d955-5324-4fe6-a6b9-ea810358d545" class="">다만 First2와 같이 2개이상을 가져오면 List로 받는 것이 보다 바람직하다</p><p id="b2431adf-9c46-4b7f-8b1b-7c86cf8ffe89" class="">
+</p><p id="3eb03071-8a12-46dc-8622-ba4e6d416b6d" class="">
+</p><h3 id="6a5477fc-2cbf-45b0-927f-3af1afa9a605" class=""><code>EndingWith</code>, <code>StartingWith</code>, <code>Containing</code> 패턴</h3><ul id="c9f319b0-8ae1-4183-8653-ef680a53b1d6" class="bulleted-list"><li>위에서 언급한 것과 같이 ~로 끝나거나/시작하거나/포함시키는 패턴!</li></ul><pre id="194b2446-96ba-4c18-9e81-33df718527b9" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //List&lt;User&gt; findByName(String name);
+    User findByEmail(String email);
+    User getByEmail(String email);
+    User readByEmail(String email);
+    User queryByEmail(String email);
+    User searchByEmail(String email);
+    User streamByEmail(String email);
+    List&lt;User&gt; findUsersByEmail(String email);
+    List&lt;User&gt; findUsersByName(String name);
+    User findSomethingByEmail(String email);
+
+    long countByName(String name);
+    long countByNameAndEmail(String name, String email);
+    long countByCreatedAtAfter(Date createdAt);
+
+    List&lt;User&gt; findFirst2UsersByName(String name);
+    List&lt;User&gt; findTop1ByName(String name);
+
+    List&lt;User&gt; findAllByEmailEndingWith(String pattern);
+    List&lt;User&gt; findAllByNameStartingWith(String pattern);
+    List&lt;User&gt; findAllByEmailContaining(String pattern);
+}</code></pre><pre id="3decf90a-bb32-415b-be15-c1739ea75ab3" class="code"><code>@Test
+    public void likeMatcher(){
+        System.out.println(&quot;findAllByEmailEndingWith: &quot;+userRepository.findAllByEmailEndingWith(&quot;slowcampus.com&quot;));
+        System.out.println(&quot;findAllByNameStartingWith: &quot;+userRepository.findAllByNameStartingWith(&quot;ma&quot;));
+        System.out.println(&quot;findAllByEmailContaining: &quot;+userRepository.findAllByEmailContaining(&quot;campus&quot;));
+    }</code></pre><pre id="d7ed4327-6f8d-41fc-be88-3173e438d288" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email like ? escape ?
+findAllByEmailEndingWith: [User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-14 23:40:21.619, updatedAt=2021-08-14 23:40:21.619), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-14 23:40:21.623, updatedAt=2021-08-14 23:40:21.623)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name like ? escape ?
+findAllByNameStartingWith: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 23:40:21.601, updatedAt=2021-08-14 23:40:21.601), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-14 23:40:21.624, updatedAt=2021-08-14 23:40:21.624)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.email like ? escape ?
+findAllByEmailContaining: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-14 23:40:21.601, updatedAt=2021-08-14 23:40:21.601), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-14 23:40:21.618, updatedAt=2021-08-14 23:40:21.618), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-14 23:40:21.619, updatedAt=2021-08-14 23:40:21.619), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-14 23:40:21.623, updatedAt=2021-08-14 23:40:21.623)]</code></pre><p id="4822ed3f-3956-4d7a-89fb-aeb7846ba625" class="">
+</p><p id="7ea97289-29b2-46c5-91ba-0611af74c07c" class="">먼저 EndingWith의 경우 ExampleMatcher에서처럼, slowcampus.com으로 끝나는 이메일이 포함된 모든 행을 찾아서 보여주고</p><p id="e58d191c-ec47-49f3-993e-94772e09b4b4" class="">
+</p><p id="376f1b02-e3a0-4bc4-8404-54d7b58f2fb9" class="">StartingWith는 ma로 시작하는 이름이 포함된 모든 행을 보여준다</p><p id="113ef976-e7e6-46a5-8b1e-c0874fcddd4f" class="">
+</p><p id="f1df9d53-485d-4026-a751-b62654413977" class="">그리고 Containing은 campus가 포함된 이메일이 존재하는 모든 행을 찾아서 보여줌을 확인해볼 수 있다</p><p id="fdcb3f3c-6f37-44ff-ba92-b1b138e70a8d" class="">
+</p><h3 id="68d08db1-e3e0-4cb7-8d19-230a0e5a0140" class=""><code>Last&lt;number&gt;</code> 도 될까? ▶️ 존재하지 않는다!!</h3><pre id="74f95618-4ce0-4924-bf91-72dd3551f1bf" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    //List&lt;User&gt; findByName(String name);
+    User findByEmail(String email);
+    User getByEmail(String email);
+    User readByEmail(String email);
+    User queryByEmail(String email);
+    User searchByEmail(String email);
+    User streamByEmail(String email);
+    List&lt;User&gt; findUsersByEmail(String email);
+    List&lt;User&gt; findUsersByName(String name);
+    User findSomethingByEmail(String email);
+
+    long countByName(String name);
+    long countByNameAndEmail(String name, String email);
+    long countByCreatedAtAfter(Date createdAt);
+
+    List&lt;User&gt; findFirst2UsersByName(String name);
+    List&lt;User&gt; findTop1ByName(String name);
+
+    List&lt;User&gt; findAllByEmailEndingWith(String pattern);
+    List&lt;User&gt; findAllByNameStartingWith(String pattern);
+    List&lt;User&gt; findAllByEmailContaining(String pattern);
+
+    User findLast1ByName(String name);
+}</code></pre><p id="97c9927b-0a9d-4880-a7ed-ae56502cbf11" class="">끝에서부터 찾는 경우도 가능할까?</p><p id="06bfcf37-99ec-4009-af97-705cc095ba13" class="">Last를 넣어서 시도해보았다</p><pre id="fbdc8d0f-992d-4c72-a033-a2f97f651e1b" class="code"><code>package com.example.jpa_repository_interface.repository;
+
+import com.example.jpa_repository_interface.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Set;
+
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
+import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void crud(){
+        User user1= new User(&quot;david&quot;,&quot;david@fastcampus.com&quot;);
+        User user2=new User(&quot;simons&quot;,&quot;simons@fastcampus.com&quot;);
+        User userInOne=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        userInOne.setEmail(&quot;update_email_martin@gmail.com&quot;);
+        List&lt;User&gt; res=userRepository.saveAll(Lists.newArrayList(user1,user2,userInOne));
+        System.out.println(&quot;inserted&amp;updated result: &quot;+res);
+    }
+
+    @Test
+    public void select(){
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findByEmail: &quot;+userRepository.findByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findUsersByEmail: &quot;+userRepository.findUsersByEmail(&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;findUsersByName: &quot;+userRepository.findUsersByName(&quot;martin&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;searchByEmail: &quot;+userRepository.searchByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;streamByEmail: &quot;+userRepository.streamByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;getByEmail: &quot;+userRepository.getByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;queryByEmail: &quot;+userRepository.queryByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+        System.out.println(&quot;readByEmail: &quot;+userRepository.readByEmail(&quot;dennis@fastcampus.com&quot;));
+        System.out.println(&quot;===&quot;);
+    }
+
+
+    @Test
+    public void somethingSelect(){
+        System.out.println(&quot;findSomethingByEmail: &quot;+userRepository.findSomethingByEmail(&quot;dennis@fastcampus.com&quot;));
+    }
+
+    @Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+
+    }
+
+    @Test
+    public void likeMatcher(){
+        System.out.println(&quot;findAllByEmailEndingWith: &quot;+userRepository.findAllByEmailEndingWith(&quot;slowcampus.com&quot;));
+        System.out.println(&quot;findAllByNameStartingWith: &quot;+userRepository.findAllByNameStartingWith(&quot;ma&quot;));
+        System.out.println(&quot;findAllByEmailContaining: &quot;+userRepository.findAllByEmailContaining(&quot;campus&quot;));
+    }</code></pre><p id="f69ebe02-33d8-4e43-bc0f-a5834c6337d1" class="">그 결과 아래와 같이 2개의 행이 조회된다는 오류가 나온다</p><p id="4fe0523b-c89c-4d20-9b0b-52b3c4caf8b3" class="">즉, Last라는 키워드는 존재하지 않음을 확인해볼 수 있다</p><p id="49e2223e-9a40-43b7-b8ae-efae4abd23ae" class="">그리고 이는 쿼리에서 limit이 없는 것으로도 확인해볼 수 있다</p><pre id="f4f9b228-3399-419e-b09b-d373a577cdd3" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+query did not return a unique result: 2; nested exception is javax.persistence.NonUniqueResultException: query did not return a unique result: 2</code></pre><p id="cd39958a-c1ce-48c6-9d1f-0674f75ba4c2" class="">이런 Last 키워드는 존재하지 않지만, 나중에 ORDER BY와 접목해서 역순으로 정렬 후 First혹은 Top으로 접근할 수 있다</p><p id="a4f777d9-2352-48c7-b529-f56f462c2be2" class="">
+</p></div></article></body></html>
