@@ -544,6 +544,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BSpring%20JPA%5DRepository%20Interface%20%EB%A9%94%EC%84%9C%EB%93%9C%20%EC%8B%A4%EC%8A%B5(1).md" target="_blank">
 		[Spring] JPA-Repository Interface 메서드(1)
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/Repository%20Interface%20%EB%A9%94%EC%84%9C%EB%93%9C%20%EC%8B%A4%EC%8A%B5(2).md" target="_blank">
+		[Spring] JPA-Repository Interface 메서드(2)
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
