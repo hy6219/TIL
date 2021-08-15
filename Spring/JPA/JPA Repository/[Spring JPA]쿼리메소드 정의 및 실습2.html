@@ -1,0 +1,970 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쿼리메소드 정의 및 실습2</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e7418fcc-1b92-46cd-a727-4991302d4309" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">쿼리메소드 정의 및 실습2</h1></header><div class="page-body"><nav id="6ae8c97a-dd30-4a04-b5e5-7d32270edc39" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cc025436-050c-476e-b42d-4feb23a3e9f1">00. 지난시간 학습한 내용을 한줄로 리뷰</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#83044112-0654-4cc9-8441-0cfab6b49d3d">01. And를 이용한 조건 확인해보기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3b2ffa62-527a-4783-a8f7-fc7543c36715">02. Or를 이용한 조건 확인해보기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#87df1510-8c9e-4ca0-a616-0ebf2d1659aa">03. After를 이용해서 특정 일자 이후일 때로 조건을 만들기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b518ab93-eefc-42cd-84f8-d18bf9ea050e">04. Before를 이용해서 특정 기점 이전의 날짜로 조건을 만들기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3de8622e-3089-4d60-b38a-bea0406237ae">05. After나 Before를 이용해서 마치 GreaterThan이나 LessThan의 효과를 둔 조건을 걸어주기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b6f6d8e1-44fc-4267-80a3-a6cb9e675eed">06. GreaterThan, GreaterThanEqual, LessThan, LessThanEqual</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ee3f8c03-8cae-4b8b-98d8-d9d9117f98c1">07. 숫자와 날짜에 대한 구간에 대한 조건을 세우는 BETWEEN으로 조건 만들기</a></div></nav><p id="0ebaad28-180b-4ed6-886b-8709a9f86036" class="">
+</p><h3 id="cc025436-050c-476e-b42d-4feb23a3e9f1" class="">00. 지난시간 학습한 내용을 한줄로 리뷰</h3><p id="23a7e207-7a8c-4cf4-ba12-ed17c9811186" class="">find..by 등과 같은 형태에서 .</p><ul id="c471fc12-2ffc-4c11-b06e-23e1d3f6f5d4" class="bulleted-list"><li>find나 count 등은 쿼리를 어떻게 생성할 지</li></ul><ul id="ac3cb218-5acb-47f1-b46a-4a9f51414823" class="bulleted-list"><li>..에는 엔티티 관련 등의 이름이 올 수 있고</li></ul><ul id="a7ba6c90-4754-4982-98ea-9d3c04334188" class="bulleted-list"><li>by이하는 where 절을 형성</li></ul><p id="031761b5-0a98-4be2-bee0-88aa5ddd518d" class="">한다는 점을 알 수 있다</p><p id="df0ea35c-3b7a-4e12-960c-06ff7faa86c6" class="">
+</p><p id="28064b3f-2b25-4015-96f0-8d0971c42983" class="">하지만 우리가 사용할 쿼리는 </p><ul id="a0ad8e13-b2d0-4857-9c84-4868646c5d76" class="bulleted-list"><li>where 조건이 여러개일 수도 있고</li></ul><ul id="858081fc-ed97-4b3e-9b7a-80c33d70beb5" class="bulleted-list"><li>문자열이 아닌 다양한 형태의 타입들을 사용할 수 있을 것</li></ul><p id="0ab02c9e-a739-4a74-904c-c0c4032d433f" class="">이다</p><p id="9f21414b-4d94-4dd5-966a-be3d8d783e90" class="">
+</p><p id="689cd810-b95e-4027-b90c-d991c2f66043" class="">조건과 관련된 키워드에 대해서는 아래를 잠깐 참고해보아도 좋다</p><figure id="6679a47d-d3dd-4704-bd62-5166c65da700"><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#b51b01d8-febf-4b00-b7a9-5e104131b780" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">쿼리메소드 정의 및 실습1</div><div class="bookmark-description">I have a JPA Query like this. PersonRepository.java public Optional &gt; findByStatus(int status); PersonService.java System.out.println(&quot;Optional value is &quot;+findByStatus(1)); The output is Optional value is Optional.empty Now I changed my query PersonRepository.java public List findByStatus(int status); PersonService.java Optional &gt; optional = Optional.of(findByStatus(1)); System.out.println(&quot;Optional value is &quot;+optional); The output is Optional value is Optional[[]] In my database, there is no value for status 1 .</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#b51b01d8-febf-4b00-b7a9-5e104131b780</div></div></a></figure><p id="80a046aa-c869-406d-9e3c-beeb4f2d09f0" class="">
+</p><h3 id="83044112-0654-4cc9-8441-0cfab6b49d3d" class="">01. And를 이용한 조건 확인해보기</h3><p id="27f4341e-3239-4927-b86e-7bd1168f0a54" class="">저번 시간에 잠깐 살펴봤지만, 복습 겸 이름과 이메일로 user를 찾도록 해보자</p><pre id="0a070f3c-34a4-4927-8a79-a1779d2d74c0" class="code"><code>User findByNameAndEmail(String name, String email);</code></pre><pre id="fc700132-696e-4e08-846e-58c5b617b89a" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+   //     System.out.println(&quot;---&quot;);
+  //      System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+		📌 System.out.println(&quot;findByNameAndEmail: &quot;+userRepository.findByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));📌
+    }</code></pre><pre id="b2e30ae3-e566-4588-80eb-c34797bb1d9a" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+        and user0_.email=?
+findByNameAndEmail: User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 07:32:08.462, updatedAt=2021-08-15 07:32:08.462)</code></pre><p id="a1aa89e0-8a78-44f6-908f-6bc23162f65b" class="">그러면 쿼리의 조건절에서는 by 뒤에 붙여진 name과 email 조건으로 국한시켜서 <code>두 조건을 모두 만족시키는</code> 레코드를 추출해내는 것을 확인해볼 수 있다</p><p id="45d046d8-fc73-4b25-8e60-aabedb58e81e" class="">
+</p><h3 id="3b2ffa62-527a-4783-a8f7-fc7543c36715" class="">02. Or를 이용한 조건 확인해보기</h3><p id="f2c2897f-155d-4974-a806-4210273c76eb" class="">
+</p><p id="b9a909bc-8f4c-4f97-82b2-1415de7ed5c8" class="">이름 혹은 이메일로 조건을 만들어서 해당되는 레코드들을 찾아보도록 하자</p><pre id="c0d8c8cf-1a81-4296-ad3f-bd50d8d4f23b" class="code"><code>List&lt;User&gt; findByNameOrEmail(String name, String email);</code></pre><pre id="819a9e80-176d-4839-8b6f-75a418c170c4" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+   //     System.out.println(&quot;---&quot;);
+  //      System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameAndEmail: &quot;+userRepository.findByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+       📌 System.out.println(&quot;findByNameOrEmail: &quot;+userRepository.findByNameOrEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));📌
+    }</code></pre><pre id="8ae9a1c9-d04c-48a0-86d6-351582f6ce30" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+        or user0_.email=?
+findByNameOrEmail: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 07:37:40.424, updatedAt=2021-08-15 07:37:40.424), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 07:37:40.448, updatedAt=2021-08-15 07:37:40.448)]</code></pre><p id="655fa351-1f3c-4d94-a3ad-3e63cbae220f" class="">OR의 경우에는, 먼저 이름으로 찾은 경우와 이메일로 찾은 경우의 합집합이므로, <code>둘 중 한 조건만 충족해도</code> 결과에 포함시키는 것을 확인해볼 수 있다</p><p id="8d656df8-4821-4f4c-bf69-b855fc9c766f" class="">
+</p><h3 id="87df1510-8c9e-4ca0-a616-0ebf2d1659aa" class="">03. After를 이용해서 특정 일자 이후일 때로 조건을 만들기</h3><p id="0ba2f01b-08e1-4744-9a81-eecaaf6874a7" class="">
+</p><p id="a9000447-c241-4248-a675-308922eed390" class="">지난시간에는 count...By와 접목해서 사용했었는데, 이번에는 복습할 겸 find...By와 접목해서 사용해보자</p><p id="f0ba26d0-1386-4475-8856-05c6747ac75c" class="">
+</p><p id="1212d163-fc52-4553-bf44-f8a7c6dcf772" class="">CreatedAt의 값에 대한 조건을 2021년 8월 1일 이후로 좁혀보자</p><pre id="53a9f972-6744-4e3f-9d86-45e69b7d16d7" class="code"><code>List&lt;User&gt; findUsersByCreatedAtAfter(Date date);</code></pre><pre id="3d76a270-e419-401d-bcbe-b5768cd5cd67" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+   //     System.out.println(&quot;---&quot;);
+  //      System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameAndEmail: &quot;+userRepository.findByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameOrEmail: &quot;+userRepository.findByNameOrEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByCreatedAtAfter: &quot;+userRepository.findUsersByCreatedAtAfter(sf.parse(createdAt)));
+    }</code></pre><pre id="bd9e3bfd-819d-41e6-a02e-087807134b7e" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at&gt;?
+findUsersByCreatedAtAfter: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 07:45:35.695, updatedAt=2021-08-15 07:45:35.695), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 07:45:35.709, updatedAt=2021-08-15 07:45:35.709), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 07:45:35.71, updatedAt=2021-08-15 07:45:35.71), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 07:45:35.71, updatedAt=2021-08-15 07:45:35.71), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 07:45:35.711, updatedAt=2021-08-15 07:45:35.711)]</code></pre><p id="f7d25d70-2dfa-4921-8922-10450e452577" class="">그러면 where 절에서 <code>검색조건일자가 입력일자값보다 커야 이후를 검색해볼 수 있기 때문에</code> created_at&gt;? 부분이 들어가는 것을 확인해볼 수 있다</p><p id="be24f5c3-b4a2-460c-aea4-5d3c31b3d998" class="">
+</p><h3 id="b518ab93-eefc-42cd-84f8-d18bf9ea050e" class="">04. Before를 이용해서 특정 기점 이전의 날짜로 조건을 만들기</h3><p id="f771cb72-2cb8-40aa-8412-22b6606742a4" class="">
+</p><p id="15c2b074-ff89-4d95-afdb-0c6eb8fc877a" class="">이번에는 들어온 createdAt값 이전까지로 범위를 좁혀서 검색해보자</p><p id="11ab9e26-fe08-4961-985c-bc806b194495" class="">지난 시간에 공식문서에서 확인해본 것을 토대로 생각해본다면,</p><p id="fc8f503a-3075-4ae0-b99b-2abc9f774237" class="">created_at&lt;?를 이용해서 지정될 것이다</p><pre id="7af00883-a30f-4803-8626-01b1c2358328" class="code"><code>List&lt;User&gt; findUsersByCreatedAtBefore(Date date);</code></pre><pre id="42e6b16b-7d45-4fad-9f78-d66fb4b424bb" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+   //     System.out.println(&quot;---&quot;);
+  //      System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameAndEmail: &quot;+userRepository.findByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameOrEmail: &quot;+userRepository.findByNameOrEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByCreatedAtAfter: &quot;+userRepository.findUsersByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        String newCr= &quot;2021-08-15&quot;;
+        System.out.println(&quot;findUsersByCreatedAtBefore: &quot;+userRepository.findUsersByCreatedAtBefore(sf.parse(newCr)));
+    }</code></pre><pre id="d6d5725c-95a9-45c4-b924-f973111a6cc2" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at&lt;?
+findUsersByCreatedAtBefore: []</code></pre><p id="80f93504-4afc-4408-8fb2-9ccfa57d1147" class="">역시 예상한 것처럼 created_at&lt;?로 조건 범위를 좁혀서 검색했는데, 지금 8월 15일 이전에 작성된 글이 없기 때문에 빈 리스트를 확인할 수 있다</p><p id="2f8100b9-87a5-4682-9b35-0f426d8e5909" class="">
+</p><h3 id="3de8622e-3089-4d60-b38a-bea0406237ae" class="">05. After나 Before를 이용해서 마치 GreaterThan이나 LessThan의 효과를 둔 조건을 걸어주기</h3><p id="4116a4ff-f3d3-483b-adcf-21442580da55" class="">
+</p><p id="6b7bb3c0-1b20-4bf0-baa5-7ea0e2079670" class="">입력된 아이디값보다 큰 경우에 대해서 찾아보고-After</p><p id="a55ad675-8b41-4bca-9246-bb75163afefa" class="">입력된 이름값보다 작은 경우에 대해서 찾아보자-Before</p><pre id="f85417a8-52c7-4a26-8ace-be9cfb89ab72" class="code"><code>List&lt;User&gt; findUsersByIdAfter(Long id);
+    List&lt;User&gt; findUsersByNameBefore(String name);</code></pre><pre id="18550002-bd33-47c9-ac49-67436a0625a6" class="code"><code>@Test
+    public void selectWithKeywords() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);
+        String createdAt=&quot;2021-08-01&quot;;
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByCreatedAtAfter: &quot;+userRepository.countByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;countByNameAndEmail: &quot;+userRepository.countByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findFirst2UsersByName: &quot;+userRepository.findFirst2UsersByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+   //     System.out.println(&quot;---&quot;);
+  //      System.out.println(&quot;findLast1ByName: &quot;+userRepository.findLast1ByName(&quot;martin&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameAndEmail: &quot;+userRepository.findByNameAndEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findByNameOrEmail: &quot;+userRepository.findByNameOrEmail(&quot;martin&quot;,&quot;martin@fastcampus.com&quot;));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByCreatedAtAfter: &quot;+userRepository.findUsersByCreatedAtAfter(sf.parse(createdAt)));
+        System.out.println(&quot;---&quot;);
+        String newCr= &quot;2021-08-15&quot;;
+        System.out.println(&quot;findUsersByCreatedAtBefore: &quot;+userRepository.findUsersByCreatedAtBefore(sf.parse(newCr)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByCreatedAtIsBefore: &quot;+userRepository.findUsersByCreatedAtIsBefore(sf.parse(newCr)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByCreatedAtIsAfter: &quot;+userRepository.findUsersByCreatedAtIsAfter(sf.parse(newCr)));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByIdAfter: &quot;+userRepository.findUsersByIdAfter(3L));
+        System.out.println(&quot;---&quot;);
+        System.out.println(&quot;findUsersByNameBefore: &quot;+userRepository.findUsersByNameBefore(&quot;martin&quot;));
+    }</code></pre><pre id="b001508c-c26b-490a-a2c0-d98e37b032f0" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id&gt;?
+findUsersByIdAfter: [User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 08:33:45.221, updatedAt=2021-08-15 08:33:45.221), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 08:33:45.221, updatedAt=2021-08-15 08:33:45.221)]
+---
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name&lt;?
+findUsersByNameBefore: [User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 08:33:45.22, updatedAt=2021-08-15 08:33:45.22), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 08:33:45.221, updatedAt=2021-08-15 08:33:45.221)]</code></pre><p id="99d236ee-29df-4f65-b3e2-d65ef08c415a" class="">그러면, 그 결과, 아이디는 주어진 값보다 큰 아이디값을 가진 레코드를 조회하여 보여주고</p><p id="04d73d0c-2d87-463c-9016-34422d7f7ee1" class="">이름은 알파벳을 기준으로 그 이전의 알파벳을 활용한 레코드를 조회하여 보여주는 것을 알 수 있다</p><p id="e01a4107-0892-467b-8af6-34ac15d4ca15" class="">
+</p><p id="ad024ced-905d-4d42-91c0-25bbfdb3183a" class="block-color-red_background">🌟 이렇게 After와 Before는 다양하게 붙여줄수도 있지만 <code>가독성을 위해서 After와 Before는 날짜나 시간에 사용하는것이 적절</code>하다</p><p id="0c9a257b-1adb-423e-bf4a-8ed8a636e414" class="">
+</p><h3 id="b6f6d8e1-44fc-4267-80a3-a6cb9e675eed" class="">06. GreaterThan, GreaterThanEqual, LessThan, LessThanEqual</h3><p id="379f354f-f873-466b-8e81-e3d322f5f3ac" class="">먼저 왼쪽부터 차례대로 <code>필드&gt;input</code>, <code>필드≥input</code>,<code>필드&lt;input</code>, <code>필드≤input</code> 을 나타낸다</p><p id="22d67eaf-3df2-488e-a0be-3af8e1488a88" class="">
+</p><p id="21216cff-ace1-46db-a0a9-98f4264a2950" class="">아이디를 기준으로 이 네가지를 적용해보자</p><pre id="9c307b86-2c9e-417c-af53-cd8faadf945c" class="code"><code>List&lt;User&gt; findUsersByIdGreaterThan(Long id);
+    List&lt;User&gt; findUsersByIdGreaterThanEqual(Long id);
+    List&lt;User&gt; findUsersByIdLessThan(Long id);
+    List&lt;User&gt; findUsersByIdLessThanEqual(Long id);
+    List&lt;User&gt; findUsersByCreatedAtLessThanEqual(Date date);
+    List&lt;User&gt; findUsersByCreatedAtGreaterThanEqual(Date date);</code></pre><pre id="fe60a2d4-d7be-425e-ad76-55a18522500b" class="code"><code>@Test
+    public void greatLess() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy/MM/dd&quot;);
+        String cr= &quot;2021/08/15&quot;;
+        System.out.println(&quot;findUsersByIdGreaterThan: &quot;+userRepository.findUsersByIdGreaterThan(2L));
+        System.out.println(&quot;findUsersByIdGreaterThanEqual: &quot;+userRepository.findUsersByIdGreaterThanEqual(2L));
+        System.out.println(&quot;findUsersByIdLessThan: &quot;+userRepository.findUsersByIdLessThan(2L));
+        System.out.println(&quot;findUsersByIdLessThanEqual: &quot;+userRepository.findUsersByIdLessThanEqual(2L));
+        System.out.println(&quot;findUsersByCreatedAtLessThanEqual: &quot;+userRepository.findUsersByCreatedAtLessThanEqual(sf.parse(cr)));
+        System.out.println(&quot;findUsersByCreatedAtGreaterThanEqual: &quot;+userRepository.findUsersByCreatedAtGreaterThanEqual(sf.parse(cr)));
+    }</code></pre><pre id="928a1587-af2d-4d4f-be8b-f63474017ef0" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id&gt;?
+findUsersByIdGreaterThan: [User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id&gt;=?
+findUsersByIdGreaterThanEqual: [User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id&lt;?
+findUsersByIdLessThan: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 12:00:15.886, updatedAt=2021-08-15 12:00:15.886)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id&lt;=?
+findUsersByIdLessThanEqual: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 12:00:15.886, updatedAt=2021-08-15 12:00:15.886), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at&lt;=?
+findUsersByCreatedAtLessThanEqual: []
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at&gt;=?
+findUsersByCreatedAtGreaterThanEqual: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 12:00:15.886, updatedAt=2021-08-15 12:00:15.886), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 12:00:15.901, updatedAt=2021-08-15 12:00:15.901), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 12:00:15.902, updatedAt=2021-08-15 12:00:15.902)]</code></pre><p id="9e5e88ad-10ff-41d6-b63a-d3ac61c5249f" class="">그러면 쿼리를 집중해서 잘 살펴보면 <code>GreaterThan에서는 조건에 &gt;</code>, <code>GreaterThanEqual에서는 &gt;=</code>, <code>LessThan에서는 &lt;</code>, <code>LessThanEqual에서는 &lt;=</code> 이 붙어서 조회가 된 것을 살펴볼 수 있다</p><p id="f331b04c-25aa-47a2-a4c5-1dfb67ab4634" class="">
+</p><p id="6acf8326-7739-449c-bf12-520ce19d13f4" class="">특히, After 및 Before와 다른 점은 <code>범용적으로 날짜, 숫자 등 다양한 타입에 적용할 수 있다</code> 는 점이다!</p><p id="5dcfd3db-a3ca-483e-8ad1-53e8982ff2c8" class="">
+</p><p id="dafa8578-2ce9-4758-ad89-c7a66c9b713c" class="block-color-red_background">그렇기에, 지금 위에서는 After나 Before는 이후 혹은 이전만 쉽게 확인해볼 수 있었는데 LessThanEqual 이라던지 GreaterThanEqual로 해당 일자 8월 15일을 포함하고 그 이전 혹은 이후도 검색해볼 수 있었다</p><p id="e7eee7a4-77ef-4e0f-abf1-ab01fd9832ea" class="">
+</p><h3 id="ee3f8c03-8cae-4b8b-98d8-d9d9117f98c1" class="">07. 숫자와 날짜에 대한 구간에 대한 조건을 세우는 BETWEEN으로 조건 만들기</h3><p id="428d9ae1-2c11-4561-85bd-6769bbe9b909" class="">쿼리문에서 BETWEEN A AND B를 통해 특정 구간을 끊어내는 것과 동일하다!</p><p id="99153a3b-d36c-42f1-8ac4-4c506946f5be" class="">
+</p><p id="25433efc-b365-4c65-ac1c-1a2a9fd748c8" class="">먼저 CreatedAt 필드를 접목해서 날짜 구간으로 조회해보고</p><p id="2c5aec6a-3f96-48ef-b7fa-a9bf3c939c51" class="">숫자로는 아이디값을 이용해서 구간으로 조회해보자</p><pre id="e3f02423-fcee-4b72-aa09-446087c9b75f" class="code"><code>List&lt;User&gt; findUsersByCreatedAtBetween(Date date1, Date date2);
+    List&lt;User&gt; findUsersByIdBetween(Long from, Long to);</code></pre><pre id="171270d5-6edc-4584-a4b7-555992d8fc04" class="code"><code>@Test
+public void betweenTest() throws ParseException {
+        SimpleDateFormat sf = new SimpleDateFormat(&quot;yyyy/MM/dd&quot;);
+        Date date1=sf.parse(&quot;2021/08/01&quot;);
+        Date date2=sf.parse(&quot;2021/08/16&quot;);
+
+        System.out.println(&quot;findUsersByCreatedAtBetween: &quot;+userRepository.findUsersByCreatedAtBetween(date1,date2));
+        System.out.println(&quot;findUsersByIdBetween: &quot;+userRepository.findUsersByIdBetween(1L,4L));
+    }
+}</code></pre><p id="7a06ceeb-970e-4403-b7b1-2c1a6ac24178" class="">살펴본다면, BETWEEN A AND B가 x≥A &amp;&amp; x≤B 의 의미이기 때문에 지금 입력에 해당되는 해당일자는 8월 15일이기 때문에 구간에 걸리는 레코드는 모든 레코드가 잡히게 될 것이다</p><p id="fff19e6f-71e0-4b15-bd4f-8d122bd11a2d" class="">
+</p><p id="3d5fab58-4d42-4c6a-92cc-676931101746" class="block-color-red_background">다만, 날짜의 경우, 보통은 데이터베이스에 시간을 미지정시 0시 0분 0초로 들어가기 때문에 24시까지 포함해서 조회하고자 한다면, 시간을 미지정한 채 위와 같이 다음날을 넣어주어도 좋다</p><p id="1ef18426-ad21-4963-9390-21eb66224c0c" class="">
+</p><p id="ce6940c1-20f7-4036-ae71-002abbaf0a68" class="">비슷한 개념에서 살펴보면, 아이디가 1L인 경우와 4L인 경우의 사이에 해당되는 레코드는 아이디가 1~4L인 경우가 해당될 것이다</p><p id="ed5d11c8-c666-487c-be42-4d62e9fc2816" class="">
+</p><pre id="a9b67672-fdd7-4576-acfb-546933583a73" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.created_at between ? and ?
+findUsersByCreatedAtBetween: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 12:14:20.855, updatedAt=2021-08-15 12:14:20.855), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 12:14:20.865, updatedAt=2021-08-15 12:14:20.865), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 12:14:20.866, updatedAt=2021-08-15 12:14:20.866), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 12:14:20.866, updatedAt=2021-08-15 12:14:20.866), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 12:14:20.866, updatedAt=2021-08-15 12:14:20.866)]
+Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id between ? and ?
+findUsersByIdBetween: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 12:14:20.855, updatedAt=2021-08-15 12:14:20.855), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 12:14:20.865, updatedAt=2021-08-15 12:14:20.865), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 12:14:20.866, updatedAt=2021-08-15 12:14:20.866), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 12:14:20.866, updatedAt=2021-08-15 12:14:20.866)]</code></pre><p id="fcae171a-0d12-46cb-9793-2cced0f42900" class="">
+</p><p id="22964804-ed06-4b73-b6ba-dc260dd42f56" class="">🌟BETWEEN과 LessThan,LessThanEquals,GreaterThan,GreaterThanEquals는 모두 경계값을 포함하고 After 및 Before는 경계값을 포함시키지 않는다는 특징을 지닌다!</p><p id="04f970a1-a10e-4df9-a524-84919e0cbcf6" class="">다만! BETWEEN은   LessThan,LessThanEquals,GreaterThan,GreaterThanEquals와 다르게 하한과 상항이 존재하고, 그 둘을 모두 포용한다는 차이가있다!</p><p id="42647575-0c7e-4f4b-9eec-0e19e266283f" class="">
+</p><p id="642866cf-da05-42eb-83b5-16d7608fe700" class="">➕Between을 풀어서 쓴다면 예를 들어서, 위의 <code>findUsersByIdBetween</code> 를 예로 든다면 아래와 같이 풀어쓸 수 있을 것이다</p><pre id="71c0eeae-10e7-41da-9f2a-d64c0afec974" class="code"><code>List&lt;User&gt; findUsersByIdGreaterThanEqualsAndIdLessThanEqual(Long from, Long to);</code></pre><p id="592abeb9-0382-44db-aa7c-52739858afb3" class="">
+</p><p id="f74aa6a6-1364-40bf-b620-95b0b27b1739" class="">🌟 쿼리상의 논리적 오류는 개발툴에서조차도 찾아줄 수 없기 때문에 키워드를 기반으로 하는 쿼리메서드 네이밍에서는 조심해야 할 것!!</p></div></article></body></html>
