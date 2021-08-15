@@ -1,0 +1,950 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쿼리메서드 기본실습3</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="2edc5008-f653-4851-bd0a-d081241e6375" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">쿼리메서드 기본실습3</h1></header><div class="page-body"><nav id="0220f9a2-4398-42d3-931d-35a25204dbdd" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#021ec601-5c20-4ab4-b718-0e525c5853fa">1.Start to add bean value condition to where clause </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#db85ac65-d2de-4a5b-8c7f-d8ec728cd48d">01-1. IsNotNull </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a5e5d7e3-a673-417b-9e08-4636d3130764">01-3. IsNotEmpty ▶️ 존재 하지 않는! WHERE Clause와 전혀 관련없는 키워드!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b7f7852a-334d-49f5-ac3d-2faac63ca317">01-3-1. 컬렉션 속성으로 사용된다? IsNotEmpty?</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3e5471aa-d5da-4867-b436-108b0f8bd3f4">01-4. True, False</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c381e0c9-6338-4bb3-a8d1-1fc2ece379b7">01-5. In, NotIn</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#440427b5-7b37-4bce-915e-ebee9c1c4eb0">01-6. StartingWith(<code>LIKE 1%</code>), EndingWith(<code>LIKE %1</code>), Containing(<code>LIKE %1%</code> ▶️ Containing은 %로 둘러싸기 특성이 있어서 양방향 검색!!이라고 불릴 수 있다!)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b9377920-d4ed-4ec5-8dcb-f2b70888edc2">01-7. 위의 01-6의 원조격! Like</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a64012e8-0532-4c47-86bc-5d0fa8ce24d6">01-8. Is,Equals</a></div></nav><h2 id="021ec601-5c20-4ab4-b718-0e525c5853fa" class="">1.Start to add bean value condition to where clause </h2><p id="63eef7c8-04fa-4bbc-842c-33fa2dac7f6b" class="">이번에는 빈값에 대한 조회를 해보자</p><figure id="adfb1458-b41e-4a03-a3db-b283aba97697"><a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Spring Data JPA - Reference Documentation</div><div class="bookmark-description">Due to the different inception dates of individual Spring Data modules, most of them carry different major and minor version numbers. The easiest way to find compatible ones is to rely on the Spring Data Release Train BOM that we ship with the compatible versions defined.</div></div><div class="bookmark-href"><img src="https://docs.spring.io/favicon.ico" class="icon bookmark-icon"/>https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation</div></div></a></figure><p id="84660de1-23ea-493d-a532-950699b154cb" class="">이 공식문서의 표를 보면,</p><ul id="eceb38c3-38a7-4796-87e8-495c9ea7f96b" class="bulleted-list"><li>IsNull, Null : 속성값이 비어있는지에 대한 조건을 붙여줌</li></ul><ul id="d4675b7d-960a-49f5-8a9d-9af563c8a428" class="bulleted-list"><li>IsNotNull, NotNull : 속성값이 비어있지 않는 조건을 붙여줌</li></ul><ul id="5c45a77b-4a75-4000-971d-defe964f2e56" class="bulleted-list"><li>Like : LIKE 조건을  붙이는 것</li></ul><ul id="74815cde-c8ce-4436-ac87-5e7629d76f55" class="bulleted-list"><li>NotLike:  NOT LIKE 조건을 붙이는 것</li></ul><ul id="0ae49850-5f2f-4cbf-9772-4499bc60863d" class="bulleted-list"><li>StartingWith : LIKE 입력% 조건을 붙이는 것</li></ul><ul id="3fd1b014-3e7d-4244-b87a-175d6e61f14f" class="bulleted-list"><li>EndingWith : LIKE %입력 조건을 붙이는 것</li></ul><ul id="1028b770-fb51-4682-866f-52fb3e061784" class="bulleted-list"><li>Containing : LIKE %입력% 조건을 붙이는 것</li></ul><ul id="7a19f5f9-1854-4e9b-9f09-2ed3c03280e9" class="bulleted-list"><li>OrderBy: 정렬조건 <code>예: findByAgeOrderByLastnameDesc</code></li></ul><ul id="2ac1576e-80dd-4018-81fe-84663848a5e4" class="bulleted-list"><li>Not: SQL에서 NOT의 기능! &lt;&gt;, ! =, ^=</li></ul><ul id="97c0419f-9c69-426c-8e7f-6c7348af8eee" class="bulleted-list"><li>In : IN(?,?,?)조건</li></ul><ul id="3d86b587-76d0-4729-a070-46ac14100bc3" class="bulleted-list"><li>NotIn : NOT IN 조건</li></ul><ul id="747ae0fc-ec14-4673-8108-6877f82b7c13" class="bulleted-list"><li>True : WHERE 속성=true</li></ul><ul id="1685798e-e9a1-4cc1-bbdd-2003ba3a9ad0" class="bulleted-list"><li>False: WHERE 속성=false</li></ul><p id="af624a55-2219-403c-a487-e30f37757c3c" class="">
+</p><p id="b9bd0030-6da4-4bf8-927d-18ed411ab83d" class="">이외에는 아래를 참조!</p><figure id="eb2d402a-75b0-44b9-ab9a-dd254b3d54f9"><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#b51b01d8-febf-4b00-b7a9-5e104131b780" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">쿼리메소드 정의 및 실습1</div><div class="bookmark-description">I have a JPA Query like this. PersonRepository.java public Optional &gt; findByStatus(int status); PersonService.java System.out.println(&quot;Optional value is &quot;+findByStatus(1)); The output is Optional value is Optional.empty Now I changed my query PersonRepository.java public List findByStatus(int status); PersonService.java Optional &gt; optional = Optional.of(findByStatus(1)); System.out.println(&quot;Optional value is &quot;+optional); The output is Optional value is Optional[[]] In my database, there is no value for status 1 .</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#b51b01d8-febf-4b00-b7a9-5e104131b780</div></div></a></figure><p id="5980f8de-5c96-454d-96c0-36c804b2fcb0" class="">
+</p><h3 id="db85ac65-d2de-4a5b-8c7f-d8ec728cd48d" class="">01-1. IsNotNull </h3><p id="ce87302d-dc2f-4d98-9144-c32f14006883" class="">특정 속성에 대해서 Null이 아닌 경우를 조회</p><pre id="89769153-1ef6-4e2d-a25a-de8d19771d6b" class="code"><code>List&lt;User&gt; findUsersByIdIsNotNull();</code></pre><pre id="8d8467ce-7118-458f-8461-98e487809940" class="code"><code>@Test
+    public void beanClause() {
+        System.out.println(&quot;findUsersByIdIsNotNull: &quot; + userRepository.findUsersByIdIsNotNull());
+    }</code></pre><pre id="076dbbe6-60e0-4e61-891c-128b8f2f476b" class="code"><code>	Hibernate: 
+    select
+        user0_.id as id1_0_,
+        user0_.created_at as created_2_0_,
+        user0_.email as email3_0_,
+        user0_.name as name4_0_,
+        user0_.updated_at as updated_5_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id is not null
+findUsersByIdIsNotNull: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 15:58:30.197, updatedAt=2021-08-15 15:58:30.197), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 15:58:30.213, updatedAt=2021-08-15 15:58:30.213), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 15:58:30.213, updatedAt=2021-08-15 15:58:30.213), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 15:58:30.214, updatedAt=2021-08-15 15:58:30.214), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 15:58:30.214, updatedAt=2021-08-15 15:58:30.214)]</code></pre><p id="6dbda338-18ed-4142-9d20-e1e2179ebf09" class="">위와 같이, WHERE 절에 NotNull 속성이 붙는 것을 알 수 있고!</p><p id="fbd5bc2a-5403-41b3-ba27-89bdd197ea3c" class="">지금 아이디는 기본키이기 때문에 NOT NULL+UNIQUE 제약조건이 기본적으로 내장되어 있기 때문에 모든 레코드가 조회된다!</p><p id="60ef06b5-9d46-4ede-89c2-96cb69e05aff" class="">
+</p><h3 id="a5e5d7e3-a673-417b-9e08-4636d3130764" class="">01-3. IsNotEmpty ▶️ 존재 하지 않는! WHERE Clause와 전혀 관련없는 키워드!</h3><p id="066cc9db-8e10-4d01-a778-3143d0639c59" class="">
+</p><p id="71fe28f5-f1c2-47c9-b7aa-bf54f8acbe32" class="">보통 자료구조에서 empty()등이 다루어 지기 때문에 isNotEmpty등을 떠올릴 수 있는데, 다음과 같이 간단하게 테스트해보면</p><pre id="d76c5e42-0a15-4f06-b27a-22bf97a03bd6" class="code"><code>List&lt;User&gt; findUsersByIdIsNotEmpty();</code></pre><pre id="de815f61-306a-48c9-a892-8491e40f9e43" class="code"><code>System.out.println(&quot;findUsersByIdIsNotEmpty: &quot;+userRepository.findUsersByIdIsNotEmpty());</code></pre><pre id="05794a42-982f-4bd3-b97e-f7bccd6287ee" class="code"><code>Caused by: org.springframework.data.repository.query.QueryCreationException: Could not create query for public abstract java.util.List com.example.jpa_query_method.repository.UserRepository.findUsersByIdIsNotEmpty()! Reason: Failed to create query for method public abstract java.util.List com.example.jpa_query_method.repository.UserRepository.findUsersByIdIsNotEmpty()! IsEmpty / IsNotEmpty can only be used on collection properties!; nested exception is java.lang.IllegalArgumentException: Failed to create query for method public abstract java.util.List com.example.jpa_query_method.repository.UserRepository.findUsersByIdIsNotEmpty()! IsEmpty / IsNotEmpty can only be used on collection properties!</code></pre><p id="7f165908-1934-4b38-ad21-490d638eca65" class="">위와 같이 IsEmpty혹은 IsNotEmpty는 컬렉션 속성으로 사용되는 부분이라서 지금과 같은 경우에는 적용할 수 없다는 에러를 확인해볼 수 있다!</p><p id="a8b2aa66-cc05-4f42-ab3f-420eca0d7c85" class="">
+</p><h3 id="b7f7852a-334d-49f5-ac3d-2faac63ca317" class="">01-3-1. 컬렉션 속성으로 사용된다? IsNotEmpty?</h3><p id="a4cee8af-86eb-4e5f-9977-42276d8ed359" class="">
+</p><p id="de39e913-3146-4943-8ee8-0281942f7ec3" class="">Address 라는 도메인을 하나 만들어보자</p><p id="2343111c-2d7b-439f-b1d6-434892b089ef" class="">Address는 id라는 필드 하나만 갖도록 하고</p><pre id="c6d2984b-fa5d-4b6d-8583-d11089974a40" class="code"><code>package com.example.jpa_query_method.domain;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Address {
+    @Id
+    private Long id;
+}</code></pre><p id="5ffd98d6-c963-4126-9ccc-185aeadbc3e1" class="">아직 배우진 않았지만 관계 중 1:N(일대다) 관계에 따르고, EAGER FETCH를 하는 List&lt;Address&gt; addresses 필드를 User 도메인에 추가해주자</p><pre id="149f1e7a-8510-4ee3-bca7-ae8ea2691329" class="code"><code>package com.example.jpa_query_method.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    @OneToMany(fetch=FetchType.EAGER)
+    private List&lt;Address&gt; addresses;
+}</code></pre><p id="d370515c-ab0a-472c-8f10-25cfd2e66ca3" class="">그러면 지금 User 내부에 컬렉션 중 하나인 List 자료형을 갖는 필드가 존재하므로 이에 대해서는 IsNotEmpty 를 붙일 수 있다!</p><pre id="60db7d5e-f3a0-4baf-b5ac-1d9f49ed6d44" class="code"><code>List&lt;User&gt; findUsersByAddressesIsNotEmpty();</code></pre><pre id="09962b19-565f-4abb-ae3f-c8447d98d68e" class="code"><code>System.out.println(&quot;findUsersByAddressesIsNotEmpty: &quot;+userRepository.findUsersByAddressesIsNotEmpty());</code></pre><pre id="d753d88f-dfb3-429a-b8c7-2d15a2f52e26" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.created_at as created_2_1_,
+        user0_.email as email3_1_,
+        user0_.name as name4_1_,
+        user0_.updated_at as updated_5_1_ 
+    from
+        user user0_ 
+    where
+        exists (
+            select
+                address2_.id 
+            from
+                user_addresses addresses1_,
+                address address2_ 
+            where
+                user0_.id=addresses1_.user_id 
+                and addresses1_.addresses_id=address2_.id
+        )
+findUsersByAddressesIsNotEmpty: []</code></pre><p id="621cee70-3b4d-46cf-bd9f-03679f7a879e" class="">그러면 EXISTS로 존재한다면 모든 값을 보여주게 되는것을 확인해볼 수 있는데, 지금은 address의 id값이 null이기 때문에 조건을 맞추는 경우가 없어 비어있는 출력을 확인해볼 수 있다</p><p id="bac8bdb6-311f-4280-b111-79a92d58d959" class="">
+</p><p id="709fbb99-269e-44af-889c-5819134a4676" class="">이러한 IsNotEmpty 의 경우는 잘 사용되지 않는 구문이다</p><p id="37467f01-709f-4853-bffb-e27d5aaa68b3" class="">🌟 empty라는 것은 원래는 is not null ➕ is not &quot;&quot; 의 의미인데, 여기서는 그런 의미가 아닌, 컬렉션에서 해당 조건이 존재하는지 확인하면 보여주는 용도로 사용됨을 알 수 있다</p><p id="fdca0b4b-0241-4103-a2b9-0b9225034661" class="">
+</p><h3 id="3e5471aa-d5da-4867-b436-108b0f8bd3f4" class="">01-4. True, False</h3><p id="ea1dc195-9d56-488c-8ac1-1d0864a68ddc" class="">먼저 불린값을 확인하기 위해서 User 도메인에 active라는 필드를 추가해주자</p><pre id="478d3947-23f2-4cf3-81a8-5eee3ac56491" class="code"><code>package com.example.jpa_query_method.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="3791bc0a-12bb-49b3-b8ad-e71a6f7276e4" class="">그리고 이에 걸맞게 data.sql도 아래처럼 수정해주자</p><pre id="c2c45054-44ab-4900-8c52-95f2bb0a7f8a" class="code"><code>call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`,`active`) values (1, &#x27;martin&#x27;, &#x27;martin@fastcampus.com&#x27;, now(), now(),true);
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`,`active`) values (2, &#x27;dennis&#x27;, &#x27;dennis@fastcampus.com&#x27;, now(), now(),true);
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`,`active`) values (3, &#x27;sophia&#x27;, &#x27;sophia@slowcampus.com&#x27;, now(), now(),false);
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`,`active`) values (4, &#x27;james&#x27;, &#x27;james@slowcampus.com&#x27;, now(), now(),false);
+
+call next value for hibernate_sequence;
+insert into user (`id`, `name`, `email`, `created_at`, `updated_at`,`active`) values (5, &#x27;martin&#x27;, &#x27;martin@another.com&#x27;, now(), now(),true);</code></pre><p id="7ff938b3-ac53-47ff-a065-89e39852304a" class="">그러면 이에 맞게 메서드를 <code>~False/True</code> 로 만들어주자</p><pre id="c4455add-d6a3-4507-ab57-e691a9e6f57a" class="code"><code>List&lt;User&gt; findUsersByActiveFalse();
+    List&lt;User&gt; findUsersByActiveTrue();</code></pre><pre id="ade8b788-367e-4bf4-af43-680d552111ef" class="code"><code>@Test
+    public void beanClause() {
+     //   System.out.println(&quot;findUsersByIdIsNotNull: &quot; + userRepository.findUsersByIdIsNotNull());
+      //  System.out.println(&quot;===&quot;);
+        //System.out.println(&quot;findUsersByAddressesIsNotEmpty: &quot;+userRepository.findUsersByAddressesIsNotEmpty());
+        System.out.println(&quot;findUsersByActiveFalse: &quot;+userRepository.findUsersByActiveFalse());
+        System.out.println(&quot;findUsersByActiveTrue: &quot;+userRepository.findUsersByActiveTrue());
+    }</code></pre><pre id="df38258e-ce80-4cf1-9048-88d96c2a40d3" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.active=0
+findUsersByActiveFalse: [User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 16:35:44.708, updatedAt=2021-08-15 16:35:44.708, active=false), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 16:35:44.709, updatedAt=2021-08-15 16:35:44.709, active=false)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.active=1
+findUsersByActiveTrue: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 16:35:44.695, updatedAt=2021-08-15 16:35:44.695, active=true), User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 16:35:44.708, updatedAt=2021-08-15 16:35:44.708, active=true), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 16:35:44.709, updatedAt=2021-08-15 16:35:44.709, active=true)]</code></pre><p id="24261c05-38b1-416d-a93e-5ff2e592eab7" class="">우선, 이진법으로 생각하면 true는 1, false는 0이기 때문에</p><p id="49651ef9-cd40-47a8-b1fb-b30e3bf019c0" class="">False의 경우에는 active=0인 조건으로 찾으려고 하고</p><p id="26ad54a2-97b2-4ec3-8104-3dd9d7fff25a" class="">True의 경우에는 active=1인 조건으로 찾으려고 하는 것을 확인해볼 수 있다</p><p id="1db55ea0-5cff-4a01-85dd-8ea0ce0260c3" class="">
+</p><p id="fb9d976f-6593-4ed1-9a46-c13eb41476e7" class="">그렇기 때문에 False인 경우에는 아이디 3,4,5에 해당하는 sophia, james, martin이 출력되고</p><p id="9e64200e-db30-45e4-a40e-a17304fd12a7" class="">
+</p><p id="1ce2ec21-4794-4eb5-bd57-16b3838416bf" class="">True인 경우에는 아이디 1,2에 해당되는 martin, dennis가 출력되는 것을 확인해볼 수 있다</p><p id="2924d297-9f76-4a40-9ba4-3840a1bb5c64" class="">
+</p><h3 id="c381e0c9-6338-4bb3-a8d1-1fc2ece379b7" class="">01-5. In, NotIn</h3><p id="64f278b1-f0c8-4931-a8dc-521e19d00cf1" class="">이번에는 IN이나 NOT IN은 1개 값에서도 찾을 수 있지만, 사용자가 지정한 특정 값들 중에 포함이 되는지를 확인해보는 것이 보다 매력있기 때문에 Iterable을 파라미터로 주어서 테스트해보도록 하겠다</p><pre id="b235a1b2-cb24-4097-96d8-05506c27becd" class="code"><code>List&lt;User&gt; findUsersByIdIn(Iterable iterable);
+    List&lt;User&gt; findUsersByIdNotIn(Iterable iterable);</code></pre><pre id="8084092a-ffe7-4e85-bee5-313d79760378" class="code"><code>@Test
+    public void inNotTest(){
+        System.out.println(&quot;findUsersByIdIn: &quot;+userRepository.findUsersByIdIn(Lists.newArrayList(1L,3L,5L)));
+        System.out.println(&quot;findUsersByIdNotIn: &quot;+userRepository.findUsersByIdNotIn(Lists.newArrayList(1L,3L,5L)));
+    }</code></pre><pre id="b8deff53-477b-41ba-9379-b7690ecf1913" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.id in (
+            ? , ? , ?
+        )
+findUsersByIdIn: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 16:41:56.454, updatedAt=2021-08-15 16:41:56.454, active=true), User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-15 16:41:56.467, updatedAt=2021-08-15 16:41:56.467, active=false), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 16:41:56.468, updatedAt=2021-08-15 16:41:56.468, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.id not in  (
+            ? , ? , ?
+        )
+findUsersByIdNotIn: [User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-15 16:41:56.467, updatedAt=2021-08-15 16:41:56.467, active=true), User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-15 16:41:56.468, updatedAt=2021-08-15 16:41:56.468, active=false)]</code></pre><p id="2e5d8ec6-b429-4f28-a646-8350702d908a" class="">그러면 In은 데이터가 아이디가 1L, 3L, 5L 중에 해당되는 레코드가 있다면 선택해서 보여주고</p><p id="cc0d6123-4b69-4325-b7d9-32ac04102f2b" class="">NotIn은 그 외의 경우, 즉 2L, 4L의 경우를 보여주는 것을 확인해볼 수 있다!</p><p id="894fb74f-944d-4671-a494-c8238b8ccd05" class="">쿼리에서는 각각이 IN, NOT IN으로 확인되는 것을 볼 수 있다!</p><p id="b2349b68-12c0-476a-97a7-a2ffe40073c6" class="">
+</p><p id="44820ade-140c-4357-9f39-3880de2b1b8d" class="">실제로는 다른 쿼리에서 리턴되는 값을 IN절을 위한 인자값으로 넣어주기 때문에 실제로는 얼마나 많은 데이터가 넘어가는지는 확인되기 어려운데, 너무 많은 데이터가 넘어가면 성능적 이슈가 있을 수 있기 때문에 사전에 미리 검토하고 들어가는 것이 좋다!</p><p id="66fee9c4-1eb7-4be2-b3c0-8d32aa8d385e" class="">
+</p><h3 id="440427b5-7b37-4bce-915e-ebee9c1c4eb0" class="">01-6. StartingWith(<code>LIKE 1%</code>), EndingWith(<code>LIKE %1</code>), Containing(<code>LIKE %1%</code> ▶️ Containing은 %로 둘러싸기 특성이 있어서 양방향 검색!!이라고 불릴 수 있다!)</h3><figure id="c9f90c3a-fddb-469e-b13c-5890204b6b76"><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#6a5477fc-2cbf-45b0-927f-3af1afa9a605" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">쿼리메소드 정의 및 실습1</div><div class="bookmark-description">I have a JPA Query like this. PersonRepository.java public Optional &gt; findByStatus(int status); PersonService.java System.out.println(&quot;Optional value is &quot;+findByStatus(1)); The output is Optional value is Optional.empty Now I changed my query PersonRepository.java public List findByStatus(int status); PersonService.java Optional &gt; optional = Optional.of(findByStatus(1)); System.out.println(&quot;Optional value is &quot;+optional); The output is Optional value is Optional[[]] In my database, there is no value for status 1 .</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B51.html#6a5477fc-2cbf-45b0-927f-3af1afa9a605</div></div></a></figure><p id="575d8a5d-e11a-4716-a55c-372c866e09b3" class="">저번 자료를 확인해보도록 하자! 🙋🏻‍♂️</p><p id="e25a5934-838e-4aea-944a-c95565518b11" class="">
+</p><p id="89749f75-42b0-4842-bfd6-93325de7c784" class="">🌟 Containing도 되지만 Contains도 된다!</p><p id="eff23c27-3291-4d6e-a470-1293dbbe132d" class="">
+</p><p id="5e19c3c5-dec4-4041-bb89-b3b3c9c4ab04" class="">사실은 이런 키워드는 Like라는 키워드를 한번 더 랩핑한 것과 같다!</p><p id="bed3b625-6a8a-44c8-8d1e-69022981e701" class="">
+</p><h3 id="b9377920-d4ed-4ec5-8dcb-f2b70888edc2" class="">01-7. 위의 01-6의 원조격! Like</h3><pre id="29b508eb-4702-4036-99f9-60f4ff8245a0" class="code"><code>List&lt;User&gt; findUsersByNameLike(String name);</code></pre><pre id="b7406c21-ea5e-4e75-8353-1913915a1e6c" class="code"><code>@Test
+    public void likeMatcher(){
+        //System.out.println(&quot;findAllByEmailEndingWith: &quot;+userRepository.findAllByEmailEndingWith(&quot;slowcampus.com&quot;));
+        //System.out.println(&quot;findAllByNameStartingWith: &quot;+userRepository.findAllByNameStartingWith(&quot;ma&quot;));
+       // System.out.println(&quot;findAllByEmailContaining: &quot;+userRepository.findAllByEmailContaining(&quot;campus&quot;));
+        System.out.println(&quot;findUsersByNameLike-start: &quot;+userRepository.findUsersByNameLike(&quot;mar%&quot;));
+        System.out.println(&quot;findUsersByNameLike-contain: &quot;+userRepository.findUsersByNameLike(&quot;%art%&quot;));
+        System.out.println(&quot;findUsersByNameLike-end: &quot;+userRepository.findUsersByNameLike(&quot;%tin&quot;));
+    }</code></pre><pre id="f252ab9d-fc86-450e-bc01-650ea55ff58e" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name like ? escape ?
+findUsersByNameLike-start: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 16:59:46.133, updatedAt=2021-08-15 16:59:46.133, active=true), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 16:59:46.149, updatedAt=2021-08-15 16:59:46.149, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name like ? escape ?
+findUsersByNameLike-contain: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 16:59:46.133, updatedAt=2021-08-15 16:59:46.133, active=true), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 16:59:46.149, updatedAt=2021-08-15 16:59:46.149, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name like ? escape ?
+findUsersByNameLike-end: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 16:59:46.133, updatedAt=2021-08-15 16:59:46.133, active=true), User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 16:59:46.149, updatedAt=2021-08-15 16:59:46.149, active=true)]</code></pre><p id="b62a7f51-d45b-4def-ab53-c3c6955a2409" class="">
+</p><p id="c58f7866-4d1b-4b94-8fda-5bff68687a34" class="">여기서 확인해볼 수 있는 것은</p><ul id="032a88ca-b1cf-434a-bfd9-6ca7feca739b" class="bulleted-list"><li>Like는 01-6의 원초적인 모습을 %기호에서 확인해볼 수 있다는 점</li></ul><p id="3a420822-da38-4fda-ab98-6702a4ea1414" class="">이다!</p><p id="2e57f2dc-f650-4174-a716-c4a11def5e83" class="">
+</p><p id="a62bed16-3c4b-41c0-be5d-b10b191f56a9" class="block-color-red_background">우리가 <code>%1%</code> 로 인자값을 넘겨주면 <code>Containing</code>과 대응되고</p><p id="3152e6f1-d56c-4d90-8d46-c7e37b41e50b" class="block-color-red_background"><code>%1</code>로 넘겨주면 <code>EndingWith</code>와 대응되며</p><p id="be01ef73-b982-4e19-a8e5-3457d2025029" class="block-color-red_background"><code>1%</code>로 넘겨주면 <code>StartingWith</code>와 대응된다는 점이다!</p><p id="377a229c-018f-439e-8695-1055c56c19af" class="">
+</p><p id="0eedcaeb-9b5b-4fec-aca3-823a85809854" class="">이것은 SQL 문법에서 사용한 것 그대로를 문자열로 보는 것과 같다!</p><p id="5785193d-9675-42e9-bbcf-a585f31308ea" class="">하지만 비슷한 점은 LIKE가 쿼리에 들어갔다는 점이라고 할 수 있겠다!</p><p id="a5c76905-420d-40c6-9b42-5bf37d973f1a" class="">
+</p><p id="c1efa06d-5446-4dd9-b4f4-e438055e3596" class="">그리고 그 결과, 모든 결과에서 동일하게 두 martin이 출력되는 것을 볼 수 있다!</p><p id="db789acb-3be5-4173-86c0-e7376c2ad2a4" class="">
+</p><p id="414f5778-f47d-4d43-9d83-2d0ed36170b1" class="">하지만, 우리가 실제로는 name에 대응되는 값이 들어온다면  <code>&quot;%&quot;+name+&quot;%&quot;</code> 로 문자열을 연결시켜주어야 하는데, 이는 가독성이 떨어진다!</p><p id="2813411b-172a-4e7a-9956-710c806904b3" class="">따라서 StartingWith 등으로 매칭시켜주는 것이 효율적일 것이다!(Like보다!)</p><p id="0e861863-20bd-42c4-8372-5793e324db05" class="">
+</p><p id="1631afef-c829-4351-88ee-744e421338aa" class="">이런 면에서 Spring Data Jpa는 코드 가독성을 많이 신경쓴 라이브러리다!</p><p id="ef360aa9-50b3-4733-b17b-18ad4686eeb5" class="">
+</p><h3 id="a64012e8-0532-4c47-86bc-5d0fa8ce24d6" class="">01-8. Is,Equals</h3><ul id="bd7959ec-8f45-431e-adcf-88f39b1223db" class="bulleted-list"><li>&quot;=&quot; 이거면 설명 끝이다!!</li></ul><p id="02cd6ca1-2938-43a6-89f4-d0034ce0fb13" class="">먼저 이번에는 이름이 martin인 경우의 행 수를 카운트하는 메서드들을 Is, Equals로 동일한 목적으로 정의해보자</p><pre id="8b0a087c-0ee7-4cf9-b8d9-2d93814024b3" class="code"><code>long countUsersByNameIs(String name);
+    long countUsersByNameEquals(String name);</code></pre><pre id="8df53da6-9a92-4497-af26-18ab179fa9e7" class="code"><code>@Test
+    public void isEquals(){
+        System.out.println(&quot;countUsersByNameIs: &quot;+userRepository.countUsersByNameIs(&quot;martin&quot;));
+        System.out.println(&quot;countUsersByNameEquals: &quot;+userRepository.countUsersByNameEquals(&quot;martin&quot;));
+    }</code></pre><pre id="81998520-53ea-48a9-8ed9-a902b697f912" class="code"><code>Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByNameIs: 2
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByNameEquals: 2</code></pre><p id="6f1b4676-54af-4d22-af5e-e280491f683b" class="">그러면 Is와 Equals 모두 <code>=</code> 를 사용해서 조건절에서 name 속성값을 확인해서 count를 수행함을 알 수 있고, count는 <code>기본키로 고유한 값을 지닌 id 필드에 기인해서 카운트함</code>을 확인해볼 수 있다!</p><p id="955087af-cc88-4620-8b45-5f92593cc1fa" class="">
+</p><p id="40a93c29-1432-419f-b4cb-0261eae9fad0" class="">그런데 사실은 Is나 Equals가 없어도 충분히 동일한 쿼리가 꾸려지게 되어 동일 결과를 볼 수 있다</p><pre id="db2c5575-4930-4cdc-ad28-b8806bf9f03a" class="code"><code>long countUsersByName(String name);
+    long countUsersByNameIs(String name);
+    long countUsersByNameEquals(String name);</code></pre><pre id="e38851aa-a653-47aa-b1e7-59dc1ec51ee1" class="code"><code>@Test
+    public void isEquals(){
+        System.out.println(&quot;countUsersByName: &quot;+userRepository.countUsersByName(&quot;martin&quot;));
+        System.out.println(&quot;countUsersByNameIs: &quot;+userRepository.countUsersByNameIs(&quot;martin&quot;));
+        System.out.println(&quot;countUsersByNameEquals: &quot;+userRepository.countUsersByNameEquals(&quot;martin&quot;));
+    }</code></pre><pre id="f3d5f22e-27ff-4650-91bc-29b0f662baf8" class="code"><code>Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByName: 2
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByNameIs: 2
+Hibernate: 
+    select
+        count(user0_.id) as col_0_0_ 
+    from
+        user user0_ 
+    where
+        user0_.name=?
+countUsersByNameEquals: 2</code></pre><p id="b642b08d-b39f-4ca8-8b6c-8b17d8be7596" class="">
+</p><p id="4c2b0046-7392-467c-9c34-6ed5838b3142" class="">즉, Is나 Equals는 코드 가독성을 어떻게 하면 더 좋게 할 수 있는 지를 위해 제공되는 키워드라고 보면 좋다!</p><p id="45d910a6-1a2d-433d-b6cf-ae7b21d8c523" class="">
+</p></div></article></body></html>
