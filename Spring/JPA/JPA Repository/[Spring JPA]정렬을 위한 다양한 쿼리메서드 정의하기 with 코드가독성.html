@@ -1,0 +1,977 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>쿼리 메서드 활용-정렬</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c57a388a-a019-4809-b198-a58cb3402c83" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">쿼리 메서드 활용-정렬</h1></header><div class="page-body"><nav id="0c106c86-637c-4a9c-b441-1eb943c685fb" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f7bd66ef-6cae-43e2-8ad3-8c239e33396e">01. (복습)Top&lt;number&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f5063beb-f88e-48af-a765-e19f557c60da">02. <code>...Top&lt;number&gt;By&quot;A&quot;OrderBy&quot;B&quot;Desc/Asc</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b62b8a8e-e0ba-407e-97e5-fe32a85172a2">03. 정렬에 기준 추가하기 </a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4c7e302a-99d8-4009-905c-e72eb7b97c5d">04. 페이징 메서드들처럼 Sort 파라미터를 받아서 처리하기(OrderBy이용 🚫)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#23cc9a96-9061-431b-ae96-b56c13226c8e">🌟04-1. OrderBy를 사용하지 않고 여러 조건을 중첩시켜서 정렬시켜보기!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#29b3697d-fb4a-4946-a776-470d0b9ff226">04-2. 04-1의 확장! 코드 가독성 증대를 위해서 Sort 형메서드를 만들어서 관리하기</a></div></nav><p id="29586445-38e0-4217-88b4-0c23b4139d34" class="">
+</p><p id="1690e1a3-6e6e-430d-ac99-431c8b0e3d47" class="">이번시간에는 OrderBy를 활용할 것인데, 이에 대해서 확인하고자 한다면 저번 기록을 참고해도 좋다!</p><figure id="d2d06905-ff9b-4082-80b7-aa41291d4966"><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B53.html#021ec601-5c20-4ab4-b718-0e525c5853fa" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">쿼리메서드 기본실습3</div><div class="bookmark-description">Due to the different inception dates of individual Spring Data modules, most of them carry different major and minor version numbers. The easiest way to find compatible ones is to rely on the Spring Data Release Train BOM that we ship with the compatible versions defined.</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/Spring/JPA/JPA%20Repository/[Spring%20JPA]%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%86%8C%EB%93%9C%20%EC%A0%95%EC%9D%98%20%EB%B0%8F%20%EC%8B%A4%EC%8A%B53.html#021ec601-5c20-4ab4-b718-0e525c5853fa</div></div></a></figure><p id="29ed57eb-20eb-406a-97fc-95b6012dc0b7" class="">
+</p><h2 id="f7bd66ef-6cae-43e2-8ad3-8c239e33396e" class="">01. (복습)Top&lt;number&gt;</h2><ul id="005edee2-359a-4ac2-b368-d66a9f928e07" class="bulleted-list"><li>앞에서 number번째까지 가져오기</li></ul><pre id="2bec341f-fa61-4370-9a77-c7fc41cc01cf" class="code"><code>package com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Date;
+import java.util.List;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    List&lt;User&gt; findTop1ByName(String name);
+}</code></pre><pre id="982a23fa-5aee-4a98-8037-9e481c69f4d6" class="code"><code>package com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void top(){
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+    }
+
+}</code></pre><pre id="9c93fa22-294e-457d-8d67-fbc94ec01ecf" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? limit ?
+findTop1ByName: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 20:23:56.551, updatedAt=2021-08-15 20:23:56.551, active=true)]</code></pre><p id="1c64b7bc-4472-4f3d-87f8-c62053e6f82c" class="">위와 같이 원래 data.sql를 보면 martin은 총 2명인데,  그중 가장 먼저 조회된 아이디가 1인 martin이 limit을 통해서 조회된 것을 볼 수 있다!</p><p id="b5e4663a-16f6-4769-a93a-a0c127aeb3bc" class="">
+</p><h2 id="f5063beb-f88e-48af-a765-e19f557c60da" class="">02. <code>...Top&lt;number&gt;By&quot;A&quot;OrderBy&quot;B&quot;Desc/Asc</code></h2><ul id="981e9aa2-88af-49e3-97fc-7f775264ae4b" class="bulleted-list"><li>A에 대해서 인자값으로 들어온 값과 비교해서 조회한 결과를 이용해서</li></ul><ul id="cf07e2e5-2bc6-4601-b528-050d5cc29c64" class="bulleted-list"><li>B에 대해서 내림차순(역순;Desc) 혹은 오름차순(정순;Asc)으로 정렬한 후 </li></ul><ul id="29e5d13b-47b0-4e47-9e93-778a2307ab2a" class="bulleted-list"><li>그 결과에 대해서 위에서 number번째까지 포함하는 결과를 반환</li></ul><pre id="b5751316-3df7-48f3-b0d1-67c32cc8dff0" class="code"><code>List&lt;User&gt; findTop1ByNameOrderByIdDesc(String name);</code></pre><pre id="7a539345-fb22-4c58-a105-1849d9cd5596" class="code"><code>System.out.println(&quot;findTop1ByNameOrderByIdDesc: &quot;+userRepository.findTop1ByNameOrderByIdDesc(&quot;martin&quot;));</code></pre><pre id="cb2d220a-d477-4c7b-ae4e-698952fc1cf3" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc limit ?
+findTop1ByNameOrderByIdDesc: [User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 20:30:19.721, updatedAt=2021-08-15 20:30:19.721, active=true)]</code></pre><p id="ea05cb46-1b8a-4780-9124-ae74fceaa700" class="">이번에는 ORDER BY 절이 삽입되고, 아이디에 대해서 내림차순 정렬을 하는 것을 확인해볼 수 있는데 </p><p id="b7c176ed-0ae5-4861-afb5-70cfd012b8d0" class="">SQL은 <code>FROM</code> &gt; <code>WHERE</code> &gt; <code>GROUP BY</code> &gt; <code>HAVING</code> &gt; <code>SELECT</code> &gt; <code>ORDER BY</code> 순이기 때문에 <code>이름에 대한 조회 후</code> <code>아이디에 대해서 내림차순 정렬</code> 된 결과 중 첫 번째 결과를 확인해볼 수 있다</p><p id="1a193936-8248-4e13-83ef-f88636daa15b" class="">
+</p><p id="aa75df1f-729e-4093-8d10-517646768199" class="">🌟Top이나 First 뒤에 number를 생략하면 기본값으로 1이 들어가는 것으로 간주된다!</p><p id="8bf6590a-2bde-469e-b0a1-0c9cc1dcfbbe" class="">
+</p><h2 id="b62b8a8e-e0ba-407e-97e5-fe32a85172a2" class="">03. 정렬에 기준 추가하기 </h2><p id="db1c9d49-19e0-4c6a-ab09-ac9871b7767c" class="">이번에는 <code>ORDER BY A DESC, B ASC</code> 처럼 정렬 기준을 추가하는 것을 확인해보자! 해당 경우에는 A에 대해서 먼저 정렬하고, A값이 같으면 B에 대해서 정렬하는 것을 의미한다!</p><p id="0e2c59b0-1bc8-46cf-bda5-882c186e831d" class="">
+</p><p id="ac4f7bec-80c0-4d45-bac0-bb58b913f0d0" class="">이 경우에는 <code>List&lt;User&gt; findFirstByNameOrderByIdDescEmailAsc(String name);</code>와 같이, <code>And로 잇지 않고 바로 이어서 적어주도록</code> 한다!</p><pre id="36e81b8e-e626-4e72-a4d0-3459b555abe9" class="code"><code>List&lt;User&gt; findFirstByNameOrderByIdDescEmailAsc(String name);</code></pre><pre id="13c1915e-89dc-4348-860c-0730728e2d97" class="code"><code>package com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void top(){
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+        System.out.println(&quot;findTop1ByNameOrderByIdDesc: &quot;+userRepository.findTop1ByNameOrderByIdDesc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByNameOrderByIdDescEmailAsc: &quot;+userRepository.findFirstByNameOrderByIdDescEmailAsc(&quot;martin&quot;));
+    }
+
+}</code></pre><pre id="9f4226e4-aa51-4d18-ab91-ed266843c17c" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc,
+        user0_.email asc limit ?
+findFirstByNameOrderByIdDescEmailAsc: [User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 20:44:06.373, updatedAt=2021-08-15 20:44:06.373, active=true)]</code></pre><p id="48584dff-6c4b-460d-889a-e91c3c1b1514" class="">그 결과, WHERE절에서는 name으로 값을 찾고 ORDER BY절에서는 아이디와 이메일에 대한 정렬이 이루어지는 것을 확인해볼 수 있다</p><p id="49977139-5c06-4acf-b8ff-66b1aa20a9da" class="">더불어 limit으로 정렬까지 마무리된 결과를 대상으로 몇 개까지 자를지를 보여주고 있다</p><p id="745f70cc-bc70-4eee-a2eb-6b369f002b0a" class="">
+</p><p id="c904dd66-eef9-4ef7-80ee-9879066e71b7" class="">해당 경우에는 martin이 두명인데, 아이디상으로 5번 마틴이 역순으로 가장 앞에 와있기 때문에 아이디 5번인 마틴이 조회된다!</p><p id="f80f83f8-f13c-415c-896d-3ae78a4163e3" class="">
+</p><p id="13c94c5f-e8a3-44b1-8edb-c42578a25257" class="">🌟name이 겹쳐지는 경우, 위와 같이 정렬조건을 적절하게 조합하여 사용하는 것도 방법이다!</p><h2 id="4c7e302a-99d8-4009-905c-e72eb7b97c5d" class="block-color-red_background">04. 페이징 메서드들처럼 Sort 파라미터를 받아서 처리하기(OrderBy이용 🚫)</h2><p id="9c2134d8-50f6-473a-a4e3-62dbb6f090c4" class="">Sort의 패키지: org.springframework.data.domain.Sort</p><p id="f2e39425-ab76-45df-af02-040df624f258" class="">
+</p><p id="586e23b9-4d24-4aed-adda-8a482fdae5fc" class="">아래의 Sort.by와 Order.desc/asc/by 조합으로 진행</p><pre id="27c56327-4e0e-4502-be8d-199b527961d9" class="code"><code>Sort.by(Order.desc(string으로 속성명 적어주기))</code></pre><pre id="cc82a259-7778-4128-bb31-ac8c0420982d" class="code"><code>List&lt;User&gt; findFirstByName(String name, Sort sort);</code></pre><pre id="a711ec77-bac5-459c-83e8-e5fcdd2cf3b5" class="code"><code>ㅍpackage com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void top(){
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+        System.out.println(&quot;findTop1ByNameOrderByIdDesc: &quot;+userRepository.findTop1ByNameOrderByIdDesc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByNameOrderByIdDescEmailAsc: &quot;+userRepository.findFirstByNameOrderByIdDescEmailAsc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByName-desc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.desc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-asc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.asc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-by id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.by(&quot;id&quot;))));
+    }
+
+}</code></pre><pre id="6f8e07cc-5df4-49f1-9f00-44c226a8e591" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc limit ?
+findFirstByName-desc id: [User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 20:56:09.531, updatedAt=2021-08-15 20:56:09.531, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id asc limit ?
+findFirstByName-asc id: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 20:56:09.519, updatedAt=2021-08-15 20:56:09.519, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id asc limit ?
+findFirstByName-by id: [User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-15 20:56:09.519, updatedAt=2021-08-15 20:56:09.519, active=true)]</code></pre><p id="48e84657-5d60-4860-bcf2-4266ad318601" class="">쿼리를 살펴보면 Order.by와 Order.asc는 모두 오름차순을 지원하고,</p><p id="115a860f-181b-4b58-bfbc-5fbc83a21aa6" class="">Order.desc는 내림차순을 지원하는 것을 살펴볼 수 있다</p><p id="48121c59-0ebe-46b9-bc8a-cba90061cc68" class="">
+</p><p id="c12a7ab8-0253-470a-a971-5a8be555da68" class="">그렇기 때문에 Order.by와 Order.asc로 조회를 시도하면 아이디가 1번인 마틴이 조회되고</p><p id="aaf327a3-fbff-40c6-af5a-a1eff08a54cc" class="">
+</p><p id="9fe39991-ede7-4efd-8e0b-d122883a4c50" class="">Order.desc로 조회하면 아이디가 5번인 마틴이 조회되는 것을 살펴볼 수 있다</p><p id="d4b8bd2c-277b-4c1c-88df-bce8f01f2cc5" class="">
+</p><h3 id="23cc9a96-9061-431b-ae96-b56c13226c8e" class="">🌟04-1. OrderBy를 사용하지 않고 여러 조건을 중첩시켜서 정렬시켜보기!</h3><p id="aa4ade02-4a2e-408e-96b3-e6ab151e08ff" class="">Sort 클래스 확인</p><pre id="0ae9b4ee-0037-495e-ba23-659d536b7f5e" class="code"><code>public static Sort by(List&lt;Order&gt; orders) {
+
+		Assert.notNull(orders, &quot;Orders must not be null!&quot;);
+
+		return orders.isEmpty() ? Sort.unsorted() : new Sort(orders);
+	}
+
+	/**
+	 * Creates a new {@link Sort} for the given {@link Order}s.
+	 *
+	 * @param orders must not be {@literal null}.
+	 * @return
+	 */
+	public static Sort by(Order... orders) {
+
+		Assert.notNull(orders, &quot;Orders must not be null!&quot;);
+
+		return new Sort(Arrays.asList(orders));
+	}</code></pre><p id="1b1be342-5f43-4db8-8d9a-761a3a4696c9" class="block-color-blue_background">위와 같이 Order를 리스트로 만든 형태를 집어넣어줘도 되고!</p><p id="6482687f-e923-4ed6-92ef-7c920d036586" class="block-color-blue_background">Orders를 계속 넣어줘도 된다(가변인자)</p><pre id="c08684d1-518c-4e5e-9d6b-33c50e1926e6" class="code"><code>package com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void top(){
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+        System.out.println(&quot;findTop1ByNameOrderByIdDesc: &quot;+userRepository.findTop1ByNameOrderByIdDesc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByNameOrderByIdDescEmailAsc: &quot;+userRepository.findFirstByNameOrderByIdDescEmailAsc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByName-desc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.desc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-asc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.asc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-by id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.by(&quot;id&quot;))));
+
+        System.out.println(&quot;여러 정렬조건을 OrderBy없이- List&lt;Order&gt; :&quot;+userRepository.findFirstByName(&quot;martin&quot;,Sort.by(Lists.newArrayList(Sort.Order.desc(&quot;id&quot;),Sort.Order.by(&quot;email&quot;)))));
+        System.out.println(&quot;여러 정렬조건을 OrderBy없이-가변인자 이용: &quot;+userRepository.findFirstByName(&quot;martin&quot;,Sort.by(Sort.Order.desc(&quot;id&quot;),Sort.Order.asc(&quot;email&quot;))));
+    }
+
+}</code></pre><pre id="0c23b0ea-ce3f-4f9d-996e-90c8d11875d0" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc,
+        user0_.email asc limit ?
+여러 정렬조건을 OrderBy없이- List&lt;Order&gt; :[User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 21:04:31.858, updatedAt=2021-08-15 21:04:31.858, active=true)]
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc,
+        user0_.email asc limit ?
+여러 정렬조건을 OrderBy없이-가변인자 이용: [User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 21:04:31.858, updatedAt=2021-08-15 21:04:31.858, active=true)]</code></pre><p id="4d8ece57-67f8-45d5-bc85-06aa9bcf18e8" class="">그러면 위의 쿼리도 그렇고, 결과도 그렇고, 동일했다!</p><p id="e91c420a-6f90-4deb-9df3-345d818c9cd4" class="">List&lt;Order&gt;방식과 Order..orders 방식, 즉 리스트에 담는 방식과 가변인자에 담는 방식 모두 여러 조건을 조합해서 사용할 수 있음을 확인해볼 수 있었다!</p><p id="6aecead0-553f-4b87-8835-64d23f194162" class="">
+</p><p id="a5b278fd-1187-47bf-ada8-a2afd567fcce" class="block-color-red_background">이러한 방식은 기존의 네이밍 방식으로 인한 자유도 저하와 OrderBy 갯수가 많아지는 것 등을 해결해줄 수 있다! 🧸 이렇게 되면, 메서드 이름 길이도 줄어들게 만들 수 있어서 코드 가독성을 높일 수 있다!</p><p id="324e09ef-3623-45bc-a869-16512a81e0eb" class="">
+</p><p id="e10e7562-9413-4460-8de4-05de3c0754f0" class="">즉, 이 방식을 통해서 인터페이스에 특정 메서드만 두고서, 내부 정렬 방식은 외부의 요청에 따라 다르게 적용될 수 있게 함으로써 그 자유도를 높여줄 수 있다!</p><p id="3648ca6a-46a7-4c76-8910-102f4c31f414" class="">
+</p><h3 id="29b3697d-fb4a-4946-a776-470d0b9ff226" class="">04-2. 04-1의 확장! 코드 가독성 증대를 위해서 Sort 형메서드를 만들어서 관리하기</h3><pre id="43a3ba99-b674-48a2-b93d-43eaa3685409" class="code"><code>package com.example.jpa_sort_practice.repository;
+
+import com.example.jpa_sort_practice.domain.User;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+//
+@SpringBootTest
+//@Transactional
+class UserRepositoryTest {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void top(){
+        System.out.println(&quot;findTop1ByName: &quot;+userRepository.findTop1ByName(&quot;martin&quot;));
+        System.out.println(&quot;findTop1ByNameOrderByIdDesc: &quot;+userRepository.findTop1ByNameOrderByIdDesc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByNameOrderByIdDescEmailAsc: &quot;+userRepository.findFirstByNameOrderByIdDescEmailAsc(&quot;martin&quot;));
+        System.out.println(&quot;findFirstByName-desc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.desc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-asc id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.asc(&quot;id&quot;))));
+        System.out.println(&quot;findFirstByName-by id: &quot;+userRepository.findFirstByName(&quot;martin&quot;, Sort.by(Sort.Order.by(&quot;id&quot;))));
+
+        System.out.println(&quot;여러 정렬조건을 OrderBy없이- List&lt;Order&gt; :&quot;+userRepository.findFirstByName(&quot;martin&quot;,Sort.by(Lists.newArrayList(Sort.Order.desc(&quot;id&quot;),Sort.Order.by(&quot;email&quot;)))));
+        System.out.println(&quot;여러 정렬조건을 OrderBy없이-가변인자 이용: &quot;+userRepository.findFirstByName(&quot;martin&quot;,Sort.by(Sort.Order.desc(&quot;id&quot;),Sort.Order.asc(&quot;email&quot;))));
+        System.out.println(&quot;Sort형 메서드를 만들어서 정렬해서 가독성 높이기: &quot;+userRepository.findFirstByName(&quot;martin&quot;,getSort()));
+    }
+
+    private Sort getSort(){
+        return Sort.by(
+          Sort.Order.desc(&quot;id&quot;),
+          Sort.Order.asc(&quot;email&quot;).ignoreCase(),
+          Sort.Order.desc(&quot;createdAt&quot;)
+        );
+    }
+}</code></pre><ul id="6f966aa1-5ab0-4476-8486-9beaaaea31bb" class="bulleted-list"><li>Order ignoreCase() : 키워드 ignoreCase처럼 대소문자를 무시(모두 대문자로 변환하여 비교할 수 있도록 지원)</li></ul><p id="576ff8ed-e0c8-4ceb-9829-919950a35415" class="">
+</p><p id="5b1b24da-e768-43f7-8e19-94695f00196f" class="">위와 같이 정렬 조건이 더 길어지면 Sort형을 반환하는 메서드를 만들어두고, Sort 자리에 인자값으로 넣어주면 복잡한 조합의 정렬 적용이 가능하다!</p><pre id="5a78e5da-50cf-4547-9783-5a2899d16697" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_ 
+    where
+        user0_.name=? 
+    order by
+        user0_.id desc,
+        lower(user0_.email) asc,
+        user0_.created_at desc limit ?
+Sort형 메서드를 만들어서 정렬해서 가독성 높이기: [User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-15 21:13:20.521, updatedAt=2021-08-15 21:13:20.521, active=true)]</code></pre><ul id="fefc9264-23d3-4b52-8022-d52b1e14b51d" class="bulleted-list"><li>자유도가 떨어지는 것이 단점만은 아닌데, Sort 인자를 관리해야 하는 부분에 대해서는 불편함을 줄여줄 수는 있다(하지만 코드 가독성은 여전히 더 악화시킨다)</li></ul><p id="af0d9c42-5139-451e-99a1-2e2e3f4653da" class="">[이것은 개발자가 직접 고민해서 선택할 문제다]</p></div></article></body></html>
