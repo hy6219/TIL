@@ -562,6 +562,9 @@
   	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA Repository/[Spring JPA]정렬을 위한 다양한 쿼리메서드 정의하기 with 코드가독성.html" target="_blank">
 		[Spring] JPA-코드가독성 측면에서 다양하게 생각해볼 수 있는 정렬을 위한 쿼리 메서드
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BSpring%20JPA%5D%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%84%9C%EB%93%9C%20%EC%A0%95%EC%9D%98%ED%95%98%EA%B8%B0-%ED%8E%98%EC%9D%B4%EC%A7%95%20%EC%B2%98%EB%A6%AC.md" target="_blank">
+		[Spring] JPA-페이징 처리를 위한 쿼리 메서드
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
