@@ -559,6 +559,9 @@
   	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA Repository/[Spring JPA]쿼리메소드 정의 및 실습3.html" target="_blank">
 		[Spring] JPA-쿼리 메서드를 키워드를 이용해서 정의해보기3
 	</a></li>
+  	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA Repository/[Spring JPA]정렬을 위한 다양한 쿼리메서드 정의하기 with 코드가독성.html" target="_blank">
+		[Spring] JPA-코드가독성 측면에서 다양하게 생각해볼 수 있는 정렬을 위한 쿼리 메서드
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
