@@ -551,7 +551,10 @@
 		[Spring] JPA-Repository Interface 메서드를 구현된 코드로 이해해보기(복습겸)
 	</a></li>
   	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA Repository/[Spring JPA]쿼리메소드 정의 및 실습1.html" target="_blank">
-		[Spring] JPA-쿼리 메서드를 키워드를 이용해서 정의해보기
+		[Spring] JPA-쿼리 메서드를 키워드를 이용해서 정의해보기1
+	</a></li>
+  	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/JPA Repository/[Spring JPA]쿼리메소드 정의 및 실습2.html" target="_blank">
+		[Spring] JPA-쿼리 메서드를 키워드를 이용해서 정의해보기2
 	</a></li>
      </ul>
   </li><!--spring-->
