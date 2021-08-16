@@ -283,6 +283,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/%EB%8F%99%EC%A0%81%EA%B3%84%ED%9A%8D%EB%B2%95%EA%B3%BC%20%EB%B6%84%ED%95%A0%EC%A0%95%EB%B3%B5/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EC%A0%84%EB%9E%B5%5DDynamic%20Programming%20%26%20Divide%20and%20Conquer.md" target="_blank">
 		[알고리즘]동적계획법과 분할정복 전략
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Sort/Advanced/MergeSort/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.md" target="_blank">
+		[알고리즘]병합정렬
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
