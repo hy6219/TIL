@@ -568,6 +568,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/JPA%20Repository/%5BSpring%20JPA%5D%EC%BF%BC%EB%A6%AC%EB%A9%94%EC%84%9C%EB%93%9C%20%EC%A0%95%EC%9D%98%ED%95%98%EA%B8%B0-%ED%8E%98%EC%9D%B4%EC%A7%95%20%EC%B2%98%EB%A6%AC.md" target="_blank">
 		[Spring] JPA-페이징 처리를 위한 쿼리 메서드
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/gradle/%5BSpring%20dependencies%5D%EB%B3%B4%EB%8B%A4%20%EC%9C%A0%EC%97%B0%ED%95%9C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%A4%20%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0.md" target="_blank">
+		[Spring] 각자 JDK 환경에 맞게 그레이들 설치하기
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
