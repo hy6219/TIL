@@ -286,6 +286,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Sort/Advanced/MergeSort/%EB%B3%91%ED%95%A9%EC%A0%95%EB%A0%AC.md" target="_blank">
 		[알고리즘]병합정렬
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Sort/Advanced/QuickSort/%5BAlgorithm%5D%ED%80%B5%20%EC%A0%95%EB%A0%AC.md" target="_blank">
+		[알고리즘]퀵 정렬
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
