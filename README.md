@@ -577,6 +577,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/YAML/%5BSpring%5DYAML%20%EB%88%84%EA%B5%AC%EC%8B%AD%EB%8B%88%EA%B9%8C.md" target="_blank">
 		[Spring] YAML을 이용한 설정 구조화 한눈에 파악해보기
 	</a></li>
+  	<li><a href="https://hy6219.github.io/TIL/Spring/JUnit5/[JUnit5]JUnit5 , 스프링 부트 테스트 내용 추가.html" target="_blank">
+		[Spring] 스프링 부트 테스트의 핵심! @SpringBootTest, @WebMvcTest, @DataJpaTest, @RestClientTest, @JsonTest
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
