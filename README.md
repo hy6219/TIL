@@ -574,6 +574,9 @@
   	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/gradle/%5BSpring%20dependencies%5D%EB%B3%B4%EB%8B%A4%20%EC%9C%A0%EC%97%B0%ED%95%9C%20%EA%B7%B8%EB%A0%88%EC%9D%B4%EB%93%A4%20%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring] 각자 JDK 환경에 맞게 그레이들 설치하기
 	</a></li>
+  	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/YAML/%5BSpring%5DYAML%20%EB%88%84%EA%B5%AC%EC%8B%AD%EB%8B%88%EA%B9%8C.md" target="_blank">
+		[Spring] YAML을 이용한 설정 구조화 한눈에 파악해보기
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
