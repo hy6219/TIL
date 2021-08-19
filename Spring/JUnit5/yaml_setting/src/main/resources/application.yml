@@ -1,0 +1,29 @@
+server:
+  port: 8089
+
+#value
+property:
+  test:
+    name:
+      property depth test
+propertyTest:
+    test
+propertyTestList:
+  a,b,c
+
+#ConfigurationProperties
+fruit:
+  list:
+    - fruit_name:
+        banana
+      fruit_color:
+        yellow
+    - fruit-name:
+        apple
+      fruit-color:
+        red
+    - FRUITNAME:
+        water melon
+      FRUITCOLOR:
+        green
+
