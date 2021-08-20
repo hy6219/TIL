@@ -1,0 +1,673 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[GIT]버전만들기</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="96a06182-b00f-4bb2-b505-70aa92bbbbf5" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">[GIT]버전만들기</h1></header><div class="page-body"><nav id="bb6552e6-4d6f-40f3-99c7-e3b5a24ddf4c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3e58211c-4363-429c-ad97-b29a466b64f0">01. <code>작업트리</code> 와 <code>스테이지</code>, <code>저장소</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2ec148fb-55af-4c1e-ae80-9d64915cfedb">02. 깃이 버전을 만드는 과정</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cd8435b7-ccc5-4943-8544-609d3adec9fd">03. 작업트리에서 vim으로 문서 수정하기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#557b89a1-6d06-46a1-b45b-818b81eda6ce">04. 수정한 파일을 스테이징하기 <code>git add</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2eceb8ff-4d21-45a2-865d-6b1587faddbd">04-1. 스테이지에 올릴 때 경고 메시지가 나타나는 이유</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#57fedaa8-2608-4de0-a35b-011d0a42864c">05. 스테이지에 올라온 파일 커밋하기 <code>git commit</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f4e3115b-34e2-40d0-b127-3b72859a08a5">06. <code>스테이징</code> ➕ <code>커밋</code> 한번에!! <code>git commit -am</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#94919a2d-651b-4d09-a4dd-cbb3570ac27d">07. 커밋 메시지의 역사를 알아보는 <code>git log</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1d9f0e7c-b64a-41aa-9b48-e681a1282e7c">08. 과거로 돌아가기(현재의 로그를 취소하고 과거의 로그로 돌아가기)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#92bacf7e-45ce-4904-a2b5-b9f5406c0456">08-1. 과거로 돌아가기 방법1-reset</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e828c886-82cd-4b8d-bb95-a58f2cb6b9b4">08-2. 과거로 돌아가기 방법2-revert</a></div></nav><h2 id="3e58211c-4363-429c-ad97-b29a466b64f0" class="">01. <code>작업트리</code> 와 <code>스테이지</code>, <code>저장소</code></h2><figure id="5cf5da00-1ce4-4fe7-a559-ca70d306f49a" class="image"><a href="https://mung0001.github.io/ST.png"><img src="https://mung0001.github.io/ST.png"/></a><figcaption>source from <a href="https://mung0001.github.io/ST.png">https://mung0001.github.io/ST.png</a> , Do it! 지옥에서 온 문서 관리자 깃 &amp; 깃허브 입문</figcaption></figure><p id="6f8682b6-1ce3-4f6d-a620-9e834fcb1272" class="">ⓐ 작업 트리 Working Tree</p><ul id="a9bb063d-04b0-4b1a-af0d-c5920ebf0455" class="bulleted-list"><li>&quot;작업 디렉터리 Working Directory&quot;</li></ul><ul id="1ea8a847-7756-4504-a3b8-1fea11229a8e" class="bulleted-list"><li>우리 눈에 보이는 디렉터리!(예: TIL 폴더)</li></ul><ul id="edebddce-66a7-496e-9c8d-f87f210351e1" class="bulleted-list"><li>파일 수정, 저장 등의 작업을 수행하는 디렉터리</li></ul><p id="0c7f5682-eb99-4483-ab45-1f4f0ed5f9d3" class="">
+</p><p id="4d8bf3d4-d82d-46d9-968f-eaaf2565a1e4" class="">ⓑ 스테이지 Stage</p><ul id="87d3f1fb-d14b-488e-a845-a41f10cd1ed1" class="bulleted-list"><li>&quot;스테이징 영역 Staging Area&quot;</li></ul><ul id="a37e1c1e-da8a-44fd-98fc-93e1699a3145" class="bulleted-list"><li><code>버전으로 만들 파일이 </code><strong><code>대기</code></strong><code>하는 공간</code></li></ul><ul id="a93381d1-0d1d-4500-8e91-6ba97d97a637" class="bulleted-list"><li>(ex)작업트리에서 10개 파일을 수정했는데, 이 중에서 3개 파일만 버전으로 만드려면 3개 파일만 스테이지로 넘겨주면 된다!</li></ul><p id="43cb9eb6-4336-41bb-8dfd-7b4b8a4cd131" class="">
+</p><p id="0baeb624-ccc7-48ff-943d-1837eccedcfb" class="">ⓒ 저장소 Repository</p><ul id="ba10ffce-aa83-46f1-b585-aaf3a0c57f29" class="bulleted-list"><li><code>스테이지에서 대기하고 있던 파일들을 </code><strong><code>버전으로 만들어 저장</code></strong>하는 곳</li></ul><p id="55235e4d-72f7-4534-b9f7-f857e9188a44" class="">
+</p><p id="945115a4-6fc8-40b0-bd1b-b46a74f1de7f" class="">📌 <code>.git 폴더</code> ◀️ 스테이지 + 저장소</p><p id="81a1f801-7d33-47ea-a857-51297a4e4fed" class="">
+</p><h2 id="2ec148fb-55af-4c1e-ae80-9d64915cfedb" class="">02. 깃이 버전을 만드는 과정</h2><p id="5e0d9023-4e54-42e0-af98-45034fb2c325" class="">
+</p><figure id="e253aa0d-2f2a-4355-9238-3ce43ebe1169" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EA%B9%83%EC%97%90%EC%84%9C%20%EB%B2%84%EC%A0%84%EC%9D%84%20%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95.png?raw=true"><img style="width:960px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EA%B9%83%EC%97%90%EC%84%9C%20%EB%B2%84%EC%A0%84%EC%9D%84%20%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95.png?raw=true"/></a><figcaption>source from <a href="https://mung0001.github.io/ST.png">https://mung0001.github.io/ST.png</a> , Do it! 지옥에서 온 문서 관리자 깃 &amp; 깃허브 입문</figcaption></figure><ol type="1" id="3cedf045-7b7f-48c1-ad6e-bfab2428a9df" class="numbered-list" start="1"><li>hello.txt 파일 문서를 수정하고 저장하면, 그 파일은 <code>작업트리</code>에 존재</li></ol><ol type="1" id="5bfa00ca-11d8-488b-a4ed-3e4bc97f7cf4" class="numbered-list" start="2"><li><code>수정한 hello.txt 파일을 버전으로 만들고 싶을 때 스테이지에</code> 그 파일을 넣는다(위의 그림의 &quot;1&quot;)</li></ol><ol type="1" id="d8bab46a-727c-42f9-b8aa-0a0dab6e9919" class="numbered-list" start="3"><li><code>커밋(commit) 명령</code>을 통해서 버전이 생성되면서 스테이지에서 대기하던 파일들이 모두 <code>저장소</code>에 저장된다!</li></ol><p id="c3b6d484-dd9f-426d-a840-f431eeef862b" class="">
+</p><h2 id="cd8435b7-ccc5-4943-8544-609d3adec9fd" class="">03. 작업트리에서 vim으로 문서 수정하기</h2><p id="d157ea94-81a8-4094-9a6e-35599d364541" class="">
+</p><p id="e74558a5-8bc3-464a-9faf-33600df3ca27" class="">저는 우선 제가 TIL을 올리는 디렉터리에서 git bash로 수행해보았습니다</p><p id="656c28b8-2468-4f09-86fb-7b61d83f9d25" class="">
+</p><p id="185861cc-0240-497d-ab09-6c042b9fbd0e" class="">ⓐ 터미널 창에 <code>git status</code>를 입력해보면 아래와 같은 화면이 보일 것인데</p><figure id="5970cc9a-fc51-49bc-a241-a4d31d9d335d" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20status.PNG?raw=true"><img style="width:960px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20status.PNG?raw=true"/></a></figure><p id="69222c02-9533-4083-8796-9c7d863d5707" class="">각 결과의 의미는 아래와 같다</p><p id="9cf3e50e-a43c-4ce0-9453-1471057b28a6" class="">
+</p><ul id="3052c2cb-edec-4b0a-9238-1fa7de63ea36" class="bulleted-list"><li><code>&quot;On branch main. Your branch is up to date with &#x27;origin/main&#x27;&quot;</code></li></ul><p id="912f2751-93a8-4e9c-b0d7-33abe1cc3046" class="">: <code>현재 main 브랜치</code> 에 있고</p><p id="5b398996-1824-4dde-8158-605a2bcf04f6" class="">: <code>당신의 브랜치는 origin/main으로 달려 있다</code></p><p id="59887a24-fbed-42d3-bbfa-013691358de4" class="">
+</p><ul id="f14b1e69-b432-495a-b460-7b61a0f2eed0" class="bulleted-list"><li><code>nothing to commit</code> : 커밋할 것은 없다</li></ul><ul id="3a04c651-88ad-4871-bd83-be1547af1146" class="bulleted-list"><li><code>working tree clean</code>: 작업트리는 비어있다</li></ul><p id="38a81cf8-b100-4dbc-8a60-afede62213f3" class="">
+</p><p id="46685a4b-299d-4331-9f87-a95b406fa5e6" class="">ⓑ 아래와 같이 새로운 문서를 만들기 위해서 새로운 폴더를 만들자</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="8c1161a4-24f7-487e-82a0-2c156a648f83"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">mkdir vcsTest</div></figure><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="e53afaa1-f0e5-4c07-a6f0-e3f762ec73dc"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">cd ./vcsTest</div></figure><p id="b90cb6be-a4dd-48ac-b9e0-1aee55470dbf" class="">
+</p><p id="6cfb051b-6ab1-4643-9f5a-a9e8acd7ff72" class="">ⓒ <code>vim hello.txt</code>를 입력해서 hello.txt 파일을 만들자</p><p id="9628176f-38d1-41cc-9c7e-e11a2442002b" class="">내용은 자유롭게 입력하고, <code>esc키+:wq</code> 를 눌러서 저장해주자!(입력을 위해서는 알파벳 i 키를 눌러주면 insert 모두가 된다)</p><figure id="c9a44a8e-f573-43fe-8401-234a75fc3f5e" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/vim%20make%20txt%20file.PNG?raw=true"><img src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/vim%20make%20txt%20file.PNG?raw=true"/></a></figure><p id="6c9af63e-eb31-44ec-9284-230df1f0f0d7" class="">
+</p><p id="d87ca155-90f0-427d-b69e-9b1500121830" class="">ⓓ 그리고 생성된 파일을 <code>ls -al</code> 로 확인하고,  <code>git status</code>를 체크해보면</p><p id="9eacfb1f-f58b-4b3c-bf08-0730e42dee3c" class="">아래와 같이 확인되는데 이를 해석해보면 아래와 같다</p><figure id="5ac6eb63-bcb4-4ed5-a625-411a7f7c39d7" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%83%9D%EC%84%B1%EB%90%9C%20%ED%8C%8C%EC%9D%BC%20%EC%B2%B4%ED%81%AC%20%ED%9B%84%20git%20status%20%ED%99%95%EC%9D%B8.PNG?raw=true"><img style="width:1440px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%83%9D%EC%84%B1%EB%90%9C%20%ED%8C%8C%EC%9D%BC%20%EC%B2%B4%ED%81%AC%20%ED%9B%84%20git%20status%20%ED%99%95%EC%9D%B8.PNG?raw=true"/></a></figure><ul id="9b55db64-477f-440f-a2e1-619475836109" class="bulleted-list"><li><code>&quot;On branch main. Your branch is up to date with &#x27;origin/main&#x27;&quot;</code></li></ul><p id="9b274d6b-e7e9-4e9b-bc6d-7a5273e41b0e" class="">: <code>현재 main 브랜치</code> 에 있고</p><p id="5c482259-2ed8-42b3-92e6-8eca62992f9f" class="">: <code>당신의 브랜치는 origin/main으로 달려 있다</code></p><ul id="3f31c82e-4df2-4174-942a-b1e48b2fce5a" class="bulleted-list"><li><code>Untracked files</code> : 아직 한번도 버전관리하지 않은 파일</li></ul><p id="229a1ff3-005f-4823-8975-d0582016a4d4" class="">-hello.txt파일을 만들고 과정을 기록하기 위해서 이미지를 캡쳐했는데 그러한 파일이 먼저 확인되는 것을 확인해볼 수 있다</p><p id="8fabd58e-a917-44b1-b541-9e816d441092" class="">
+</p><p id="d983339e-a653-4e94-84ef-5adcd5d5cee2" class="">🌟 지금까지는 hello.txt파일은 &quot;작업트리 Working tree&quot;에 있는 것이다!!</p><p id="38ae07c0-3a6c-4bae-91fe-3f42c986922e" class="">
+</p><h2 id="557b89a1-6d06-46a1-b45b-818b81eda6ce" class="">04. 수정한 파일을 스테이징하기 <code>git add</code></h2><ul id="8f68b601-a4d5-4729-bd89-ab857f5f0a89" class="bulleted-list"><li>작업 트리에서 파일을 만들거나 수정했다면, 스테이지에 이러한 파일을 추가하는데, 이는 <code>깃에게 버전을 만들 준비를 하라고 알려주는 것</code>인데 이것이 바로 <code>스테이징 Staging</code> 혹은 <code>스테이지에 올린다</code> 라고 표현된다</li></ul><ul id="b80fdab1-5d87-4902-a339-4cd48ba6b947" class="bulleted-list"><li>git add 는 <code>최초 생성</code> 시와 <code>수정 시</code> 모두에 적용해주어야 할 명령어!</li></ul><p id="e4616bae-8422-480b-afaf-925543dffa81" class="">
+</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="257e8dab-4d02-4e5b-9193-7d0e9405e8c6"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git add . 혹은 git add hello.txt</div></figure><p id="b0b084ba-9f5a-4bc2-bf26-83a5ef3a83b1" class="">위를 입력해서 업로드할 파일을 추가해주자(<strong>선택적</strong>으로 파일을 버전으로 만들 수 있음)</p><p id="3a7b37f3-2657-407d-91fd-14cc1852245b" class="">
+</p><p id="a9eb68d8-74a3-49af-b8bb-e31d95ccb19b" class="">그리고 <code>git status</code> 를 입력해주면 아래와 같이 표시되는데</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="4bbf7c08-c3ad-4c3b-a7c4-b44c1c5eb9f0"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        new file:   hello.txt</div></figure><p id="03cd31d7-4d80-4dbe-837c-72a3c91a17de" class="">여전히 untracked files로 이미지들이 확인된다.</p><p id="b9735bec-001b-41ad-a7ea-6fcb733df44b" class="">상대적으로 가장 상위 폴더라 할 수 있는 TIL 폴더로 이동한 후 </p><p id="e675aaca-013b-4343-b49f-54195c7a7ff4" class=""><code>git add .</code> 후 <code>git status</code>를 해보면 더이상 버전 관리가 되지 않은 파일들에 이미지들이 표시되지 않는다!</p><p id="a8f33d1f-15ac-4dcc-8d0f-0fe69cf437f3" class="">
+</p><p id="04521d0f-0348-4944-b082-dce2601ca889" class="">이 때 나타나는 <code>new file:</code> 이라는 수식어는 <code>새 파일 ~를 (앞으로) 커밋할 것</code> 이라는 의미를 갖는다! 이제 스테이지에 파일들이 올라갔고, 버전을 만들 준비가 끝났다!</p><figure id="9b90f936-d1a6-48f8-9c16-ac72ab838682" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20add%20%ED%9B%84%20git%20status.PNG?raw=true"><img style="width:1008px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20add%20%ED%9B%84%20git%20status.PNG?raw=true"/></a></figure><h3 id="2eceb8ff-4d21-45a2-865d-6b1587faddbd" class="">04-1. 스테이지에 올릴 때 경고 메시지가 나타나는 이유</h3><p id="61799168-5809-457d-a03d-01129a338d53" class="">앞서서 hello.txt 파일을 만들고 스테이징할 때, </p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="48862807-f939-4093-a462-4b457af95494"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">warning: LF will be replaced by CRLF in gitStudy/vcsTest/hello.txt.
+The file will have its original line endings in your working directory</div></figure><p id="e32fa052-f887-41c3-896c-edaa30c7410b" class="">위와 같은 경고 문구를 확인하게 된다</p><p id="28b90cbb-2185-4309-b976-43eced0c0737" class="">
+</p><p id="f6c8a9e4-1975-4d95-b2f9-ec197ca958c1" class="">그 이유는 윈도우의 개행 문자와 리눅스의 개행 문자가 다르고,</p><p id="348dace0-ba7d-4ebf-b78d-3ad3c2937a8f" class="">윈도우에서 문서 저장 시 줄바꿈 위치에서 CRLF문자(Carriage Return Line Feed)[CR: \r, LF:\n] 가 삽입되기 때문에 발생한 것이다!</p><p id="92ae962a-99b4-4a34-bb8f-198c2415440a" class="">
+</p><p id="63b80798-4e7c-4f5c-8f1f-1acb1d572c76" class="">이 때 깃에서는 자동으로 CRLF 문자를 LF 문자로 변환해서 커밋할 것이라는 메시지이다! 사용자가 별도로 조치할 필요는 없다!</p><p id="b1f09479-67b9-4427-b736-663a0aa0f350" class="">
+</p><h2 id="57fedaa8-2608-4de0-a35b-011d0a42864c" class="">05. 스테이지에 올라온 파일 커밋하기 <code>git commit</code></h2><ul id="6a897795-5bc6-4fed-ac51-e55294094199" class="bulleted-list"><li><code>커밋</code> : <code>버전을 만드는 것</code></li></ul><p id="a0b3997a-9104-4123-8309-6d301e9c4e62" class="">ⓐ 깃에서 파일을 커밋하는 명령은 <code>git commit</code> 이고, <code>-m 옵션</code>을 붙이면 커밋과 함께 저장할 메시지(<code>커밋메시지</code>)를 적을 수 있다!</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="048a38af-59b4-42bc-a6bb-37832ef8534d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git commit -m &#x27;test git&#x27;</div></figure><p id="f311636b-8c35-479f-8070-b78669a50b75" class="">
+</p><p id="f186dc72-69f8-4e83-bc41-5700f701c2d5" class="">ⓑ 이제 결과를 통해 커밋메시지를 가장 첫 줄에서 확인해볼 수 있고, 5개 파일에 변경되었고, 파일에 1개의 내용이 추가되었다고 나타난다!</p><p id="cccb0fb3-a98d-46dc-abb0-f3d0dde8a2d0" class=""><code>[main ~] test git</code></p><p id="53831a4b-3194-48ed-9ac4-9656844ad03e" class=""><code>5 files changed, 1 insertion(+)</code></p><p id="e692da1e-520e-46a5-9d83-66c16849f927" class="">
+</p><p id="3adc4813-d740-4bbd-b689-4975fc880a5b" class="">ⓒ 이제 <code>git status</code>를 입력하면, 깃 상태가</p><ul id="52e3c0b2-9010-4653-aa00-1f369d879b54" class="bulleted-list"><li><code>nothing to commit</code> : 버전으로 만들 파일이 없다</li></ul><ul id="850a2268-bc00-42be-beb0-f307616c7010" class="bulleted-list"><li><code>working tree clean</code> : 작업트리도 수정사항 없이 깨끗하다</li></ul><p id="55b04ed0-1b60-4b47-abb9-78393908b87e" class="">라고 표시되는 것을 확인해볼 수 있다</p><p id="a4f88f1d-47a5-4e2a-9bd0-8b8ead2cd401" class="">
+</p><p id="06de2161-f4cc-46dd-a021-8aafd620363a" class="">ⓓ <code>git log</code>를 입력해보자</p><ul id="9eadfca6-e3e4-461a-8940-ec88799cd259" class="bulleted-list"><li>그러면 아래처럼 지금까지 진행된 커밋(버전만들기)한 버전에 대해서</li></ul><p id="a367c21b-bf22-46b2-89dc-136e261d05c9" class="">1) 커밋 메시지</p><p id="3752026a-ccbd-4213-83ab-c701e1ada2cd" class="">2) 작성자(<code>git config --global user.name, git config --global user.email</code> 로 설정해둔 내용 기반)</p><p id="470df965-7db0-4a06-831d-820dcadc06ab" class="">3) 작성 일자 및 시간(타임존 기반)</p><p id="87b29803-9145-431d-baf0-d08917a1df3c" class="">을 확인해볼 수 있다</p><figure id="f9f655f4-5de3-4620-a615-94b31c903ca2" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log.PNG?raw=true"><img style="width:1008px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log.PNG?raw=true"/></a></figure><p id="af26a001-0077-4315-9a1b-ca27aa09bc22" class="">이렇게 되면 지금은 작업 트리와 저장소에 hello.txt 등의 파일이 존재하게 되는 것이다!</p><p id="fee9edcc-8a96-45a1-bdf6-face1d1b0a90" class="">(스테이지에서 저장소로 파일들이 이동)</p><p id="359eceaf-fe47-4e23-8d27-92c4120c872b" class="">
+</p><h2 id="f4e3115b-34e2-40d0-b127-3b72859a08a5" class="">06. <code>스테이징</code> ➕ <code>커밋</code> 한번에!! <code>git commit -am</code></h2><ul id="62d69794-c26b-4b89-9a4c-4ab1bb456cb4" class="bulleted-list"><li><code>-am</code> 옵션을 이용하면 스테이지에 올리고 커밋하는 과정을 한꺼번에 처리할 수 있다![=add+commit]</li></ul><ul id="ab16f2f5-30c7-414b-a161-296461ae232b" class="bulleted-list"><li>이 방법은 vim 에디터를 켜지 않고도 인라인에서 처리할 수 있는 방식</li></ul><ul id="6093a13b-f974-4d1c-861e-8e72d1ca67b1" class="bulleted-list"><li>위와 같이 할 수 잇는 것은 <code>-a</code> 옵션은 변경된 파일을 모두 자동적으로 스테이징해주는 옵션이고, <code>-m</code> 옵션은 커밋 메시지와 함께 커밋을 하는 옵션인데 이 둘이 합쳐졌기 때문이다!</li></ul><ul id="d2ac9dbc-1d45-4a82-849a-f9258b29cd47" class="bulleted-list"><li>이 방법은 <code>한 번이라도 커밋한 적 있는 파일을 재커밋할 경우에만</code> 사용 가능하다! 👈 <code>a</code></li></ul><p id="73d192f7-4211-454c-bda3-b785a5d234f6" class="">
+</p><p id="4fb26fbd-6e05-4b5c-9ee6-3b3f78f3c3bd" class="">위의 &quot;a&quot; 이유로, 미리 만들었던 hello.txt를 수정해주자</p><p id="a9d4d022-b298-45d0-b1dc-b2c3ed93e97c" class="">그 후, <code>git commit -am &#x27;commit with am option test&#x27;</code> 를 입력해주자</p><p id="ab1adae9-7360-4bb2-b22d-6976b0dc4348" class="">
+</p><p id="2ca2f2e9-e8ce-4040-a837-c45e25ca70db" class="">그 후 <code>git log</code> 에서 위의 커밋 버전을 확인해볼 수 있다</p><p id="ae3d2c40-9be3-47ad-b57e-0639f51ebc74" class="">
+</p><h2 id="94919a2d-651b-4d09-a4dd-cbb3570ac27d" class="">07. 커밋 메시지의 역사를 알아보는 <code>git log</code></h2><ul id="f5343e60-bd3c-4443-beeb-3dc99bc270d6" class="bulleted-list"><li><code>git log -p</code> : <code>각각의 커밋</code>과 <code>커밋 사이의 소스 간 차이점</code>을 볼 수 있음</li></ul><p id="373e26f1-7a65-4e4d-80c0-1faf1bd10741" class="">-그 중 +++로 된 부분이 최근 변경된 파일/이번 버전의 내용을 나타내고, —-로 된 부분이 이전 버전의 내용을 나타낸다</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="f4eaacaf-403a-460a-aa80-249ddfc51dcb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">—- /dev/null, +++ b/f2.txt</div></figure><p id="71174830-9a6a-4eab-9b58-4f2f3073ef8f" class="">위의 경우에는 이전버전에서는 파일이 존재하지 않았는데 이번 버전에서는 파일이 생성되었다는 의미이다</p><figure id="79dcbdfe-6bf1-4f26-a44d-6114f9b8e44b" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20-p.PNG?raw=true"><img style="width:1056px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20-p.PNG?raw=true"/></a></figure><ul id="f869086e-6ccb-487a-8ae7-aa087f09c423" class="bulleted-list"><li><code>git diff 커밋아이디1..커밋아이디2</code> : 커밋아이디1과 커밋아이디2 사이의 소스상의 차이점을 보여줌</li></ul><p id="738b0363-01af-4936-8e5d-e4e5369194c8" class="">-각각의 커밋은 각자 고유의 아이디 번호가 있다! 그것이 바로 로그 결과의 &quot;commit~&quot;내용 중 &quot;~&quot;에 해당되는 숫자와 영어의 조합이다![맨 첫줄]</p><p id="e886e318-8023-4b22-acd1-c83a5363a870" class="">-커밋아이디는 각 버전의 고유값!</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ef1c6b3a-ce28-4c94-b910-a44a01736043"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">$ git diff d73c36e1f85c8ad64488b07c574637918f0056ed..40d344f73631bd8f15d90fe50d01eeaf85037ffc</div></figure><p id="058b9051-b994-4eae-82a2-2a2eb48347e8" class="">위와 같이 테스트해보면, ..을 기준으로 앞부분을 보다 최근의 아이디이고 뒷부분을 이전 아이디로 적어서 테스트해보았는데 그 결과 이전에는 vcsTest.txt와 hello2.txt가 없었는데 생성되었음을 확인해볼 수 있다</p><p id="02618f19-ed0c-4a17-8076-2527d9275545" class="">[—가 이때는 ..기준으로 앞과 뒤 중 &quot;앞&quot;에 해당되는데, 위의 경우는 &quot;최근&quot;이 된다!◀️ 최근값을 왼쪽에 두었기 때문에]</p><figure id="71fac04e-138b-472f-8563-a0feb2bab400" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff%20%EC%BB%A4%EB%B0%8B%EC%95%84%EC%9D%B4%EB%94%941..%EC%BB%A4%EB%B0%8B%EC%95%84%EC%9D%B4%EB%94%942.PNG?raw=true"><img style="width:1008px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff%20%EC%BB%A4%EB%B0%8B%EC%95%84%EC%9D%B4%EB%94%941..%EC%BB%A4%EB%B0%8B%EC%95%84%EC%9D%B4%EB%94%942.PNG?raw=true"/></a></figure><ul id="c881ca2a-13bc-4f97-9a85-bd5be4d25106" class="bulleted-list"><li>vim에디터를 이용해서 파일 수정 후 <code>git diff</code> ▶️ 이전 버전과 달라진 부분을 확인</li></ul><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="5e13c0f4-679e-4828-a274-11cbd1643507"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">vim hello.txt</div></figure><p id="3fec70c4-7e05-4cc4-adce-422c027737bf" class="">로 파일을 수정하고</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="6a6ab18e-50ad-4cd3-8d79-7075e85a7091"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">get diff</div></figure><p id="857c7351-cd8e-4756-b1bc-fdb8cba1ce16" class="">를 입력하면 아래와 같이 이전에는 hello2.txt에서 버전관리 테스트 깃 최고 222의 내용이 있었는데, 지금은  아래와 같은 내용이 추가되었음을 확인해볼 수 있다</p><p id="b9a2e102-8256-4648-b14e-c8584d3ae5ee" class="">즉, 이를 통해서 내용변경을 확인해볼 수 있다</p><p id="202a6ebd-929c-4f48-8a8e-69e5f24e81f7" class="">이는 <code>커밋 전 작업 내용의 문제점을 마지막으로  확인해볼 수 있는 리뷰기회를 가질 수 있도록</code> 도와준다![버전관리 시스템의 효용!]</p><pre id="5dc1acd9-045b-4e73-81aa-e09f5523a44f" class="code"><code>+버전관리 테스트 깃 최고 222111111111111111111
++깃 수정수정
++git diff 테스트중</code></pre><figure id="b172e842-f9c8-48ba-9fbb-1b9dc90c76d4" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff.gif?raw=true"><img style="width:1248px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff.gif?raw=true"/></a></figure><h2 id="1d9f0e7c-b64a-41aa-9b48-e681a1282e7c" class="">08. 과거로 돌아가기(현재의 로그를 취소하고 과거의 로그로 돌아가기)</h2><ul id="569c0ef9-466e-46f1-9202-0b6013c9a736" class="bulleted-list"><li>아래의 두 방법은 비슷한듯 다르다!</li></ul><ul id="f9424691-93e5-4295-906e-d7ce46fbb86d" class="bulleted-list"><li>만약의 상황을 위해서 .git이 포함된 폴더를 복사해둔 후 이 작업을 하는 것을 권장!</li></ul><ul id="a23242e6-a499-4e40-b181-e4cffc2fe22e" class="bulleted-list"><li>가장 처음에 했던 test git 커밋 메시지가 있는 버전으로 돌아가도록 해보자!</li></ul><ul id="6a126110-461d-463f-b9d0-8ee0ac2d3a89" class="bulleted-list"><li>돌아가고 싶은 과거의 버전 값-b5bf9f06eb45f2233cfccca0f4f58fabdd08df31</li></ul><ul id="b0b31829-697e-4e4c-bf6e-1248473bc6f1" class="bulleted-list"><li>현재 버전 값 - d73c36e1f85c8ad64488b07c574637918f0056ed</li></ul><h3 id="92bacf7e-45ce-4904-a2b5-b9f5406c0456" class="">08-1. 과거로 돌아가기 방법1-reset</h3><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="9e7c0c92-cb32-45b0-b6c6-a66983fa1938"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git reset 과거값 —hard</div></figure><p id="690495c9-0839-4f61-a6e0-32f66811b09a" class="">지금의 경우에는 <code>git reset b5bf9f06eb45f2233cfccca0f4f58fabdd08df31 --hard</code> 로 실행해주면 된다!</p><p id="55527f5c-4442-4624-93be-59f434a17cfa" class="">그러면, <code>b5bf9f06eb45f2233cfccca0f4f58fabdd08df31 버전까지 없어지는 것이 아니라</code> <code>b5bf9f06eb45f2233cfccca0f4f58fabdd08df31버전이전까지만 사라지는 것</code>이다! 즉, [최근,과거) 가 사라지는 버전이다!</p><ul id="52ea3509-5c54-49c0-a26a-704013bebdaf" class="bulleted-list"><li>—hard 옵션은 위험하긴 한데 매력적!(복잡하지 않다 😢)- 작업트리까지 업데이트</li></ul><figure id="4392c55f-0cdc-4b15-b48b-f3a07d35dd00"><a href="https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-Reset-%EB%AA%85%ED%99%95%ED%9E%88-%EC%95%8C%EA%B3%A0-%EA%B0%80%EA%B8%B0" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git - Reset 명확히 알고 가기</div><div class="bookmark-description">git cat-file -p HEAD tree cfda3bf379e4f8dba8717dee55aab78aef7f4daf author Scott Chacon 1301511835 -0700 committer Scott Chacon 1301511835 -0700 initial commit $ git ls-tree -r HEAD 100644 blob a906cb2a4a904a152... README 100644 blob 8f94139338f9404f2... Rakefile 040000 tree 99f1a6d12cb4b6f19... lib</div></div><div class="bookmark-href"><img src="https://git-scm.com/favicon.ico" class="icon bookmark-icon"/>https://git-scm.com/book/ko/v2/Git-%EB%8F%84%EA%B5%AC-Reset-%EB%AA%85%ED%99%95%ED%9E%88-%EC%95%8C%EA%B3%A0-%EA%B0%80%EA%B8%B0</div></div><img src="https://git-scm.com/book/en/v2/images/reset-soft.png" class="bookmark-image"/></a></figure><p id="81ca9415-868b-47ce-b36b-7a466e87e9f7" class="">🌹 깃에서 알아둘 것 🌹</p><p id="9fe670c9-2481-4772-b727-7ed234886365" class="">ⓐ 깃에서는 왠만해서는 어떠한 정보도 삭제하지 않는다</p><ul id="2e7ff99f-2387-4220-be3b-e88048442357" class="bulleted-list"><li>따라서 우리가 삭제했다고 생각해도 어딘가에 남겨져 있다!</li></ul><ul id="3dd1207e-82ef-497b-8fd6-2fe18182302e" class="bulleted-list"><li>따라서 나중에 복구할 수 있다!</li></ul><p id="1940e737-924e-40b7-be69-ae78a957fb22" class="">ⓑ 자신의 버전을 원격연결을 통해 공유를 할 수 있는데, 공유한 이후에는 절대로 reset해서는 안된다!(본인의 컴퓨터 내에서만 리셋해야 한다!)</p><p id="c22adc12-49e7-4497-a821-c088b0b9248b" class="">
+</p><figure id="68f66021-e1c0-4c38-8983-837b191dd7a6" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EA%B3%BC%EA%B1%B0%20%EC%BB%A4%EB%B0%8B%20%EC%83%81%ED%83%9C%EB%A1%9C%20%EB%8F%8C%EC%95%84%EA%B0%80%EA%B8%B0-reset.PNG?raw=true"><img style="width:1200px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EA%B3%BC%EA%B1%B0%20%EC%BB%A4%EB%B0%8B%20%EC%83%81%ED%83%9C%EB%A1%9C%20%EB%8F%8C%EC%95%84%EA%B0%80%EA%B8%B0-reset.PNG?raw=true"/></a></figure><h3 id="e828c886-82cd-4b8d-bb95-a58f2cb6b9b4" class="">08-2. 과거로 돌아가기 방법2-revert</h3><ul id="158f3ceb-6804-44ac-972d-ab151e58d913" class="bulleted-list"><li>커밋을 취소하면서 새로운 버전을 생성하는 방법</li></ul><ul id="89ff4dd1-907e-4976-bacc-4e57eadad2ec" class="bulleted-list"><li>나중에 이해해보도록! 나중에 긴박할때 공부하라!😭</li></ul><p id="49b23ff1-08dd-4b54-a8f1-5158c1f54383" class="">
+</p><hr id="64afabdb-0518-44e1-a162-50895e01da9a"/><p id="b1fe1cca-423c-4bff-8e32-038d038b5635" class="">➕ <code>git commit</code> 을 입력하고 나타나는 vim 에디터에서 커밋 버전을 기입해줘도 된다!!</p><p id="47d79eb9-6cea-4d1d-b14d-d003f2c31ad7" class="">➕ <code>git commit --help</code><strong> 를 입력하면 commit에 대한 도움을 받을 수 있는 사이트를 확인해볼 수 있다</strong></p><p id="37b6776a-47ae-4ad3-9814-7269e45f268c" class="">
+</p><p id="faa00eef-00f0-49f3-8eec-be8b37b9fc0f" class="">
+</p></div></article></body></html>
