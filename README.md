@@ -580,6 +580,9 @@
   	<li><a href="https://hy6219.github.io/TIL/Spring/JUnit5/[JUnit5]JUnit5 , 스프링 부트 테스트 내용 추가.html" target="_blank">
 		[Spring] 스프링 부트 테스트의 핵심! @SpringBootTest, @WebMvcTest, @DataJpaTest, @RestClientTest, @JsonTest
 	</a></li>
+  	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/[Spring JPA]엔티티의 기본 특징.html" target="_blank">
+		[Spring JPA]엔티티의 기본 특징
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
