@@ -1,0 +1,2187 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Entity 기본 속성(Annotation)</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d4e70cdc-c4c6-4071-ae7c-670965cb246d" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">Entity 기본 속성(Annotation)</h1></header><div class="page-body"><nav id="a8f4da21-7b2d-4e79-972b-1722d25af86a" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0d894248-b597-47ae-82b2-12dbbefa0e04">01. Entity를 나타내는 어노테이션</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#93ac2d1f-1331-44a5-a043-0f28361f062a">02. <code>@GeneratedValue</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ee1288ce-bc20-4203-8629-b233025d0f74">03. <code>@Table</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0af7ae41-8ec6-49a5-8142-846b12e3f7cc">03-1. <code>@Table</code> 어노테이션에서 인덱스와 UNIQUE 제약조건 붙여주기- <code>indexes={@Index(columnList=&quot;컬럼명&quot;)}</code> , <code>uniqueConstraints={@UniqueConstraint(columnNames={&quot;컬럼명&quot;})}</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#738ab4a6-a34a-42ca-8f3b-8b42b9b826e2">04. <code>@Column</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#643ddf73-3add-4e65-a257-18b00ce56e81">04-1. <code>@Column-nullable속성</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#854578a8-b75b-4f58-9e4a-bf22afa527a4">05. <code>@Transient</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0670721e-dd44-4629-80fc-bb3404205ec2">🌟 06. Enum에 대한 처리</a></div></nav><h2 id="0d894248-b597-47ae-82b2-12dbbefa0e04" class="">01. Entity를 나타내는 어노테이션</h2><p id="95413025-4f38-4a68-9c9a-f68332cfc68d" class=""><code>@Entity</code> 어노테이션을 이용!</p><p id="82255800-38af-4552-ba4e-5ecd187dd885" class="">▶️ <code>@Id</code>라는 기본키를 나타내는 어노테이션도 반드시 필요!</p><p id="1fcaa79e-aa1a-419d-860c-08cc33e73704" class="">
+</p><h2 id="93ac2d1f-1331-44a5-a043-0f28361f062a" class="">02. <code>@GeneratedValue</code></h2><pre id="dfb1fe16-acba-4f0e-9891-200a36e0db98" class="code"><code>/*
+ * Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0,
+ * or the Eclipse Distribution License v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+
+// Contributors:
+//     Linda DeMichiel - 2.1
+//     Linda DeMichiel - 2.0
+
+package javax.persistence;
+
+import java.lang.annotation.Target;
+import java.lang.annotation.Retention;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import static javax.persistence.GenerationType.AUTO;
+
+/**
+ * Provides for the specification of generation strategies for the
+ * values of primary keys. 
+ *
+ * &lt;p&gt; The &lt;code&gt;GeneratedValue&lt;/code&gt; annotation
+ * may be applied to a primary key property or field of an entity or
+ * mapped superclass in conjunction with the {@link Id} annotation.
+ * The use of the &lt;code&gt;GeneratedValue&lt;/code&gt; annotation is only
+ * required to be supported for simple primary keys.  Use of the
+ * &lt;code&gt;GeneratedValue&lt;/code&gt; annotation is not supported for derived
+ * primary keys.
+ *
+ * &lt;pre&gt;
+ *
+ *     Example 1:
+ *
+ *     &amp;#064;Id
+ *     &amp;#064;GeneratedValue(strategy=SEQUENCE, generator=&quot;CUST_SEQ&quot;)
+ *     &amp;#064;Column(name=&quot;CUST_ID&quot;)
+ *     public Long getId() { return id; }
+ *
+ *     Example 2:
+ *
+ *     &amp;#064;Id
+ *     &amp;#064;GeneratedValue(strategy=TABLE, generator=&quot;CUST_GEN&quot;)
+ *     &amp;#064;Column(name=&quot;CUST_ID&quot;)
+ *     Long id;
+ * &lt;/pre&gt;
+ *
+ * @see Id
+ * @see TableGenerator
+ * @see SequenceGenerator
+ *
+ * @since 1.0
+ */
+@Target({METHOD, FIELD})
+@Retention(RUNTIME)
+
+public @interface GeneratedValue {
+
+    /**
+     * (Optional) The primary key generation strategy
+     * that the persistence provider must use to
+     * generate the annotated entity primary key.
+     */
+    GenerationType strategy() default AUTO;
+
+    /**
+     * (Optional) The name of the primary key generator
+     * to use as specified in the {@link SequenceGenerator} 
+     * or {@link TableGenerator} annotation.
+     * &lt;p&gt; Defaults to the id generator supplied by persistence provider.
+     */
+    String generator() default &quot;&quot;;
+}</code></pre><pre id="33fab064-29cf-40e8-ba4a-69bf2349de70" class="code"><code>/*
+ * Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0,
+ * or the Eclipse Distribution License v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+
+// Contributors:
+//     Linda DeMichiel - 2.1
+//     Linda DeMichiel - 2.0
+
+package javax.persistence;
+
+/** 
+ * Defines the types of primary key generation strategies. 
+ *
+ * @see GeneratedValue
+ *
+ * @since 1.0
+ */
+public enum GenerationType { 
+
+    /**
+     * Indicates that the persistence provider must assign 
+     * primary keys for the entity using an underlying 
+     * database table to ensure uniqueness.
+     */
+    TABLE, 
+
+    /**
+     * Indicates that the persistence provider must assign 
+     * primary keys for the entity using a database sequence.
+     */
+    SEQUENCE, 
+
+    /**
+     * Indicates that the persistence provider must assign 
+     * primary keys for the entity using a database identity column.
+     */
+    IDENTITY, 
+
+    /**
+     * Indicates that the persistence provider should pick an 
+     * appropriate strategy for the particular database. The 
+     * &lt;code&gt;AUTO&lt;/code&gt; generation strategy may expect a database 
+     * resource to exist, or it may attempt to create one. A vendor 
+     * may provide documentation on how to create such resources 
+     * in the event that it does not support schema generation 
+     * or cannot create the schema resource at runtime.
+     */
+    AUTO
+}</code></pre><p id="1a0a341e-68fc-4a2c-99e8-946f7121fb0c" class=""><code>@GeneratedValue</code>를 추적하다 보면, <code>GenerationType</code>이라는 열거형을 확인해볼 수 있는데, 이 열거형은 테이블/시퀀스/Identity/Auto 총 4 가지 타입의 전략을 지원하는 것을 확인해볼 수 있다</p><ul id="1b17c6b9-3e3d-41e8-a05a-ccc550d41090" class="bulleted-list"><li>Table 전략은 아이디를 관리할 별도의 테이블을 만들어두고, 테이블에서 아이디값을 계속 추출해서 사용하도록 제공</li></ul><ul id="2f604b2a-c60f-4a60-a45e-c48379881656" class="bulleted-list"><li>SEQUENCE 전략은 오라클에서 자주 사용하는 전략</li></ul><p id="17004c61-abb3-417c-aecb-d5f98729c837" class="">-H2 db에서도 이 전략을 자주 사용</p><ul id="f3c9c8df-1b9c-4c64-acf2-ee92d521ba34" class="bulleted-list"><li>Identity 전략은 MySQL에서 자주 사용하는 전략
+-auto_increment를 이용해서 기본키값을 증가시킴</li></ul><ul id="30ac1371-e747-490d-bacf-afefda389a9d" class="bulleted-list"><li>일반적으로 AUTO전략을 기본값처럼 설정하여 사용하는데, 이렇게 될 경우 각 DB에 맞는 값을 자동으로 연결해주어 사용하게 됨[DB의존성이 없는 장점!]</li></ul><p id="6b910d69-69dc-491a-b263-6820fe7a8d04" class="">
+</p><ul id="0fbdb794-a849-483c-bb96-3edb2c35457d" class="bulleted-list"><li>AUTO 전략이 DB의존성이 없다는 점에서 장점을 갖고는 있지만, 특정 DB를 연결하여 사용하는 경우가 많기 때문에 전략을 정해주고 사용하는 경우가 많이 있다!</li></ul><p id="9e0dff5b-cd57-403f-a3a8-02363386c8eb" class="">
+</p><h2 id="ee1288ce-bc20-4203-8629-b233025d0f74" class="">03. <code>@Table</code></h2><pre id="b863c255-1129-4edb-a823-612c7d3f397f" class="code"><code>/*
+ * Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0,
+ * or the Eclipse Distribution License v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+
+// Contributors:
+//     Linda DeMichiel - 2.1
+//     Linda DeMichiel - 2.0
+
+package javax.persistence;
+
+import java.lang.annotation.Target;
+import java.lang.annotation.Retention;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+/**
+ * Specifies the primary table for the annotated entity. Additional
+ * tables may be specified using {@link SecondaryTable} or {@link
+ * SecondaryTables} annotation.
+ *
+ * &lt;p&gt; If no &lt;code&gt;Table&lt;/code&gt; annotation is specified for an entity 
+ * class, the default values apply.
+ *
+ * &lt;pre&gt;
+ *    Example:
+ *
+ *    &amp;#064;Entity
+ *    &amp;#064;Table(name=&quot;CUST&quot;, schema=&quot;RECORDS&quot;)
+ *    public class Customer { ... }
+ * &lt;/pre&gt;
+ *
+ * @since 1.0
+ */
+@Target(TYPE) 
+@Retention(RUNTIME)
+public @interface Table {
+
+    /**
+     * (Optional) The name of the table.
+     * &lt;p&gt; Defaults to the entity name.
+     */
+    String name() default &quot;&quot;;
+
+    /** (Optional) The catalog of the table.
+     * &lt;p&gt; Defaults to the default catalog.
+     */
+    String catalog() default &quot;&quot;;
+
+    /** (Optional) The schema of the table.
+     * &lt;p&gt; Defaults to the default schema for user.
+     */
+    String schema() default &quot;&quot;;
+
+    /**
+     * (Optional) Unique constraints that are to be placed on 
+     * the table. These are only used if table generation is in 
+     * effect. These constraints apply in addition to any constraints 
+     * specified by the &lt;code&gt;Column&lt;/code&gt; and &lt;code&gt;JoinColumn&lt;/code&gt; 
+     * annotations and constraints entailed by primary key mappings.
+     * &lt;p&gt; Defaults to no additional constraints.
+     */
+    UniqueConstraint[] uniqueConstraints() default {};
+
+    /**
+     * (Optional) Indexes for the table.  These are only used if
+     * table generation is in effect.  Note that it is not necessary
+     * to specify an index for a primary key, as the primary key
+     * index will be created automatically.
+     *
+     * @since 2.1
+     */
+    Index[] indexes() default {};
+}</code></pre><p id="6842218e-c9ab-4c20-a7c6-428b58d0a135" class="">위의 테이블을 살펴보면, 테이블 이름과 카탈로그, 스키마, 인덱스 등에 대해서 제공을 해주고 있는 것을 살펴볼 수 있다</p><pre id="d86faf39-5e6f-4e31-814e-d94e70738627" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="47f2b16c-6085-4ef7-9d84-53b26b575413" class="">그리고 위에서는 <code>@Table(name=&#x27;user&#x27;)</code>로 명시해주었는데, 테이블 이름은 자동으로 클래스명과 매칭되기 때문에 <code>@Table</code>로 명시해주어도 괜찮다!</p><p id="6ddebc03-fe6d-4b0f-8080-0836d62a18e1" class="">
+</p><p id="d93417cf-891e-442e-af5b-23e8128bafcf" class="">다만, <code>마이그레이션이나 이관작업</code>을 하는 경우에는, <code>@Table(name=테이블명)</code> 처럼 기입해주어야 할 상황도 존재한다!</p><p id="ffb91609-a77e-4b7b-a156-cff181c1a29e" class="">
+</p><ul id="e413a814-6649-4dd3-baba-eed1c3fbee9c" class="bulleted-list"><li>마이그레이션: 데이터나 소프트웨어를 다른 시스템으로 이동시키는 것</li></ul><p id="666682dd-793a-4679-804e-75a211c12385" class="">
+</p><p id="163e5b9e-3879-47e7-93cd-9dff5fe8c692" class="">이번에는 테이블 이름을 나타내는 name 속성의 값을 &quot;user_legacy&quot;로 변경해보자</p><p id="b44b5ce9-4c8c-4351-b950-2450af137060" class="">물론, data.sql에서 테이블명을 user라고 해두었기 때문에, 분명히 오류는 날 것이다</p><pre id="8ad038ce-f5b9-4cde-90ca-3e176d9f12da" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user_legacy&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><pre id="ff072070-bae8-461f-8a5a-611405be7c25" class="code"><code>create table user_legacy (
+       id bigint not null,
+        active boolean,
+        created_at timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp,
+        primary key (id)
+    )</code></pre><p id="ef35c5d6-967a-4e3d-8159-1b33dc3a6ce6" class="">하지만, 쿼리에서 테이블을 생성할 때 user_legacy로 실행되었음을 확인해볼 수 있다</p><p id="4b6cb9a8-8818-4307-b9ae-5e2c0721400b" class="">
+</p><p id="f4e32e14-ee3a-49c6-8d92-98cf708d0a3b" class="">🌟 하지만, 일반적으로 테이블과 엔티티는 1:1 관계가 되어 이름이 동일한 것이 좋다!</p><p id="c52d89cc-f991-4d19-9249-37a3831dd297" class="">
+</p><h3 id="0af7ae41-8ec6-49a5-8142-846b12e3f7cc" class="">03-1. <code>@Table</code> 어노테이션에서 인덱스와 UNIQUE 제약조건 붙여주기- <code>indexes={@Index(columnList=&quot;컬럼명&quot;)}</code> , <code>uniqueConstraints={@UniqueConstraint(columnNames={&quot;컬럼명&quot;})}</code></h3><pre id="46892122-6ceb-460e-b692-46c3a09a69a0" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="ff71f733-0517-4527-868b-6f1aa0d189c0" class="">위에서 잠깐 언급했던 것처럼 Table 어노테이션 내에서는 인덱스와 UNIQUE 제약조건을 걸어줄 수 있다!</p><p id="c641dc97-94b5-420a-a2ab-b773a04e19a8" class="">이는 각각 <code>indexes={@Index(columnList=&quot;컬럼명&quot;)}</code> , <code>uniqueConstraints={@UniqueConstraint(columnNames={&quot;컬럼명&quot;})}</code> 을 이용해서 위와 같이 적용가능하다!</p><pre id="cf996d25-aa9a-4655-9243-88b144f38a3b" class="code"><code>Hibernate: 
+    
+    drop table if exists address CASCADE 
+Hibernate: 
+    
+    drop table if exists user CASCADE 
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table address (
+       id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        active boolean,
+        created_at timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp,
+        primary key (id)
+    )
+Hibernate: create index IDXgj2fy3dcix7ph7k8684gka40c on user (name)
+Hibernate: 
+    
+    alter table user 
+       add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)</code></pre><p id="40e5dbfd-9dd0-48f7-94ad-0f4d59c66a06" class="">그리고 테스트를 실행해보면 DDL에서 `테이블이나 시퀀스가 존재하면 삭제하는 것을 먼저 수행하고 테이블을 만드는 형태를 확인해볼 수 있고</p><p id="4d12f3a7-d809-420e-b127-d35eb145fd33" class="">
+</p><p id="1c3e1819-cbe1-4e84-9b72-0d5a0f973e6f" class="">인덱스를 만들고, UNIQUE 제약조건을 추가하는 것을 살펴볼 수 있다!</p><p id="b0c5fe88-01d0-45cb-833c-4129c3e8f97b" class="">하지만 이러한 인덱스나 제약조건에 대한 적용사항은 실제 DB에 저장되는 것과는 다를 수 있다! 일반적으로 많이 사용되는 select, update, insert, delete 쿼리 실행 시에는 어떤 효력도 주지 않는다! </p><p id="29b6d299-f075-46af-af07-7f19901b1358" class="">따라서 인덱스나 제약조건은 DB에 맡기고 엔티티에 표기하지 않는 경우가 보다 많다!</p><p id="3e2298bb-5c67-4927-a09c-2b41e8f1a125" class="">
+</p><h2 id="738ab4a6-a34a-42ca-8f3b-8b42b9b826e2" class="">04. <code>@Column</code></h2><p id="9c8e7ccf-c174-4761-a19b-676fe45904be" class="">객체 필드에 각 컬럼 속성을 지정</p><ul id="3a3d997c-e03c-427b-b9c2-1120287ba937" class="bulleted-list"><li>DB는 그대로 유지하고 웹 어플리케이션을 새로 리빌딩하는 경우 등에 적합</li></ul><p id="7ee7e9bd-84d0-444f-be2b-8e8c82af3e34" class="">
+</p><p id="ea71f6df-8474-483c-998a-d1cf83c2b5e5" class="">예전에는 예를 들어서 createdAt과 같은 필드를 모음을 최대한 적게 쓰기 위해서 crtdat와 같은 형태로 사용했었다. 하지만 이는 가독성이 떨어지기 때문에 이 경우에 Column을 적용하면 좋다![A]</p><p id="1743fab8-625e-4ab2-914c-97ad76b15d9c" class="">
+</p><pre id="e2e00618-59dd-4d59-8365-07be6056fb4b" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="97a0fd51-15ca-4b1f-ae8f-7dae53b73183" class="">
+</p><p id="5011be0a-a471-4a0d-be5b-0a91563b3812" class="">👉[A] 과거에 사용하던 데이터베이스 필드명에 자바 필드를 매칭시켜줄 때, 가독성을 UP!</p><pre id="7ff7950d-2698-4c4e-8eae-f1f6d9ac3f09" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;crtdat&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="059ecc8b-7466-4a47-bc79-f4de07050b78" class="">그러면 지금은 당연히 오류가 날 수밖에 없지만(data.sql에 insert할 컬럼명을 createdAt으로 적어두었기 때문), DDL만 확인해본다면, crtdat컬럼이 생긴 것을 확인해볼 수 있다</p><pre id="d8bf98da-e566-4046-b0d0-e14da25a1df8" class="code"><code>Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        active boolean,
+        crtdat timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp,
+        primary key (id)
+    )</code></pre><p id="abf96dd0-8b59-48e0-a3a4-db77c08f8f77" class="">
+</p><h3 id="643ddf73-3add-4e65-a257-18b00ce56e81" class="">04-1. <code>@Column-nullable속성</code></h3><p id="9caae3ed-ddf3-4c7d-879d-58a2b8073425" class="">
+</p><ul id="2083c318-7a9b-4220-9c79-ad1b04b72c89" class="bulleted-list"><li>일반적인 조회 기능 사용 시에는 ,사전에 걸러주는 validation 역할을 수행하지 않음</li></ul><ul id="9fb25b44-4acc-4954-b918-f2626981e8db" class="bulleted-list"><li>nullable은 기본적으로 true로 되어있음</li></ul><ul id="80edd409-d8c9-494a-b525-ac99c36e889b" class="bulleted-list"><li>NOT NULL 제약조건을 만들어주기 위한 것</li></ul><ul id="47fa05be-b383-451e-84b4-1f30eef2b8d6" class="bulleted-list"><li><code>nullable=false ↔️ NOT NULL 제약조건 추가</code></li></ul><ul id="1bf1dc17-94a9-471d-b3c2-1f2d5d93c1ba" class="bulleted-list"><li><code>nullable=true ↔️ 비어있어도 된다 ↔️NOT NULL 제약조건 없음</code></li></ul><ul id="920b5986-aa3f-4ff1-b6e1-f1e7502877fe" class="bulleted-list"><li>nullable은 체크해야할 속성으로써 추후 테스트 등에서 유용하게 사용되어서 자주 사용된다!</li></ul><pre id="e5214f86-4d51-4746-88d2-db21234dec9b" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;crtdat&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,nullable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><pre id="d4cd474c-63c4-4be1-91d0-ad0e7c163fd8" class="code"><code>Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        active boolean,
+        crtdat timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp not null,
+        primary key (id)
+    )</code></pre><p id="a6409f14-5348-449f-a189-f63b92dac398" class="">그러면, <code>nullable=false를 지정해준 필드에 not null이 붙은 것을 알 수 있다</code></p><hr id="3be79d27-6e69-454b-8589-287b66471d43"/><pre id="e9ae7a81-8786-43bc-ab98-46e720e6c81f" class="code"><code>/*
+ * Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0,
+ * or the Eclipse Distribution License v. 1.0 which is available at
+ * http://www.eclipse.org/org/documents/edl-v10.php.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR BSD-3-Clause
+ */
+
+// Contributors:
+//     Linda DeMichiel - 2.1
+//     Linda DeMichiel - 2.0
+
+
+package javax.persistence;
+
+import java.lang.annotation.Target;
+import java.lang.annotation.Retention;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+/**
+ * Specifies the mapped column for a persistent property or field.
+ * If no &lt;code&gt;Column&lt;/code&gt; annotation is specified, the default values apply.
+ *
+ * &lt;blockquote&gt;&lt;pre&gt;
+ *    Example 1:
+ *
+ *    &amp;#064;Column(name=&quot;DESC&quot;, nullable=false, length=512)
+ *    public String getDescription() { return description; }
+ *
+ *    Example 2:
+ *
+ *    &amp;#064;Column(name=&quot;DESC&quot;,
+ *            columnDefinition=&quot;CLOB NOT NULL&quot;,
+ *            table=&quot;EMP_DETAIL&quot;)
+ *    &amp;#064;Lob
+ *    public String getDescription() { return description; }
+ *
+ *    Example 3:
+ *
+ *    &amp;#064;Column(name=&quot;ORDER_COST&quot;, updatable=false, precision=12, scale=2)
+ *    public BigDecimal getCost() { return cost; }
+ *
+ * &lt;/pre&gt;&lt;/blockquote&gt;
+ *
+ *
+ * @since 1.0
+ */ 
+@Target({METHOD, FIELD}) 
+@Retention(RUNTIME)
+public @interface Column {
+
+    /**
+     * (Optional) The name of the column. Defaults to 
+     * the property or field name.
+     */
+    String name() default &quot;&quot;;
+
+    /**
+     * (Optional) Whether the column is a unique key.  This is a 
+     * shortcut for the &lt;code&gt;UniqueConstraint&lt;/code&gt; annotation at the table 
+     * level and is useful for when the unique key constraint 
+     * corresponds to only a single column. This constraint applies 
+     * in addition to any constraint entailed by primary key mapping and 
+     * to constraints specified at the table level.
+     */
+    boolean unique() default false;
+
+    /**
+     * (Optional) Whether the database column is nullable.
+     */
+    boolean nullable() default true;
+
+    /**
+     * (Optional) Whether the column is included in SQL INSERT 
+     * statements generated by the persistence provider.
+     */
+    boolean insertable() default true;
+
+    /**
+     * (Optional) Whether the column is included in SQL UPDATE 
+     * statements generated by the persistence provider.
+     */
+    boolean updatable() default true;
+
+    /**
+     * (Optional) The SQL fragment that is used when 
+     * generating the DDL for the column.
+     * &lt;p&gt; Defaults to the generated SQL to create a
+     * column of the inferred type.
+     */
+    String columnDefinition() default &quot;&quot;;
+
+    /**
+     * (Optional) The name of the table that contains the column. 
+     * If absent the column is assumed to be in the primary table.
+     */
+    String table() default &quot;&quot;;
+
+    /**
+     * (Optional) The column length. (Applies only if a
+     * string-valued column is used.)
+     */
+    int length() default 255;
+
+    /**
+     * (Optional) The precision for a decimal (exact numeric) 
+     * column. (Applies only if a decimal column is used.)
+     * Value must be set by developer if used when generating 
+     * the DDL for the column.
+     */
+    int precision() default 0;
+
+    /**
+     * (Optional) The scale for a decimal (exact numeric) column. 
+     * (Applies only if a decimal column is used.)
+     */
+    int scale() default 0;
+}</code></pre><p id="1f72eeb0-1bca-470a-b26b-4b79ae95cdb3" class="">위는 Column 어노테이션에 대한 부분인데, </p><ul id="fd47bdc4-6bfd-4a85-a1e2-3ffb7519dca7" class="bulleted-list"><li>unique는 unique 제약조건에 대한 부분이다</li></ul><p id="38c2147f-5dab-43fd-a702-5263c58a6fb4" class="">-Table에서는 복합 컬럼에 대해 unique 제약조건을 걸 수 있는 uniqueConstraints가 있다면,</p><p id="7e8a433f-c9ff-4452-a983-f3f357a8d88b" class="">
+</p><p id="d3e214df-7c9c-42c8-8544-994749ac82da" class="">column에는 단독적으로 각 필드에 걸 수 있도록 되어있다!</p><pre id="9d7a7f1a-2bd9-4087-ace5-ee40c167f7c8" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;,unique = true)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;crtdat&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,nullable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><pre id="40d12fd2-a901-4488-82d7-6bc0015d34ca" class="code"><code>create table user (
+       id bigint not null,
+        active boolean,
+        crtdat timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp not null,
+        primary key (id)
+    )
+Hibernate: create index IDXgj2fy3dcix7ph7k8684gka40c on user (name)
+Hibernate: 
+    
+    alter table user 
+       add constraint UKob8kqyqqgmefl0aco34akdtpe unique (email)
+Hibernate: 
+    
+    alter table user 
+       add constraint UK_gj2fy3dcix7ph7k8684gka40c unique (name)</code></pre><p id="7bfcacbc-e509-4ee5-83fe-0dc40f9f2f99" class="">
+</p><ul id="70c631ff-605a-48b3-afa9-52e2506c4d49" class="bulleted-list"><li>length()는 해당 필드의 길이를 나타내는데,  기본값이 255이라서 varchar(255)로 표기되어 있는 것을 볼 수 있다</li></ul><p id="a3a9d2cb-608d-45bd-9921-7297f2ddb80d" class="">
+</p><p id="1c0b453e-449e-4ff1-9e11-1bf8a79dbb12" class="">이메일 필드의 길이를 4000으로 늘려보자</p><pre id="e0bd55be-f514-4b70-8e7d-7e961cf1179e" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;,unique = true)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;,length = 4000)
+    private String email;
+    @Column(name=&quot;crtdat&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,nullable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><pre id="8b4a93a9-4eb8-4b37-b6af-6d212d8a4ac7" class="code"><code>create table user (
+       id bigint not null,
+        active boolean,
+        crtdat timestamp,
+        email varchar(4000),
+        name varchar(255),
+        updated_at timestamp not null,
+        primary key (id)
+    )</code></pre><p id="33675cfb-ad1b-40cd-9cbb-2220a04376bc" class="">
+</p><p id="56f26901-b13d-4220-b796-99bcc93eca91" class="">그러면 이제 이메일 필드의 길이는 더이상 255가 아니라 4000이 되었음을 확인해볼 수 있다</p><p id="5e84474d-6c71-4dd6-919d-7b017260af17" class="">
+</p><ul id="2e1c5666-c5e1-43d0-b564-31882c9432dd" class="bulleted-list"><li>insertable, updatable: 다른 속성들과 다르게 DDL이 아닌 일반적인 DML 쿼리에 영향을 끼침</li></ul><p id="1c933dbe-23d5-4ff8-94c4-810442d20b7a" class="">먼저 User 객체를 다시 정리해보고, 아래와 같이 테스트해보자</p><pre id="e089cc14-39c8-411b-b4f1-d0adffae4852" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(indexes = {@Index(columnList = &quot;name&quot;)},uniqueConstraints = {@UniqueConstraint(columnNames = {&quot;email&quot;})})
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;,length = 4000)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><pre id="fbc6342f-8695-49fc-986a-fb8bdb5a501b" class="code"><code>@Test
+    public void dmlAccess(){
+        User user=new User();
+
+        user.setName(&quot;martin&quot;);
+        user.setEmail(&quot;martin2@fastcampus.com&quot;);
+
+        userRepository.save(user);//insert
+
+        User user2=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setEmail(&quot;update_1l_id@fastcampus.com&quot;);
+
+        userRepository.save(user2);//update
+    }</code></pre><p id="db64b9df-295f-4922-8faa-e28a6335f381" class="">그러면 당연히, 처음에는 insertable과 updatable의 기본값이 true로 되어있어서 insert, update가 가능하여 아래와 같은 쿼리를 확인해볼 수 있다</p><pre id="0405ecf1-98d3-4cca-8d20-a9e152dcc2ba" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        created_at=?,
+        email=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?</code></pre><p id="21959c45-0e5d-44fe-b999-c00732df9ef8" class="">
+</p><p id="149e1e96-39c8-4499-8789-5cbe26a3b9b7" class="">🌟 이번에는 created_at 필드에 대해서 update되지 못하도록 <code>updatable=false</code>를 설정해주고, updated_at 필드에 대해서 insert되지 못하도록 <code>insertable=false</code>를 설정해주자</p><pre id="bfb96eed-5bc0-426c-bbca-9f50892fa981" class="code"><code>package com.example.jpa_sort_practice.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+}</code></pre><p id="c23b08b4-fb0d-4b84-b7b9-bed95e01d224" class="">그리고 결과를 레코드들의 묶음으로 보기 위해서 출력을 해주면</p><pre id="bd5396ff-5bfc-4b83-924c-2c01199fb2b5" class="code"><code>@Test
+    public void dmlAccess(){
+        User user=new User();
+
+        user.setName(&quot;martin&quot;);
+        user.setEmail(&quot;martin2@fastcampus.com&quot;);
+
+        userRepository.save(user);//insert
+
+        User user2=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+        user2.setEmail(&quot;update_1l_id@fastcampus.com&quot;);
+
+        userRepository.save(user2);//update
+
+        userRepository.findAll().forEach(System.out::println);
+    }</code></pre><pre id="52d788ab-8ad9-44a2-bed1-a0c593324398" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=update_1l_id@fastcampus.com, createdAt=2021-08-19 14:32:55.101, updatedAt=2021-08-19 14:32:55.101, active=true)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-19 14:32:55.114, updatedAt=2021-08-19 14:32:55.114, active=true)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-19 14:32:55.114, updatedAt=2021-08-19 14:32:55.114, active=false)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-19 14:32:55.114, updatedAt=2021-08-19 14:32:55.114, active=false)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-19 14:32:55.115, updatedAt=2021-08-19 14:32:55.115, active=true)
+User(id=6, name=martin, email=martin2@fastcampus.com, createdAt=null, updatedAt=null, active=false)</code></pre><p id="1970960d-ffdb-4da1-8344-5af75d44a473" class="">id=6, 즉 새로 삽입한 martin은 updated_at 이 insertable=false이기 때문에 값에서도, 쿼리에서도 빠진 것을 확인해볼 수 있고</p><p id="2811abfa-4e34-4321-abe9-ba662db8375b" class="">
+</p><p id="de2f833f-0b84-49bd-99d9-86982e33222c" class="">id=1인 martin은 created_at이 updatable=false라서 쿼리에서 update 시 created_at이 빠진 것을 확인해볼 수 있다!</p><p id="53bd17ae-44cc-4774-9c84-92db5e1ad828" class="">
+</p><p id="e1d67790-7b71-4e7c-90ba-daff505ac12c" class="">🌟 엔티티는 데이터에 대한 객체이기 때문에 DB 레코드의 값을 그대로 반영한다! 하지만, 객체이기 때문에 별도의 데이터를 갖고 싶은 니즈도 생기기 마련인데, 이를 위해 존재하는 어노테이션이 바로 <code>@Transient</code> 이다!</p><p id="ce2e2ff4-d528-4924-86be-6f2d6e97fcf0" class="">
+</p><h2 id="854578a8-b75b-4f58-9e4a-bf22afa527a4" class="">05. <code>@Transient</code></h2><p id="6917051b-c7e3-4681-bab8-ac27e1928ce2" class="">추가적으로, testData라는 필드를 User 객체에 추가해보자</p><pre id="5c226525-59eb-404e-b058-6053917e9704" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    private String testData;
+}</code></pre><p id="6cad1670-4612-434e-8b0b-2fdd75188ea5" class="">
+</p><pre id="7f4150f1-f4f6-4e30-982e-2159666bcbf5" class="code"><code>Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        active boolean,
+        created_at timestamp,
+        email varchar(255),
+        name varchar(255),
+        test_data varchar(255),
+        updated_at timestamp,
+        primary key (id)
+    )
+(중략)
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, name, test_data, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.test_data as test_dat6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.test_data as test_dat6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        name=?,
+        test_data=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.test_data as test_dat6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=update_1l_id@fastcampus.com, createdAt=2021-08-19 14:43:22.501, updatedAt=2021-08-19 14:43:22.501, active=true, testData=null)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-19 14:43:22.517, updatedAt=2021-08-19 14:43:22.517, active=true, testData=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-19 14:43:22.518, updatedAt=2021-08-19 14:43:22.518, active=false, testData=null)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-19 14:43:22.518, updatedAt=2021-08-19 14:43:22.518, active=false, testData=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-19 14:43:22.519, updatedAt=2021-08-19 14:43:22.519, active=true, testData=null)
+User(id=6, name=martin, email=martin2@fastcampus.com, createdAt=null, updatedAt=null, active=false, testData=null)</code></pre><p id="94d0a849-3e31-4ed4-a337-309ae02d1937" class="">
+</p><p id="4cfa5d98-1087-47c0-a455-7b234b9f598d" class="">그러면, test_data라는 필드가 생겨나고,  insert와 update 시 해당 필드가 노출되는 것을 확인해볼 수 있다</p><p id="8eb80c23-de50-40e4-8944-40eb6aaf81c0" class="">
+</p><p id="c82910f9-db40-4015-b5d7-0b82f39c4ef3" class="">하지만 이 <code>testData는 DB에는 반영하지 않고 객체에서만 사용하고 싶은 오브젝트의 속성일 수도 있다</code></p><p id="23b2e2d4-6a93-4915-90fd-dc16392cdb67" class="">
+</p><p id="f6c32e6b-9f2c-48ec-8e20-b781b171bca8" class="block-color-blue_background">📌이때 <code>@Transient</code>를 붙여주면, <code>이 어노테이션이 붙은 필드는 DB에 반영되지 않음을 나타낼 수 있다</code></p><p id="8e619fb5-8fd4-47b7-acea-cd4925fe0cac" class="">
+</p><pre id="ea7bcef9-6fbd-4573-a55f-240566d184a1" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+}</code></pre><pre id="40b73d2e-a794-4921-81da-5a6cb9e49d3e" class="code"><code>create table user (
+       id bigint not null,
+        active boolean,
+        created_at timestamp,
+        email varchar(255),
+        name varchar(255),
+        updated_at timestamp,
+        primary key (id)
+    )
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.name as name5_1_0_,
+        user0_.updated_at as updated_6_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.name as name5_1_,
+        user0_.updated_at as updated_6_1_ 
+    from
+        user user0_</code></pre><p id="f4ed73e5-ceb0-4c73-b05a-a6e47fbf2551" class="">그러면 앞서 확인되었던 testData가 <code>DB 필드에는 전혀 반영이 되지 않는 것(DDL, DML에 모두 반영x</code>▶️<code> 영속성x)을 확인해볼 수 있다</code> 그리고 이러면서 <code>해당 엔티티와 생명주기를 같이하게 된다</code></p><p id="d9dba336-2420-4aa7-add5-b72d7de47bde" class="">
+</p><h2 id="0670721e-dd44-4629-80fc-bb3404205ec2" class="">🌟 06. Enum에 대한 처리</h2><p id="db6f4bbb-f8f7-4326-897d-ff265e434dc2" class="">먼저 아래와 같이 성별에 대한 enum을 만들어보자</p><pre id="7a87e032-ac99-4436-a3de-1ce703e78520" class="code"><code>package com.example.jpa_entity.domain;
+
+public enum Gender {
+    MALE,
+    FEMALE
+}</code></pre><p id="329166cd-fcbd-4e65-a69e-f68240815291" class="">
+</p><p id="d80d3ebd-553b-4b38-a78f-47b272c3679e" class="">그리고 이러한 enum을 User의 필드로써 넣어주도록 하자</p><pre id="d65d5753-be84-42cd-a9e7-2531c1dfeaad" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    private Gender gender;
+}</code></pre><p id="9f57962f-870c-4ca2-8e41-45cace726667" class="">그리고 아이디가 1인 user를 찾아서 성별을 MALE로 설정하는 update를 실행해주자</p><pre id="5aa902cf-f060-40f4-9891-1ee565281f8e" class="code"><code>@Test
+    public void enumTest(){
+        User user=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        user.setGender(Gender.MALE);
+        userRepository.save(user);//update
+
+        userRepository.findAll().forEach(System.out::println);
+
+    }</code></pre><p id="c0acb152-3e5e-4c41-beaf-051a1b3502b5" class="">그러면 아래처럼  아이디가 1인 사용자만 gender값으로 MALE이 들어간 것을 확인해볼 수 있다</p><pre id="401ea462-a0a9-463c-9c4e-ef3940a05b2a" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-20 14:04:02.216, updatedAt=2021-08-20 14:04:02.216, active=true, testData=null, gender=MALE)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-20 14:04:02.232, updatedAt=2021-08-20 14:04:02.232, active=true, testData=null, gender=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-20 14:04:02.232, updatedAt=2021-08-20 14:04:02.232, active=false, testData=null, gender=null)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-20 14:04:02.233, updatedAt=2021-08-20 14:04:02.233, active=false, testData=null, gender=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-20 14:04:02.233, updatedAt=2021-08-20 14:04:02.233, active=true, testData=null, gender=null)</code></pre><p id="6a32d220-cad6-4fd6-94ce-277c35f23389" class="">
+</p><p id="e87f2628-24f9-41a5-8b02-13db5b70bec8" class="">enum을 사용한 데이터를 다루는 것을 보다 이해하기 위헤서 아직 배우지는 않았지만 네이티브 쿼리를 이용해보자</p><pre id="e9b577f2-233e-446b-8977-f77b5086e594" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.User;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+import java.util.Map;
+
+public interface UserRepository extends JpaRepository&lt;User,Long&gt; {
+
+    List&lt;User&gt; findTop1ByName(String name);
+    List&lt;User&gt; findTop1ByNameOrderByIdDesc(String name);
+
+    List&lt;User&gt; findFirstByNameOrderByIdDescEmailAsc(String name);
+    List&lt;User&gt; findFirstByName(String name, Sort sort);
+
+    @Query(value=&quot;select * from user limit 1;&quot;, nativeQuery = true)
+    Map&lt;String, Object&gt; findRawRecord();
+}</code></pre><p id="57b30a39-b144-4cc9-984b-112e8d6f50e2" class="">그리고 간단하게 테스트해보자</p><pre id="db4ad58c-0c8a-4a01-ada5-6dd5c0625984" class="code"><code>@Test
+    public void enumTest(){
+        User user=userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        user.setGender(Gender.MALE);
+        userRepository.save(user);//update
+
+        userRepository.findAll().forEach(System.out::println);
+
+        System.out.println(userRepository.findRawRecord().get(&quot;gender&quot;));
+    }</code></pre><pre id="1aac4d88-23c6-4d93-8144-a11f22363318" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-20 14:09:55.478, updatedAt=2021-08-20 14:09:55.478, active=true, testData=null, gender=MALE)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-20 14:09:55.494, updatedAt=2021-08-20 14:09:55.494, active=true, testData=null, gender=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-20 14:09:55.494, updatedAt=2021-08-20 14:09:55.494, active=false, testData=null, gender=null)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-20 14:09:55.495, updatedAt=2021-08-20 14:09:55.495, active=false, testData=null, gender=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-20 14:09:55.495, updatedAt=2021-08-20 14:09:55.495, active=true, testData=null, gender=null)
+Hibernate: 
+    select
+        * 
+    from
+        user limit 1;
+0</code></pre><p id="a36c589e-14c1-4144-85b0-6f764965a86e" class="">
+</p><p id="c206c79e-4963-4323-ba0c-792ef2f7679d" class="">그러면 <code>@Query</code> 안의 내용으로 보아 USER 테이블에서 1개 데이터를 가져오는 내용으로 추측된다</p><p id="c09d3bc8-00c5-49da-ae79-fa078583ba42" class="">그리고 get(&quot;gender&quot;)를 했을 때에 대한 결과를 바라보는 것이 바로 위의 테스트이다</p><p id="781518e0-fcf6-4288-af76-6b60539aaff8" class="">하지만 0이 출력되는 것을 확인해볼 수 있다!</p><p id="0e32fbe8-a739-4e12-b581-54b58df59b62" class="">하지만 enum의 내용을 아래처럼 변경하면 1이 출력되는 것을 확인해볼 수 있다.</p><p id="b89bfb8e-d9d0-4c84-87c8-6ffb7d30cb6e" class="">
+</p><pre id="8866ac3c-f6fb-4a1b-8c63-7cd0e8951495" class="code"><code>package com.example.jpa_entity.domain;
+
+public enum Gender {
+    FEMALE,
+    MALE
+}</code></pre><pre id="079df121-fba0-45b1-90f1-a491702a712a" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-20 14:15:04.59, updatedAt=2021-08-20 14:15:04.59, active=true, testData=null, gender=MALE)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-20 14:15:04.602, updatedAt=2021-08-20 14:15:04.602, active=true, testData=null, gender=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-20 14:15:04.603, updatedAt=2021-08-20 14:15:04.603, active=false, testData=null, gender=null)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-20 14:15:04.603, updatedAt=2021-08-20 14:15:04.603, active=false, testData=null, gender=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-20 14:15:04.604, updatedAt=2021-08-20 14:15:04.604, active=true, testData=null, gender=null)
+Hibernate: 
+    select
+        * 
+    from
+        user limit 1;
+1</code></pre><p id="555c1999-6bb1-48ce-8141-3c66fffa988e" class="">User의 Gender 필드에 <code>@Enumerated</code>를 붙여보자</p><pre id="372180e4-2d3d-4d22-928e-e0484eca0857" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated
+    private Gender gender;
+}</code></pre><p id="ceee4855-d232-439c-b388-eb2c5366f17b" class="">그리고 Enumerated를 잘 보면 Enum의 타입에 대한 기본값이 ORDINAL 즉 서수로 되어 있는 것을 확인해볼 수 있다</p><p id="1f9498f7-7279-4836-9edf-8a6ea352306d" class="">(이외에도 String이 가능)</p><p id="de7b6126-c516-4839-8d7e-e078a20bed4e" class="">
+</p><p id="5d5a4d43-b4c4-403a-82e9-3a3eed835aff" class="">🌟 즉, 첫번째에 위치한 값이 0이고, 그 다음이 1 이런 순서로 매겨져서 DB에 저장되기 때문에 그런것이었다! 이는 테스트로는 확인하기 어렵다(MALE, FEMALE로 출력되기 때문)</p><p id="24ab2d56-1c2e-4bc1-9482-e7d64750c4af" class="">
+</p><p id="6cb7bb01-d310-444e-826e-2bb977771085" class="">하지만 지금 테스트해본 것처럼 저장 순서가 바뀌거나, 혹은 이외의 상황으로 값을 추가하면 잠재적인 버그가 일어날 수 있기 때문에 ORDINAL로 다루는 것은 바람직하지 못하다</p><p id="1b92110d-aae1-4047-be7a-9af8293547f1" class="block-color-red_background">🌟 따라서 반드시 Enum을 필드로 사용하려면 <code>@Enumerated(value=EnumType.String)</code>을 설정하고 사용해주자!!</p><pre id="79765568-276b-456d-ab25-89005ed9d770" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><pre id="4bd77f75-8b9b-47ff-9572-267211fc6409" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-20 14:21:14.97, updatedAt=2021-08-20 14:21:14.97, active=true, testData=null, gender=MALE)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-20 14:21:14.981, updatedAt=2021-08-20 14:21:14.981, active=true, testData=null, gender=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-20 14:21:14.982, updatedAt=2021-08-20 14:21:14.982, active=false, testData=null, gender=null)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-20 14:21:14.983, updatedAt=2021-08-20 14:21:14.983, active=false, testData=null, gender=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-20 14:21:14.983, updatedAt=2021-08-20 14:21:14.983, active=true, testData=null, gender=null)
+Hibernate: 
+    select
+        * 
+    from
+        user limit 1;
+📌MALE📌</code></pre><p id="de1c3a58-a429-450b-9f82-8a39d4401f1d" class="">그러면 더이상 0이나 1로 저장 순서에 따라 바뀌지 않고, MALE로 DB에 저장되었음을 확인해볼 수 있다!</p><p id="7f9f65cd-e786-45b7-a5a5-2e8658f58651" class="">
+</p><p id="5785c95e-aada-4d6b-983f-458979fe4131" class="">🌟 추후 DB 장애나 마이그레이션 시 문제를 방지하기 위해서 Enum 사용에 주의하자!</p><p id="adb0c47b-5151-4db2-8848-db6fb899d2bc" class="">
+</p></div></article></body></html>
