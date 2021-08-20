@@ -235,6 +235,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/InstallGit/%EA%B9%83%20%EC%84%A4%EC%B9%98%ED%95%98%EA%B8%B0.md">
 		윈도우, 우분투에 깃 설치하기
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]VCS의 기본에 대해서 학습하기.html">
+		[GIT]VCS의 기본에 대해서 학습하기
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
