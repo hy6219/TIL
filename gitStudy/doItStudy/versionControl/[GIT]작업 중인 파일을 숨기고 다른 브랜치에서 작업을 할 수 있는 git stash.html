@@ -1,0 +1,818 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[Git] Branch-Stash</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3fcf144e-f2f8-4979-a128-e509863695bd" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">[Git] Branch-Stash</h1></header><div class="page-body"><nav id="51d6d302-2137-4ae6-a2b6-4f638718deec" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#14a3e850-599d-45b4-bc58-20ff616b16b7">00. <code>git checkout -b 브랜치명</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b15fe29e-5ee5-4bc1-af81-0737b7ad54a8">01. stash?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#672ac79d-59ea-4a37-82f9-a8f4aa805165">02. <code>git stash [save]</code> - 내용을 감추고 다른 브랜치로 이동</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d38793a1-c59d-491e-8618-9e52f5d193e4">03. 작업 후 , 숨겨두었던 파일을 복원</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#05fa51b4-d15a-4fd6-89e4-0c72e341e714">04 <code>git stash list</code> - 저장했던 여러 번의 stash 기록을 확인</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#91c21903-a34b-43f4-9340-5ad22782f8f5">05. <code>get reset --hard  HEAD</code> - 가장 최신 상태로 작업트리를 보내기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7ea15397-0cdf-41d0-b7d7-8796086b7d21">06. <code>git stash drop</code> -가장 최신의 stash 를 삭제</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d3e9e8ef-2a14-477a-a627-9c37bf51fd3d">07. 06의 확장- <code>git stash apply; git stash drop;</code>: stash 복원과 drop을 동시에 한 줄에서 실행</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9a4e4edf-14c5-4025-80e5-55d2e1cd8720">08. 06의 확장, 07을 더 편하게! <code>git stash pop</code> -맨 위의 stash를 복원되고 제거까지 !</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b93df672-f2ab-4e01-a037-dbce36e2274b">09. <code>stash</code>는 <code>tracked되고 있는 파일(버전 관리가 되고 있는 파일)에 대해서만</code> 적용가능하다!</a></div></nav><p id="82e813ff-8948-4a74-adf9-6abac7769b3c" class="">
+</p><h2 id="14a3e850-599d-45b4-bc58-20ff616b16b7" class="">00. <code>git checkout -b 브랜치명</code></h2><ul id="0336167b-7169-419f-86b0-eb4b29a5e99d" class="bulleted-list"><li>새로운 브랜치를 만듦과 동시에 그와 함께 새 브랜치로 이동! move move!!</li></ul><pre id="f26f64a9-2d54-498f-a8af-8c25593b66b2" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git checkout -b test
+Switched to a new branch &#x27;test&#x27;
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git branch
+  exp_git_test
+  main
+* test</code></pre><h2 id="b15fe29e-5ee5-4bc1-af81-0737b7ad54a8" class="">01. stash?</h2><p id="75bcc404-19e6-415e-832d-0cdfd99d7359" class="">stash &quot;감추다&quot; &quot;숨겨두다&quot;</p><p id="997b6be4-4945-4dc7-a90d-e3e9af89dde5" class="">브랜치를 이용해서 작업 중에 다른 브랜치로 체크아웃을 해야할 경우 사용!</p><p id="54a72e7f-a22f-4388-87ba-a8b966bf1ff4" class="">(아직 작업할 작업이 있는데 커밋을 할 수는 없지 않은가!)</p><p id="3d2cf389-6103-42e8-8281-2a1de2a48a63" class="">이때 작업중이던 파일을 숨겨두고 다른 브랜치로 체크아웃</p><p id="6df7c9c5-19cb-4f7a-a923-fa6d6f0ed951" class="">
+</p><h2 id="672ac79d-59ea-4a37-82f9-a8f4aa805165" class="">02. <code>git stash [save]</code> - 내용을 감추고 다른 브랜치로 이동</h2><p id="c5509938-0caf-49b1-a3f3-6f92933aad63" class="">main 브랜치에서 stash.txt라는 파일을 만들어 작업하고 커밋까지 해주자</p><p id="cea9bfd3-ed72-423d-93ec-26cb5809993b" class="">
+</p><p id="0282b497-b137-4052-a2b8-42121d2a7f9c" class="">그리고 <code>git checkout -b test</code> 로 test용 브랜치를 만듦과 동시에 해당 브랜치로 체크아웃해주자</p><p id="a45b0a92-aeb4-401e-a5d8-bb8b9a94a788" class="">
+</p><p id="97fce3b5-afeb-4f91-ad07-94d604141675" class="">그리고 stash.txt 파일을 수정해주려 </p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="7b153b84-0a79-4f67-923a-39d02a586c15"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">vim stash.txt</div></figure><p id="11ee5b3c-a46a-460e-98f2-9f2c6f7aed1f" class="">를 실행하고 바로 메인브랜치로 체크아웃하면</p><pre id="ce6dd47e-1e08-4e68-b642-d9499f506e83" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git status
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.
+  (use &quot;git push&quot; to publish your local commits)
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt</code></pre><p id="fde18161-2b8e-49ee-8912-3e6ade984622" class="">커밋을 위한 스테이징이 이루어지지 않았다는 메시지가 뜨면서, 다른 브랜치에 영향을 주는 것을 확인해볼 수 있다</p><p id="b15aecb9-3f42-41a0-924e-31f08364894e" class="">
+</p><p id="c4ff2579-7afb-4b10-97c5-7c3344811a1f" class="">다시 test 브랜치로 체크아웃하고, 이제는 <code>git stash --help</code> 로 stash의 옵션들을 보자</p><p id="fe764f03-2785-45a9-a70e-f2fd708ae513" class="">
+</p><p id="c11df9ca-8807-4142-9ac8-b8df68b11627" class="">많은 옵션들이 있지만 save 옵션을 사용해보자 <code>git stash</code> 로 끝나도 좋다</p><pre id="0ff9a109-6271-4023-8ec8-ad215179ce78" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash save
+warning: LF will be replaced by CRLF in stash.txt.
+The file will have its original line endings in your working directory
+Saved working directory and index state WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+nothing to commit, working tree clean
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git checkout main
+Switched to branch &#x27;main&#x27;
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.
+  (use &quot;git push&quot; to publish your local commits)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git status
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 1 commit.
+  (use &quot;git push&quot; to publish your local commits)
+
+nothing to commit, working tree clean</code></pre><p id="b734023a-9e9c-4908-9683-d8fcbc07a074" class="">그러면 작업 트리의 내용과  인덱스의 작업 중인 상태가 test에 저장되었음을 확인해볼 수 있다</p><p id="30931ecc-d8bb-4dc7-a63a-ba7a678bd1aa" class="">✴️ WIP(Working In Process)  : 작업 중이라는 뜻</p><p id="e9d3512d-1dec-484e-8b95-6745d446922d" class="">
+</p><p id="4ef97118-9ec9-4a38-838c-5fceb51cb4a3" class="">그리고 더이상 Changes not staged for commit이 아닌 nothing to commit의 메시지를 확인해볼 수 있다</p><p id="497cd635-fa41-4e27-9681-2e204f659f9f" class="">즉, stash.txt는 이제 수정했던 내용을 갖고 있지 않은 상태가 된 것이다!</p><p id="dac2e1cf-ab2d-4d24-a007-7ccff9262f7b" class="">
+</p><h2 id="d38793a1-c59d-491e-8618-9e52f5d193e4" class="">03. 작업 후 , 숨겨두었던 파일을 복원</h2><p id="8e5d4018-fdcc-4cc0-8ae0-8f8c49126129" class="">이제 실컷 작업을 하고 다시 test 브랜치로 이동하여 작업중이었던 파일을 복원해서 작업할 필요가 있다</p><p id="01ce8e80-9146-4dea-b168-dd6e062034a1" class="">
+</p><p id="720cf9c1-5391-4c74-9219-4926e5aeb40b" class="">이때에는 <code>git stash apply</code>를 해주자</p><pre id="b84829b6-1933-4ec6-895e-c66803420849" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash apply
+On branch test
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt</code></pre><p id="1d6f631c-0a60-4177-beb9-561584cca9ca" class="">그러면 이전과 동일한 메시지를 확인해볼 수 있다</p><p id="2869cdf6-9113-4316-80d6-df1fe0d35ef5" class="">즉, 이전에 숨겨둔 작업중인 파일이 살아나서, 수정된 상태임이 확인되는 것이다</p><p id="1fdbe54e-d0e4-4151-bb9b-129f93036f65" class="">
+</p><h2 id="05fa51b4-d15a-4fd6-89e4-0c72e341e714" class="">04 <code>git stash list</code> - 저장했던 여러 번의 stash 기록을 확인</h2><p id="e933fc47-5597-4525-9f5c-5de8ac54fb97" class="">
+</p><pre id="a774e81e-0504-461e-a86c-c5c77b326a57" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash</code></pre><p id="33485ca3-478e-4531-b068-e9ba9c63c4ff" class="">
+</p><h2 id="91c21903-a34b-43f4-9340-5ad22782f8f5" class="">05. <code>get reset --hard  HEAD</code> - 가장 최신 상태로 작업트리를 보내기</h2><pre id="c8ae7f15-f814-424c-818b-664f2ec3064d" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git reset --hard HEAD
+HEAD is now at 81afa08 test:branch stash
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+nothing to commit, working tree clean</code></pre><p id="ca9828d3-498d-4630-8b52-c084649d5c92" class="">
+</p><p id="56f94721-a5dc-43ee-9a80-0fd6518c47d1" class="">이는 제거한 것이 아니라 포인터처럼 시점만 움직여준 것이다!</p><pre id="1629ffe5-57f8-4685-afeb-41562c1dd281" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash apply
+On branch test
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt</code></pre><p id="c0bf4730-1703-42a3-bec3-e2004fcb9e25" class="">stash 목록에 여전히 stash가 존재하고, git stash apply로 복원도 잘 되는 것을 확인해볼 수 있다</p><p id="d219a883-661b-4561-b2b7-8c6cc5f08a6a" class="">즉, 포인터처럼 시점/지점을 움직여준 것 뿐이다</p><p id="fbd7f332-46e8-4e5a-af24-38381480ce70" class="">
+</p><p id="54359cab-b3a9-475a-8a40-b8662346355f" class="">🌟 stash를 명시적으로 삭제하지 않는 한 어딘가에 stash 는 존재한다!</p><p id="dff468cd-038e-4747-abe1-14a4c6a60651" class="">
+</p><h2 id="7ea15397-0cdf-41d0-b7d7-8796086b7d21" class="">06. <code>git stash drop</code> -가장 최신의 stash 를 삭제</h2><p id="27faee09-46b8-4860-b5c0-045b3d611ba3" class="">다시 test 브랜치에서 stash2.txt파일을 만들고 스테이징까지만 해주자</p><pre id="508a4b6c-50f4-49bf-aa32-2ddcb78b611e" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ vim stash2.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git add stash2.txt
+warning: LF will be replaced by CRLF in stash2.txt.
+The file will have its original line endings in your working directory</code></pre><p id="66ee71f4-6d3a-479d-a444-6a9dbf6b4790" class="">
+</p><p id="fcbde333-0052-4b79-8e1e-267dd934d190" class="">그리고 stash를 해주자</p><pre id="04e783fd-34ba-4aa3-a78c-87aa9b2b9e42" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash
+Saved working directory and index state WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+nothing to commit, working tree clean</code></pre><p id="2a979cd1-939d-4b59-be40-ecbdaf09f95e" class="">
+</p><p id="7942b217-8b11-44ad-bf0f-e3daade739e6" class="">그리고 <code>git stash list</code>를 확인해보면 2개의 stash 가 존재함을 확인해볼 수 있다</p><p id="5422eeb9-203e-4b67-98ac-fda2a98565e3" class="">그리고 최근에 들어온 stash가 바로 인덱스 0이다!!(보여지는 순서와 들어간 순서를 생각하면 스택구조같다]</p><pre id="277e50e3-fa20-493a-92ca-4160cf6ba6cd" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash
+stash@{1}: WIP on test: 81afa08 test:branch stash</code></pre><p id="5358dd59-59c4-42dd-8de1-0b409270665d" class="">그리고 이 상황에서 <code>git stash apply</code>는 맨 위에 있는 <code>stash[0]에 대해서 처리한다!</code></p><p id="53e7fa00-8efc-438c-a414-2ecb036d3c2b" class="">그런데 <code>stash[0]을 먼저 복원 후 stash[1]을 복원하는 순차적인 작업을 하고 싶다면</code></p><p id="7b3d5ded-a4ad-433d-84dd-1b092cf3876f" class=""><code>git stash drop</code>으로 가장 최근의 stash를 제거하자</p><pre id="2c58e823-4314-4399-b9c4-19fb5ef7c8b6" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash drop
+Dropped refs/stash@{0} (24cc8455b5ac859f3a9db7f261e75d1a8182f343)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash</code></pre><p id="ff31d969-38f2-4a07-8a66-98801bcb0668" class="">그러면 위와 같이 이제는 stash가 1개 뿐임을 확인해볼 수 있다</p><p id="0527e1d9-76af-4825-848d-c3393f4a3bde" class="">(이 과정에서 파일이 삭제될 수 있다)</p><h2 id="d3e9e8ef-2a14-477a-a627-9c37bf51fd3d" class="">07. 06의 확장- <code>git stash apply; git stash drop;</code>: stash 복원과 drop을 동시에 한 줄에서 실행</h2><pre id="b5d04582-ca7a-4c98-943f-e60e5e357989" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash apply; git stash drop;
+On branch test
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        new file:   stash2.txt
+
+Dropped refs/stash@{0} (f49e5f95b6ade63dc3a2109b6009cb6b20760671)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash</code></pre><p id="cdbf796f-0be0-4995-8672-6b6563fc619c" class="">위와 같이 한줄에 apply와 drop을 모두 실행하면 맨 위에 있던 stash는 복원되었지만 여전히 stash로 있었다가 drop으로 삭제되는 것을 확인해볼 수 있다</p><p id="1cee3c3c-2f82-4345-9597-72aa7aef6d1c" class="">즉, stash에는 1개만 남게 되는 것이다</p><p id="9a1a05b4-92b6-4c16-b50a-eeca31175ac3" class="">
+</p><h2 id="9a4e4edf-14c5-4025-80e5-55d2e1cd8720" class="">08. 06의 확장, 07을 더 편하게! <code>git stash pop</code> -맨 위의 stash를 복원되고 제거까지 !</h2><p id="8f1357e5-a729-4412-8494-48d9e5996846" class=""> HEAD 위치로 (최근의 위치로 )이동한 후 , 복원하지 않고 stash2.txt 내용을 변경 후 stash하자</p><p id="6af169f9-95d6-4cce-9205-40c1d7e05765" class="">
+</p><p id="0983f31f-00d4-43b8-83fa-26d3001f196e" class="">그 후에는, stash list를 확인하고 stash pop, stash list를 해봄으로써 pop을 살펴보자</p><pre id="0501665b-0dfd-482e-9788-6cd255d2d64e" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git reset --hard HEAD
+HEAD is now at 81afa08 test:branch stash
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ vim stash2.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash
+Saved working directory and index state WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash pop
+On branch test
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        stash2.txt
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+Dropped refs/stash@{0} (3510c1fc6c88304f3a2c613499758b918b5c3765)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list</code></pre><p id="4241bc1d-111b-424d-9ad7-de15eeaa2afa" class="">그러면 stash 후에는 stash list에서 stash를 확인해볼 수 있었는데</p><p id="d1c2f858-80ef-4f0a-a9bd-a100c0dec9b2" class="">stash pop에서 복원될 때 보이는 메시지와 삭제할 때 보이는 메시지를 모두 확인해볼 수 있었다</p><p id="c7befe3b-c6fb-46ff-a7af-7b0fe788f13f" class="">그 후 stash list를 확인해보니 비어있는 것을 알 수 있었다</p><p id="3e50dfbb-46f0-4c54-9d2e-0ebfddff8bde" class="">
+</p><h2 id="b93df672-f2ab-4e01-a037-dbce36e2274b" class="">09. <code>stash</code>는 <code>tracked되고 있는 파일(버전 관리가 되고 있는 파일)에 대해서만</code> 적용가능하다!</h2><p id="9ceabc98-e218-4493-9357-5c42cf680252" class="">만약 stash3.txt를 만들고, 기존의 stash2.txt는 내용 변경 후 스테이징만 한다고 하자</p><pre id="dba12c01-71ee-4019-8c9f-1eab070e0a0f" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+Changes to be committed:
+  (use &quot;git restore --staged &lt;file&gt;...&quot; to unstage)
+        new file:   stash2.txt
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   stash.txt
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        stash3.txt</code></pre><p id="d40c11ef-d5e3-4f4b-aa72-e65c27a7743e" class="">그러면 stash3.txt가 추적되지 않는다 </p><p id="91ddc2f2-a603-4ff3-a26d-f3fa1238ce2b" class="">이 상태에서 stash 해보자</p><pre id="97da9ece-07c5-4470-a684-4d0c5568cf02" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash
+Saved working directory and index state WIP on test: 81afa08 test:branch stash
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git stash list
+stash@{0}: WIP on test: 81afa08 test:branch stash</code></pre><p id="cfdd9a34-d0a9-4f9a-bd9f-c42246232805" class="">그러면 단 한 개에 대해서만 stash가 되었음을 알 수 있다</p><p id="70b477c2-7993-4cd2-91ba-d9a7da6d9f1f" class="">그러면 그것이 어떤 것일지 궁금해서 git status를 해보면 stash2.txt파일만 stash 됨을 알 수 있다</p><p id="835b1c11-8a19-43e0-9651-8b0c513ecbca" class="">즉, tracked files에 대해서만 stash가 가능한 것이다!</p><pre id="fa001727-82a0-48c5-8a43-2d2ca8a191a4" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (test)
+$ git status
+On branch test
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        stash3.txt</code></pre></div></article></body></html>
