@@ -245,7 +245,7 @@
 		[GIT ERR] Repository not found-해당 레포지토리가 없다거나 그 레포지토리에 대한 깃을 찾을 수 없다고 할 때
 	</a></li>
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]Branch Merge Conflict.html">
-		[Git]Branch Merge Conflict
+		[Git]브랜치 병합 충돌
 	</a></li>
          </ul>
     </li><!--git -->
