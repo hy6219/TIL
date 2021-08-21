@@ -247,6 +247,9 @@
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]Branch Merge Conflict.html">
 		[Git]브랜치 병합 충돌
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]작업 중인 파일을 숨기고 다른 브랜치에서 작업을 할 수 있는 git stash.html">
+		[GIT]작업 중인 파일을 숨기고 다른 브랜치에서 작업을 할 수 있는 git stash
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
