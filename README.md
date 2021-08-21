@@ -241,6 +241,9 @@
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]브랜치란 무엇인가(1).html">
 		[GIT][Git]브랜치란 무엇인가(1)
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGIT%20ERR%5D%20Repository%20not%20found.md">
+		[GIT ERR] Repository not found-해당 레포지토리가 없다거나 그 레포지토리에 대한 깃을 찾을 수 없다고 할 때
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
