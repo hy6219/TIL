@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 iii
+=======
+git
+>>>>>>> exp_git_test
