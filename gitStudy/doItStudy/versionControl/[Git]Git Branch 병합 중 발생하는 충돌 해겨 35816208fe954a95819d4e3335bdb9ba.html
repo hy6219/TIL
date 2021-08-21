@@ -1,0 +1,835 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[Git]Git Branch 병합 중 발생하는 충돌 해결하기</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="35816208-fe95-4a95-819d-4e3335bdb9ba" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">[Git]Git Branch 병합 중 발생하는 충돌 해결하기</h1></header><div class="page-body"><nav id="b51d0a8f-aa85-4b12-8079-d6b9a80b40c3" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#07f6122a-6088-42ac-80b3-e90d48719fbc">00. (Appendix) 강제로 브랜치 삭제하기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cf3ca62d-5377-4805-8d30-b1ec1bcf9575">01. (Merge 충돌이 없는 상황)서로 다른 브랜치에 서로 다른 파일을 만든 경우</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3734d9f3-9a6f-459b-8732-c8352ad2623b">02. (Merge 충돌이 없는 상황) 파일이 같지만, 위치가 다른 경우</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#95163e01-af9e-43ec-ad82-2dcc0055befe">03. (Merge 충돌이 일어날 수 있는 상황) 파일과 위치가 같은 경우[=같은 부분을 수정한 경우!]</a></div></nav><p id="e230a56f-50a8-4622-84f2-9da8a090ce45" class="">
+</p><p id="1fcbc797-08db-4dc9-bd2b-460837504c5d" class="">병합 충돌은 아래의 저번 공부 중 발생했었는데, 정확하게 어떻게 해결해야 좋을지 학습해보자!</p><figure id="1f3de906-d5d7-497f-b837-7cd71ca5f759"><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]%EB%B8%8C%EB%9E%9C%EC%B9%98%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80(1).html#d7b5e1af-9a49-4692-a5e3-31598c5037ec" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">[GIT]Branch를 만들고, 정보를 확인하고, 병합하기 ❤</div><div class="bookmark-description">클라이언트와 회사 내부에 배포될 파일을 분리해서 진행할 필요가 있는 경우와 같은 상황에서 클라이언트와 회사 내부가 각각이 브랜치가 될 수 있다! 즉, 케이스에 따라 버전 관리를 분기해서 진행할 수 있도록 하는 개념이 바로 브랜치다! 다른 VCS의 브랜치 시스템보다 깃의 브랜치가 보다 가볍고 쓸만한 수준까지 끌어올렸다!</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]%EB%B8%8C%EB%9E%9C%EC%B9%98%EB%9E%80%20%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80(1).html#d7b5e1af-9a49-4692-a5e3-31598c5037ec</div></div><img src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%EC%BB%A4%EB%B0%8B%ED%95%9C%20%EB%82%B4%EC%9A%A9%EC%9D%84%20main%20%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0.PNG?raw=true" class="bookmark-image"/></a></figure><p id="0a2c5a5e-d3d6-4ae3-b983-e937dc89961c" class="block-color-orange_background">🌟 브랜치 병합 중 충돌이 일어나는 이유- 파일 내용이 서로 다르기 때문!!</p><p id="b74e2b09-b3db-40ab-b36d-b60a44b807df" class="">
+</p><h2 id="07f6122a-6088-42ac-80b3-e90d48719fbc" class="">00. (Appendix) 강제로 브랜치 삭제하기</h2><p id="d866fd13-c234-4bf8-b289-83d20e789786" class="">▶️ <code>git branch -D 브랜치명</code></p><p id="cf9b366c-5baa-413f-a53a-d0253028a6bb" class="">
+</p><h2 id="cf3ca62d-5377-4805-8d30-b1ec1bcf9575" class="">01. (Merge 충돌이 없는 상황)서로 다른 브랜치에 서로 다른 파일을 만든 경우</h2><p id="fbc19a4a-9869-48aa-b9b5-b3225af5783f" class="">먼저 main 브랜치에 master.txt라는 문서를 하나 만들어두자</p><p id="bdf433e8-1656-4630-903d-4139fea06d03" class="">그리고 스테이징과 커밋까지 진행해주자!!</p><p id="29415ba7-a50b-48dd-b8b5-4b35785d365e" class="">그 후에!! 분기된 브랜치인 exp_git_test로 체크아웃해주자!</p><p id="71d817fa-d260-47a4-b56c-2d0f3f3f24f8" class="">그리고 exp_git_test 브랜치에서는 exp.txt라는 문서를 만들어주자</p><p id="d1f73823-45d5-4b1d-bb34-57eaa01305d3" class="">exp.txt도 커밋까지 진행해주자!</p><pre id="ec1aab6c-2912-4e86-a097-9ff8e06f932e" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git checkout main
+Switched to branch &#x27;main&#x27;
+Your branch is up to date with &#x27;origin/main&#x27;.
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ vim master.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git commit -am &#x27;test:make conflict&#x27;
+On branch main
+Your branch is up to date with &#x27;origin/main&#x27;.
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+        master.txt
+
+nothing added to commit but untracked files present (use &quot;git add&quot; to track)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git add .
+warning: LF will be replaced by CRLF in master.txt.
+The file will have its original line endings in your working directory
+g
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git commit -m &#x27;test:make conflict&#x27;
+[main ad0fc8a] test:make conflict
+ 1 file changed, 1 insertion(+)
+ create mode 100644 master.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git checkout exp_git_test
+Switched to branch &#x27;exp_git_test&#x27;
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ vim exp.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git add .
+warning: LF will be replaced by CRLF in exp.txt.
+The file will have its original line endings in your working directory
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git commit -m &#x27;text:make conflict at exp&#x27;
+[exp_git_test 20e80c9] text:make conflict at exp
+ 1 file changed, 1 insertion(+)
+ create mode 100644 exp.txt</code></pre><p id="860faf4f-d6ab-4bfc-82b2-23a1a549a6a1" class="">
+</p><p id="3d0b697e-c552-42af-b3bb-5110d7b6d9e2" class="">이제 메인 브랜치로 이동하자</p><p id="bdc68260-f654-4998-bfb8-244a3e08c4d5" class="">.</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="fb35bd0f-b8d5-4bc7-a12e-53e72233b2a7"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git checkout main</div></figure><p id="37dff52c-bf15-441d-b05d-2cb6181b583d" class="">그리고 현재 커밋 버전을 확인하기 위해서 git log를 찍어보았다</p><pre id="f6c03eff-663d-42af-815b-0dfa0ab3e634" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git log --branches --decorate --graph
+* commit 20e80c9af725e5f2e33c00797e1c2b7c36e874a1 (exp_git_test)
+| Author: JSJeong &lt;hy6219@naver.com&gt;
+| Date:   Sat Aug 21 20:38:32 2021 +0900
+|
+|     text:make conflict at exp
+|
+| * commit ad0fc8a2095555d8793e35ddafee71200c6e084d (HEAD -&gt; main)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:35:51 2021 +0900
+| |
+| |     test:make conflict
+| |
+| * commit f7cfe5e1903835bdd0d3d8ffaad6e58253ff4bef (origin/main, origin/HEAD)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:45:50 2021 +0900
+| |
+| |     docs:README.md 업데이트
+| |
+| * commit 9283bd58ac77e936d4c5f6e62f48b3deee55f0f4
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:43:28 2021 +0900
+| |
+| |     docs:[GIT ERR]Repository not found</code></pre><p id="1ff26d6a-8977-4ef3-86c1-9dc2485595d9" class="">이전에 올렸던 <code>ad0fc8a</code>, <code>f7cfe5</code>, <code>9283bd</code>  버전에 대해서 각자의 길을 걷고 있는 것을 확인해볼 수 있다</p><p id="cfe8c4e8-7b2f-41b9-bcf9-7403efd6b1b3" class="">
+</p><p id="b80dcd59-7dea-421a-8726-23cb2afbcf12" class="">이제 병합해볼까?(악마의 미소! 😼)</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="aa26adcd-aff1-4381-84e4-12dab080608e"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git merge exp_git_test</div></figure><p id="01ee460c-0552-4270-bb85-698b01e5139c" class="">그러면 두 브랜치가 달랐기 때문에 <code>Merge</code>메시지가 생기는 것을 vim 에디터에서 확인해볼 수 있다!</p><pre id="290dffe4-35aa-4962-9d9a-dd7a9964daad" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git log --branches --decorate --graph
+*   commit 9f31ed04c3a2afc3d578754c383bce6edf34201f (HEAD -&gt; main)
+|\  Merge: ad0fc8a 20e80c9
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:43:36 2021 +0900
+| |
+| |     Merge branch &#x27;exp_git_test&#x27;
+| |
+| * commit 20e80c9af725e5f2e33c00797e1c2b7c36e874a1 (exp_git_test)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:38:32 2021 +0900
+| |
+| |     text:make conflict at exp
+| |
+* | commit ad0fc8a2095555d8793e35ddafee71200c6e084d
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:35:51 2021 +0900
+| |
+| |     test:make conflict
+| |
+* | commit f7cfe5e1903835bdd0d3d8ffaad6e58253ff4bef (origin/main, origin/HEAD)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:45:50 2021 +0900
+| |</code></pre><p id="66e6933a-b28e-4cc4-a790-8b24987bf1e4" class="">그러면 이전의 버전들이 모두병합된 상태의 main 브랜치임을 살펴볼 수 있다</p><p id="915c69c0-bb0b-4406-9cf5-abd5a48e764a" class="">그리고 ls -al을 통해서 exp.txt라는 분기된 브랜치에서 만든 파일도 병합되었음을 확인해볼 수 있다</p><p id="dc2fab86-c118-4927-b368-3258d8e95609" class="">
+</p><p id="0e237088-9a33-4848-94b3-ea29f38d203e" class="">이를 통해서 <code>각기 다른 브랜치에서 각기 다른 파일에 대해서는 merge 시에 충돌이 일어나지 않고 자동 병합</code>됨을 확인해볼 수 있다</p><p id="97be1dbc-25e3-4d72-aaf1-3f946f3ad272" class="">
+</p><h2 id="3734d9f3-9a6f-459b-8732-c8352ad2623b" class="">02. (Merge 충돌이 없는 상황) 파일이 같지만, 위치가 다른 경우</h2><p id="3b20540f-1b92-4d57-b4a9-a281c05234f6" class="">먼저 main브랜치에 다음과 같은 내용으로 common2.txt 파일을 만들고 커밋까지 해주자(TIL위치에)</p><pre id="559814b4-fe66-4760-8b44-687516d4172d" class="code"><code>function a(main){
+}</code></pre><p id="8e72f04e-8dab-4cfd-b954-30a22442ff9a" class="">
+</p><p id="1ee8433b-83d2-4c45-bd6d-2894499ad311" class="">그리고 exp_git_test 브랜치로 체크아웃 후 TIL 하위 디렉토리 중 gitStudy 디렉토리에서 아래와 같이 common2.txt파일을 작성하고 커밋까지 해주자</p><pre id="bd705b06-efbc-452f-a30f-4cd75ae18ba3" class="code"><code>function a(exp){
+}</code></pre><p id="906a6c5e-c1f8-496d-8b85-0596816f94e7" class="">그리고 main 브랜치로 이동 후 merge 를 시도하면 vim 에디터로 메시지를 설정하고 병합되는 것을 살펴볼 수 있다(문제없이)</p><pre id="0a203921-4701-4821-9972-d7710851654b" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL/gitStudy (main)
+$ git merge exp_git_test
+Merge made by the &#x27;recursive&#x27; strategy.
+ gitStudy/common2.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+ create mode 100644 gitStudy/common2.txt</code></pre><p id="a5c2d055-eb56-4245-b357-8487ea357874" class="">
+</p><h2 id="95163e01-af9e-43ec-ad82-2dcc0055befe" class="">03. (Merge 충돌이 일어날 수 있는 상황) 파일과 위치가 같은 경우[=같은 부분을 수정한 경우!]</h2><p id="08766aa5-02ad-4cde-a60e-be3b051094c1" class="">
+</p><p id="bd10960e-fb40-42a3-8955-4c5f13aa128c" class="">main 브랜치와 exp_git_test 브랜치에 TIL 폴더 바로 밑에 common.txt 파일을 만들고, 각기 다른 내용을 작성해준 후, 스테이징 및 커밋을 해주자</p><pre id="b5214f1c-6bcd-4888-99fe-fa9e90040310" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ vim common.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git add .
+warning: LF will be replaced by CRLF in common.txt.
+The file will have its original line endings in your working directory
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git commit -m &#x27;text:make conflict&#x27;
+[main d37d6ee] text:make conflict
+ 1 file changed, 1 insertion(+)
+ create mode 100644 common.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git checkout exp_git_test
+Switched to branch &#x27;exp_git_test&#x27;
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ vim common.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git add .
+warning: LF will be replaced by CRLF in common.txt.
+The file will have its original line endings in your working directory
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git commit -m &#x27;test: exp conflict&#x27;
+[exp_git_test 74f7c00] test: exp conflict
+ 1 file changed, 1 insertion(+)
+ create mode 100644 common.txt</code></pre><p id="a0fbdc54-f4a2-4436-bdf1-00ba482c610d" class="">
+</p><p id="e7eebb68-eb66-429e-a63d-e721b8883b57" class="">그 후에 다시 main 브랜치로 체크아웃하자</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ee3d3729-6f22-4002-8305-1f6ff00a6a24"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git checkout main</div></figure><p id="939b49da-b3b6-4dc6-8c09-9cbf3bd1d241" class="">
+</p><p id="8b41b05c-a08d-447a-93ea-dd33779bf31e" class="">그리고 exp브랜치를 병합해주자</p><pre id="82668fe5-e14b-4aac-b5a1-5113b630f5e4" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git merge exp_git_test
+CONFLICT (add/add): Merge conflict in common.txt
+Auto-merging common.txt
+Automatic merge failed; fix conflicts and then commit the result.</code></pre><p id="445b3422-7409-4ce9-8fa1-14f9873d8b8c" class="">😍 드디어 충돌!!이 일어났다 ❤</p><p id="d8fd7e46-89e3-415b-8d1f-5ca2608efa51" class="">메시지를 잘 살펴보면 &quot;자동으로 common.txt를 병합하려다가 실패했다고 메시지에서 뜬다!</p><p id="99663bab-dc01-4540-b52b-55bb9821cac4" class="">그리고 상태를 확인해보기 위해서 git status 를 입혁하면 아래처렴 <code>main|MERGING</code>이 표시되는 것을 볼 수 있다</p><p id="6b71f7e4-2373-46f7-9c12-ff6dbcd67f50" class="">그리고 양측 모두에서 변경하려고 시도했기 때문에 문제가 생겼다라는 메시지를 확인해볼 수 있다</p><pre id="82d1d769-3cac-4c9a-8773-ca97480e1631" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git status
+On branch main
+Your branch is ahead of &#x27;origin/main&#x27; by 4 commits.
+  (use &quot;git push&quot; to publish your local commits)
+
+You have unmerged paths.
+  (fix conflicts and run &quot;git commit&quot;)
+  (use &quot;git merge --abort&quot; to abort the merge)
+
+Unmerged paths:
+  (use &quot;git add &lt;file&gt;...&quot; to mark resolution)
+        both added:      common.txt
+
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)</code></pre><p id="ba1031e6-53c8-4949-a9a3-9b8f44536b65" class="">
+</p><p id="6f14c46e-55ba-4272-8b37-379fb47b57e5" class="">🌟 이제 vim 에디터를 켜자</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="fb8d7764-63f6-498e-a1d9-e5a687593ca3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">vim common.txt</div></figure><pre id="4911a070-be19-4772-9ef3-2afa59fcd613" class="code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+make conflict
+=======
+On branch origin/exp_git_test
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; exp_git_test</code></pre><p id="b4841fa7-33da-48f7-abda-628c59ebe1cb" class="">그러면 정체불명의 기호들이 보인다 😭</p><p id="72d064f9-b4c6-4846-a150-08fd08894ad4" class="">
+</p><ul id="208a5d1c-d459-400c-b1ee-d866836be8e6" class="bulleted-list"><li>======= : equal 구분자! 이 구분자를 기준으로 HEAD와 브랜치를 확인 가능!</li></ul><ul id="f0dcf05b-59ce-46fa-8a49-9a6a53254fd2" class="bulleted-list"><li><mark class="highlight-orange_background"><strong>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD : 현재 체크아웃 한 브랜치의 수정 사항</strong></mark></li></ul><ul id="d16bd538-ac02-400e-a347-a913d0b5349d" class="bulleted-list"><li><mark class="highlight-orange_background"><strong>&gt;&gt;&gt;&gt;&gt;&gt;&gt; exp_git_test: exp_git_test 브랜치의 수정 사항</strong></mark></li></ul><p id="028ca0a3-75d1-483e-a514-d7a82a2a620f" class="">즉, 깃이 사용자에게 충돌을 해결하라고 위임한 것➕ 충돌이 난 부분을 표시</p><p id="ed0f5f03-0668-45f7-9611-e95d4777c53b" class="">▶️ 자유롭게 수정</p><pre id="746b4bfa-7da4-4930-993e-fb1c16e8d6f3" class="code"><code>make conflict On branch origin/exp_git_test and origin/main</code></pre><p id="5e5ac183-1904-4f8e-b087-b869507434b9" class="">
+</p><p id="f84b07ff-85f4-451a-9751-1c0427bff7fa" class="">그 후 커밋까지 실행해준 후, 로그를 살펴보면 , 충돌이 해결되고 병합된 것을 살펴볼 수 있다</p><pre id="32ca330b-0d14-47cc-8a97-2fc717a894b2" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git add common.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git commit -m &#x27;test: merge conflict solving&#x27;
+[main 7fd6a32] test: merge conflict solving
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git log --branches --decorate --graph
+*   commit 7fd6a327291afc044adc753f0b9d59bf4f43669e (HEAD -&gt; main)
+|\  Merge: d37d6ee 74f7c00
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 21:09:14 2021 +0900
+| |
+| |     test: merge conflict solving
+| |
+| * commit 74f7c0043bc21412c65d070d1d1c193e0a084b4b (exp_git_test)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:51:54 2021 +0900
+| |
+| |     test: exp conflict
+| |
+* | commit d37d6ee91f9c72434dbb13b13b7a14a42114eeff
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:50:41 2021 +0900
+| |
+| |     text:make conflict
+| |
+* | commit 9f31ed04c3a2afc3d578754c383bce6edf34201f
+|\| Merge: ad0fc8a 20e80c9
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 20:43:36 2021 +0900</code></pre></div></article></body></html>
