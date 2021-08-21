@@ -2,4 +2,8 @@
 iii
 =======
 git
+<<<<<<< HEAD
+>>>>>>> exp_git_test
+=======
+merge test
 >>>>>>> exp_git_test
