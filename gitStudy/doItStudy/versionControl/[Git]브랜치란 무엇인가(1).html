@@ -1,0 +1,890 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[GIT]Branch를 만들고, 정보를 확인하고, 병합하기 ❤</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="85996825-b0dd-4fcc-a001-824923a03969" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">[GIT]Branch를 만들고, 정보를 확인하고, 병합하기 ❤</h1></header><div class="page-body"><nav id="694bb37c-c6f0-4bf4-985e-d4a18effcad1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c96858e8-4767-4295-902a-1e9a3ab85a60">01. <code>git branch</code> - 현재 사용중인 브랜치 확인하기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1e483f81-77dd-4c30-a84d-701b5c6d641a">02. <code>git branch 브랜치명</code> - 브랜치명으로 브랜치 생성하기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fd2d5b91-2875-4d15-9444-bcde6975c4e7">03. <code>git checkout 브랜치명</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#baade7a8-90c2-422d-bb68-e5287d90d3a2">04. Branch 정보 확인하기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#88f8f2c2-7faf-405c-be40-07191d05d53b">04-1. 브랜치 간 정보 차이 확인하기 1 <code>git log --branches --decorate</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2b84dce6-93f4-43c7-8c40-2067829ef247">04-2. 브랜치 간 정보 확인하기 2 - <code>git log —branches —decorate —graph</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e173919-16fd-4d58-a731-90da42dcbf9d">04-3. 브랜치 간 정보 확인하기 3 - <code>git log --branches --decorate --graph --oneline</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d0f36e1d-ae2f-4b66-aae5-6a2bb5d1adb6">04-4. 브랜치 간 정보 차이 확인하기 <code>git log 브랜치1..브랜치2</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7b66dfad-9482-4012-ba7e-9b42ac57f1b0">04-5. 브랜치 간 정보 차이 +소스 차이 확인하기 <code>git log -p 브랜치1..브랜치2</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#66951c65-e423-44be-bb45-f8cdb3f66d59">04-6. 브랜치 간 정보+소스 차이 확인하기with diff!- <code>git diff 브랜치1..브랜치2</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#26b10ef9-1417-49a4-9bf4-6a83b406f726">05. Branch 병합</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d7b5e1af-9a49-4692-a5e3-31598c5037ec">05-1. <code>분기한 브랜치 exp_git_test를 메인 브랜치인 main에</code> 병합시키기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#769f3b1a-6ab7-497c-aeba-d87ec89dedb4">05-2. <code>05-1은 분기된 브랜치를 복사해서 main에 넣는것</code>이라면, 이제는 <code>분기된 브랜치와 main브랜치가 완전하게 같게 만들도록</code> 하자</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7a4e8f2c-a83a-4cfb-8171-f98b143019ef">05-3. <code>git branch -d 분기된 브랜치명</code> : 브랜치 삭제</a></div></nav><p id="e4a7b3d9-b03c-487d-ade1-25eabe283f97" class="">
+</p><ul id="4bcbc219-347e-4eec-891d-fc8e8c0f9c30" class="bulleted-list"><li>클라이언트와 회사 내부에 배포될 파일을 분리해서 진행할 필요가 있는 경우와 같은 상황에서 <code>클라이언트</code>와 <code>회사 내부</code>가 각각이 <code>브랜치</code>가 될 수 있다! 즉, <code>케이스에 따라 버전 관리를 분기해서 진행할 수 있도록 하는 개념</code>이 바로 <code>브랜치</code>다!</li></ul><p id="e614871f-708b-4489-86b1-85548a9e2d12" class="">
+</p><ul id="3468c98c-b0e3-4f5a-b89d-8f606ab1efb7" class="bulleted-list"><li>다른 VCS의 브랜치 시스템보다 깃의 브랜치가 보다 가볍고 쓸만한 수준까지 끌어올렸다!</li></ul><p id="dca28421-e45e-4795-844b-8056f2e8c259" class="">
+</p><h2 id="c96858e8-4767-4295-902a-1e9a3ab85a60" class="">01. <code>git branch</code> - 현재 사용중인 브랜치 확인하기</h2><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="c989859a-2cb6-4c23-894e-38448407eccc"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git branch</div></figure><p id="400e6fc2-6a18-4c4f-a1e3-f1257ce5448c" class="">나의 경우에는 origin/main으로 달린 브랜치를 사용중이기 때문에 <code>main</code>이 표시되는 것을 볼 수 있다</p><ul id="fe8e51f0-682d-4805-9650-2e59d817b1bd" class="bulleted-list"><li>원래는 기본 브랜치는 <code>master</code>인데 <code>main</code>으로 표기되기도 한다</li></ul><figure id="9d331705-725d-4afc-b874-8dd06996b01e"><a href="https://dunchi.tistory.com/92" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">둔치의 개발 이야기</div><div class="bookmark-description">얼마전에 사이드프로젝트를 새로 시작하려고 새로운 repository를 생성했는데 뚜둔,,, Default Branch가 main이다. 그래서 내가 뭔가 잘못 설정했나..? 싶었다. * 원래는 master가 기본이었다. Git은 10월부터 새로 만들어지는 repository는 Default Branch를 master에서 main으로 변경하기로 하였다! 이전까지 생성된 repository는 master가 그대로 유지된다 바뀐 사유를 읽어보니,,master라는 명칭에 대한 논란이 있었던거 같다.</div></div><div class="bookmark-href"><img src="https://tistory1.daumcdn.net/tistory/2946823/4e6e08cb69c34f5a9c7c19af3067f97d" class="icon bookmark-icon"/>https://dunchi.tistory.com/92</div></div><img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbZ2yqu%2FbtqKwrAktJ4%2FYctMrC4yIUvZKoqdkSwFm1%2Fimg.png" class="bookmark-image"/></a></figure><p id="46e12356-1673-4989-8fc5-8fe4338c43b0" class="">
+</p><h2 id="1e483f81-77dd-4c30-a84d-701b5c6d641a" class="">02. <code>git branch 브랜치명</code> - 브랜치명으로 브랜치 생성하기</h2><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="abfe865e-4274-4d08-adf7-567cbfe9eea3"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git branch exp_git_test</div></figure><p id="1c3e8e1f-2b27-4ea5-9834-10b65dd2d99d" class="">위의 명령어를 통해서 레포지토리에는 &quot;exp_git_test&quot;라는 이름의 브랜치가 만들어지고, git branch 명령어를 통해서 생성된 브랜치를 확인해볼 수 있다</p><ul id="efa46aae-f9bf-4b33-a3e1-e62a0aef250b" class="bulleted-list"><li>보통, 기능을 추가하면 feature로 시작하고, 실험적인 브랜치면 exp를 붙여서 사용하기도 한다</li></ul><ul id="b0f00f63-88cb-4805-bb11-7c662911c8c8" class="bulleted-list"><li><code>*</code>가 붙은 곳이 지금 있는 브랜치!</li></ul><p id="4fa4d0de-b66a-4881-a26f-13ce2113f726" class="">
+</p><p id="c865be66-692e-4c64-a47e-0c7fd47e1388" class="">
+</p><h2 id="fd2d5b91-2875-4d15-9444-bcde6975c4e7" class="">03. <code>git checkout 브랜치명</code></h2><ul id="9ba36f36-3181-49ad-b554-da37936c9ee8" class="bulleted-list"><li>기존에 사용중이던 브랜치에서 나와서, <code>브랜치명</code> 브랜치로 이동</li></ul><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="6ffb5ca4-3a08-421b-974e-94f0df77070f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git checkout exp_git_test</div></figure><p id="a48367c9-646f-4222-b6f7-6038e120f085" class="">위와 같이 명령어를 실행해보면, 기존의 main 브랜치에서 exp_git_test로 이동된 것을 확인해볼 수 있다</p><p id="e0afcaa5-b980-4c78-8368-a1eb7a2c64ae" class="">🌟 로그를 찍어보면 기존의 브랜치에서 만들었던 로그와 동일한 것을 보아, <code>기존의 브랜치와 생성된 브랜치는 같은 상태</code>임을 알 수 있다!</p><p id="6f9dc59d-b9b5-415c-9725-d16805b0031b" class="">
+</p><p id="15b96fbd-5587-4f3a-8389-9686a79cc6a2" class="">그리고 새로 만든 브랜치에서 f1.txt라는 파일을 새로 만들어 수정 후 , 커밋까지 진행하고,</p><p id="e9f4ae6f-bce0-4488-a306-12a2bbe67e1a" class="">main 브랜치에 돌아오면 아래처럼 버전 값 확인이 안되는 것을 볼 수 있다</p><p id="1781a09e-84ed-4d30-a4fd-27c922090c1b" class="">추가로, 원래 main 브랜치에는 f1.txt가 없었기 때문에 <code>cat f1.txt</code>를 하면, </p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="f663e474-5da2-4150-b219-269e6e63b51d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">$ cat f1.txt
+cat: f1.txt: No such file or directory</div></figure><p id="005e18b9-5689-4d1c-ba6c-4d5268d3fd25" class="">아래와 같이 그런 파일이나 주소는 없다고 뜬다</p><p id="9395e143-bc5c-4193-b89d-939a14dc4c4f" class="">즉,  파일이 어떤 브랜치에 있는지 혹은 같은 파일이더라도 어떤 브랜치에서 작업했는지에 따라서 완전히 달라질 수 있는 것이다!</p><figure id="3f87afd8-6968-44fb-b7a5-e9dbace3b2b0" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%EC%BB%A4%EB%B0%8B%ED%95%9C%20%EB%82%B4%EC%9A%A9%EC%9D%84%20main%20%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0.PNG?raw=true"><img style="width:1344px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%EC%BB%A4%EB%B0%8B%ED%95%9C%20%EB%82%B4%EC%9A%A9%EC%9D%84%20main%20%EB%B8%8C%EB%9E%9C%EC%B9%98%EC%97%90%EC%84%9C%20%ED%99%95%EC%9D%B8%ED%95%98%EA%B8%B0.PNG?raw=true"/></a></figure><p id="7d069780-9d24-496e-930a-ab80ea049f2e" class="">즉, 아래처럼, f2.txt파일을 하나 더 만들고 버전을 생성하기까지 한 채로 main으로 이동하면 디렉토리에서 f1.txt나 f2.txt를 확인할 수가 없는 것이다!</p><figure id="89fd262d-6a48-4208-9e78-6c2b4f7b3464" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20branch%EC%9D%98%20%ED%8A%B9%EC%A7%95.gif?raw=true"><img style="width:1296px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20branch%EC%9D%98%20%ED%8A%B9%EC%A7%95.gif?raw=true"/></a></figure><p id="c0f2d79f-0594-47db-aa28-180d492019a7" class="">
+</p><p id="937a6223-7b27-453f-9d01-8da8ef7b4d93" class="">🌟 이렇게 깃은 <code>저장소를 추가적으로 사용하지 않고 버전관리를 할 수 있게 된다! 브랜치를 통해서!</code></p><p id="ad5b1704-1f68-4317-836f-6f6fa902ac53" class="">
+</p><p id="666621af-9370-4577-a596-b78787171a3b" class="">🌟 다만, 브랜치를 위해서 익혀야 할 것이 많다!</p><p id="e6e6f2ca-2e91-4a90-a6b6-beb42022c74f" class="">
+</p><h2 id="baade7a8-90c2-422d-bb68-e5287d90d3a2" class="">04. Branch 정보 확인하기</h2><h3 id="88f8f2c2-7faf-405c-be40-07191d05d53b" class="">04-1. 브랜치 간 정보 차이 확인하기 1 <code>git log --branches --decorate</code></h3><p id="8a46aaac-feab-40da-b182-3974a98a4014" class="">저장소에 있는 모든 브랜치들의 버전을 폰트 색상을 달리주어 확인할 수 있도록 도와준다</p><figure id="bedb4d8f-609f-4111-b016-2fa7dec61e3e" class="image"><a href="https://github.com/hy6219/TIL/blob/exp_git_test/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate.PNG?raw=true"><img style="width:1392px" src="https://github.com/hy6219/TIL/blob/exp_git_test/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate.PNG?raw=true"/></a></figure><p id="a3b23b32-71ae-486c-91a8-714ffe503f2d" class="">
+</p><p id="03358e8b-93d2-4141-994c-450f4b22ce06" class="">🌟 HEAD는 현재 체크아웃된 브랜치를 바라본다!</p><p id="f715db48-d750-48bc-8b28-6507ed72c989" class="">
+</p><p id="ddb36af9-02a7-43e2-9f22-01d530035eb6" class="">위에서는 현재 exp_git_test 브랜치의 최근 버전에서의 커밋 메시지가 &quot;git log branches&quot;임을 보여주고 있다</p><p id="64a85032-a445-443a-97d8-7a72e4258ff9" class="">
+</p><h3 id="2b84dce6-93f4-43c7-8c40-2067829ef247" class="">04-2. 브랜치 간 정보 확인하기 2 - <code>git log —branches —decorate —graph</code></h3><p id="280a3be9-44c6-4b1b-9f46-44fd82470d16" class="">위의 명령어를 실행해보면 아래처럼 왼쪽에 | 모양의 선들이 생긴 것을 확인해볼 수 있다</p><figure id="b69178e0-702e-4efd-a26b-4f992f1adfa7" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate%20--graph.PNG?raw=true"><img style="width:1392px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate%20--graph.PNG?raw=true"/></a></figure><p id="f092a2c7-75ad-482b-b8cc-2ff5021d7c59" class="">이것은 그 선의 흐름대로 브랜치가 작업을 해왔다는 것을 나타내는 것인데</p><p id="9e06e882-3308-4881-b56f-8670c2e19418" class="">이것으로만 정보를 확인하는 것은 그 이전과 별다른 차이가 없다</p><p id="9b4d71d3-ca18-41ee-bde3-787223cd7e1c" class="">다만, 브랜치가 서로 각자의 길을 걷고 있을 때에는 그 차이가 보여질 수 있다!</p><p id="618aafa7-56b5-4647-b31a-5892668a4102" class="">main에서도 새로운 커밋을 만들어보자</p><p id="34b640b1-dc5a-48da-bb54-84e7500f71ad" class="">✴️ <code>git log</code> 는 현재 체크아웃된 브랜치의 로그만을 보여준다!</p><p id="7bdba5b7-e4c2-447c-9414-0ead95ae849b" class="">먼저 main 브랜치에서 f3.txt라는 파일을 만들고, 커밋한 후 <code>git log --branhes --decorate --graph</code>를 해보자</p><p id="db297bb8-0dcc-4177-b8e0-1593aae5e363" class="">그러면 빨간 글자가 exp_git_test 브랜치의 색이고, 초록색 글자가 main 브랜치의 색인데 이 두 색상을 이용한 선들이 보이는 것을 확인해볼 수 있다</p><figure id="ae95633e-31ca-4fb2-9a7d-a8f665d43205" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EB%B8%8C%EB%9E%9C%EC%B9%98%EA%B0%80%20%EA%B0%81%EC%9E%90%20%EA%B4%80%EB%A6%AC%EB%90%A0%20%EB%95%8C%20git%20log%20--branches%20--decorate%20--graph.gif?raw=true"><img style="width:1392px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EB%B8%8C%EB%9E%9C%EC%B9%98%EA%B0%80%20%EA%B0%81%EC%9E%90%20%EA%B4%80%EB%A6%AC%EB%90%A0%20%EB%95%8C%20git%20log%20--branches%20--decorate%20--graph.gif?raw=true"/></a></figure><p id="1be8ce96-c569-4292-bda9-421d896c0726" class="">그리고 이를 통해서 두 브랜치의 공통의 조상은 바로 아래의 버전임을 확인해볼 수 있다!</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="57b6e3ef-5bd4-49d6-a200-74a78aabf2e6"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">* commit b9c299118dfc70736142b4af4abdfe03653a0802
+| Author: JSJeong &lt;hy6219@naver.com&gt;
+| Date:   Fri Aug 20 20:39:47 2021 +0900</div></figure><p id="66db547b-79f8-4623-8066-5d4b1c0b3a02" class="">
+</p><h3 id="4e173919-16fd-4d58-a731-90da42dcbf9d" class="">04-3. 브랜치 간 정보 확인하기 3 - <code>git log --branches --decorate --graph --oneline</code></h3><figure id="9976486f-2002-4995-8232-9ed1da66afe0" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate%20--graph%20--oneline.PNG?raw=true"><img style="width:1392px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20--branches%20--decorate%20--graph%20--oneline.PNG?raw=true"/></a></figure><p id="ec594794-9cad-43e9-95a1-976bca456156" class="">이 명령어는 —oneline옵션을 주어서 한줄에 커밋메시지와 버전 아이디값을 보여준다!</p><p id="003ac35a-b5e1-4cfd-8201-b0dda30434a8" class="">그리고 어떤 부분에서 분기되고 내용이 달라지는지도 / 표시를 통해 확인해볼 수 있다!</p><p id="ec2bcecb-2982-4665-a35d-fabc289a015a" class="">이를 통해서 훨씬 간결하게 살펴볼 수 있다!</p><p id="a522b0ba-268e-48c8-b922-b511dc1b854c" class="">
+</p><p id="b93b7934-8f7b-4a2d-b161-57906ff10f24" class="">🌟 깃에서 저장소 위치에서 <code>stree</code>를 입력하면 해당 레포지토리에 대해서 GUI로 깃을 살펴볼 수 있는 소스트리가 실행될 수 있다! 이렇게 브랜치간 작업을 GUI에서 보다 시각적으로 확인해볼 수 있지만 CLI에서도 각자만의 가치가 있다고 한다!</p><p id="4d85ea11-1b12-40da-aad1-960b45d11dfe" class="">
+</p><h3 id="d0f36e1d-ae2f-4b66-aae5-6a2bb5d1adb6" class="">04-4. 브랜치 간 정보 차이 확인하기 <code>git log 브랜치1..브랜치2</code></h3><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="71811ab9-3c24-4773-8e45-dcec83881f96"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">$ git log main..exp_git_test</div></figure><p id="aba90d73-cc96-4d29-95f3-6c1d4846a2a1" class="">를 입력해보면</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="58ca613d-3ea2-487c-aee5-4af901c519cb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">commit 11cbd671f973ed34a3436e9a399d9a927d30e77d (origin/exp_git_test, exp_git_test)
+Author: JSJeong &lt;hy6219@naver.com&gt;
+Date:   Sat Aug 21 15:04:15 2021 +0900
+
+    test:git log --branches --decorate
+
+commit 61de8713faa0c1ca9f525e0520d0593e0f310dbe
+Author: JSJeong &lt;hy6219@naver.com&gt;
+Date:   Sat Aug 21 15:00:25 2021 +0900
+
+    git log branches</div></figure><p id="dd9dc064-aa25-45b6-9ce3-e44eedb87a3d" class="">위와 같이 출력되는 것을 확인해볼 수 있는데, 이는 풀어서 설명하면 <code>브랜치1에는 없고</code> <code>브랜치2에만 있는 정보를 확인</code> 한다는 것이다!</p><p id="a89ffa9f-19b7-4094-9d85-284d7692c634" class="">
+</p><p id="2dc80897-b8da-4931-a067-40db6164a7cf" class="">그러면 반대로 <code>git log exp_git_test..main</code> 은 아래처럼 main에서만 있는 정보를 확인하는 것이다! 즉 <code>브랜치1이 집합A, 브랜치2가 집합B라면 B-A</code>의 차집합 개념이라고 보면 되는 것이다!</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="357b30d1-4855-496f-8e0d-c6f288692027"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">commit fdaa2113512b506daef74114cd757ac63cf02498 (HEAD -&gt; main, origin/main, origin/HEAD)
+Merge: b1fe5a6 a17ee32
+Author: JSJeong &lt;hy6219@naver.com&gt;
+Date:   Sat Aug 21 15:41:06 2021 +0900
+
+    git push origin main
+    Merge branch &#x27;main&#x27; of https://github.com/hy6219/TIL
+
+commit b1fe5a664f7d2f98310bfd11492a2a43099c2ca2
+Author: JSJeong &lt;hy6219@naver.com&gt;
+Date:   Sat Aug 21 15:25:01 2021 +0900
+
+    test:git log --branches --decorate --graph (--oneline)
+
+commit 853837bf484f440305531244821f24869c53674b
+Author: JSJeong &lt;hy6219@naver.com&gt;
+Date:   Sat Aug 21 15:13:56 2021 +0900
+
+    test:git log --branches --decorate --graph
+
+commit a17ee32247cda9bb096ff636424bc007a02aec3f
+Merge: 9a47781 ffd7f37</div></figure><p id="97dc8d49-1ac9-4da1-9a2c-4e1a6f25b8cc" class="">
+</p><h3 id="7b66dfad-9482-4012-ba7e-9b42ac57f1b0" class="">04-5. 브랜치 간 정보 차이 +소스 차이 확인하기 <code>git log -p 브랜치1..브랜치2</code></h3><p id="bf16cdaf-601a-4529-abb6-0d146bc08799" class="">
+</p><p id="9976fed3-9427-42dc-a9f7-8706b2c3f671" class="">로그에 대해서 -p 옵션은 이미 아래의 링크에서 확인해본 바 있다! <code>소스 차이</code>!!</p><figure id="0641b4f6-6eb5-425e-a063-b37f6c4e40cf"><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]VCS%EC%9D%98%20%EA%B8%B0%EB%B3%B8%EC%97%90%20%EB%8C%80%ED%95%B4%EC%84%9C%20%ED%95%99%EC%8A%B5%ED%95%98%EA%B8%B0.html#94919a2d-651b-4d09-a4dd-cbb3570ac27d" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">[GIT]버전만들기</div><div class="bookmark-description">git cat-file -p HEAD tree cfda3bf379e4f8dba8717dee55aab78aef7f4daf author Scott Chacon 1301511835 -0700 committer Scott Chacon 1301511835 -0700 initial commit $ git ls-tree -r HEAD 100644 blob a906cb2a4a904a152... README 100644 blob 8f94139338f9404f2... Rakefile 040000 tree 99f1a6d12cb4b6f19... lib</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]VCS%EC%9D%98%20%EA%B8%B0%EB%B3%B8%EC%97%90%20%EB%8C%80%ED%95%B4%EC%84%9C%20%ED%95%99%EC%8A%B5%ED%95%98%EA%B8%B0.html#94919a2d-651b-4d09-a4dd-cbb3570ac27d</div></div><img src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20add%20%ED%9B%84%20git%20status.PNG?raw=true" class="bookmark-image"/></a></figure><p id="9cfeddfa-fbe2-455a-87e0-4c3fe1787f8e" class="">
+</p><figure id="5d3c5b11-a7b2-4d6b-9e04-0c42c668f101" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20-p%20%EB%B8%8C%EB%9E%9C%EC%B9%981..%EB%B8%8C%EB%9E%9C%EC%B9%982.PNG?raw=true"><img style="width:1296px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20log%20-p%20%EB%B8%8C%EB%9E%9C%EC%B9%981..%EB%B8%8C%EB%9E%9C%EC%B9%982.PNG?raw=true"/></a></figure><p id="8033da52-9e79-4af8-adcb-22531130de93" class="">먼저 exp_git_test 브랜치에서 f1.txt의 내용을 수정해주고 커밋까지 진행해준 후,</p><p id="1e251a9f-460e-4a43-88fd-0d1ec90d216c" class=""><code>git log -p main..exp_git_test</code> 를 실행해주었다</p><p id="aa266c87-dbd5-4b36-8d56-a15b77dfac09" class="">그 결과 —-, +++로 차이점이 드러나는데,-가 앞 +가 뒤[버전간 차이에서는 -가 이전버전, +가 지금버전]이므로 main에서는 f1.txt파일이 없었는데 지금 브랜치에서는 해당 파일이 존재하며</p><p id="45e54b69-4e92-4364-b7a7-52025ee1f357" class="">그 내용이 &quot;e&quot;가 추가되었음을 확인해볼 수 있다</p><p id="65bc5acb-17ad-4017-8b34-8621fdd8d3f7" class="">
+</p><h3 id="66951c65-e423-44be-bb45-f8cdb3f66d59" class="">04-6. 브랜치 간 정보+소스 차이 확인하기with diff!- <code>git diff 브랜치1..브랜치2</code></h3><p id="aa3600cb-2d14-4c90-a3da-951ded7d1db2" class="">각 브랜치의 현재 상태들을 비교 가능</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="68eff347-da22-4679-9617-d0e4e0ea1295"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">$ git diff main..exp_git_test</div></figure><p id="0a7dc168-9e56-4def-9e69-a9f392ac17a5" class="">위를 실행해보면 아래처럼 마치 <code>git log -p 브랜치1..브랜치2와 유사한 것을 확인해볼 수있다!</code></p><p id="60fa94c5-da03-4650-a97d-b672848b4158" class="">앞부분이 main, 뒤가 exp_git_test이기 때문에 -가 main이 되는 것이다! 따라서</p><p id="9621ee22-26d2-4ee4-a823-f397f3723d6e" class=""> main에서는 f1.txt파일이 없었는데 지금 브랜치에서는 해당 파일이 존재하며</p><p id="27e1d935-2001-40dc-8194-775cc2b87860" class="">그 내용이 &quot;e&quot;가 추가되었음을 확인해볼 수 있다</p><figure id="36f2524d-6e55-42c1-809f-ea537172b1d4" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff%20%EB%B8%8C%EB%9E%9C%EC%B9%981%20%EB%B8%8C%EB%9E%9C%EC%B9%982.PNG?raw=true"><img style="width:1296px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/git%20diff%20%EB%B8%8C%EB%9E%9C%EC%B9%981%20%EB%B8%8C%EB%9E%9C%EC%B9%982.PNG?raw=true"/></a></figure><p id="8ed70720-b658-4983-9d7d-1a61e9bf0233" class="">
+</p><h2 id="26b10ef9-1417-49a4-9bf4-6a83b406f726" class="">05. Branch 병합</h2><p id="c19ce541-30c5-420b-962c-d9325e905f28" class="">각자 브랜치 작업을 진행하여 히스토리에 기록되던 중, 병합하고자 할 때 생각해볼 부분!</p><p id="1fefe595-d640-4a1a-9ded-2cdc7b541adc" class="">
+</p><h3 id="d7b5e1af-9a49-4692-a5e3-31598c5037ec" class="">05-1. <code>분기한 브랜치 exp_git_test를 메인 브랜치인 main에</code> 병합시키기</h3><p id="9b2a315b-3b91-401b-825a-f16c8805a672" class="">
+</p><ol type="1" id="d3757af6-5696-419e-afc9-92bc66a83fce" class="numbered-list" start="1"><li>main 브랜치로 체크아웃</li></ol><ol type="1" id="cf57793c-476e-41e9-9979-2730a0939995" class="numbered-list" start="2"><li>main 브랜치에서 merge 명령어 사용</li></ol><p id="b20a18d6-ca71-44d5-93ae-591484633f89" class="">
+</p><p id="92917e89-7ad7-42f8-9ea6-bd76163fc73a" class="">먼저 exp_git_test에서 f1.txt 파일의 내용을 수정해주고 커밋까지 해주도록 하자</p><p id="8dce7d88-a4da-42be-867e-063ffaf4b655" class="">그 후 <code>git checkout main</code>을 통해서 메인 브랜치로 이동해주자</p><p id="f3cad7e2-54fb-44cf-8b67-a250d02ffc9f" class="">
+</p><p id="ef61c63e-51d2-4af2-af08-aaec4bec4203" class="">그 후, 아래와 같이 <code>git merge 분기된_브랜치</code> 명령어를 사용해주자</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="ac6c3341-49dd-44fb-9abc-209655343986"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">$ git merge exp_git_test</div></figure><p id="66d3603a-8b84-4f17-a5f1-bfe2f06bdc15" class="">그런데 나의 경우에는 f3.txt파일에 대해서 충돌이 있었는데,</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="40df9bd7-07b4-4de6-9fbc-6ce2232cdda1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Removing gitStudy/doItStudy/readme.md
+CONFLICT (add/add): Merge conflict in f3.txt
+Auto-merging f3.txt
+Automatic merge failed; fix conflicts and then commit the result.</div></figure><p id="1d6999ae-a91d-455a-b3a8-ca7a38228cb6" class=""> 차분하게 안내되는 대로 git add 후 commit까지 적어주면 merge되는 것을 확인해볼 수 있다. 그 후 <code>git log --branches --decorate --graph</code>를 통해서 병합된 것을 다시금 시각적으로 확인해볼 수 있다!</p><pre id="bd92fd41-e72b-475c-84f1-3074d5727a39" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git merge exp_git_test
+Removing gitStudy/doItStudy/readme.md
+CONFLICT (add/add): Merge conflict in f3.txt
+Auto-merging f3.txt
+Automatic merge failed; fix conflicts and then commit the result.
+(중략)
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git merge exp_git_test
+error: Merging is not possible because you have unmerged files.
+hint: Fix them up in the work tree, and then use &#x27;git add/rm &lt;file&gt;&#x27;
+hint: as appropriate to mark resolution and make a commit.
+fatal: Exiting because of an unresolved conflict.
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git add .
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main|MERGING)
+$ git commit -m &#x27;test:git merge&#x27;
+[main 93b78b2] test:git merge
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git log --branches --graph --decorate --oneline
+*   93b78b2 (HEAD -&gt; main) test:git merge
+|\
+| * 3423172 (exp_git_test) merge test pre
+| * 812f1d0 git test
+| * 11cbd67 (origin/exp_git_test) test:git log --branches --decorate
+| * 61de871 git log branches
+* | f3d0ded (origin/main, origin/HEAD) test:git diff branch1 branch2
+* | e5e4274 test:git log -p 브랜치1..브랜치2
+* |   fdaa211 git push origin main Merge branch &#x27;main&#x27; of https://github.com/hy6219/TIL
+|\ \
+| * | a17ee32 Merge pull request #3 from hy6219/exp_git_test
+| |\|
+| | * ffd7f37 git branch
+| | * 2aa6220 create f2.txt
+| | * 4c1e3b5 test git after modify&#x27;
+| | * 57d1ee6 test3
+* | | b1fe5a6 test:git log --branches --decorate --graph (--oneline)
+* | | 853837b test:git log --branches --decorate --graph
+|/ /
+* | 9a47781 git branch
+* | 24d942b git branch
+|/
+:...skipping...
+*   93b78b2 (HEAD -&gt; main) test:git merge
+|\
+| * 3423172 (exp_git_test) merge test pre
+| * 812f1d0 git test
+| * 11cbd67 (origin/exp_git_test) test:git log --branches --decorate
+| * 61de871 git log branches
+* | f3d0ded (origin/main, origin/HEAD) test:git diff branch1 branch2
+* | e5e4274 test:git log -p 브랜치1..브랜치2
+* |   fdaa211 git push origin main Merge branch &#x27;main&#x27; of https://github.com/hy6219/TIL
+|\ \
+| * | a17ee32 Merge pull request #3 from hy6219/exp_git_test
+| |\|
+| | * ffd7f37 git branch
+| | * 2aa6220 create f2.txt
+| | * 4c1e3b5 test git after modify&#x27;
+| | * 57d1ee6 test3
+* | | b1fe5a6 test:git log --branches --decorate --graph (--oneline)
+* | | 853837b test:git log --branches --decorate --graph
+|/ /
+* | 9a47781 git branch
+* | 24d942b git branch
+|/
+* b9c2991 docs:Update README.md
+* c8959a7 docs:깃의 버전관리 공부
+* ae3e338 add all and commit message not in vim editor
+* ee951e7 git commit all option
+* 4a1dfbc test git 210820-2
+* 1b44d33 test git
+* b5bf9f0 test git
+* 8acf082 docs:git status
+* 03d411d docs:References for git, JPA listener
+* 46171a0 docs:Update README.md:210820-1
+* 574f73c docs:JPA 엔티티 공부
+* ad3123a Update README.md-210819-2
+* 83005e8 docs:YAML,JUnit5 특징
+* 110b0f2 JUnit5-SpringBootTest,WebMvcTest, DataJpaTest, JsonTest,RestClientTest
+* 49e9231 Update README.md:210819-1
+* cafa3ad overview about YAML
+* b80c68a 스프링부트-자동설정
+* 5dc3eaf docs:SWEA1926번 두 개의 숫자열
+* 09eeabf 백준 18870번-Arrays.sort, Map구조를 이용
+* 1ad9ecf Update README.md:210818-1
+* 29c2314 docs:퀵정렬 알고리즘 공부
+* 0104145 단위 테스트 중 나타날 수 있는 Mockito 관련 에러
+* ac759cc Update TIL
+* 24ae1a4 Update README.md:210817-1
+* f5bc3f8 [Spring dependencies]보다 유연한 그레이들 설치하기
+* 42e9e3a check gradle build settings in project
+* 58858b1 Update README.md:210816-1
+* b54ab0c merge sort
+* be33ba6 time complexity of merge sort
+* 970919b merge sort algorithm
+* c247d14 Update README.md:210815-4
+* 22c376a 페이징 처리를 위한 쿼리메서드
+* 883f034 Update README.md:210815-3
+* b232238 정렬을 위한 다양한 쿼리메서드 정의 방식 with 코드가독성 측면
+* 407461b Update README.md:210815-2</code></pre><p id="775de2ae-447b-4d73-8825-3fb0095c163e" class="">🌟 만약, 나와 같이 충돌이 있지 않는다면, 병합되면서 vim에디터가 뜨는데, 에디터에서 메시지를 수정하지 않는다면, 자동으로 <code>Merge branch &#x27;분기된 브랜치명&#x27;</code> 이 맨 상단에 보일 것이다(로그 추적시)</p><pre id="6e0199da-227e-4f2d-8964-a911ae645514" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git checkout main
+Switched to branch &#x27;main&#x27;
+Your branch is ahead of &#x27;origin/main&#x27; by 7 commits.
+  (use &quot;git push&quot; to publish your local commits)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git merge exp_git_test
+Merge made by the &#x27;recursive&#x27; strategy.
+ f4.txt | 2 ++
+ 1 file changed, 2 insertions(+)
+ create mode 100644 f4.txt
+$ git log --branches --decorate --graph
+*   commit 9998e7dc8f9144d4f1c763887dc5aea0ed22fcf7 (HEAD -&gt; main)
+|\  Merge: 17b2381 1ace639
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:02:03 2021 +0900
+| |
+| |     Merge branch &#x27;exp_git_test&#x27;
+| |
+| * commit 1ace6395b646923fb6fc03f8e0255785e66b363c (exp_git_test)
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:01:47 2021 +0900
+| |
+| |     test:git merge test
+| |
+* | commit 17b2381859c49278d23f2f333905a3f5809d3667
+|\| Merge: 93b78b2 7172399
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:00:28 2021 +0900
+| |
+| |     merging
+| |
+| * commit 717239987a4e404ad63a6420f7ff799cf768714e
+| | Author: JSJeong &lt;hy6219@naver.com&gt;</code></pre><p id="a0a59416-8111-4eb2-90c0-6471e064b915" class="">그러면 원래 분기전 포인트와 merge 포인트들로 부터 여러개의 부모 지점들이 생기게 된다![이제 main에서는 f1~f4.txt를 모두 갖고, f3.txt를 예로 들면 아래처럼 내용이 병합된 것을 확인해볼 수 있다]</p><pre id="3de87810-311a-4d0f-9fba-f41382d3c299" class="code"><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+iii
+=======
+git
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; exp_git_test
+=======
+merge test
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; exp_git_test</code></pre><p id="b48f12dc-392b-410a-92a3-22d6f6cc8a70" class="">
+</p><h3 id="769f3b1a-6ab7-497c-aeba-d87ec89dedb4" class="">05-2. <code>05-1은 분기된 브랜치를 복사해서 main에 넣는것</code>이라면, 이제는 <code>분기된 브랜치와 main브랜치가 완전하게 같게 만들도록</code> 하자</h3><p id="ec1627ec-b937-46c2-b4a2-40b0a40a4b5d" class="">
+</p><p id="3be47ce8-e685-4989-8853-7395656edb9a" class="">지금 하려는 것이 무슨 말인지 확인해보기 위해서 분기된 브랜치인 exp_git_test 브랜치로 체크아웃해보자</p><p id="b2b4bac9-b4f5-4cb2-a13e-82eb58ab379b" class="">그 후 f3.txt 파일을 확인해보면, 분기된 브랜치에서 작성된 내용만이 포함된 것을 확인해볼 수 있다</p><p id="8c9b9b1f-0fed-4c68-b728-e44e17bb7193" class="">직감이 오는가?? 그렇다! <code>이전</code>에는 <code>a 팀원님, 합본하기 위해서 팀장님께 파일 전달부탁드려요</code> 라는 느낌으로 <code>a 팀원은 그 팀원이 작성한 파일만</code> 갖고 있었다면</p><p id="b7f7715a-8a79-4727-862d-a0cb97f84145" class=""><code>이번</code>에는 <code>a 팀원님, 작업하면서 모든 팀원들과 같은 파일들을 갖고 있도록 합시다</code> 라는 느낌이다!</p><pre id="c2b08f6e-21a8-4265-bb66-2eb185c6ed1c" class="code"><code>$ cat f3.txt
+git
+merge test</code></pre><p id="90e69428-05ef-4a2d-8eb3-1159846cb6df" class="">
+</p><p id="bbf342e8-de91-4a86-95f8-b7c9e59ee439" class="">이런 느낌으로 가보자!</p><p id="51897cda-aa31-4a7f-a63b-214a545d234a" class="">먼저, 분기된 브랜치인 exp_git_test 브랜치로 체크아웃해보자</p><pre id="3403f873-d179-44e9-a613-3538dd451636" class="code"><code>git checkout exp_git_test</code></pre><p id="18ba8632-5728-4ac5-9c79-04c62ec7c0fd" class="">🌟 <code>main을 exp_git_test로</code> 즉, <code>메인브랜치 내용을 분기된 브랜치로 가져오도록</code> 하기 위해서 <code>분기된 브랜치에서 git merge 메인브랜치</code>를 해주자</p><pre id="faa74b0b-c437-4782-a6be-4a8955d9da91" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (exp_git_test)
+$ git merge main</code></pre><pre id="d7fc7243-a48e-4d2e-9f74-20a9ff5bdac1" class="code"><code>$ git log --branches --decorate --graph
+*   commit 9998e7dc8f9144d4f1c763887dc5aea0ed22fcf7 (HEAD -&gt; exp_git_test, main)
+|\  Merge: 17b2381 1ace639
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:02:03 2021 +0900
+| |
+| |     Merge branch &#x27;exp_git_test&#x27;
+| |
+| * commit 1ace6395b646923fb6fc03f8e0255785e66b363c
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:01:47 2021 +0900
+| |
+| |     test:git merge test
+| |
+* | commit 17b2381859c49278d23f2f333905a3f5809d3667
+|\| Merge: 93b78b2 7172399
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 17:00:28 2021 +0900
+| |
+| |     merging
+| |
+| * commit 717239987a4e404ad63a6420f7ff799cf768714e
+| | Author: JSJeong &lt;hy6219@naver.com&gt;
+| | Date:   Sat Aug 21 16:59:49 2021 +0900</code></pre><p id="5229b693-a9b6-471f-86a1-c831e7ab5801" class="">그러면 HEAD, 즉 지금 체크아웃된 브랜치를 가리키는 HEAD가 exp_git_test를 가리키는데, <code>최신의 커밋이 exp_git_test와 main을 동시에 가리키고</code> 있는 것을 확인해볼 수 있다! </p><p id="1f2d883f-a71a-4e0b-8e16-dd10ac45f316" class="">그리고 두번째 라인위에 있는 * 표시를 확인해보았을 때,  해당 버전까지 포함시켜서 두 브랜치는 완전히 같은 상태가 되었다!</p><p id="8450f779-cab2-40f9-9ea2-3f8175e13452" class="">
+</p><h3 id="7a4e8f2c-a83a-4cfb-8171-f98b143019ef" class="">05-3. <code>git branch -d 분기된 브랜치명</code> : 브랜치 삭제</h3><p id="fc895b8b-445f-41b1-adab-6ec94dc28f65" class="">나는 지금 exp_git_test를 계속해서 테스트용으로 사용하기 위해서 새로 exp라는 브랜치를 새로 만들어서 테스트해보겠다!</p><p id="27123087-e26a-425a-bd3e-b0eb6f1c1f5f" class="">
+</p><p id="4f4a18a8-c9f8-446e-a597-bdc6b4284cc1" class="">먼저 main브랜치로 이동하자</p><figure class="block-color-teal_background callout" style="white-space:pre-wrap;display:flex" id="081e3485-496a-4fc4-bf54-c496a921ef56"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">git checkout main</div></figure><p id="2fed7348-bc81-4966-8bbc-59a894e9c35e" class="">그리고 exp라는 브랜치를 만들고 확인하자</p><pre id="3d6e47a1-ee96-4304-933c-81b19b72f97d" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git branch &#x27;exp&#x27;
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git branch
+  exp
+  exp_git_test
+* main</code></pre><p id="cafface6-a9d9-4e26-88a7-4da489732325" class="">
+</p><p id="e2b74192-8dae-4583-a554-6ab2c32643fe" class="">그리고 아래와 같이 명령어를 실행해보고 git branch로 확인해보자</p><pre id="d6b59f32-6621-4a17-a3e8-9fc06847e69c" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git branch -d exp
+Deleted branch exp (was 9998e7d).
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/TIL (main)
+$ git branch
+  exp_git_test
+* main</code></pre><p id="0bb6ab76-485e-41b2-a18a-9837c812ed16" class="">
+</p><p id="79709c4c-2a40-4036-a13b-b330c41c80a5" class="">그러면 만들었던 브랜치가 삭제되었음을 확인해볼 수 있다</p></div></article></body></html>
