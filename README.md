@@ -238,6 +238,9 @@
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]VCS의 기본에 대해서 학습하기.html">
 		[GIT]VCS의 기본에 대해서 학습하기
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]브랜치란 무엇인가(1).html">
+		[GIT][Git]브랜치란 무엇인가(1)
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
