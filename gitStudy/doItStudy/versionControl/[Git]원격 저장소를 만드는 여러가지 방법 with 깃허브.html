@@ -1,0 +1,879 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[Git]원격 저장소를 만드는 방법 With GITHUB!</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="fa333fc7-37d0-42e1-81a4-f0e55e007e90" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📌</span></div><h1 class="page-title">[Git]원격 저장소를 만드는 방법 With GITHUB!</h1></header><div class="page-body"><nav id="f49114d2-f1c1-40a5-8900-7f504843b255" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#553d9d35-6f8a-453a-ae99-701a9d6b7f75">01. 깃허브에 올라와 있는 오픈소스 원격 저장소를 로컬 저장소로 가져와서 소스를 수정하는 방법 <code>git clone 오픈소스의_깃_주소  복제될_로컬_저장소_위치</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3115145d-99d6-4bea-a1eb-a51e3d853cc2">02. 내 계정에서 원격 저장소를 만들고, 로컬 저장소와 연결하기! <code>git remote add origin ~</code> ➕ <code>git push -u origin master/main</code> ▶️ 백업의 의미가 짙음!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#229907c4-995f-4fd2-a976-d3d0b860920f">02-1. 작업 중이던 로컬 저장소를 원격 저장소에 연결하기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#328aecb6-dce2-4227-9f3d-160036124b42">02-2. 원격 저장소 생성 후, 복제해서 로컬 저장소를 만들어서, 로컬 저장소에서 작업 ▶️ 협업에 보다 초점!!</a></div></nav><p id="2e43b4fd-91ce-4db6-b76f-b7597f0b21b7" class="">
+</p><p id="47235e75-f3b0-485e-a04e-b85472ad7d9c" class="">깃허브는 원격 저장소를 제공하고, 오픈 소스의 경우에는 원격 저장소를 무료로 제공한다!</p><p id="0ebd58f4-b373-4ef9-b643-3e10e4f090cf" class="">
+</p><h2 id="553d9d35-6f8a-453a-ae99-701a9d6b7f75" class="">01. 깃허브에 올라와 있는 오픈소스 원격 저장소를 로컬 저장소로 가져와서 소스를 수정하는 방법 <code>git clone 오픈소스의_깃_주소  복제될_로컬_저장소_위치</code></h2><p id="4ef4c73f-024d-4575-b8bb-a2dfac6528a5" class="">
+</p><figure id="6f48f7e7-67c7-4a5d-bc39-4dcdf6fbc3fe"><a href="https://github.com/git/git" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - git/git: Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.</div><div class="bookmark-description">Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements. - GitHub - git/git: Git Source Code Mirror - This is a publish-only repository and all pull requests are ignored. Please follow Documentation/SubmittingPatches procedure for any of your improvements.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/git/git</div></div><img src="https://opengraph.githubassets.com/bc6ee672f0c36ee93ef00e2284f32ab3e51ba689bce624bb3fdd50f2ecea9f6f/git/git" class="bookmark-image"/></a></figure><p id="3fb1b942-67e2-4cb5-8e86-d6f5bdfa0e82" class="">
+</p><p id="8100f94b-f90b-4cde-b1cc-6bec67c65f06" class="">위의 git/git에 들어가자!</p><ul id="589c6dc6-d188-4be2-8394-3d29637a7ee8" class="bulleted-list"><li>fork: 해당 프로젝트를 복제(contributor가 되더라도 수정 가능 but 원본에 영향을 주지 않음)</li></ul><p id="7ed96786-8fa0-45aa-8b0b-a326b15d7f58" class="">
+</p><p id="3099ef7f-7ea2-4dd1-89ef-f429c0fb3e7f" class="">초록색으로 된 code 버튼을 누르고, HTTPS 탭의 &quot;<a href="https://github.com/git/git.git">https://github.com/git/git.git</a>&quot;를 복사하자!</p><p id="de6d3ebc-c906-4f09-9dea-ad7ba8c92216" class="">그리고 깃 배쉬에서 적당한 디렉토리로 이동을 하자!</p><p id="ddf05f37-9802-44d6-9c2e-1681db8f9299" class="">나는 테스트용으로 remote_git_test 폴더를 만들것이다</p><p id="8154144c-e7ef-4d19-970a-3228fcb061f5" class="">그 후 <code>git clone https://github.com/git/git.git gitsrc</code>로 해당 프로젝트를 remote_git_test 내부에 gitsrc라는 폴더를 만듦과 동시에 그 폴더 안에 복제하자![복제+init]</p><pre id="19ccc2cb-e46d-4cd6-bfa3-f41c454cb139" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder
+$ mkdir remote_git_test
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder
+$ cd ./remote_git_test
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test
+$ git clone https://github.com/git/git.git gitsrc
+Cloning into &#x27;gitsrc&#x27;...
+remote: Enumerating objects: 312253, done.
+remote: Counting objects: 100% (714/714), done.
+remote: Compressing objects: 100% (317/317), done.
+remote: Total 312253 (delta 460), reused 524 (delta 397), pack-reused 311539
+Receiving objects: 100% (312253/312253), 169.76 MiB | 22.99 MiB/s, done.
+Resolving deltas: 100% (232970/232970), done.
+Updating files: 100% (3967/3967), done.
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test
+$ ls -al
+total 132
+drwxr-xr-x 1 gs813 197609 0 Aug 22 14:23 ./
+drwxr-xr-x 1 gs813 197609 0 Aug 22 14:22 ../
+drwxr-xr-x 1 gs813 197609 0 Aug 22 14:24 gitsrc/
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test
+$ cd ./gitsrc
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc (master)
+$ git branch
+* master
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc (master)
+$ ls -al
+total 8150
+drwxr-xr-x 1 gs813 197609      0 Aug 22 14:24 ./
+drwxr-xr-x 1 gs813 197609      0 Aug 22 14:23 ../
+-rw-r--r-- 1 gs813 197609    327 Aug 22 14:24 .cirrus.yml
+-rw-r--r-- 1 gs813 197609   5266 Aug 22 14:24 .clang-format
+-rw-r--r-- 1 gs813 197609    304 Aug 22 14:24 .editorconfig
+drwxr-xr-x 1 gs813 197609      0 Aug 22 14:24 .git/
+(생략)</code></pre><p id="46774af6-e4d7-4d2e-b7cf-a925a9dca9eb" class="">그러면 위와 같이 gitsrc라는 폴더가 만들어지고, 그 내부에 해당 프로젝트가 복제되었음을 확인해볼 수 있다</p><p id="1cafb609-0d20-4f61-a94e-1c963d030a82" class="">
+</p><p id="c5d15d22-3e60-4fdd-afdf-8b966fe2cb4d" class="">로그를 찍어볼까?</p><pre id="56315f0b-0c66-4caa-b1f9-4b824ecf4c01" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc (master)
+$ git log --branches --decorate
+commit 225bc32a989d7a22fa6addafd4ce7dcd04675dbf (HEAD -&gt; master, tag: v2.33.0, origin/master, origin/HEAD)
+Author: Junio C Hamano &lt;gitster@pobox.com&gt;
+Date:   Mon Aug 16 12:15:44 2021 -0700
+
+    Git 2.33
+
+    Signed-off-by: Junio C Hamano &lt;gitster@pobox.com&gt;
+
+commit b06a5047eee5132a12752822114abc546462dffb
+Merge: f7cd3c0832 8bcda98da5
+Author: Junio C Hamano &lt;gitster@pobox.com&gt;
+Date:   Mon Aug 16 12:14:35 2021 -0700
+
+    Merge branch &#x27;rs/oidtree-alignment-fix&#x27;
+
+    Codepath to access recently added oidtree data structure had
+    to make unaligned accesses to oids, which has been corrected.
+
+    * rs/oidtree-alignment-fix:
+      oidtree: avoid unaligned access to crit-bit tree</code></pre><p id="6fbef288-a74e-4ef0-89ea-41a7bee2fa3a" class="">그러면 위와 같은 커밋들을 살펴볼 수 있다</p><p id="39d8d78d-9bc6-48c0-98ad-d00e968e035a" class="">🌟 <code>git log --reverse</code> : 로그를 역순으로 출력하여, 오름차순으로 , 즉 옛날부터 확인해볼 수 있음!</p><pre id="1ec97d91-e2f7-4f81-ba9c-4477465a905e" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc (master)
+$ git log --branches --decorate --reverse
+commit e83c5163316f89bfbde7d9ab23ca2e25604af290
+Author: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;
+Date:   Thu Apr 7 15:13:13 2005 -0700
+
+    Initial revision of &quot;git&quot;, the information manager from hell
+
+commit 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
+Author: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;
+Date:   Thu Apr 7 15:16:10 2005 -0700
+
+    Add copyright notices.
+
+    The tool interface sucks (especially &quot;committing&quot; information, which is just
+    me doing everything by hand from the command line), but I think this is in
+    theory actually a viable way of describing the world. So copyright it.
+
+commit e497ea2a9b6c378f01d092c210af20cbee762475
+Author: Linus Torvalds &lt;torvalds@linux-foundation.org&gt;
+Date:   Thu Apr 7 21:03:28 2005 -0700
+
+    Make read-tree actually unpack the whole tree.
+
+    I needed this to make a &quot;sparse&quot; archive conversion from my old</code></pre><p id="8b97a377-a2ae-46cf-8d13-4c467b5a69ea" class="">그러면 깃의 첫 번째 커밋을 확인해볼 수 있는데, 메시지가 재밌다 😸</p><p id="ba31c5ea-5071-4707-bcc9-f6e75428024b" class=""><code>지옥에서 온 정보 매니저인 깃의 초기 버전</code> 이라니 😭😄</p><p id="f545a85b-e5fe-4a02-9445-1e6dc1d0aac4" class="">
+</p><p id="13556cc3-9fa1-49ae-b908-c72602ee2ef0" class="">그리고 첫 번째 커밋의 소스코드를 보고 싶다면 </p><p id="e5b14b83-ccfb-426d-8c04-ff4e892003c9" class=""><code>git checkout e83c5163316f89bfbde7d9ab23ca2e25604af290</code> 를 실행해주면</p><pre id="765df9b3-645b-4e64-a094-6762da9f3ff4" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc (master)
+$ git checkout e83c5163316f89bfbde7d9ab23ca2e25604af290
+Updating files: 100% (3975/3975), done.
+Note: switching to &#x27;e83c5163316f89bfbde7d9ab23ca2e25604af290&#x27;.
+
+You are in &#x27;detached HEAD&#x27; state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c &lt;new-branch-name&gt;
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at e83c516331 Initial revision of &quot;git&quot;, the information manager from hell
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc ((e83c516331...))</code></pre><p id="5351839f-5a97-4048-8c1d-8b2406291f46" class="">위와 같이 master 브랜치가 아닌 e83c516 브랜치로 이동한 것을 확인해볼 수 있다</p><p id="2c51a5d6-4499-44f3-b24e-f3e4ba774702" class="">그리고 로그와 파일 목록을 확인해보니, 로그는 우리가 확인했던 한 개가 존재하고 , 헤더파일과 c 언어로 작성된 파일이 존재하는 것을 확인해볼 수 있다</p><pre id="6565182a-ec30-4ea6-b833-cc0d18d33b83" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc ((e83c516331...))
+$ git log
+commit e83c5163316f89bfbde7d9ab23ca2e25604af290 (HEAD)
+Author: Linus Torvalds &lt;torvalds@ppc970.osdl.org&gt;
+Date:   Thu Apr 7 15:13:13 2005 -0700
+
+    Initial revision of &quot;git&quot;, the information manager from hell
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/remote_git_test/gitsrc ((e83c516331...))
+$ ls -al
+total 145
+drwxr-xr-x 1 gs813 197609    0 Aug 22 14:32 ./
+drwxr-xr-x 1 gs813 197609    0 Aug 22 14:23 ../
+drwxr-xr-x 1 gs813 197609    0 Aug 22 14:32 .git/
+-rw-r--r-- 1 gs813 197609  997 Aug 22 14:32 Makefile
+-rw-r--r-- 1 gs813 197609 8560 Aug 22 14:32 README
+-rw-r--r-- 1 gs813 197609 2577 Aug 22 14:32 cache.h
+-rw-r--r-- 1 gs813 197609  526 Aug 22 14:32 cat-file.c
+-rw-r--r-- 1 gs813 197609 4275 Aug 22 14:32 commit-tree.c
+-rw-r--r-- 1 gs813 197609 1249 Aug 22 14:32 init-db.c
+-rw-r--r-- 1 gs813 197609 5940 Aug 22 14:32 read-cache.c
+-rw-r--r-- 1 gs813 197609 1029 Aug 22 14:32 read-tree.c
+-rw-r--r-- 1 gs813 197609 2115 Aug 22 14:32 show-diff.c
+-rw-r--r-- 1 gs813 197609 5643 Aug 22 14:32 update-cache.c
+-rw-r--r-- 1 gs813 197609 1507 Aug 22 14:32 write-tree.c</code></pre><p id="c879732a-340c-425a-8e6a-9c491d7ede8f" class="">
+</p><h2 id="3115145d-99d6-4bea-a1eb-a51e3d853cc2" class="">02. 내 계정에서 원격 저장소를 만들고, 로컬 저장소와 연결하기! <code>git remote add origin ~</code> ➕ <code>git push -u origin master/main</code> ▶️ 백업의 의미가 짙음!</h2><p id="6b0052cd-8ebe-4a63-bca8-c11a9c763198" class="">
+</p><p id="ca757d9c-3fd8-4f03-9895-504508b8e380" class="">먼저 테스트용으로 깃허브에 들어가서 repositories에서 <code>new (repository)</code>를 누르고, <code>repository name</code>으로 <code>git_remote_test</code> 를 입력 후 접근권한을  <code>public</code>으로 둔 후 <code>Initialize this repository with: Add a README file(프로젝트 설명 파일 생성)</code>을 우선은 체크하지 않도록 하겠다</p><p id="a0435122-1242-4968-a6dd-755c6f57c1b2" class="">그 후 <code>create repository</code>를 해주자</p><ul id="ac98c92d-cf49-4b17-9848-e2e3a8e58104" class="bulleted-list"><li>public : 오픈소스로 만들 때(무료)</li></ul><ul id="2f676565-ad95-41ad-a7a4-98f0548afd84" class="bulleted-list"><li>private : 공개하지 않는 것! (유료인지 무료인지는 잘 모르겠다)</li></ul><p id="edb8f391-4d7b-4d45-9f22-908133a16e8f" class="">
+</p><ul id="9fa65c9c-7991-410e-b296-b9eb1eb70eb7" class="bulleted-list"><li>gitignore: 프로젝트에 원하지 않는 백업파일이나 로그파일, 컴파일된 파일들을 깃에서 제외 설정하는 파일</li></ul><figure id="6929abcd-fda1-426d-a51f-f43fd9d86aad"><a href="https://nesoy.github.io/articles/2017-01/Git-Ignore" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git .gitignore 적용하기</div><div class="bookmark-description">Project에 원하지 않는 Backup File이나 Log File , 혹은 컴파일 된 파일들을 Git에서 제외시킬수 있는 설정 File이다. 적용하는 방법은 어렵지 않다. .gitignore File을 같이 Push하면 된다. 기존에 있던 Project에 .gitignore File이 적용이 안되는 경우에는 git Repository에서 적용해보고 다시 Push해보기 바란다. Local에서는 ignoreFile이 사라지지 않았지만 Remote에 Push가 될때에는 적용되어 올라간 모습을 볼 수 있다.</div></div><div class="bookmark-href"><img src="https://nesoy.github.io/assets/favicon.ico?v=5.1.1" class="icon bookmark-icon"/>https://nesoy.github.io/articles/2017-01/Git-Ignore</div></div><img src="https://nesoy.github.io/assets/logo/git.png" class="bookmark-image"/></a></figure><figure id="cd32a9ce-3fa5-4d97-8b67-b448048a704b"><a href="https://lsjsj92.tistory.com/566" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">이수진의 블로그</div><div class="bookmark-description">이번 포스팅은 .gitignore에 대해서 작성합니다. git을 하다보면 .gitignore가 많이 보이는데요. 이 gitignore을 왜 사용하는지, 사용하는 목적이 무엇인지 그리고 사용하는 방법에 대해서 작성합니다. gitignore를 왜 사용하는가? gitignore 사용하는 이유에 대해서 먼저 .gitignore를 왜 사용하는지에 대해서 정리합니다. 다양한 이유로 github, gitlab 등을 이용할 때 .gitignore을 사용하는데요. 그 이유들은 아래와 같습니다.</div></div><div class="bookmark-href"><img src="https://t1.daumcdn.net/tistory_admin/static/top/favicon_0630.ico" class="icon bookmark-icon"/>https://lsjsj92.tistory.com/566</div></div><img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FU53C4%2FbtqA4zAzYCC%2FZYLYGoFaNPOvEbm53KGCK1%2Fimg.png" class="bookmark-image"/></a></figure><p id="cbed0829-6d9e-46bd-8732-ce4f936b2211" class="">그렇게 원격 저장소를 만들면 아래와 같은 화면이 나타나는데</p><figure id="d5682f07-8818-4aea-b7e7-18a135973eee" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%9B%90%EA%B2%A9%20%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80%20%EB%A1%9C%EC%BB%AC%20%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC%20%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95-%EA%B9%83%ED%97%88%EB%B8%8C.PNG?raw=true"><img style="width:1344px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%9B%90%EA%B2%A9%20%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80%20%EB%A1%9C%EC%BB%AC%20%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC%20%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95-%EA%B9%83%ED%97%88%EB%B8%8C.PNG?raw=true"/></a></figure><p id="daa6768c-9e44-4c90-8444-58459f876fc3" class="">
+</p><p id="b9ae31d1-5e81-4fea-ad79-318762a4d43a" class="">a 부분이 바로 원격저장소 고유의 위치가 되는 것이다</p><p id="220cc206-b005-41e6-b8fc-ba14af4395ce" class="">그리고 밑을 보면 로컬저장소와 원격저장소를 연결하는 방법을 CLI 명령어들로 설명되어 있는데</p><ul id="b45e2569-310a-4220-af5b-a60764b6d53f" class="bulleted-list"><li>상황1 : 원격 저장소 생성 후, 복제해서 로컬 저장소를 만들어서, 로컬 저장소에서 작업(b)</li></ul><ul id="3da00413-435e-40d9-892c-139f46a6f194" class="bulleted-list"><li>상황 2: 작업 중이던 로컬 저장소를 원격 저장소에 올리는 것(c)</li></ul><p id="baa57e1d-29df-4ac6-a5ae-a0a10da53fdd" class="">
+</p><p id="894419f1-7dc9-4533-a9a4-62d9753c9a06" class="">상황 2부터 진행해보자</p><h3 id="229907c4-995f-4fd2-a976-d3d0b860920f" class="">02-1. 작업 중이던 로컬 저장소를 원격 저장소에 연결하기</h3><p id="ce8079ba-fa50-42e7-ac09-c633766fdab3" class="">
+</p><p id="cc7f8402-618e-4fcd-b479-ca608c2f76bd" class="">ⓐ 로컬 저장소를 만들고, 그 저장소에 간단한 작업물 만들기</p><p id="1bacc54f-8ffe-4ca9-894a-4903fcf709ab" class="">hellGit이라는 레포지토리를 만들고, <code>git init</code> 으로 프로젝트를 생성해주자</p><p id="f5300c02-deb4-426f-bdaf-ccaebf0058eb" class="">그리고 hello.txt라는 파일을 간단히 만들고 커밋까지 진행해보자</p><pre id="a0a33418-9b8c-4499-8b8c-b5b37ca213a2" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder
+$ mkdir hellGit
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit
+$ git init
+Initialized empty Git repository in D:/VirtualBox_share_folder/hellGit/.git/</code></pre><p id="75b22c16-e709-4578-8cc3-1d352793a17a" class="">
+</p><pre id="297cd575-9836-43ff-bee7-2f43d796f04c" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ vim hello.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ cat hello.txt
+hello git!
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git add hello.txt
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git commit -m &#x27;test:make local repo&#x27;
+[master (root-commit) e2155a2] test:make local repo
+ 1 file changed, 1 insertion(+)
+ create mode 100644 hello.txt</code></pre><p id="38764330-c119-4b01-b40f-4a3f0504a871" class="">
+</p><p id="98ad5c7e-383b-44be-b8d3-52207769fab4" class="">ⓑ 로컬 저장소 위치에서 <code>git remote add origin 깃허브의_원격저장소_위치</code></p><p id="3a746a01-1ee7-431f-a42f-4f07e7c2c038" class="">익숙하지 않은가? 저번에 origin이 위치의 별명이고, 로컬과 원격저장소를 연결하는 첫 단계였다! 기억이 안난다면 아래로!!~[기존 작업트리에 새로운 원격 저장소(위의 주소 ~.git=origin)를 추가]</p><figure id="535d1876-a476-4490-b9ab-44da47598124"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGit%5DRemote%20Repository%20Overview.md" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TIL/[Git]Remote Repository Overview.md at main · hy6219/TIL</div><div class="bookmark-description">&quot;로컬(지역) 레포지토리&quot;와 대비되는 개념으로, 저장소를 인터넷에 올려서 협업할 때, 저장소와 연결되어 있는 다른 저장소 지역 저장소(로컬 레포지토리)와 연결되어 동기화되는 저장소 ▶️ 프로젝트 규모가 커질수록 더 중요해짐 먼저, 내 컴퓨터에서 폴더 하나를 새로 만들어서 그 위치에서 git init을 해주자 그리고 f1.txt라는 이름의 파일을 하나 만들고 커밋까지 해주자 git init --bare 저장소명</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGit%5DRemote%20Repository%20Overview.md</div></div><img src="https://opengraph.githubassets.com/8dcc77b298d8d76fe2f089dd441b6ef3443bade057f11794085d88a7268eabc5/hy6219/TIL" class="bookmark-image"/></a></figure><p id="b819bf35-d973-4208-807c-ff2fc6d541be" class="">
+</p><pre id="516e6b81-784d-493e-9afb-dbe484d7a8a4" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote add origin https://github.com/hy6219/git_remote_test.git
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote -v
+origin  https://github.com/hy6219/git_remote_test.git (fetch)
+origin  https://github.com/hy6219/git_remote_test.git (push)</code></pre><p id="9318a64e-17f6-48f0-9cbd-e6c1211fec33" class="">그리고 <code>git remote -v</code>를 통해서(저번처럼) 원격 저장소가 추가된 것을 확인해볼 수 있다</p><p id="a87c1ccf-6bb6-4b79-9ecc-2cb360acfc73" class="">
+</p><p id="3967d881-83a0-4b96-8cab-1fec94dc441e" class="">📌 깃허브를 통해서 여러 개의 원격 저장소를 하나의 로컬 저장소 내에 저장할 수 있다!</p><pre id="6faf36b3-bacd-421b-905f-510d0ab4b630" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote add dev https://github.com/hy6219/git_remote_test.git
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote -v
+dev     https://github.com/hy6219/git_remote_test.git (fetch)
+dev     https://github.com/hy6219/git_remote_test.git (push)
+origin  https://github.com/hy6219/git_remote_test.git (fetch)
+origin  https://github.com/hy6219/git_remote_test.git (push)</code></pre><p id="55ed0e35-0322-4f70-972c-f3b5f7e335ce" class="">🌟 <code>origin</code>이라는 원격 저장소는 로컬 저장소와 연결되어 있는 <code>기본적인 원격 저장소</code>로 관용적으로 많이 사용된다!</p><ul id="d175eecf-0b6f-4e87-b6c0-53cca98ba722" class="bulleted-list"><li>필요없는 dev 저장소를 삭제하도록 하자</li></ul><pre id="96f11f98-42b4-47b1-9302-15a7ffc05e33" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote remove dev
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git remote -v
+origin  https://github.com/hy6219/git_remote_test.git (fetch)
+origin  https://github.com/hy6219/git_remote_test.git (push)</code></pre><p id="d5192cf4-aafb-479e-80ce-c31a67c65b56" class="">
+</p><p id="d903c359-87d4-429e-b484-ddd2987d69c7" class="">ⓒ  <code>git push -u origin master</code> : 현재 체크아웃하고 있는 <code>로컬 저장소의 브랜치를 origin에 해당된 원격 저장소</code>에 <code>master라는 이름의 브랜치로 동기화</code></p><ul id="98aaafa0-0adc-4f82-8a06-9a6eb5619e70" class="bulleted-list"><li>git push : 로컬 저장소를 원격 저장소에 끼워 넣는 것(깃은 대부분 로컬 저장소를 기준으로 설명)</li></ul><ul id="de8a15fe-4556-4865-aa69-e4f65ca1ee66" class="bulleted-list"><li>-u 옵션: 로컬 저장소와 원격 저장소를 연결시켜서 그 다음에는 git push 만으로도 자동으로 master 이름으로 업로드 되도록 지원</li></ul><pre id="5d24ab81-feb9-4c1f-99bd-b781893aed07" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git push -u origin master
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 227 bytes | 113.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/hy6219/git_remote_test.git
+ * [new branch]      master -&gt; master
+Branch &#x27;master&#x27; set up to track remote branch &#x27;master&#x27; from &#x27;origin&#x27;.</code></pre><p id="f149d310-e13a-4d03-8778-5c0073b40f26" class="">Username과 비밀번호를 입력하라고 뜨면 입력해주면 된다</p><p id="8bab1a56-cf97-45d6-9f6c-fd998425aa19" class="">(나의 경우에는 뜨지 않았다)</p><p id="7f9f9b87-29ca-4b73-9f9c-983c8f4bf894" class="">그리고 나서 깃허브의 원격 저장소를 새로고침하면 아래처럼 hello.txt가 확인된다!</p><figure id="0c01d9ed-0e09-4f1e-a435-f0abd69c3cc4" class="image"><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%9B%90%EA%B2%A9%20%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80%20%EB%A1%9C%EC%BB%AC%20%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC%20%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95-%EA%B9%83%ED%97%88%EB%B8%8C02.PNG?raw=true"><img style="width:1344px" src="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%EC%9B%90%EA%B2%A9%20%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80%20%EB%A1%9C%EC%BB%AC%20%EC%A0%80%EC%9E%A5%EC%86%8C%EB%A5%BC%20%EC%97%B0%EA%B2%B0%ED%95%98%EB%8A%94%20%EB%B0%A9%EB%B2%95-%EA%B9%83%ED%97%88%EB%B8%8C02.PNG?raw=true"/></a></figure><p id="2027fa42-6a3d-431b-9510-8ba8ebe704a9" class="">이번에는 hello.txt의 내용을 수정해서 업로드해보자</p><pre id="1b30f951-c85c-41e4-81f8-0d72654c6c7b" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ vim hello.txt
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ cat hello.txt
+hello git!
+update content!!
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git add hello.txt
+warning: LF will be replaced by CRLF in hello.txt.
+The file will have its original line endings in your working directory
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git commit -m &#x27;test:modify hello.txt&#x27;
+[master 7e0301f] test:modify hello.txt
+ 1 file changed, 1 insertion(+)
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/hellGit (master)
+$ git push
+Enumerating objects: 5, done.
+Counting objects: 100% (5/5), done.
+Writing objects: 100% (3/3), 277 bytes | 138.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/hy6219/git_remote_test.git
+   f2acfc3..7e0301f  master -&gt; master</code></pre><p id="6d114426-f387-480e-8dc1-1835cd9df2f8" class="">🌟 그러면 이전에 <code>git push -u origin master</code> 로 기본 푸쉬 브랜치를 설정해두었기 때문에 <code>git push</code>만 해주어도 master 브랜치로 업로드할 수 있는 것을 확인해볼 수 있다!</p><p id="15adcf9e-f208-45ed-b69d-2e4cece30f08" class="">
+</p><h3 id="328aecb6-dce2-4227-9f3d-160036124b42" class="">02-2. 원격 저장소 생성 후, 복제해서 로컬 저장소를 만들어서, 로컬 저장소에서 작업 ▶️ 협업에 보다 초점!!</h3><p id="cb9b2a5e-6f6b-4d65-b306-db327d52cdfa" class="">
+</p><p id="01a7ac77-a179-4ab2-abe9-a9c5b17613e0" class="">이미 1번에서 배운 것이나 다름없다!!</p><p id="7df262a5-e57b-43a0-932b-85b1e56a92c8" class=""><code>code</code>라는 초록색 버튼을 눌러서 HTTPS 탭의 ~.git으로 끝나는 주소를 복사해서 특정 디렉토리에 복제!</p><p id="8a291078-e172-4fa0-b0c0-7dc545b7632b" class=""><code>git clone .git주소 </code>🌟<strong><code>.</code></strong>🌟은 현재 위치에 복제하겠다는 의미!!</p><pre id="fc5c3983-cd09-490d-89f9-fb67b8419d56" class="code"><code>gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder
+$ mkdir collaboration
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder
+$ cd ./collaboration
+
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/collaboration
+$ git clone https://github.com/hy6219/git_remote_test.git .
+Cloning into &#x27;.&#x27;...
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 6 (delta 0), reused 6 (delta 0), pack-reused 0
+Receiving objects: 100% (6/6), done.
+gs813@DESKTOP-4A8Q9J9 MINGW64 /d/VirtualBox_share_folder/collaboration (master)
+$ git remote -v
+origin  https://github.com/hy6219/git_remote_test.git (fetch)
+origin  https://github.com/hy6219/git_remote_test.git (push)</code></pre><p id="53cc098f-f0bd-416f-b0d7-36d8d90df94a" class="">
+</p></div></article></body></html>
