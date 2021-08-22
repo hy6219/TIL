@@ -250,6 +250,9 @@
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[GIT]작업 중인 파일을 숨기고 다른 브랜치에서 작업을 할 수 있는 git stash.html">
 		[GIT]작업 중인 파일을 숨기고 다른 브랜치에서 작업을 할 수 있는 git stash
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGit%5DRemote%20Repository%20Overview.md">
+		[GIT]로컬 저장소를 인터넷과 연결해서 사용하는 원격 저장소 Overview
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
