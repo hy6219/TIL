@@ -253,6 +253,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGit%5DRemote%20Repository%20Overview.md">
 		[GIT]로컬 저장소를 인터넷과 연결해서 사용하는 원격 저장소 Overview
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]원격 저장소를 만드는 여러가지 방법 with 깃허브.html">
+		[GIT]로컬 저장소를 깃허브의 원격 저장소와 연결해서 사용하는 똑똑한 두 가지 방법(초점이 백업이냐 협업인지)
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
