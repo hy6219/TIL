@@ -256,6 +256,9 @@
 	<li><a href="https://hy6219.github.io/TIL/gitStudy/doItStudy/versionControl/[Git]원격 저장소를 만드는 여러가지 방법 with 깃허브.html">
 		[GIT]로컬 저장소를 깃허브의 원격 저장소와 연결해서 사용하는 똑똑한 두 가지 방법(초점이 백업이냐 협업인지)
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/gitStudy/doItStudy/versionControl/%5BGit%5Dgit%20pull%EB%A1%9C%20%EC%9B%90%EA%B2%A9%EC%A0%80%EC%9E%A5%EC%86%8C%EC%99%80%20%EB%8B%A4%EC%88%98%EC%9D%98%20%EB%A1%9C%EC%BB%AC%20%EC%A0%80%EC%9E%A5%EC%86%8C%20%EA%B0%84%20%EB%8F%99%EA%B8%B0%ED%99%94%ED%95%98%EA%B8%B0.md">
+		[GIT]git pull을 이용한 원격 저장소와 다수의 로컬 저장소 동기화하기
+	</a></li>
          </ul>
     </li><!--git -->
 <!--알고리즘 공부-->
