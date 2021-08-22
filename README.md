@@ -316,6 +316,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Search/Sequential/%5BAlgorithm%5D%EC%88%9C%EC%B0%A8%ED%83%90%EC%83%89.md" target="_blank">
 		[알고리즘]순차 탐색
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Search/Binary/%5BAlgorithm%5D%EC%9D%B4%EC%A7%84%ED%83%90%EC%83%89.md" target="_blank">
+		[알고리즘]이진 탐색
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
