@@ -313,6 +313,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Sort/Advanced/QuickSort/%5BAlgorithm%5D%ED%80%B5%20%EC%A0%95%EB%A0%AC.md" target="_blank">
 		[알고리즘]퀵 정렬
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Search/Sequential/%5BAlgorithm%5D%EC%88%9C%EC%B0%A8%ED%83%90%EC%83%89.md" target="_blank">
+		[알고리즘]순차 탐색
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
