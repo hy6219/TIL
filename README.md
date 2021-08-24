@@ -619,6 +619,9 @@
   	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/[Spring JPA]엔티티의 기본 특징.html" target="_blank">
 		[Spring JPA]엔티티의 기본 특징
 	</a></li>
+  	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/Listener/[Spring]Entity의 리스너 활용 ①.html" target="_blank">
+		[Spring JPA]Entity의 리스너 활용 ①
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
