@@ -1,0 +1,1548 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Entity의 Listener 활용 1편!</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="071c9e15-0877-44b6-8290-c025c7694d4a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">Entity의 Listener 활용 1편!</h1></header><div class="page-body"><nav id="560772dd-ba93-485b-8068-960ef70f0b7d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#08af6c8c-64a6-4ea3-8510-1d0152a2b16a">00. Listener 란 무엇일까?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#849cd801-49e9-4c72-b78e-5a9519eb0e45">01. JPA에서 제공하고 있는 이벤트의 종류에는 무엇이 있을까?</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8cc70829-59fa-452a-900a-a174673dd3ef">02. 엔티티의 <code>insert 메서드 호출</code>을 감지하는 리스너- <code>@PrePersist과 @PostPersist</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0939dfa8-e598-428e-8d3d-c9a0d1ddb2a3">03. 엔티티의 <code>update 메서드 호출</code>을 감지하는 리스너- <code>@PreUpdate와 @PostUpdate</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b41a1d75-b5be-4a56-abcf-72910d2637b8">04. 엔티티의 <code>delete 메서드 호출</code>을 감지하는 리스너- <code>@PreRemove와 @PostRemove</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d2a45a48-e43b-4751-b587-e0bf488d84ea">05. 엔티티의 <code>select 메서드 호출</code>을 감지하는 리스너- <code>@PostLoad</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2fb30a60-2e7e-4ff8-9182-b00d90ba4bef">06. 실제 리스너 사용시 생각해볼 부분 with DRY법칙</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9ade67f3-30a3-4593-b6f5-b903ff27a86f">07. 복습해보기 with Book 엔티티</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cdeb01f9-ea96-45c0-882b-072b17f2c3d7">08. 엔티티 리스너 만들기</a></div></nav><h2 id="08af6c8c-64a6-4ea3-8510-1d0152a2b16a" class="">00. Listener 란 무엇일까?</h2><ul id="223f921f-a7f5-468c-ab00-9bd26a98fc74" class="bulleted-list"><li>엔티티에 대한 <code>이벤트를 관찰하고 있다가 이벤트 발생 시 특정 동작을 진행</code>하는 것!</li></ul><p id="19c7b7cf-ae9c-4019-b85c-f4b0ebc52b95" class="">
+</p><p id="756c59af-4ace-41cd-8417-28a7a677c4cf" class="">기존의 실습 프로젝트를 그대로 확장해서 사용해보자</p><figure id="bd7e2fa5-1d4c-4aeb-a930-dc60a7dc6855"><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/[Spring%20JPA]%EC%97%94%ED%8B%B0%ED%8B%B0%EC%9D%98%20%EA%B8%B0%EB%B3%B8%20%ED%8A%B9%EC%A7%95.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Entity 기본 속성(Annotation)</div><div class="bookmark-description">Copyright (c) 2008, 2019 Oracle and/or its affiliates. All rights reserved. * * This program and the accompanying materials are made available under the * terms of the Eclipse Public License v. 2.0 which is available at * http://www.eclipse.org/legal/epl-2.0, * or the Eclipse Distribution License v.</div></div><div class="bookmark-href">https://hy6219.github.io/TIL/Spring/JPA/Entity/[Spring%20JPA]%EC%97%94%ED%8B%B0%ED%8B%B0%EC%9D%98%20%EA%B8%B0%EB%B3%B8%20%ED%8A%B9%EC%A7%95.html</div></div></a></figure><p id="a5a02c9e-0058-4c0c-9652-08cb6130b44e" class="">
+</p><h2 id="849cd801-49e9-4c72-b78e-5a9519eb0e45" class="">01. JPA에서 제공하고 있는 이벤트의 종류에는 무엇이 있을까?</h2><p id="b70ef771-3fcf-4bd1-b870-9469d183b9f4" class="">
+</p><p id="5e95ab60-2be5-4eb1-9096-83ec2daf65c5" class="">▶️ <code>@PrePersist</code> : <code>insert 메서드가 호출되기 전에 실행되는 메서드</code></p><p id="314e0e8f-dc7e-49e1-88eb-20e781bab38f" class="">▶️ <code>@PreUpdate</code> : <code>merge 메서드 호출 전</code> 에 실행되는 메서드</p><p id="92cac31d-0c7d-4958-b41c-c317803efa50" class="">▶️ <code>@PreRemove</code> : <code>delete 메서드 호출 전</code>에 실행되는 메서드</p><p id="1391b9b0-4bef-4758-8f3c-745773a80b83" class="">▶️ <code>@PostPersist</code> : <code>insert 메서드가 호출된 후 이후에 실행되는 메서드</code></p><p id="972dc5f5-221d-441d-8b34-6c7f0d3660e7" class="">▶️ <code>@PostUpdate</code> : <code>merge메서드 호출 후</code>에 실행되는 메서드</p><p id="3f9f6a10-23a8-4972-9450-b68970e8e785" class="">▶️ <code>@PostRemove</code> : <code>delete 메서드 호출 후</code>에 실행되는 메서드</p><p id="ea36fbce-95b5-4660-8735-f286a42db77c" class="">▶️ <code>@PostLoad</code> : <code>select 조회 호출 직후</code> 실행되는 메서드</p><p id="de0f79fb-13f1-4200-b640-96258aa88c1a" class="">
+</p><h2 id="8cc70829-59fa-452a-900a-a174673dd3ef" class="">02. 엔티티의 <code>insert 메서드 호출</code>을 감지하는 리스너- <code>@PrePersist과 @PostPersist</code></h2><p id="07d75e80-be3c-4b37-b1cd-ae91f3fa4c9d" class="">먼저 아래와 같이 <code>@Prepersist</code>  및 <code>@PostPersist</code>어노테이션을 메서드 위에 달아주자 </p><pre id="7012a17f-279a-49f5-a510-362a9f45d51a" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @PrePersist
+    public void prePersist(){
+        String method=Thread.currentThread().getStackTrace()[0].getMethodName();
+        System.out.println(&quot;PrePersist in method: &quot;+method);
+    }
+    @PostPersist
+    public void postPersist(){
+        String method=Thread.currentThread().getStackTrace()[0].getMethodName();
+        System.out.println(&quot;PostPersist in method: &quot;+method);
+    }
+
+}</code></pre><p id="46fcc513-2aff-4e44-a4c0-a36857adfaa1" class="">그리고 다른 기존의 테스트는 확인하기에 중간에 양이 많아서 확인이 어려울 수 있어서 아래와 같이 insert를 실행하는 짧은 테스트를 구성해보자</p><pre id="7c542457-f23f-4203-804d-24ef705e51d1" class="code"><code>@Test
+    public void insertListener(){
+        User user=new User(&quot;kate&quot;,&quot;myKate@slowcampus.com&quot;);
+        userRepository.save(user);
+    }</code></pre><p id="0debd00a-ea6a-42c7-a3d5-ef7496e887d6" class="">테스트를 진행해보면, 아래처럼, 데이터 삽입 전후에 prePersist와 postPersist 문장이 확인된다</p><figure id="9fb59fe5-41ef-405d-9b4a-bdb33f6d905a" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/Pre_PostPersist.PNG?raw=true"><img src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/Pre_PostPersist.PNG?raw=true"/></a></figure><h2 id="0939dfa8-e598-428e-8d3d-c9a0d1ddb2a3" class="">03. 엔티티의 <code>update 메서드 호출</code>을 감지하는 리스너- <code>@PreUpdate와 @PostUpdate</code></h2><p id="d2dc4e40-e757-4b4d-b2c9-435cfda52480" class="">
+</p><p id="bced08b2-fa9d-4952-b0cc-f03b4f678a51" class="">먼저 User에 PreUpdate와 PostUpdate 어노테이션을 활용한 메서드를 만들어서 test로 간단하게 언제 이벤트를 감지하는지 확인해보자</p><p id="19d94590-2bd9-49b4-b250-72cc4d28df6a" class="">
+</p><pre id="e78fa8c7-c06c-4df4-9b35-181d9d5b9cd0" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @PrePersist
+    public void prePersist(){
+        System.out.println(&quot;PrePersist&quot;);
+    }
+    @PostPersist
+    public void postPersist(){
+        System.out.println(&quot;PostPersist&quot;);
+    }
+    @PreUpdate
+    public void preUpdate(){
+        System.out.println(&quot;PreUpdate&quot;);
+    }
+    @PostUpdate
+    public void postUpdate(){
+        System.out.println(&quot;PostUpdate&quot;);
+    }
+}</code></pre><p id="eb32d432-b3cf-4a00-a41f-481304044f6a" class="">
+</p><pre id="113375c0-1b21-4a0d-bb9d-3bfc10022e3b" class="code"><code>@Test
+    public void updateEvent(){
+        User user=userRepository.findById(3L).orElseThrow(RuntimeException::new);
+        user.setActive(true);
+        user.setGender(FEMALE);
+        userRepository.save(user);
+    }</code></pre><pre id="d8770844-b62c-4dc9-a632-531d47a68075" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+PostLoad
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+PostLoad
+PreUpdate
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+PostUpdate</code></pre><p id="bb28690c-97b9-4707-bd0f-02df50876a8f" class="">위의 테스트 결과를 통해서, PreUpdate와 PostUpdate는 <code>update문 실행 전과 후에 적용됨을 확인해볼 수 있다</code></p><h2 id="b41a1d75-b5be-4a56-abcf-72910d2637b8" class="">04. 엔티티의 <code>delete 메서드 호출</code>을 감지하는 리스너- <code>@PreRemove와 @PostRemove</code></h2><p id="8777e3d5-bf6d-4459-a227-db0b449c38c1" class="">
+</p><p id="eb5bed5a-cc69-4595-8be1-42c82377efdd" class="">이번에는 PreRemove와 PostRemove어노테이션을 붙인 메서드를 통해서 어느 시점에 감지하는지 간단한 출력문을 출력하도록 작성을 추가해보자</p><pre id="1c62791c-5dff-4ab3-b4fb-80c4e92da86d" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @PrePersist
+    public void prePersist(){
+        System.out.println(&quot;PrePersist&quot;);
+    }
+    @PostPersist
+    public void postPersist(){
+        System.out.println(&quot;PostPersist&quot;);
+    }
+    @PreUpdate
+    public void preUpdate(){
+        System.out.println(&quot;PreUpdate&quot;);
+    }
+    @PostUpdate
+    public void postUpdate(){
+        System.out.println(&quot;PostUpdate&quot;);
+    }
+    @PreRemove
+    public void preRemove(){
+        System.out.println(&quot;PreRemove&quot;);
+    }
+    @PostRemove
+    public void postRemove(){
+        System.out.println(&quot;PostRemove&quot;);
+    }
+
+
+}</code></pre><pre id="7255c9ce-855e-4d44-a54d-4b2f2fa9a2b4" class="code"><code>@Test
+    public void deleteEvent(){
+        userRepository.deleteAll();
+        System.out.println(&quot;---&quot;);
+        userRepository.deleteAllInBatch();
+    }</code></pre><figure id="c373032f-621a-480a-bd6b-1e2eadfde269" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/deleteAll-pre_postRemove.PNG?raw=true"><img src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/deleteAll-pre_postRemove.PNG?raw=true"/></a></figure><figure id="9b3b846b-874a-4dab-8e40-d7a7c4b2ee01" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/deleteAllInBatch-pre_postRemove.PNG?raw=true"><img src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/deleteAllInBatch-pre_postRemove.PNG?raw=true"/></a></figure><p id="b7aa9359-4520-4579-8564-b2139750b2e8" class="">delete의 경우에는 특히 전체삭제에서 배치삭제 경우가 존재하기 때문에 다르게 감지될 수 있지 않을까? 라는 생각에 deleteAll과 deleteAllInBatch를 모두 실행해보았다</p><p id="90ca4613-28ce-4568-8c29-5ce499d34556" class="">
+</p><p id="88fb7b4c-7ef9-4ec3-8f26-95a6df597a88" class="">그 결과, <code>deletetAll일 경우, 삭제 전후로 PreRemove와 PostRemove</code>가 붙는 것을 확인해볼 수 있었지만</p><p id="d2039b77-ae9b-4d36-bb1f-09f683e38b97" class=""><code>deleteAllInBatch에서는 삭제 전후로 delete관련 리스너가 붙지 않는 것을 확인해볼 수 있었다</code></p><p id="7a3041c2-9ea5-448e-88fe-812017232497" class="">
+</p><p id="23923c08-0dcd-40d4-8c9c-d244c8f312d1" class="">
+</p><h2 id="d2a45a48-e43b-4751-b587-e0bf488d84ea" class="">05. 엔티티의 <code>select 메서드 호출</code>을 감지하는 리스너- <code>@PostLoad</code></h2><p id="bc4b4cb1-ad94-48e5-9579-466c1e20683a" class="">
+</p><p id="303aa51b-ea83-4c23-bbdb-5e7303e21eb9" class="">이번에는 select에 대한 리스너인 PostLoad 어노테이션을 이용해서 어느 시점에 작동하는지 확인해보자</p><pre id="0706205f-bbb7-4076-a087-1e8309a0c83d" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;,updatable = false)
+    private Date createdAt;
+    @Column(name=&quot;updated_at&quot;,insertable = false)
+    private Date updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @PrePersist
+    public void prePersist(){
+        System.out.println(&quot;PrePersist&quot;);
+    }
+    @PostPersist
+    public void postPersist(){
+        System.out.println(&quot;PostPersist&quot;);
+    }
+    @PreUpdate
+    public void preUpdate(){
+        System.out.println(&quot;PreUpdate&quot;);
+    }
+    @PostUpdate
+    public void postUpdate(){
+        System.out.println(&quot;PostUpdate&quot;);
+    }
+    @PreRemove
+    public void preRemove(){
+        System.out.println(&quot;PreRemove&quot;);
+    }
+    @PostRemove
+    public void postRemove(){
+        System.out.println(&quot;PostRemove&quot;);
+    }
+    @PostLoad
+    public void postLoad(){
+        System.out.println(&quot;PostLoad&quot;);
+    }
+
+}</code></pre><pre id="bf3b47a7-0837-45af-863a-75806035b13e" class="code"><code>@Test
+    public void selectEvent(){
+        User user=userRepository.findById(2L).orElseThrow(RuntimeException::new);
+        System.out.println(user);
+    }</code></pre><figure id="6003e5d1-b77f-43ca-a33b-fa1b72c1b063" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/PostLost-select%20%EC%A1%B0%ED%9A%8C.PNG?raw=true"><img src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/Listener/PostLost-select%20%EC%A1%B0%ED%9A%8C.PNG?raw=true"/></a></figure><p id="e4bd39c4-6a61-40e5-8a5e-b5fed74bf777" class="">위의 그림에서 알 수 있듯이, PostLoad는 <code>select 조회 후에 붙는 어노테이션임을 확인</code>해볼 수 있었다</p><p id="8793f8ba-fa12-4e5b-96f5-348f025feed8" class="">
+</p><p id="b7d7def8-f0d7-4b05-be48-f227539c4968" class="">일반적으로 PrePersist, PreUpdate가 가장 많이 사용된다</p><p id="939acb5e-619f-4b66-a73a-168cc68829b8" class="">그리고 대부분 DB의 레코드에서는 생성일과 수정일을 함께 넣어서 생성하도록 되어 있다</p><p id="42d74f66-2e93-4cca-a018-d2a7f6b98a12" class="">
+</p><h2 id="2fb30a60-2e7e-4ff8-9182-b00d90ba4bef" class="">06. 실제 리스너 사용시 생각해볼 부분 with DRY법칙</h2><p id="e33c68fa-ff39-4f73-95f3-6154665d939d" class="">
+</p><p id="4f0f476c-9f1c-415d-84a4-3d69d7bed9cd" class="">✴️ DRY 법칙 ❓</p><ul id="9ddae7c6-93a9-47c4-8f2c-d5f0f6f7f407" class="bulleted-list"><li>Don&#x27;t Repeat Yourself</li></ul><ul id="35b77146-61b9-467b-bf22-7530714ddb42" class="bulleted-list"><li>개발 과정과 유지보수 비용 절감에 효과적</li></ul><p id="625cbc89-90ef-4ac2-bcf4-7b8ebf8a4c3c" class="">
+</p><p id="0544a130-fd05-422d-9bbf-def7010cb0dc" class="">✴️ KISS 법칙 ❓</p><ul id="a92fc5f5-11a9-409e-91b9-99ba65ce8e80" class="bulleted-list"><li>Keep It Simple, Stupid</li></ul><ul id="90c765ba-ff63-4f68-aeef-0f0cebfd2912" class="bulleted-list"><li>단순하게 작성하자</li></ul><p id="8e2bb8af-fce4-4dd0-a864-18576b5603b2" class="">
+</p><p id="8acb7739-44da-4fb8-b7cc-cdc79718f2d0" class="">✴️ YANGNI 법칙 ❓</p><ul id="9f922581-0fd0-41dc-9a1a-8b22bdc8c62b" class="bulleted-list"><li>You Ain&#x27;t Gonna Need It</li></ul><ul id="d8530702-8654-4bb4-8934-1d728073105f" class="bulleted-list"><li>미리 함수나 코드를 작성하지 말고 지금 필요한 기능만 추가</li></ul><p id="7e425671-9d56-45b6-a59b-ab82cbebf467" class="">
+</p><figure id="ba4d8af7-d2a7-4505-8773-c363013b7ce3"><a href="https://hongjinhyeon.tistory.com/136" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">소프트웨어 개발의 3개의 KEY 원칙 : KISS,YAGNI,DRY</div><div class="bookmark-description">소프트웨어 책을 몇권 읽다보니 자주 언급되고 중복적으로 언급되는 원칙들과 법칙들이 있었습니다. 원칙과 법칙을 간단히 정리해서 2개의 포스트로 나누어서 글을 올립니다. 여기에서는 우선 소프트웨어를 개발시에 필수로 알아야할 3가지의 원칙에 대해서 소개합니다. : 똑같은 일을 두번하지 않는다. 중복되는 함수나 코드는 하나의 공통의 콤포넌트에 넣고 사용한다. 큰 시스템을 여러 조각으로 나누고 서로 참조한다.</div></div><div class="bookmark-href"><img src="https://hongjinhyeon.tistory.com/favicon.ico" class="icon bookmark-icon"/>https://hongjinhyeon.tistory.com/136</div></div><img src="https://img1.daumcdn.net/thumb/R800x0/?scode=mtistory2&amp;fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F216A403A58DD98FE19" class="bookmark-image"/></a></figure><p id="5f909847-e622-43ff-aaba-2daa4d6bab2d" class="">ref : <a href="https://hongjinhyeon.tistory.com/136">https://hongjinhyeon.tistory.com/136</a></p><hr id="75ce3a63-e110-4f48-91b7-b3f0ca3566a0"/><p id="0d68f8fe-8f7e-43d8-8a2c-10c4ae9949d5" class="">예를 들어서, 새로운 사용자를 추가하고, 이메일로 찾도록 해보자</p><pre id="25d3c2dc-d113-45b5-8567-5a142ba190f1" class="code"><code>@Test
+    public void prePersistTest(){
+        User user= new User();
+        user.setEmail(&quot;abc@fastcampus.com&quot;);
+        user.setName(&quot;abc&quot;);
+        user.setCreatedAt(LocalDateTime.now());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);//insert
+
+        System.out.println(userRepository.findByEmail(user.getEmail()));
+    }</code></pre><pre id="cb56718a-1c5c-4ba5-a280-9d61391a4b5f" class="code"><code>PrePersist
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, gender, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?)
+PostPersist
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+PostLoad
+User(id=6, name=abc, email=abc@fastcampus.com, createdAt=2021-08-23T15:07:44.905, updatedAt=null, active=false, testData=null, gender=null)</code></pre><p id="fdc94662-68f1-4a0f-b643-50ebef08405d" class="">그러면 insert 전 후에, 정확히 말하자면, prePersist는 시퀀스를 부르기 전에 부터 시작되고, postPersist는 insert 후에 감지되는 것을 확인해볼 수 있다</p><p id="06198500-120b-47ff-a04c-9249cdbd82f0" class="">그리고, 이메일로 조회한 후에 postLoad가 감지됨을 확인해볼 수 있다</p><p id="0fca3f41-8c8a-494d-8cfc-6a290d20d5f5" class="">
+</p><p id="20bf272d-cf4b-4015-8eb5-8745f92d80a0" class="">하지만, setCreatedAt이나 setUpdatedAt과 같은 setter들을 계속해서 반복해주는 것은 DRY 법칙에 어긋나고, 실수로 지금 언급된 setter 중 하나이상을 넣지 않음으로써 발생가능한 데이터 정확성의 문제가 발생가능하다</p><p id="0d3ab782-1c5a-41cb-85b2-a7299dc7d8f7" class="">
+</p><p id="88dd8186-d2e4-4010-b110-9d0bee0b657c" class="">이를 위해서 엔티티 자체에 prePersist를 사용해서 값을 set하는 방식을 사용해줌이 바람직하다</p><pre id="00aae59e-f8a4-4b15-ab18-8d0f0c1c06ab" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @PrePersist
+    public void prePersist(){
+       this.createdAt=LocalDateTime.now();
+       this.updatedAt=LocalDateTime.now();
+    }
+    @PostPersist
+    public void postPersist(){
+        System.out.println(&quot;PostPersist&quot;);
+    }
+
+}</code></pre><pre id="f50c40f0-d8e5-486d-b90a-408929b377c6" class="code"><code>@Test
+    public void prePersistTest(){
+        User user= new User();
+        user.setEmail(&quot;abc@fastcampus.com&quot;);
+        user.setName(&quot;abc&quot;);
+     
+//        user.setCreatedAt(LocalDateTime.now());
+//        user.setUpdatedAt(LocalDateTime.now());
+
+        userRepository.save(user);//insert
+
+        System.out.println(userRepository.findByEmail(user.getEmail()));
+    }</code></pre><pre id="944e1056-2568-4549-93fe-f435f452c0bb" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, gender, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+User(id=6, name=abc, email=abc@fastcampus.com, createdAt=2021-08-24T14:12:54.864, updatedAt=2021-08-24T14:12:54.864, active=false, testData=null, gender=null)</code></pre><p id="4df74b9e-d3c2-4d86-b08f-d5a8d33ca629" class="">그러면 이제는 굳이 setter로 유사 작업을 반복하지 않고도, 생성일자와 수정일자에 대해서 반영할 수 있음을 확인해볼 수 있다</p><p id="8801bcc8-460c-4c6d-b461-b140d0e3a6f4" class=""> </p><p id="0f30df6e-b3d8-49a5-8c76-6735dc0f1781" class="">비슷한 맥락에서 preUpdate에 대해서도, 반복되는 것을 줄일 수 있다</p><p id="d08b524c-0671-40f7-8869-b7bfe3062971" class="">update는 createdAt과는 맥락이 맞지 않으므로, updatedAt만 수정해주는 것으로 하자</p><pre id="4f573db4-f818-4bae-9fb3-d27bc0c1fb3a" class="code"><code>@PreUpdate
+    public void preUpdate(){
+        this.updatedAt=LocalDateTime.now();
+    }</code></pre><pre id="01d0acc2-2f6f-4e0e-b71d-e1b0c52739d6" class="code"><code>@Test
+    public void updateEvent(){
+        User user=userRepository.findById(3L).orElseThrow(RuntimeException::new);
+        user.setGender(FEMALE);
+        userRepository.save(user);
+        userRepository.findAll().forEach(System.out::println);
+    }</code></pre><pre id="d4d255c2-628e-4fe3-971a-a7d71967fb75" class="code"><code>Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_0_,
+        user0_.active as active2_1_0_,
+        user0_.created_at as created_3_1_0_,
+        user0_.email as email4_1_0_,
+        user0_.gender as gender5_1_0_,
+        user0_.name as name6_1_0_,
+        user0_.updated_at as updated_7_1_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        created_at=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+Hibernate: 
+    select
+        user0_.id as id1_1_,
+        user0_.active as active2_1_,
+        user0_.created_at as created_3_1_,
+        user0_.email as email4_1_,
+        user0_.gender as gender5_1_,
+        user0_.name as name6_1_,
+        user0_.updated_at as updated_7_1_ 
+    from
+        user user0_
+User(id=1, name=martin, email=martin@fastcampus.com, createdAt=2021-08-24T14:16:05.417, updatedAt=2021-08-24T14:16:05.417, active=true, testData=null, gender=null)
+User(id=2, name=dennis, email=dennis@fastcampus.com, createdAt=2021-08-24T14:16:05.437, updatedAt=2021-08-24T14:16:05.437, active=true, testData=null, gender=null)
+User(id=3, name=sophia, email=sophia@slowcampus.com, createdAt=2021-08-24T14:16:05.438, updatedAt=2021-08-24T14:16:05.888, active=false, testData=null, gender=FEMALE)
+User(id=4, name=james, email=james@slowcampus.com, createdAt=2021-08-24T14:16:05.438, updatedAt=2021-08-24T14:16:05.438, active=false, testData=null, gender=null)
+User(id=5, name=martin, email=martin@another.com, createdAt=2021-08-24T14:16:05.439, updatedAt=2021-08-24T14:16:05.439, active=true, testData=null, gender=null)</code></pre><p id="63a95991-aecb-46a0-9ad4-ce326ed6a93d" class="">그러면 알아서 update 전 시점에 이벤트를 감지해서 미리 updatedAt시점을 수정해서 반영하는 것을 확인해볼 수 있다</p><p id="c3fa7108-a825-454d-bd6c-b834881fe7f7" class="">[위에서 user 인스턴스를 출력에 사용하지 않은 이유는 이전에 조회된 값, 즉 변경 전의 값이 담겨져있기 때문이다]</p><p id="2b0a0777-35bd-4da9-be1a-b15d55f2ac8a" class="">
+</p><h2 id="9ade67f3-30a3-4593-b6f5-b903ff27a86f" class="">07. 복습해보기 with Book 엔티티</h2><p id="c47a0019-f6a5-4507-915d-e66a843a1f52" class="">
+</p><p id="3cef3154-8e77-4a1a-861e-25f89944d70d" class="">Book이라는 엔티티를 만들어보자</p><p id="9528071b-33b9-4625-ab71-c014449cb44a" class="">그런데 앞에서 다룬 것처럼 DRY법칙에 의해서 생성일과 수정일에 대해서 리스너가 감지하여 반복을 줄이도록 하자</p><pre id="f63a165b-de44-46d5-ad95-4995ff2a1f25" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+    private LocalDateTime createdAt;
+    //수정일
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void preProcessing(){
+        this.createdAt=LocalDateTime.now();
+        this.updatedAt=LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt=LocalDateTime.now();
+    }
+}</code></pre><p id="390f3fbf-5924-4a10-967a-12eda03a5ed1" class="">
+</p><p id="57c58812-b358-4528-a0ca-29c2fac0b718" class="">엔티티를 만들었다면 다음은 월 만들어야죠? → <code>레포지토리</code>!! dao를 만들어야죠!</p><pre id="6119e487-fc1e-41b7-831f-62b8fb02b9c5" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+
+public interface BookRepository extends JpaRepository&lt;Book,Long&gt; {
+
+}</code></pre><p id="a1d058d8-c421-4ccf-9c2c-c89976706833" class="">그러면 이제 BookRepository에 대한 테스트를 만들어주자</p><pre id="5ae8f0f2-7288-4a6f-8249-c7dc3175c3c4" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.Book;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+class BookRepositoryTest {
+    @Autowired
+    private BookRepository bookRepository;
+
+
+    @Test
+    public void bookTest(){
+        Book book=new Book();
+        book.setName(&quot;jpa 초격차 패키지&quot;);
+        book.setAuthor(&quot;패스트 캠퍼스&quot;);
+
+        bookRepository.save(book);
+
+        bookRepository.findAll().forEach(System.out::println);
+    }
+}</code></pre><p id="4b878245-9548-42c1-9227-d848ca7e7bec" class="">위의 bookTest메서드를 통해 insert후 Book 엔티티에 존재하는 레코드들을 조회해보면 아래와 같이 prePersist가 시작되어 사전에 DEFAULT값처럼 당시 시간이 저장된 것을 확인해볼 수 있다</p><pre id="130df3aa-0f17-453d-a0a6-8c36537f7a4c" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        book
+        (author, created_at, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        book0_.id as id1_1_,
+        book0_.author as author2_1_,
+        book0_.created_at as created_3_1_,
+        book0_.name as name4_1_,
+        book0_.updated_at as updated_5_1_ 
+    from
+        book book0_
+Book(id=6, name=jpa 초격차 패키지, author=패스트 캠퍼스, createdAt=2021-08-24T14:31:56.505, updatedAt=2021-08-24T14:31:56.505)</code></pre><p id="20517e00-71de-464d-96e4-44790bd249ba" class="">
+</p><p id="344149f2-b186-4e33-9299-04d47e6d2c60" class="">▶️ 하지만 이러한 메서드는 각 엔티티마다 반복해서 만들어줘야 할 것이다!</p><p id="f46ec15b-c4a5-4c94-a57d-26be6dbd3a51" class="">이럴때 엔티티 리스너를 이용해서 지정해주는 방법이 있다!</p><p id="48bb2ac2-7199-4bc7-9a67-4e867cfd45df" class="">
+</p><h2 id="cdeb01f9-ea96-45c0-882b-072b17f2c3d7" class="">08. 엔티티 리스너 만들기</h2><p id="5120a4fa-68cf-4636-a586-f60b583c75e1" class="">우선, 도메인 패키지에 &quot;MyEntityListener&quot;클래스를 만들고</p><pre id="8ed4ad64-905a-49da-8a60-8ee22bbf8f8b" class="code"><code>package com.example.jpa_entity.domain;
+
+public class MyEntityListener {
+}</code></pre><p id="956da794-4426-413a-afe9-8ac3426fb901" class="">
+</p><p id="dd9ccf0f-674d-4425-91be-360c57f9d283" class="">Book과 User 엔티티에서 <code>@PrePersist</code>나 <code>@PreUpdate</code> 가 붙여진 메서드를 지우고</p><p id="ccf954d4-c26d-45f2-9b7c-2bab0b572fd0" class="">윗부분에 <code>@EntityListeners(value=MyEntityListener.class)</code> 를 붙여주자</p><pre id="61bd9cf6-f3f1-4954-b90e-3f866bfe9684" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@EntityListeners(value=MyEntityListener.class)
+public class Book {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+    private LocalDateTime createdAt;
+    //수정일
+    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="bb7d2672-d47b-47d5-9d31-55d0521e0ea6" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+@EntityListeners(value=MyEntityListener.class)
+public class User {
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><p id="3621d8ff-ff8d-4cec-9b2d-ac260da38661" class="">
+</p><p id="532148d9-3b4a-4fe4-b456-36d315cc4f65" class="block-color-red_background">그리고 createdAt과 updatedAt에 대한 존재를 MyEntityListener에서도 알고 있어야 하므로, jpa와는 별개로 인터페이스를 두는 것이 좋다(setter, getter 만들기)</p><pre id="d5858372-2cb9-496b-af21-67490fe06833" class="code"><code>package com.example.jpa_entity.domain;
+
+import java.time.LocalDateTime;
+
+public interface Auditable {
+    LocalDateTime getCreatedAt();
+    LocalDateTime getUpdatedAt();
+
+    public void setCreatedAt(LocalDateTime createdAt);
+    public void setUpdatedAt(LocalDateTime updatedAt);
+    
+
+}</code></pre><p id="f8c295d4-77fc-4c0e-8e90-6d52803e6412" class="">그러면 Book과 User가 이 인터페이스를 구현하는 것으로 해줘도 문제가 없을 것이다!</p><pre id="e04b0bc5-4f54-46df-927b-0f476107db11" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@EntityListeners(value=MyEntityListener.class)
+public class Book implements Auditable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+    private LocalDateTime createdAt;
+    //수정일
+    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="310b93f1-dd7b-4c01-986c-bc0d11c9abd0" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+@EntityListeners(value=MyEntityListener.class)
+public class User implements Auditable{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><p id="1894c4bb-e450-4301-a80f-4f815be44394" class="">
+</p><p id="b3074008-3db8-4adf-bc19-b4a4f5178ea5" class="">🌟 단, 중요한 점은, 엔티티 내에서는 this로 어떤 엔티티인지 구분이 갔기 때문에 매개변수가 필요없었다! 다만, 이렇게 엔티티 외에서 리스너로 감지하고자 할 경우에는 엔티티 객체를 감지해야 하는데, 어떤 타입인지 분간할 수 없으므로 파라미터의 타입이 Object로 강제되어, 파라미터 사용에 대해서 강제성이 붙는다</p><p id="3425e8ba-379c-4992-b5f5-d3bdad17f226" class="">
+</p><p id="6159032e-b1db-4e63-8305-b412d098a330" class="">그 점을 고려하면 아래와 같이 insert전과 update 전에 이벤트를 감지하여 날짜를 저장 및 변경할 수 있도록 할 수 있다</p><pre id="d440946a-40d8-488f-84f6-a12e01dfa415" class="code"><code>package com.example.jpa_entity.domain;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import java.time.LocalDateTime;
+
+public class MyEntityListener {
+    //해당 엔티티를 받아서 리스너에서 처리해야 해서,
+    //전과 다르게 매개변수가 있어야!
+    //단지, 그 인자값 타입이 무엇인지 알 수 없어서
+    //Object 타입으로 강제
+    @PrePersist
+    public void prePersist(Object obj){
+        if(obj instanceof Auditable){
+            Auditable a=(Auditable) obj;
+            a.setCreatedAt(LocalDateTime.now());
+            a.setUpdatedAt(LocalDateTime.now());
+        }
+    }
+
+    @PreUpdate
+    public void preUpdate(Object obj){
+        if(obj instanceof Auditable){
+            Auditable a=(Auditable) obj;
+            a.setUpdatedAt(LocalDateTime.now());
+        }
+    }
+
+}</code></pre><p id="95b2d670-ef6d-4b7c-bbcc-543f4def2569" class="">그리고 간단하게 insert는 BeforeEach로 테스트 전에 케이스로 넣어주도록 하고,</p><p id="321d9be4-5977-4dc9-a6ce-02d812c13ad6" class="">update는 그 데이터를 기준으로 실행되도록 테스트해보자</p><pre id="0c2fcb65-c249-462f-8c01-d15a9087492c" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.Book;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class BookRepositoryTest {
+    @Autowired
+    private BookRepository bookRepository;
+
+    @BeforeEach
+    public void init(){
+        System.out.println(&quot;insert&quot;);
+        Book book=new Book();
+        book.setName(&quot;테스트&quot;);
+        book.setAuthor(&quot;테스트&quot;);
+        bookRepository.save(book);
+        System.out.println(&quot;insert 끝&quot;);
+    }
+
+    @Test
+    public void bookTest(){
+        Book book=new Book();
+        book.setName(&quot;jpa 초격차 패키지&quot;);
+        book.setAuthor(&quot;패스트 캠퍼스&quot;);
+
+        bookRepository.save(book);
+
+        bookRepository.findAll().forEach(System.out::println);
+    }
+
+    @Test
+    public void listenerTest(){
+        bookRepository.findAll().forEach(System.out::println);
+//Book(id=6, name=테스트, author=테스트, createdAt=2021-08-24T15:10:22.153, updatedAt=2021-08-24T15:10:22.153)
+        System.out.println(&quot;update&quot;);
+        Book book2=bookRepository.findById(6L).orElseThrow(RuntimeException::new);
+        book2.setName(&quot;수정&quot;);
+        bookRepository.save(book2);
+        System.out.println(&quot;update 끝&quot;);
+        bookRepository.findAll().forEach(System.out::println);
+    }
+}</code></pre><pre id="4dc23121-0c7e-4f35-b5d0-a7182b6550b4" class="code"><code>insert
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        book
+        (author, created_at, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?)
+insert 끝
+Hibernate: 
+    select
+        book0_.id as id1_1_,
+        book0_.author as author2_1_,
+        book0_.created_at as created_3_1_,
+        book0_.name as name4_1_,
+        book0_.updated_at as updated_5_1_ 
+    from
+        book book0_
+Book(id=6, name=테스트, author=테스트, createdAt=2021-08-24T15:12:05.959, updatedAt=2021-08-24T15:12:05.959)
+update
+Hibernate: 
+    select
+        book0_.id as id1_1_0_,
+        book0_.author as author2_1_0_,
+        book0_.created_at as created_3_1_0_,
+        book0_.name as name4_1_0_,
+        book0_.updated_at as updated_5_1_0_ 
+    from
+        book book0_ 
+    where
+        book0_.id=?
+Hibernate: 
+    select
+        book0_.id as id1_1_0_,
+        book0_.author as author2_1_0_,
+        book0_.created_at as created_3_1_0_,
+        book0_.name as name4_1_0_,
+        book0_.updated_at as updated_5_1_0_ 
+    from
+        book book0_ 
+    where
+        book0_.id=?
+Hibernate: 
+    update
+        book 
+    set
+        author=?,
+        created_at=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+update 끝
+Hibernate: 
+    select
+        book0_.id as id1_1_,
+        book0_.author as author2_1_,
+        book0_.created_at as created_3_1_,
+        book0_.name as name4_1_,
+        book0_.updated_at as updated_5_1_ 
+    from
+        book book0_
+Book(id=6, name=수정, author=테스트, createdAt=2021-08-24T15:12:05.959, updatedAt=2021-08-24T15:12:06.245)</code></pre><p id="8f59f796-833f-4278-bbe2-b37189cc4f52" class="">그러면 이전에 우리가 엔티티에서 <code>@PrePersist</code>와 <code>@PreUpdate</code>를 감지해서 메서드로 일괄 값 수정을 해준것과 동일하게 적용되는 것을 확인해볼 수 있다</p><p id="81903f7b-cbde-435a-9d3e-0601a1a74f73" class="">
+</p><p id="80574082-647e-4001-a03d-9c99238b26c6" class="">뿐만아니라, User 엔티티에 대해서도 이 리스너를 활용할 수 있기 때문에 반복적인 코딩을 줄일 수 있게 된다!</p><p id="5898f6f4-156e-4530-a341-64459d8debe6" class="">
+</p></div></article></body></html>
