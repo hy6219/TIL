@@ -622,6 +622,9 @@
   	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/Listener/[Spring]Entity의 리스너 활용 ①.html" target="_blank">
 		[Spring JPA]Entity의 리스너 활용 ①
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/Listener/[Spring]Entity의 리스너 활용 ②.html" target="_blank">
+		[Spring JPA]Entity의 리스너 활용 ②
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
