@@ -628,7 +628,7 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/%5BSpring%20JPA%5DERD%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%8F%84%EC%8B%9D%ED%99%94%ED%95%98%EA%B8%B0.md" target="_blank">
 		[Spring JPA]ERD를 이용한 연관관계 도식화
 	</a></li>
-	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/%5BSpring%20JPA%5DERD%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%8F%84%EC%8B%9D%ED%99%94%ED%95%98%EA%B8%B0.md" target="_blank">
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/%5BSpring%20JPA%5DOneToOne%20%EA%B4%80%EA%B3%84.md" target="_blank">
 		[Spring JPA]일대일 연관관계, 그리고 주의해야 할 순환참조
 	</a></li>
      </ul>
