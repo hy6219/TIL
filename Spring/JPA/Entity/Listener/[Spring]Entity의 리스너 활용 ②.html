@@ -1,0 +1,1964 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Entity의 Listener 활용 2편</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="469fcb57-662a-4961-98cd-ba4ed8671a35" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">Entity의 Listener 활용 2편</h1></header><div class="page-body"><nav id="db3012a9-ea4e-414b-9754-67111c75b408" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#519f918b-1c97-4c16-87e7-19e42e423f4c">01. 히스토리 데이터</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c0dae990-ff8a-496f-8b37-a8c408a87c50">01-1. 엔티티 리스너의 의존성 주입 해결하기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#02e0e693-bb2b-4ce1-bf3d-e7fb83ed259b">📌01-2. insert 전에도 감지해서 히스토리에 저장하도록 하기</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5989bf5a-26b2-4d53-bb5c-1295abdff2d5">02. 스프링에서 제공되는 기본 리스너 <code>@EnableJpaAuditing</code>, <code>AuditingEntityListener.class, @CreatedDate, @LastModifiedDate</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d98a2c26-bb32-4f81-81f8-6ccbbb172f72">📌📌03. 실제로 사용되는 리스너의 모습 더 알아보기! <code>@MappedSuperClass를 이용한 공통 부분이 모여진 클래스를 만들어서 리스너와 연결해서 사용하기</code></a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2f1df2b2-cb66-470b-8ec8-c4df2c89b0e9">03-1. BaseEntity 클래스 만들기</a></div></nav><h2 id="519f918b-1c97-4c16-87e7-19e42e423f4c" class="">01. 히스토리 데이터</h2><ul id="226d2763-f093-43f6-a198-d68c20100d55" class="bulleted-list"><li><code>히스토리 데이터는 DB에 특정 부분이 수정되면 해당 값의 복사본을 다른 테이블에 저장</code>해둠</li></ul><p id="e6bcba23-c614-4c19-a0bc-c5553aabe394" class="">
+</p><p id="a252ae23-da31-4918-b818-d1327f99e305" class=""><code>UserHistory</code> 라는 엔티티를 추가적으로 만들어보자</p><p id="842f6927-3979-4b3e-8874-0db54f888799" class="">User 엔티티와 동일하게 진행하고, 거기에 userId라는 컬럼만 추가해보자</p><pre id="2566fefe-ffe6-4618-9a7c-3808db7b70c7" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+public class UserHistory {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private boolean active;
+    
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><p id="8e38e2c2-bd0d-43b2-800a-9d702db481fb" class="">이어서 레포지토리도 만들어보자</p><pre id="b8e7a0c5-7537-4e25-a1e8-8dad59e72be4" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.UserHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserHistoryRepository extends JpaRepository&lt;UserHistory,Long&gt; {
+    
+}</code></pre><p id="d39fb183-9167-4c70-8c10-044d8d50f49a" class="">그리고 리스너를 만드는데 여기서는</p><ul id="9f4fb661-d0d6-4927-9210-38169aa6fded" class="bulleted-list"><li>User엔티티의 값을 히스토리에 <code>저장 insert</code> 하는 것이 목적</li></ul><p id="8e508881-a6a2-4da0-9c12-bfc256b657c1" class="">으로 하는데, 갱신전에 진행되도록 해보자</p><pre id="cab4cf26-7c32-4fec-ac67-5a17bb306336" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.repository.UserHistoryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.PreUpdate;
+
+@Component
+public class UserEntityListener {
+    //autowired를 위해서 listener를 스프링 빈으로 등록
+    //field injection은 바람직하지 않음
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
+    @PreUpdate
+    public void preUpdate(Object o){
+        User user=(User)o;
+        //userHistory는 insert
+        UserHistory userHistory=new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setName(user.getName());
+        userHistory.setEmail(user.getEmail());
+        userHistory.setCreatedAt(user.getCreatedAt());
+        userHistory.setUpdatedAt(user.getUpdatedAt());
+        userHistory.setActive(user.isActive());
+        userHistory.setGender(user.getGender());
+
+        userHistoryRepository.save(userHistory);
+    }
+}</code></pre><p id="a6cde318-325a-4955-98c0-7145e489a511" class="">그리고  User 엔티티에 <code>@EntityListeners(value={})</code> 를 이용해서 지난번 리스너 외에 지금 만든 리스너를 등록해서 <code>여러개의 리스너를 만들어 등록</code>해보자</p><pre id="97f0993a-334f-4494-9d80-6c250e5925bb" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+public class User implements Auditable{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><p id="e4df6ef0-c252-4c9c-a70f-325b9f842d80" class="">
+</p><p id="48cb5137-8cf9-49b3-8f44-c1a0d9fc842f" class="">이제 테스트를 해보도록 하자</p><pre id="8ddfeff9-cac1-45dd-8740-668d1c98070b" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+class UserHistoryRepositoryTest {
+
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void preUpdateListenerTest(){
+        User user=new User();
+        user.setEmail(&quot;abcd@fastcampus.com&quot;);
+        user.setName(&quot;abcd&quot;);
+				user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+        System.out.println(&quot;---insert완료&quot;);
+
+        user.setName(&quot;abcde&quot;);
+        userRepository.save(user);
+        System.out.println(&quot;---update완료&quot;);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+}</code></pre><p id="059ce0a1-b52e-42de-812c-49e7b85fb5d3" class="">먼저 User 엔티티를 저장하고, 수정해서 반영한 후, userHistory에 반영이 되었는지 확인해보자</p><p id="18ed2311-bfcd-42cf-859a-7eac545d1d79" class="">그런데 이를 실행해보면 아래와 같이 <code>리스너에서 NullPointerException</code>이 발생한다</p><pre id="69b8fc9a-cc36-4444-b0b2-be6229543622" class="code"><code>Caused by: java.lang.NullPointerException
+	at com.example.jpa_entity.domain.UserEntityListener.preUpdate</code></pre><p id="6eaec687-f399-4c5b-a37c-22368acbe027" class="block-color-red_background">🌟이는, 엔티티 리스너는 스프링빈을 주입받지 못하기 때문에 내부에서 <code>@Autowired</code>로 객체주입을 해줄 수 없다![MyEntityListener에서는 주입해준 적이 없었던 것을 비교해서 생각해보자!]</p><p id="f8c7598d-9c75-428b-9519-8326316769c1" class="">
+</p><h3 id="c0dae990-ff8a-496f-8b37-a8c408a87c50" class="">01-1. 엔티티 리스너의 의존성 주입 해결하기</h3><p id="6199bc33-8029-4905-84f1-a1a5f6c23ead" class="">위의 문제를 해결하기 위해서 스프링 빈을 가져올 수 있도록 특별한 클래스를 만들어보자</p><p id="eb52d973-b85e-4cca-917f-f6ac380867ee" class="">🌟 이전에 IoC/DI 부분에서 배웠던 ApplicationContextAware를 이용한 방법이다!</p><ul id="dda13c54-6ee6-4726-bcf5-7b22d8d1be9e" class="bulleted-list"><li>ApplicationContextAware를 구현하는 클래스를 만들고</li></ul><ul id="5a85a7b2-ba41-493a-9cf6-2986a46a3194" class="bulleted-list"><li>그 클래스는 객체 주입이 가능해지도록 <code>@Component</code>를 클래스 위에 붙여주자</li></ul><ul id="b9340f69-7cc3-4844-b065-da811ed225d2" class="block-color-red_background bulleted-list"><li>그런데, 다만, 추가적으로 이번에는 제네릭스를 이용하고, 매개변수로 클래스를 받아서 <code>getBean</code>을 이용해서(<code>context.getBean(class)</code>) <code>클래스에 맞는 빈을 리턴</code>해주도록 하자!!</li></ul><ul id="1eee5f2a-f40c-441a-b73a-26e7f65a18d1" class="bulleted-list"><li>위의 부분☝️을 통해서 이전보다는 더 클래스에 맞도록 빈을 돌려주는 방법인 것 같다!</li></ul><ul id="0379c23d-8915-4a24-b80f-311aa1c0a11d" class="bulleted-list"><li>이전에는 context를 찾은 후 바로 그 context를 리턴하면 이를 이용해서 다른 클래스 getBean을 하는 방법이었다! 차이가 있다!</li></ul><figure id="eed49187-d66e-4525-ba60-aab01e464804"><a href="https://github.com/hy6219/TIL/blob/main/Spring/KeyPoint/%EC%A0%9C%EC%96%B4%EC%9D%98%20%EC%97%AD%EC%A0%84%EA%B3%BC%20%EC%9D%98%EC%A1%B4%EC%84%B1%EC%A3%BC%EC%9E%85/%5BSpring%5DIoC%20and%20DI.md" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">TIL/[Spring]IoC and DI.md at main · hy6219/TIL</div><div class="bookmark-description">🌻 IoC(Inversion of Control) &quot;제어의 역전&quot; 스프링에서는 객체를 new 생성자로 개발자가 관리하지 않고!</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/hy6219/TIL/blob/main/Spring/KeyPoint/%EC%A0%9C%EC%96%B4%EC%9D%98%20%EC%97%AD%EC%A0%84%EA%B3%BC%20%EC%9D%98%EC%A1%B4%EC%84%B1%EC%A3%BC%EC%9E%85/%5BSpring%5DIoC%20and%20DI.md</div></div><img src="https://opengraph.githubassets.com/fe85c3d0318c0a4cb84fb8de0876bef0598bbaf527ced1c5235b984b2495355b/hy6219/TIL" class="bookmark-image"/></a></figure><pre id="db0859d2-b9a1-4f76-940b-266d4b2ad2aa" class="code"><code>package com.example.jpa_entity.support;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+@Component
+public class BeanUtils implements ApplicationContextAware {
+
+    private static ApplicationContext context;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        BeanUtils.context=applicationContext;
+    }
+
+    public static ApplicationContext getContext(){
+        return BeanUtils.context;
+    }
+}</code></pre><pre id="184eceef-f7df-48ad-8f6a-23e8d7d29a36" class="code"><code>package com.example.jpa_entity.support;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+@Component
+public class BeanUtils implements ApplicationContextAware {
+
+    private static ApplicationContext context;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        BeanUtils.context=applicationContext;
+    }
+
+    public static &lt;T&gt; T getBean(Class&lt;T&gt; clazz){
+        return BeanUtils.context.getBean(clazz);
+    }
+}</code></pre><p id="d65055ec-1831-4abf-bdb5-7f8e39d52634" class="">그리고 이를 이용해서 엔티티 리스너에서 <code>UserHistoryRepository의 빈을 찾으면 된다</code></p><pre id="1730b5fa-3020-47cf-a07a-84f3826bd93f" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.repository.UserHistoryRepository;
+import com.example.jpa_entity.support.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.PreUpdate;
+
+public class UserEntityListener {
+
+    @PreUpdate
+    public void preUpdate(Object o){
+        UserHistoryRepository userHistoryRepository= BeanUtils.getBean(UserHistoryRepository.class);
+        User user=(User)o;
+        //userHistory는 insert
+        UserHistory userHistory=new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setName(user.getName());
+        userHistory.setEmail(user.getEmail());
+        userHistory.setCreatedAt(user.getCreatedAt());
+        userHistory.setUpdatedAt(user.getUpdatedAt());
+        userHistory.setActive(user.isActive());
+        userHistory.setGender(user.getGender());
+
+        userHistoryRepository.save(userHistory);
+    }
+}</code></pre><pre id="cab9b2b2-3714-41a3-89ab-bf5742ca0564" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, gender, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+---insert완료
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.active as active2_2_0_,
+        user0_.created_at as created_3_2_0_,
+        user0_.email as email4_2_0_,
+        user0_.gender as gender5_2_0_,
+        user0_.name as name6_2_0_,
+        user0_.updated_at as updated_7_2_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (active, created_at, email, gender, name, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        created_at=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+---update완료
+Hibernate: 
+    select
+        userhistor0_.id as id1_3_,
+        userhistor0_.active as active2_3_,
+        userhistor0_.created_at as created_3_3_,
+        userhistor0_.email as email4_3_,
+        userhistor0_.gender as gender5_3_,
+        userhistor0_.name as name6_3_,
+        userhistor0_.updated_at as updated_7_3_,
+        userhistor0_.user_id as user_id8_3_ 
+    from
+        user_history userhistor0_
+UserHistory(id=7, userId=6, name=abcde, email=abcd@fastcampus.com, createdAt=2021-08-25T20:00:29.111, updatedAt=2021-08-25T20:00:29.226, active=false, gender=MALE)</code></pre><p id="e9271c21-74a3-4145-9020-ed6632f14bc4" class="">그러면 위와 같이 아이디가 6인 User가 update 전에 감지되어 히스토리에 저장된 것을 확인해볼 수 있다</p><p id="a6ef0d20-ab7e-4550-a337-485624441d7e" class="">
+</p><h3 id="02e0e693-bb2b-4ce1-bf3d-e7fb83ed259b" class="">📌01-2. insert 전에도 감지해서 히스토리에 저장하도록 하기</h3><p id="a6ddfb31-4493-4e57-860d-e978438b1ad6" class="">이번에는 삽입 전에도 감지해서 작동되는 리스너를 만들어보자</p><p id="a945677f-3096-4e75-872c-bfd663105465" class="">그러면 아래처럼 어노테이션을 하나 더 붙여주면 되고,</p><p id="d778b565-de6b-47d0-bad7-6f0e713aa98e" class="">메서드명도 적절하게 변경해주면 된다!</p><p id="2a5669d6-66cf-47ab-9187-cd11821aca5f" class="block-color-red_background">🌟 이렇게 insert와 update 전에 엔티티 이벤트를 감지하면, 새로운 엔티티가 추가될 때마다, 그리고 엔티티가 수정될 때마다 히스토리에 데이터가 차곡차곡 쌓이게 된다!</p><pre id="27828948-73d0-4047-ac47-8dcbc686655b" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.repository.UserHistoryRepository;
+import com.example.jpa_entity.support.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+public class UserEntityListener {
+
+    @PrePersist
+    @PreUpdate
+    public void prePersistAndUpdate(Object o){
+        UserHistoryRepository userHistoryRepository= BeanUtils.getBean(UserHistoryRepository.class);
+        User user=(User)o;
+        //userHistory는 insert
+        UserHistory userHistory=new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setName(user.getName());
+        userHistory.setEmail(user.getEmail());
+        userHistory.setCreatedAt(user.getCreatedAt());
+        userHistory.setUpdatedAt(user.getUpdatedAt());
+        userHistory.setActive(user.isActive());
+        userHistory.setGender(user.getGender());
+
+        userHistoryRepository.save(userHistory);
+    }
+}</code></pre><p id="99d0bfed-6c2d-44e5-a2de-8a643ec1edd3" class="">이에 걸맞게 테스트하는 메서드의 이름도 변경해주자</p><pre id="06ce447c-0ad8-496e-8e3e-5d0256112d70" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.Gender;
+import com.example.jpa_entity.domain.User;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+class UserHistoryRepositoryTest {
+
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Test
+    public void prePersistAndUpdateListenerTest(){
+        User user=new User();
+        user.setEmail(&quot;abcd@fastcampus.com&quot;);
+        user.setName(&quot;abcd&quot;);
+        user.setGender(Gender.MALE);
+
+        userRepository.save(user);
+        System.out.println(&quot;---insert완료&quot;);
+
+        user.setName(&quot;abcde&quot;);
+        userRepository.save(user);
+        System.out.println(&quot;---update완료&quot;);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }
+
+}</code></pre><pre id="ab52c46a-7bcb-42e7-a6da-cb5bfa92f944" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (active, created_at, email, gender, name, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, gender, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+---insert완료
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.active as active2_2_0_,
+        user0_.created_at as created_3_2_0_,
+        user0_.email as email4_2_0_,
+        user0_.gender as gender5_2_0_,
+        user0_.name as name6_2_0_,
+        user0_.updated_at as updated_7_2_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (active, created_at, email, gender, name, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        created_at=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+---update완료
+Hibernate: 
+    select
+        userhistor0_.id as id1_3_,
+        userhistor0_.active as active2_3_,
+        userhistor0_.created_at as created_3_3_,
+        userhistor0_.email as email4_3_,
+        userhistor0_.gender as gender5_3_,
+        userhistor0_.name as name6_3_,
+        userhistor0_.updated_at as updated_7_3_,
+        userhistor0_.user_id as user_id8_3_ 
+    from
+        user_history userhistor0_
+UserHistory(id=6, userId=null, name=abcd, email=abcd@fastcampus.com, createdAt=2021-08-25T20:08:51.218, updatedAt=2021-08-25T20:08:51.218, active=false, gender=MALE)
+UserHistory(id=8, userId=7, name=abcde, email=abcd@fastcampus.com, createdAt=2021-08-25T20:08:51.218, updatedAt=2021-08-25T20:08:51.339, active=false, gender=MALE)</code></pre><p id="c279d886-4137-410e-9781-cefe6df56f48" class="">그러면 이번에는 insert 전에 가져와서 정보를 저장한 데이터와 update 전에 가져와서 정보를 저장한 데이터를 확인해볼 수 있는데</p><p id="276110a9-e8f3-4d25-a499-b95b99dab1a5" class="">insert 전에 가져온 데이터에서는 말 그대로 삽입 전에 가져왔기 때문에 자동으로 카운트되도록 된 User의 PK인 id값이 세팅도 되기 전에 가져온 것이므로 userId가 null로 되어 있는 것을 확인해볼 수 있다</p><p id="a2f22d03-ba91-4256-bc32-cc59a57435f2" class="">
+</p><p id="364a79de-ba97-4623-9e05-82a95b849872" class="">추가적으로, 만약의 경우에 insert와 update 전의 값들을 가져오지 못하거나, 이전에 설정했던 createdAt이나 updatedAt이 null이라면 아래처럼 리스너를 연결해주고,</p><p id="c1264c3e-9978-40a0-b79b-a801172bcbcc" class="">MyEntityListener에서 사용하는 인터페이스인 Auditable을 붙여주자</p><pre id="ae17e858-c3ac-4509-a2b2-d1d861c7aec5" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@EntityListeners(value={MyEntityListener.class})
+public class UserHistory implements Auditable{
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><p id="6f7734b1-ea07-42c5-84da-d3acc85e7c9f" class="">
+</p><h2 id="5989bf5a-26b2-4d53-bb5c-1295abdff2d5" class="">02. 스프링에서 제공되는 기본 리스너 <code>@EnableJpaAuditing</code>, <code>AuditingEntityListener.class, @CreatedDate, @LastModifiedDate</code></h2><p id="0bfd2f3f-e69c-431a-9d4e-b2f7dba1c710" class="">🌟먼저, <code>~Application.java</code>에 들어가서 <code>@EnableJpaAuditing</code>이라는 어노테이션을 추가해주자!</p><pre id="94b5754f-f6ab-4f0e-b1ce-ad94db4627ca" class="code"><code>package com.example.jpa_entity;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+@SpringBootApplication
+@EnableJpaAuditing
+public class JpaEntityApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(JpaEntityApplication.class, args);
+    }
+
+}</code></pre><p id="c4c5983d-5420-4d69-a43e-60c2ebe51c0f" class="">그리고, User엔티티와 Book엔티티, UserHistory엔티티에서 MyEntityListener가 아닌 <code>AuditingEntityListener를 연결해주자</code></p><pre id="7b8e36ea-277a-4c96-9897-ae497ed680aa" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+@EntityListeners(value={AuditingEntityListener.class,UserEntityListener.class})
+public class User implements Auditable{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><pre id="e50580d3-54db-4c2d-b1b2-5a12ef59e40c" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+///@EntityListeners(value=MyEntityListener.class)
+@EntityListeners(value= AuditingEntityListener.class)
+public class Book implements Auditable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+    private LocalDateTime createdAt;
+    //수정일
+    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="252852bf-ae7d-45a3-8a31-b3274e91eabf" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+//@EntityListeners(value={MyEntityListener.class})
+@EntityListeners(value={AuditingEntityListener.class})
+public class UserHistory implements Auditable{
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><p id="0244510b-ffb5-468c-a5c5-c8172e6eb72b" class="">그리고 <code>Auditing으로 지정해야 할 데이터 중 createdDate에 @CreatedDate</code> ,</p><p id="beabc133-6b9d-46e1-bb0d-d94122f65b80" class=""><code>Auditing으로 지정해야 할 데이터 중 updatedAt에 @LastModifiedDate</code>를 붙여주자</p><pre id="0b45ac18-5ccb-44d6-ac87-e5af4b536b23" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+@EntityListeners(value={AuditingEntityListener.class,UserEntityListener.class})
+public class User implements Auditable{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+    @Column(name=&quot;created_at&quot;)
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @Column(name=&quot;updated_at&quot;)
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><pre id="c97d7e04-40cc-4d16-bd0f-1e8878442af1" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+///@EntityListeners(value=MyEntityListener.class)
+@EntityListeners(value= AuditingEntityListener.class)
+public class Book implements Auditable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+    @CreatedDate
+    private LocalDateTime createdAt;
+    //수정일
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="fbe671bd-d8fb-4c72-8b19-0cf45a538f2e" class="code"><code>package com.example.jpa_entity.domain;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+//@EntityListeners(value={MyEntityListener.class})
+@EntityListeners(value={AuditingEntityListener.class})
+public class UserHistory implements Auditable{
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><p id="d97262e9-4b2c-47c4-a837-e065b9bbad96" class="">동일한 테스트를 진행해보자!</p><pre id="6ae46827-fcd5-445c-902f-0ba3f4724d17" class="code"><code>Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (active, created_at, email, gender, name, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user
+        (active, created_at, email, gender, name, updated_at, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+---insert완료
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.active as active2_2_0_,
+        user0_.created_at as created_3_2_0_,
+        user0_.email as email4_2_0_,
+        user0_.gender as gender5_2_0_,
+        user0_.name as name6_2_0_,
+        user0_.updated_at as updated_7_2_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (active, created_at, email, gender, name, updated_at, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        user 
+    set
+        active=?,
+        created_at=?,
+        email=?,
+        gender=?,
+        name=?,
+        updated_at=? 
+    where
+        id=?
+---update완료
+Hibernate: 
+    select
+        userhistor0_.id as id1_3_,
+        userhistor0_.active as active2_3_,
+        userhistor0_.created_at as created_3_3_,
+        userhistor0_.email as email4_3_,
+        userhistor0_.gender as gender5_3_,
+        userhistor0_.name as name6_3_,
+        userhistor0_.updated_at as updated_7_3_,
+        userhistor0_.user_id as user_id8_3_ 
+    from
+        user_history userhistor0_
+UserHistory(id=6, userId=null, name=abcd, email=abcd@fastcampus.com, createdAt=2021-08-25T20:25:17.779, updatedAt=2021-08-25T20:25:17.779, active=false, gender=MALE)
+UserHistory(id=8, userId=7, name=abcde, email=abcd@fastcampus.com, createdAt=2021-08-25T20:25:17.899, updatedAt=2021-08-25T20:25:17.899, active=false, gender=MALE)</code></pre><p id="ead26825-c43b-4b5f-9f06-ac44977f66c3" class="">그러면 앞에서 살펴본 결과와 동일하게 insert 및 update 전에 가져온 데이터로 저장된 모습을 확인해볼 수 있다!</p><p id="7d8165da-a470-4546-8f8b-c4500801504f" class="">즉, 자동으로 적용될 수 있다는 점이다!</p><p id="11229f67-90c4-4958-be42-de225e3a3cbc" class="">
+</p><p id="e9ba399c-b58d-4e78-b6a1-15f0f13b2c0c" class="">그리고 위에서 살펴본 <code>@CreatedDate</code>나 <code>@LastModifiedDate</code>외에도 org.springframework.data:spring-data-commons:2.5.3을 살펴보면</p><p id="8542d4de-afd9-48f4-b336-15b837538570" class="">AccessType, createdBy 등 다양한 어노테이션이 있는 것을 알 수 있다!</p><p id="c1d0df89-f767-474f-8404-1ec08b9f3bae" class="">특히 createdBy나 LastModifiedBy는 스프링 시큐리티와 연동하면 더 쉽다고 하다! 나중에 스프링시큐리티를 공부하면서 생각해봐야겠다!</p><figure id="9f3b9e99-2ae5-4d69-9115-c0d12d42bf08"><div class="source"><a></a></div></figure><p id="bf063b45-858a-47a5-8a90-0c404fc9d00d" class="">
+</p><h2 id="d98a2c26-bb32-4f81-81f8-6ccbbb172f72" class="">📌📌03. 실제로 사용되는 리스너의 모습 더 알아보기! <code>@MappedSuperClass를 이용한 공통 부분이 모여진 클래스를 만들어서 리스너와 연결해서 사용하기</code></h2><p id="55dd4c99-af4c-4a35-a450-7f89115d2d39" class="">먼저, 클래스 구조가 다소 복잡하기 때문에, 리스너라는 패키지를 도메인 패키지 하위에 두고, 기존의 Auditable 인터페이스와 다른 리스너들을 이동시켜주자</p><p id="580108c6-109f-4e19-a932-9d947b0895ec" class="">
+</p><p id="cd4d31aa-cbc7-4714-ae16-8962b6535636" class="">그런데 계속해서 Book에도, User에도, UserHistory에도 <code>@CreatedDate</code>나 <code>@LastModifiedDate를 반복해서 넣어주고 있는 불편함이 보인다</code></p><p id="076d152f-1611-4681-8a06-f315cc776c97" class="">이를 차근차근 더 보기 좋게 변경해보자</p><h3 id="2f1df2b2-cb66-470b-8ec8-c4df2c89b0e9" class="">03-1. BaseEntity 클래스 만들기</h3><ul id="2955c4e0-2679-4be0-8b4a-0d4a02304653" class="bulleted-list"><li>공통적으로 필요한 createdAt, updatedAt, AuditingEntityListener를 정리해서 보관하는 개념!</li></ul><ul id="92d5d2e3-74ae-4fdc-a6c3-f9c0adbdbf99" class="bulleted-list"><li><code>@MappedSuperclass</code>로 필드를  위의 Book, User,UserHistory 엔티티의 컬럼으로 상속시켜주기</li></ul><ul id="edb55134-5612-4be8-affb-8c524ca5af73" class="bulleted-list"><li><code>@MappedSuperclass</code>:해당 클래스를 상속받는 자식 클래스에 대해서  해당 클래스의 필드를 자식 클래스의 컬럼으로 포함시켜줌</li></ul><p id="6e89c22a-ceb7-4e8a-874a-9cb96ed7463e" class="">
+</p><pre id="2a76cc6c-d1a6-46fe-a769-ee2a9f1a3821" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.Column;
+import javax.persistence.EntityListeners;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@MappedSuperclass
+@EntityListeners(value= AuditingEntityListener.class)
+public class BaseEntity {
+    @CreatedDate
+    @Column(name=&quot;created_at&quot;)
+    private LocalDateTime cratedAt;
+    @LastModifiedDate
+    @Column(name=&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+}</code></pre><p id="2badc34e-b8cf-498d-8fc7-d7b83b089356" class="">그리고 처음에는 <code>@MappedSuperClass만 붙였다가</code>  처음에는 </p><pre id="c243d514-c320-4472-a328-0e4903f413e9" class="code"><code>warning: Generating equals/hashCode implementation but without 
+a call to superclass, even though this class does not 
+extend java.lang.Object. If this is intentional, add 
+&#x27;@EqualsAndHashCode(callSuper=false)&#x27; to your type.</code></pre><p id="0309cbb6-d231-4d08-b96b-9740337ded55" class="">이 경고를 보고서, <code>그러면 권장받은 대로 @EqualsAndHashCode(callSuper=false)를 해서 domain에 별도로 구현하는 value object가 없을 경우를 나타내도록</code> 하였는데[처음에는 공통적인 부분을 모두 지우고 BaseEntity로 관리하도록 했기 때문에 이렇게 접근하는 것이 맞는 줄 알았지만.. 아래를 보면 알겠지만 아니었다😢]</p><figure id="1f274a84-ddb9-4cf7-abb7-fe3c3cd9fb28"><a href="https://chati.tistory.com/168" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">[Spring] Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object 오류 해결</div><div class="bookmark-description">⌗ 오류 현상 warning: Generating equals/hashCode implementation but without a call to superclass, even though this class does not extend java.lang.Object. If this is intentional, add &#x27;@EqualsAndHash..</div></div><div class="bookmark-href"><img src="https://t1.daumcdn.net/tistory_admin/static/top/favicon_0630.ico" class="icon bookmark-icon"/>https://chati.tistory.com/168</div></div><img src="https://t1.daumcdn.net/tistory_admin/static/images/openGraph/opengraph.png" class="bookmark-image"/></a></figure><p id="7710b73c-2bb1-4b84-9c70-2a12c40bff17" class="">`<code>org.h2.jdbc.JdbcSQLSyntaxErrorException: Column &quot;CREATED_AT&quot; not found</code> 에러도 발생했었다. 그래서 혹여 name 속성을 넣어줘야 하나 싶어서, 위와 같이 <code>@Column(name=~)</code>을 추가해주었다! 이부분을 꼭! 잊지 말자!</p><p id="d4705f67-9cc8-48ba-9e06-36fe4af652d4" class="">
+</p><p id="2764eced-5f5f-41c3-84d1-77a06bac9ea3" class="">그리고 이제는 더이상 Auditable 인터페이스가 필요없기 때문에(스프링에서 제공되는 AuditingEntityListener가 있기 때문), UserEntityListener를 이용하도록 나머지 엔티티들을 조절해주자</p><p id="bf341f07-28ed-49eb-8f9e-023d6d8bb078" class="">
+</p><p id="ce932ecb-09c9-4155-a8b9-acd3f66da368" class="">아래는 UserEntityListener를 다시 확인해보기 위한 것이다!</p><pre id="b83db85f-77d6-4473-9fe4-cdf17a8bef09" class="code"><code>package com.example.jpa_entity.domain.listener;
+
+import com.example.jpa_entity.domain.User;
+import com.example.jpa_entity.domain.UserHistory;
+import com.example.jpa_entity.repository.UserHistoryRepository;
+import com.example.jpa_entity.support.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
+public class UserEntityListener {
+
+    @PrePersist
+    @PreUpdate
+    public void prePersistAndUpdate(Object o){
+        UserHistoryRepository userHistoryRepository= BeanUtils.getBean(UserHistoryRepository.class);
+        User user=(User)o;
+        //userHistory는 insert
+        UserHistory userHistory=new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setName(user.getName());
+        userHistory.setEmail(user.getEmail());
+        userHistory.setCratedAt(user.getCratedAt());
+        userHistory.setUpdatedAt(user.getUpdatedAt());
+        userHistory.setActive(user.isActive());
+        userHistory.setGender(user.getGender());
+
+        userHistoryRepository.save(userHistory);
+    }
+}</code></pre><pre id="42e44e7b-b4bb-42ee-910c-43f996e3bfc9" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@EqualsAndHashCode(callSuper=false)
+///@EntityListeners(value=MyEntityListener.class)
+//@EntityListeners(value= AuditingEntityListener.class)
+public class Book extends BaseEntity/* implements Auditable*/ {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    //수정일
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="f992181e-d6a7-448d-bb40-b4d84e20fa9e" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@EqualsAndHashCode(callSuper=false)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+//    @Column(name=&quot;created_at&quot;)
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    @Column(name=&quot;updated_at&quot;)
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><pre id="f0a1d867-8164-470b-be42-38d1516fd496" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@EqualsAndHashCode(callSuper=false)
+//@EntityListeners(value={MyEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class})
+public class UserHistory extends BaseEntity/*implements Auditable*/ {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><p id="5bc4ece3-9707-4675-a3de-e9609e5861f8" class="">그런데 아래처럼 테스트해보면, created_at과 updated_at이 ddl이나 dql, dml에서는 잘 확인되지만, 정작 전체결과에서는 보이질 않는다</p><pre id="4a716d75-f7ca-483c-a5ca-01d6122e0c5f" class="code"><code>Hibernate: 
+    
+    drop table if exists address CASCADE 
+Hibernate: 
+    
+    drop table if exists book CASCADE 
+Hibernate: 
+    
+    drop table if exists user CASCADE 
+Hibernate: 
+    
+    drop table if exists user_history CASCADE 
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table address (
+       id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table book (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        author varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_history (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean not null,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        user_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (created_at, updated_at, active, email, gender, name, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user
+        (created_at, updated_at, active, email, gender, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+---insert완료
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.created_at as created_2_2_0_,
+        user0_.updated_at as updated_3_2_0_,
+        user0_.active as active4_2_0_,
+        user0_.email as email5_2_0_,
+        user0_.gender as gender6_2_0_,
+        user0_.name as name7_2_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (created_at, updated_at, active, email, gender, name, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+---update완료
+Hibernate: 
+    select
+        userhistor0_.id as id1_3_,
+        userhistor0_.created_at as created_2_3_,
+        userhistor0_.updated_at as updated_3_3_,
+        userhistor0_.active as active4_3_,
+        userhistor0_.email as email5_3_,
+        userhistor0_.gender as gender6_3_,
+        userhistor0_.name as name7_3_,
+        userhistor0_.user_id as user_id8_3_ 
+    from
+        user_history userhistor0_
+UserHistory(id=6, userId=null, name=abcd, email=abcd@fastcampus.com, active=false, gender=MALE)
+UserHistory(id=8, userId=7, name=abcde, email=abcd@fastcampus.com, active=false, gender=MALE)</code></pre><p id="80adcd8e-2808-4405-a926-e118e0b25882" class="">
+</p><p id="89356f2c-81c5-44e1-9caf-fbfecd828845" class="">그래서 조금 더 나아가서 생각해볼 때, created_at과 updated_at을 상속받은 부분이 잘 처리되지 않았다는 점에서</p><pre id="07742c8e-08c9-4cc3-8d68-0b8d16b0033a" class="code"><code>@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)</code></pre><p id="a4b84025-c74c-47a5-9611-d790d74ac631" class="">를 각 엔티티에 적용해주었다</p><p id="e46bbbdc-7e14-4bba-bb7f-00cd193c12f9" class="">처음에는 자손 클래스 내부에 직접적으로 value object가 보이지 않아서 false로 해주어야 하나 생각했는데 , 생각해보니 equals와 ToString, HashCode는 삼총사마냥 동등성과 동일성 비교시에 따라다니니 이 점을 고려해서 상속받은 정보를 처리해주어야 했던 것 같다😭</p><pre id="d0f9618b-448e-4c13-b054-efcbf59776d1" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+//    @Column(name=&quot;created_at&quot;)
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    @Column(name=&quot;updated_at&quot;)
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+    //IsNotEmpty 확인용
+    //@OneToMany(fetch=FetchType.EAGER)
+    //private List&lt;Address&gt; addresses;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+
+}</code></pre><pre id="e0739a56-2b84-4ed9-a18f-96617bdb2013" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+///@EntityListeners(value=MyEntityListener.class)
+//@EntityListeners(value= AuditingEntityListener.class)
+public class Book extends BaseEntity/* implements Auditable*/ {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    //책 이름
+    private String name;
+    //책 저자
+    private String author;
+    //생성일
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    //수정일
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+}</code></pre><pre id="37eed0ab-56b9-487e-8c59-661d9e8cd879" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+//@EntityListeners(value={MyEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class})
+public class UserHistory extends BaseEntity/*implements Auditable*/ {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><pre id="286d6a29-161a-45cf-978c-19e1e37ebcf8" class="code"><code>Hibernate: 
+    
+    drop table if exists address CASCADE 
+Hibernate: 
+    
+    drop table if exists book CASCADE 
+Hibernate: 
+    
+    drop table if exists user CASCADE 
+Hibernate: 
+    
+    drop table if exists user_history CASCADE 
+Hibernate: 
+    
+    drop sequence if exists hibernate_sequence
+Hibernate: create sequence hibernate_sequence start with 1 increment by 1
+Hibernate: 
+    
+    create table address (
+       id bigint not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table book (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        author varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_history (
+       id bigint not null,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean not null,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        user_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (created_at, updated_at, active, email, gender, name, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user
+        (created_at, updated_at, active, email, gender, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+---insert완료
+Hibernate: 
+    select
+        user0_.id as id1_2_0_,
+        user0_.created_at as created_2_2_0_,
+        user0_.updated_at as updated_3_2_0_,
+        user0_.active as active4_2_0_,
+        user0_.email as email5_2_0_,
+        user0_.gender as gender6_2_0_,
+        user0_.name as name7_2_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    call next value for hibernate_sequence
+Hibernate: 
+    insert 
+    into
+        user_history
+        (created_at, updated_at, active, email, gender, name, user_id, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+---update완료
+Hibernate: 
+    select
+        userhistor0_.id as id1_3_,
+        userhistor0_.created_at as created_2_3_,
+        userhistor0_.updated_at as updated_3_3_,
+        userhistor0_.active as active4_3_,
+        userhistor0_.email as email5_3_,
+        userhistor0_.gender as gender6_3_,
+        userhistor0_.name as name7_3_,
+        userhistor0_.user_id as user_id8_3_ 
+    from
+        user_history userhistor0_
+UserHistory(super=BaseEntity(cratedAt=2021-08-26T12:31:13.541, updatedAt=2021-08-26T12:31:13.541), id=6, userId=null, name=abcd, email=abcd@fastcampus.com, active=false, gender=MALE)
+UserHistory(super=BaseEntity(cratedAt=2021-08-26T12:31:13.641, updatedAt=2021-08-26T12:31:13.641), id=8, userId=7, name=abcde, email=abcd@fastcampus.com, active=false, gender=MALE)</code></pre><p id="67945e01-ef01-4cd4-8116-580fd357176c" class="">그러면 이번에는 위와 같이 created_at과 updated_at이 표시되는 것을 확인해볼 수 있다</p><p id="b6ce550a-f89a-4bf7-8d19-73ec1c8964b6" class="">
+</p></div></article></body></html>
