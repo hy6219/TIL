@@ -625,6 +625,9 @@
 	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/Listener/[Spring]Entity의 리스너 활용 ②.html" target="_blank">
 		[Spring JPA]Entity의 리스너 활용 ②
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/%5BSpring%20JPA%5DERD%EB%A5%BC%20%EC%9D%B4%EC%9A%A9%ED%95%9C%20%EC%97%B0%EA%B4%80%EA%B4%80%EA%B3%84%20%EB%8F%84%EC%8B%9D%ED%99%94%ED%95%98%EA%B8%B0.md" target="_blank">
+		[Spring JPA]ERD를 이용한 연관관계 도식화
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
