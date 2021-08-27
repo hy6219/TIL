@@ -1,0 +1,1724 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>1 : N 연관관계 알아보기</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e0a99b8b-af85-45cf-a188-33f2823cc3b6" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">1 : N 연관관계 알아보기</h1></header><div class="page-body"><nav id="00f1900b-40d7-4427-9af3-bfe8a91c85e0" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b34ca5c7-6619-4f4c-ac0b-5e1ba2032209"><code>@OneToMany</code> - 1:N의 연관관계 지원</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#693e46a9-29dd-4581-9875-0d50b11ee2de">🌟🌟🌟<code>@JoinColumn(name=</code><em><code>연결되는 n측에서의 관련 필드명</code></em><code>)</code> - 엔티티가 어떤 컬럼으로 조인될 지 지정🌟🌟🌟</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9fdb16c9-ad77-4b00-9726-26bd743ac8ad">1측에 존재하는 필드(매개체)에 @JoinColumn(<code>insertable=false, updatable=false</code>)로 설정하여 이 연결체에 접근하지 못하도록 하기</a></div></nav><p id="3aff3d26-d00c-46c7-983e-eeb7fd5f8dbd" class="">
+</p><p id="aaf9308d-d18d-4ed3-8ab2-adf15e8fef18" class="">🌟🌟🌟핵심🌟🌟🌟</p><ol type="1" id="8647a7ef-59a1-44bb-ab79-3b09a78ed8aa" class="numbered-list" start="1"><li><code>@OneToMany(fetch=FetchType.EAGER)</code></li></ol><ol type="1" id="bee2d1f8-308f-4963-85f4-ab9268b9a304" class="numbered-list" start="2"><li><code>@JoinColumn(name=~)</code></li></ol><ol type="1" id="10adb93d-58d9-41ed-96ee-cc47b24aa433" class="numbered-list" start="3"><li>N측에 <code>@Column(name=~)</code></li></ol><ol type="1" id="1071f76d-5351-4150-8944-8338c16b2140" class="numbered-list" start="4"><li>1측에 준비된 연결 필드는 <code>컬렉션 자료구조</code></li></ol><p id="d17b69a8-0151-4fb5-96eb-ac09ca73dc86" class="">
+</p><figure id="cc7997c4-7fb7-48c4-b255-b3075135cd13" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/OneToOne.png?raw=true"><img style="width:1248px" src="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/OneToOne.png?raw=true"/></a></figure><p id="3782148f-81f8-4232-a075-996bf8acdddc" class="">
+</p><p id="83ccabd9-1985-47ce-8d5c-e23421cf87d2" class="">User엔티티와 UserHistory는 1:N의 연관관계를 갖는다</p><p id="85436470-a2c6-4406-88c7-17c63694e592" class="">
+</p><p id="76ff2d8e-7bea-4a24-bfed-d4a90b526303" class="">다시 한 번 복습 겸, User 객체를 하나 저장하고, 이를 history에서 확인해보자</p><pre id="92b07a27-973f-4b64-ba93-779b3d185eb0" class="code"><code>@Test
+    public void userRelationTest(){
+        User user=new User();
+        user.setName(&quot;David&quot;);
+        user.setEmail(&quot;david@fastcampus.com&quot;);
+        user.setGender(MALE);
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }</code></pre><p id="864e5bb0-799b-4c91-92d7-34197c1b384c" class="">
+</p><pre id="a5b5cd6e-3cbf-4f5c-b0b8-a8c726ccabfa" class="code"><code>UserHistory(super=BaseEntity(cratedAt=2021-08-27T10:56:43.874, updatedAt=2021-08-27T10:56:43.874), id=1, userId=null, name=David, email=david@fastcampus.com, active=false, gender=MALE)
+UserHistory(super=BaseEntity(cratedAt=2021-08-27T10:56:43.976, updatedAt=2021-08-27T10:56:43.976), id=2, userId=6, name=David, email=modified-david@fastcampus.com, active=false, gender=MALE)</code></pre><p id="ab8535b4-2a7a-4704-811a-759b97de23a6" class="">그러면 PrePersist로 삽입 전에 가져왔기 때문에 첫번째 데이터는 userId가 null인 것을 알 수 있다</p><p id="c9ce466c-56be-428e-989d-5f3a7c047db7" class="">따라서 우리는 보다 나은 적용을 위해서 리스너 시점을 삽입 후, 수정 후로 변경해주자</p><pre id="0819bacc-6b44-4523-87dc-cda02c6e4642" class="code"><code>package com.example.jpa_entity.domain.listener;
+
+import com.example.jpa_entity.domain.User;
+import com.example.jpa_entity.domain.UserHistory;
+import com.example.jpa_entity.repository.UserHistoryRepository;
+import com.example.jpa_entity.support.BeanUtils;
+
+import javax.persistence.PostPersist;
+import javax.persistence.PostUpdate;
+
+public class UserEntityListener {
+
+    @PostPersist
+    @PostUpdate
+    public void prePersist(Object o){
+        UserHistoryRepository userHistoryRepository= BeanUtils.getBean(UserHistoryRepository.class);
+        User user=(User)o;
+        //userHistory는 insert
+        UserHistory userHistory=new UserHistory();
+        userHistory.setUserId(user.getId());
+        userHistory.setName(user.getName());
+        userHistory.setEmail(user.getEmail());
+        userHistory.setCratedAt(user.getCratedAt());
+        userHistory.setUpdatedAt(user.getUpdatedAt());
+        userHistory.setActive(user.isActive());
+        userHistory.setGender(user.getGender());
+
+        userHistoryRepository.save(userHistory);
+    }
+
+}</code></pre><pre id="5d87c91a-5e81-4a03-aff1-4fa63fce9da3" class="code"><code>Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        userhistor0_.id as id1_4_,
+        userhistor0_.created_at as created_2_4_,
+        userhistor0_.updated_at as updated_3_4_,
+        userhistor0_.active as active4_4_,
+        userhistor0_.email as email5_4_,
+        userhistor0_.gender as gender6_4_,
+        userhistor0_.name as name7_4_,
+        userhistor0_.user_id as user_id8_4_ 
+    from
+        user_history userhistor0_
+UserHistory(super=BaseEntity(cratedAt=2021-08-27T11:04:34.222, updatedAt=2021-08-27T11:04:34.222), id=1, userId=6, name=David, email=david@fastcampus.com, active=false, gender=MALE)</code></pre><p id="1c1024a0-1189-43b8-ac2a-530c86e25d7c" class="">그러면 이제는 History 내부에는 삽입 후에 저장이 되고, 그 후 추가 수정이 없었지만 그래도 이전과 다르게 userId값이 존재하였기 때문에 하나의 레코드만 조회될 수 있게 된다</p><p id="bfaca080-24a6-456e-8bfa-5b2f68df2fc7" class="">▶️ DB에 저장한 후에 바로 UserHistory 값을 저장하도록 처리한다는 의미</p><p id="7d7c1e30-f65a-45d9-bf0f-9efc629e08c5" class="">
+</p><p id="8eb46a98-738a-473a-ad1b-06cfd9fb16fd" class="">이번에는 같은 user에 대해서 히스토리를 쌓도록 해보자</p><ul id="24463a81-5b27-4a71-baa0-5251471b560f" class="bulleted-list"><li>먼저 이름을 daniel로 변경해주고(기존:david)</li></ul><ul id="d4a45a89-cd0a-4c67-8c9a-ef3e2e3f271b" class="bulleted-list"><li>그 다음에는 이메일을 davidToDaniel@fastcampus.com 으로 변경해주자</li></ul><pre id="719f9bad-9821-45f2-9b45-0ca08fc51eb6" class="code"><code>@Test
+    public void userRelationTest(){
+        User user=new User();
+        user.setName(&quot;David&quot;);
+        user.setEmail(&quot;david@fastcampus.com&quot;);
+        user.setGender(MALE);
+
+        userRepository.save(user);
+        user.setName(&quot;daniel&quot;);
+        userRepository.save(user);//update
+        user.setEmail(&quot;davidToDaniel@fastcampus.com&quot;);
+        userRepository.save(user);//update
+        userHistoryRepository.findAll().forEach(System.out::println);
+    }</code></pre><p id="b9e5edc1-3339-4594-baca-3c5056765d01" class="">그러면 setter로 데이터에 대한 업데이트가 발생하여, 동일한 userId를 갖는 데이터에 대해서 여러번 접근한 기록이 저장된다!(이 때, userId는 null이 아니다)</p><pre id="0268ff8d-d27e-455c-8f08-069417ba4a0b" class="code"><code>Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        userhistor0_.id as id1_4_,
+        userhistor0_.created_at as created_2_4_,
+        userhistor0_.updated_at as updated_3_4_,
+        userhistor0_.active as active4_4_,
+        userhistor0_.email as email5_4_,
+        userhistor0_.gender as gender6_4_,
+        userhistor0_.name as name7_4_,
+        userhistor0_.user_id as user_id8_4_ 
+    from
+        user_history userhistor0_
+UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:12:39.286, updatedAt=2021-08-27T14:12:39.286), id=1, userId=6, name=David, email=david@fastcampus.com, active=false, gender=MALE)
+UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:12:39.459, updatedAt=2021-08-27T14:12:39.459), id=2, userId=6, name=daniel, email=david@fastcampus.com, active=false, gender=MALE)
+UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:12:39.468, updatedAt=2021-08-27T14:12:39.468), id=3, userId=6, name=daniel, email=davidToDaniel@fastcampus.com, active=false, gender=MALE)</code></pre><p id="26d7aff0-8eb7-49ee-845c-844d881d72db" class="block-color-red_background">▶️ 그리고 이러한 테스트를 통해서, 지난 번에 학습했던 리스너 설정으로 인해서 히스토리 저장을 자동화하는 데에 매우 효과적임을 확인해볼 수 있다!</p><p id="53558019-ffe5-475c-91c6-0f1d60978a14" class="">
+</p><p id="0d690818-5282-4e0b-aacd-7f941e40cc5f" class="">그런데 유저 히스토리에 쌓인 값이 많은 경우에는 findAll보다는 userId별로 추출해내오는 것이 보다 나을 수 있다!</p><pre id="9afeda55-1ebd-40bc-b6a5-82bea456e4a6" class="code"><code>package com.example.jpa_entity.repository;
+
+import com.example.jpa_entity.domain.UserHistory;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+
+public interface UserHistoryRepository extends JpaRepository&lt;UserHistory,Long&gt; {
+
+    List&lt;UserHistory&gt; findByUserId(Long userId);
+}</code></pre><pre id="f610126f-cfe5-479b-b251-c38249b2f8f9" class="code"><code>@Test
+    public void userRelationTest(){
+        User user=new User();
+        user.setName(&quot;David&quot;);
+        user.setEmail(&quot;david@fastcampus.com&quot;);
+        user.setGender(MALE);
+
+        userRepository.save(user);
+        user.setName(&quot;daniel&quot;);
+        userRepository.save(user);//update
+        user.setEmail(&quot;davidToDaniel@fastcampus.com&quot;);
+        userRepository.save(user);//update
+        //userHistoryRepository.findAll().forEach(System.out::println);
+        System.out.println(userHistoryRepository.findByUserId(6L));
+    }</code></pre><pre id="4ba959a0-7f7c-4790-b5bc-f74bdb75d2b9" class="code"><code>Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        userhistor0_.id as id1_4_,
+        userhistor0_.created_at as created_2_4_,
+        userhistor0_.updated_at as updated_3_4_,
+        userhistor0_.active as active4_4_,
+        userhistor0_.email as email5_4_,
+        userhistor0_.gender as gender6_4_,
+        userhistor0_.name as name7_4_,
+        userhistor0_.user_id as user_id8_4_ 
+    from
+        user_history userhistor0_ 
+    where
+        userhistor0_.user_id=?
+[UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:21:33.181, updatedAt=2021-08-27T14:21:33.181), id=1, userId=6, name=David, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:21:33.240, updatedAt=2021-08-27T14:21:33.240), id=2, userId=6, name=daniel, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:21:33.246, updatedAt=2021-08-27T14:21:33.246), id=3, userId=6, name=daniel, email=davidToDaniel@fastcampus.com, active=false, gender=MALE)]</code></pre><p id="18917d4e-ac67-44b3-8ec5-538c1a20020e" class="">그러면 userId가 6인 경우에 대해서 히스토리에 쌓인 결과를 리스트 형태로 확인해볼 수 있음을 알 수 있다</p><p id="29395f42-2ee5-4c3d-b75a-37d15198a4c5" class="">
+</p><p id="4de2622d-8925-43c4-9462-9b04347d1cfd" class="">그리고 더 나아가서, 이는 수정 등의 과정에 따라 달라진 값을 추적하기도 용이하다 ! 결과적으로는 위와 동일하지만 엄연히 &quot;어떤 값으로 userId를 가져온다는 점&quot;이 차이라고 할 수 있다</p><p id="58ce4776-9c14-4c28-b789-4c421f014b82" class="">아래처럼 수정된 이메일 값이었던 &quot;davidToDaniel@fastcampus.com&quot;이었던 기록으로 userId값을 찾고, 이를 파라미터로 넣어서 수정 전후 과정을 살펴보자</p><pre id="1667fb3b-4a02-4cde-ae0e-9995d5a124f7" class="code"><code>@Test
+    public void userRelationTest(){
+        User user=new User();
+        user.setName(&quot;David&quot;);
+        user.setEmail(&quot;david@fastcampus.com&quot;);
+        user.setGender(MALE);
+
+        userRepository.save(user);
+        user.setName(&quot;daniel&quot;);
+        userRepository.save(user);//update
+        user.setEmail(&quot;davidToDaniel@fastcampus.com&quot;);
+        userRepository.save(user);//update
+        List&lt;UserHistory&gt; list=userHistoryRepository.findByUserId(
+                userRepository.findByEmail(&quot;davidToDaniel@fastcampus.com&quot;).getId()
+        );
+        System.out.println(list);
+    }</code></pre><p id="07b24bac-8023-48f4-a9db-fb92068f6965" class="">먼저! 지금은 user에 david@fastcampus.com으로 검색해볼 수 없어서 저장된 값인 davidToDaniel@fastcampus.com으로 userId를 찾도록 하였다</p><p id="974bab4e-1920-48fd-ab75-5354320dbfd1" class="">그 결과 해당 userId에 대한 변화 사항은 아래와 같이, 먼저 이름이 바뀌었고, 그 후에 이메일이 변경되었음을 확인해볼 수 있었다</p><p id="98e8cf66-ac45-4cd8-8684-b41739dc6ff0" class="">더불어 findByUserId로 인해서 WHERE 절의 조건에 user_id=?가 추가되었음을 확인해볼 수 있다</p><pre id="fe69c657-5866-45f6-a63f-eb9f5b71c538" class="code"><code>Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_,
+        user0_.created_at as created_2_3_,
+        user0_.updated_at as updated_3_3_,
+        user0_.active as active4_3_,
+        user0_.email as email5_3_,
+        user0_.gender as gender6_3_,
+        user0_.name as name7_3_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+Hibernate: 
+    select
+        userhistor0_.id as id1_4_,
+        userhistor0_.created_at as created_2_4_,
+        userhistor0_.updated_at as updated_3_4_,
+        userhistor0_.active as active4_4_,
+        userhistor0_.email as email5_4_,
+        userhistor0_.gender as gender6_4_,
+        userhistor0_.name as name7_4_,
+        userhistor0_.user_id as user_id8_4_ 
+    from
+        user_history userhistor0_ 
+    where
+        userhistor0_.user_id=?
+[UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:28:32.954, updatedAt=2021-08-27T14:28:32.954), id=1, userId=6, name=David, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:28:33.016, updatedAt=2021-08-27T14:28:33.016), id=2, userId=6, name=daniel, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T14:28:33.021, updatedAt=2021-08-27T14:28:33.021), id=3, userId=6, name=daniel, email=davidToDaniel@fastcampus.com, active=false, gender=MALE)]</code></pre><p id="b8b8870a-b09d-4d9a-a789-c47d22c8e095" class="">
+</p><p id="d47b8251-4058-469b-92d2-f443fedd797e" class="">하지만 지난 시간처럼 이 방식은 JPA에서 제공하는 관계에 대한 방식이 아니고 기존의 기능을 이용한 것이라, 지난 시간처럼 JPA에서 제공하는 관계에 대한 어노테이션을 배워보도록 하자</p><p id="b2b1d52e-fe47-4ea5-a144-88479f995c9b" class="">
+</p><h2 id="b34ca5c7-6619-4f4c-ac0b-5e1ba2032209" class=""><code>@OneToMany</code> - 1:N의 연관관계 지원</h2><p id="2c94650b-4fab-4b77-95f8-f12d10648ae3" class="">
+</p><p id="8c4bc466-467c-4424-a6f8-35f70d5e3652" class="">User에 관련된 UserHistory는 n개이기 때문에 <code>리스트 등과 같은 자바 컬렉션이 지원</code>될 것이다</p><p id="887033fe-729c-4518-8c4e-39bdd068544b" class="">
+</p><p id="bce086b7-c8fc-429d-a4ab-6017aa1518d4" class="">1:N에서 <code>@OneToMany</code>의 핵심인 <code>One</code>은 User측이므로, User 엔티티에서 적용해보도록 하자</p><pre id="1eecb8b1-32a6-464b-a987-d36a6db30172" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+ 🌟🌟🌟   @OneToMany
+ 🌟🌟🌟   private List&lt;UserHistory&gt; userHistories;
+}</code></pre><p id="7d6b024c-a81d-4e3b-a388-2d4a15ec5a7e" class="">그리고 인텔리제이 내부에서 자체적으로 변수명을 추천해주는데, ~List로 끝나는 것보다는, ~(e)s와 같은 복수형으로 끝나는 네이밍을 선택하는 것이 최근 트렌드라고 한다</p><p id="5f84de8d-6b9b-4891-83b6-a234451b6529" class="">
+</p><p id="157bfed5-10e8-4d44-8638-42508fad1c9c" class="">📌 그리고! NullPointerException이 발생하지 않도록 new 생성자로 List에 대해서 생성되도록 해주자</p><pre id="1ed15121-e099-4ef0-a731-6385e6308af7" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @OneToMany
+    private List&lt;UserHistory&gt; userHistories=new ArrayList&lt;&gt;();
+}</code></pre><p id="292cf071-60b1-4e68-9109-ae2fab1a7575" class="">물론 몇 번의 테스트를 통해서 JPA에서는 null인 경우 빈 리스트를 출력하는 것을 확인했지만 JPA에서 Persist 전에 NULL이라서 insert 시에 문제가 발생할 수도 있다! 그래서 위처럼 기본적으로 객체를 생성시켜주는 것이 좋다</p><p id="086904ee-83fd-4e37-ac34-274775eb0986" class="">
+</p><p id="1c51c68f-69ca-4576-8b83-453946330e49" class="">이번에는 UserId를 가져와서 UserHistory를 조회하는 부분을 위로 인해서 변경해줄 수 있을 것이다</p><p id="4678d654-ba8d-49e2-8534-979f48e3acf4" class="">다만, 개념적으로 나눠서 생각을 더 해주기 위해서, 메서드명을 oneToManyTest로 짓고 새로이 만들어주자</p><pre id="b33b53da-e0e6-4f24-a145-8f15e68f2764" class="code"><code>//1:n적용후
+    @Test
+    public void oneToManyTest(){
+        User user=new User();
+        user.setName(&quot;David&quot;);
+        user.setEmail(&quot;david@fastcampus.com&quot;);
+        user.setGender(MALE);
+
+        userRepository.save(user);
+        user.setName(&quot;daniel&quot;);
+        userRepository.save(user);//update
+        user.setEmail(&quot;davidToDaniel@fastcampus.com&quot;);
+        userRepository.save(user);//update
+
+        List&lt;UserHistory&gt; list=userRepository.findByEmail(&quot;davidToDaniel@fastcampus.com&quot;).getUserHistories();
+        System.out.println(list);
+    }</code></pre><p id="25c03653-1787-46c4-9efd-8415144777ad" class="">
+</p><p id="3d6f6acc-3aa5-41e2-82bc-5a397071179b" class="">이대로 실행해보면 아래처럼 LazyInitializationException이 발생한다</p><pre id="bcd541f2-f7ec-4f2b-bea2-31461a62d483" class="code"><code>org.hibernate.LazyInitializationException</code></pre><p id="7b209698-2525-41a4-80d3-4650a1335b89" class="">
+</p><p id="3898fda6-5121-4328-88d6-db71f597c87f" class="">그래서 User에서 userHistories에 대해 사용되었던 OneToMany의 속성 중 fetch 속성의 값을 `FetchType.EAGER로 변경해주자</p><pre id="cfaec5b1-8253-4944-a335-ceec53ebf702" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    private List&lt;UserHistory&gt; userHistories=new ArrayList&lt;&gt;();
+}</code></pre><p id="1acc077d-92af-4def-a835-a3172f6c61fb" class="">테스트를 실행해보고 DDL부터 살펴보자</p><pre id="b4960b93-0b5b-4807-8891-f2d6f5e4ec77" class="code"><code>Hibernate: 
+    
+    create table user (
+       id bigint generated by default as identity,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_user_histories (
+       user_id bigint not null,
+        user_histories_id bigint not null
+    )
+Hibernate: 
+    
+    create table user_history (
+       id bigint generated by default as identity,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean not null,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        user_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table user_user_histories 
+       add constraint UK_s2x6bx7omau9g3vxibgmcgkct unique (user_histories_id)
+Hibernate: 
+    
+    alter table book_review_info 
+       add constraint FKp5fhkokpbtoxmc3mxo8ay9e5l 
+       foreign key (book_id) 
+       references book
+Hibernate: 
+    
+    alter table user_user_histories 
+       add constraint FKf8g37jnpc3f9trg0i893oqnyx 
+       foreign key (user_histories_id) 
+       references user_history
+Hibernate: 
+    
+    alter table user_user_histories 
+       add constraint FKop961c3sakkxvcadq7djc11kt 
+       foreign key (user_id) 
+       references user</code></pre><p id="82fbb990-bc0b-4684-b1f7-be35ef28e438" class="">그러면 List&lt;UserHistory&gt; 객체에 대한 테이블이 생성되는데,</p><p id="3c81c08a-c79b-4d3d-b178-0b1eee76c26c" class="">user_histories로 생성되고 user_histories_id는 고유키이자 외래키로 설정되며</p><p id="ed5c823c-7eea-453f-a5e4-8df854750a60" class="">user_id는 외래키로 설정된 것을 확인해볼 수 있다</p><pre id="2bad37df-4a50-4351-9441-ceda08e1dd5b" class="code"><code>Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id1_4_0_,
+        userhistor0_.user_histories_id as user_his2_4_0_,
+        userhistor1_.id as id1_5_1_,
+        userhistor1_.created_at as created_2_5_1_,
+        userhistor1_.updated_at as updated_3_5_1_,
+        userhistor1_.active as active4_5_1_,
+        userhistor1_.email as email5_5_1_,
+        userhistor1_.gender as gender6_5_1_,
+        userhistor1_.name as name7_5_1_,
+        userhistor1_.user_id as user_id8_5_1_ 
+    from
+        user_user_histories userhistor0_ 
+    inner join
+        user_history userhistor1_ 
+            on userhistor0_.user_histories_id=userhistor1_.id 
+    where
+        userhistor0_.user_id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id1_4_0_,
+        userhistor0_.user_histories_id as user_his2_4_0_,
+        userhistor1_.id as id1_5_1_,
+        userhistor1_.created_at as created_2_5_1_,
+        userhistor1_.updated_at as updated_3_5_1_,
+        userhistor1_.active as active4_5_1_,
+        userhistor1_.email as email5_5_1_,
+        userhistor1_.gender as gender6_5_1_,
+        userhistor1_.name as name7_5_1_,
+        userhistor1_.user_id as user_id8_5_1_ 
+    from
+        user_user_histories userhistor0_ 
+    inner join
+        user_history userhistor1_ 
+            on userhistor0_.user_histories_id=userhistor1_.id 
+    where
+        userhistor0_.user_id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_,
+        user0_.created_at as created_2_3_,
+        user0_.updated_at as updated_3_3_,
+        user0_.active as active4_3_,
+        user0_.email as email5_3_,
+        user0_.gender as gender6_3_,
+        user0_.name as name7_3_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id1_4_0_,
+        userhistor0_.user_histories_id as user_his2_4_0_,
+        userhistor1_.id as id1_5_1_,
+        userhistor1_.created_at as created_2_5_1_,
+        userhistor1_.updated_at as updated_3_5_1_,
+        userhistor1_.active as active4_5_1_,
+        userhistor1_.email as email5_5_1_,
+        userhistor1_.gender as gender6_5_1_,
+        userhistor1_.name as name7_5_1_,
+        userhistor1_.user_id as user_id8_5_1_ 
+    from
+        user_user_histories userhistor0_ 
+    inner join
+        user_history userhistor1_ 
+            on userhistor0_.user_histories_id=userhistor1_.id 
+    where
+        userhistor0_.user_id=?
+[]</code></pre><p id="b9badb18-ae97-4a5a-80af-aa16ec323b9c" class="">그리고 DQL, DML을 살펴보면 ANSI 문법을 이용해서 innser join을 on을 이용해서 userHistory 테이블 내에서 먼저 select 후 반환 혹은 업데이트를 하는 모습을 확인해볼 수 있다</p><p id="12ea04ae-3344-4f05-87a1-90bf8f5aab2a" class="">
+</p><h2 id="693e46a9-29dd-4581-9875-0d50b11ee2de" class="">🌟🌟🌟<code>@JoinColumn(name=</code><em><code>연결되는 n측에서의 관련 필드명</code></em><code>)</code> - 엔티티가 어떤 컬럼으로 조인될 지 지정🌟🌟🌟</h2><p id="c256cf40-ddb3-498b-9d91-09b04b9855f1" class="">위의 innser join의 번거로움을 <code>@JoinColumn</code>으로 줄여보도록 하자</p><p id="57508ef5-5e30-45b5-bbe1-242327501c50" class="">우리는 UserHistory테이블의 user_id와 연결되므로 <code>@JoinColumn(name=user_id)</code></p><p id="92505a5b-9663-4739-a282-8364398ce49d" class="">로 진행해주자</p><pre id="c0063ee9-2c3d-4841-b916-5fa1278ecc25" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name=&quot;user_id&quot;)
+    private List&lt;UserHistory&gt; userHistories=new ArrayList&lt;&gt;();
+}</code></pre><p id="a5656ccb-74c7-4d7f-80de-bd2ffe968180" class="">그러면 아래처럼 컬럼이름인 user_id로 해야할지, 자바에서의 이름인 userId로 해야할 지 모호하다는 에러가 발생한다</p><pre id="00c9d1fc-3c00-4bb7-8cf0-c997ac8524d1" class="code"><code>Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name &#x27;entityManagerFactory&#x27; defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.DuplicateMappingException: Table [user_history] contains physical column name [user_id] referred to by multiple logical column names: [user_id], [userId]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory</code></pre><p id="f02610cc-dc14-4b0c-9695-e5f54621c2f2" class="">
+</p><p id="bc327952-5fab-4766-8277-5107a237e5c7" class="">이를 UserHistory에서 <code>@Column(name=&quot;user_id&quot;)</code>로 명시해주자</p><pre id="ff17a7c4-d933-4369-8718-65cfde4e029a" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.Auditable;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+//@EntityListeners(value={MyEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class})
+public class UserHistory extends BaseEntity/*implements Auditable*/ {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name=&quot;user_id&quot;)
+    private Long userId;
+
+    private String name;
+
+    private String email;
+
+//    @CreatedDate
+//    private LocalDateTime createdAt;
+//    @LastModifiedDate
+//    private LocalDateTime updatedAt;
+
+    private boolean active;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+}</code></pre><pre id="daaf152c-80af-434c-ba80-f2350e0f969b" class="code"><code>
+Hibernate: 
+    
+    create table user (
+       id bigint generated by default as identity,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_history (
+       id bigint generated by default as identity,
+        created_at timestamp,
+        updated_at timestamp,
+        active boolean not null,
+        email varchar(255),
+        gender varchar(255),
+        name varchar(255),
+        user_id bigint,
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table book_review_info 
+       add constraint FKp5fhkokpbtoxmc3mxo8ay9e5l 
+       foreign key (book_id) 
+       references book
+Hibernate: 
+    
+    alter table user_history 
+       add constraint FKaa6ilb6iqih95bntoeyysb2pc 
+       foreign key (user_id) 
+       references user
+Hibernate: 
+    insert 
+    into
+        user
+        (id, created_at, updated_at, active, email, gender, name) 
+    values
+        (null, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id8_4_0_,
+        userhistor0_.id as id1_4_0_,
+        userhistor0_.id as id1_4_1_,
+        userhistor0_.created_at as created_2_4_1_,
+        userhistor0_.updated_at as updated_3_4_1_,
+        userhistor0_.active as active4_4_1_,
+        userhistor0_.email as email5_4_1_,
+        userhistor0_.gender as gender6_4_1_,
+        userhistor0_.name as name7_4_1_,
+        userhistor0_.user_id as user_id8_4_1_ 
+    from
+        user_history userhistor0_ 
+    where
+        userhistor0_.user_id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_0_,
+        user0_.created_at as created_2_3_0_,
+        user0_.updated_at as updated_3_3_0_,
+        user0_.active as active4_3_0_,
+        user0_.email as email5_3_0_,
+        user0_.gender as gender6_3_0_,
+        user0_.name as name7_3_0_ 
+    from
+        user user0_ 
+    where
+        user0_.id=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id8_4_0_,
+        userhistor0_.id as id1_4_0_,
+        userhistor0_.id as id1_4_1_,
+        userhistor0_.created_at as created_2_4_1_,
+        userhistor0_.updated_at as updated_3_4_1_,
+        userhistor0_.active as active4_4_1_,
+        userhistor0_.email as email5_4_1_,
+        userhistor0_.gender as gender6_4_1_,
+        userhistor0_.name as name7_4_1_,
+        userhistor0_.user_id as user_id8_4_1_ 
+    from
+        user_history userhistor0_ 
+    where
+        userhistor0_.user_id=?
+Hibernate: 
+    update
+        user 
+    set
+        created_at=?,
+        updated_at=?,
+        active=?,
+        email=?,
+        gender=?,
+        name=? 
+    where
+        id=?
+Hibernate: 
+    insert 
+    into
+        user_history
+        (id, created_at, updated_at, active, email, gender, name, user_id) 
+    values
+        (null, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    select
+        user0_.id as id1_3_,
+        user0_.created_at as created_2_3_,
+        user0_.updated_at as updated_3_3_,
+        user0_.active as active4_3_,
+        user0_.email as email5_3_,
+        user0_.gender as gender6_3_,
+        user0_.name as name7_3_ 
+    from
+        user user0_ 
+    where
+        user0_.email=?
+Hibernate: 
+    select
+        userhistor0_.user_id as user_id8_4_0_,
+        userhistor0_.id as id1_4_0_,
+        userhistor0_.id as id1_4_1_,
+        userhistor0_.created_at as created_2_4_1_,
+        userhistor0_.updated_at as updated_3_4_1_,
+        userhistor0_.active as active4_4_1_,
+        userhistor0_.email as email5_4_1_,
+        userhistor0_.gender as gender6_4_1_,
+        userhistor0_.name as name7_4_1_,
+        userhistor0_.user_id as user_id8_4_1_ 
+    from
+        user_history userhistor0_ 
+    where
+        userhistor0_.user_id=?
+[UserHistory(super=BaseEntity(cratedAt=2021-08-27T15:03:38.196, updatedAt=2021-08-27T15:03:38.196), id=1, userId=6, name=David, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T15:03:38.352, updatedAt=2021-08-27T15:03:38.352), id=2, userId=6, name=daniel, email=david@fastcampus.com, active=false, gender=MALE), UserHistory(super=BaseEntity(cratedAt=2021-08-27T15:03:38.361, updatedAt=2021-08-27T15:03:38.361), id=3, userId=6, name=daniel, email=davidToDaniel@fastcampus.com, active=false, gender=MALE)]</code></pre><p id="7b0dfaf7-d921-41c6-9a82-d0e994a41e89" class="">그러면 이전과 다르게, user_histories라는 별도 테이블이 보이지 않고, user_histories_id가 남고, innser join도 보이지 않는다</p><p id="ccb6c061-226d-4e0b-9a7a-2ac636cf4c65" class="">그리고!! 우리가 연관관계를 JPA 어노테이션을 이용하지 않았을 때와 동일한 결과를 확인해볼 수 있다!</p><p id="b770ee7f-dfce-4404-a333-563eb3b2be7e" class="">
+</p><p id="fcd4c81e-91a3-43f1-b9eb-98d433b60292" class="block-color-red_background">📌여기에서 history라는 값은 user엔티티에서 수정하면 안되는 값이다!! 즉, READ-ONLY로 되어야 한다!</p><h2 id="9fdb16c9-ad77-4b00-9726-26bd743ac8ad" class="">1측에 존재하는 필드(매개체)에 @JoinColumn(<code>insertable=false, updatable=false</code>)로 설정하여 이 연결체에 접근하지 못하도록 하기</h2><pre id="17d440c4-f6aa-48a6-a97a-81d0795281bb" class="code"><code>package com.example.jpa_entity.domain;
+
+import com.example.jpa_entity.domain.listener.UserEntityListener;
+import lombok.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@RequiredArgsConstructor
+@Entity
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper=true)
+@Table(name=&quot;user&quot;)
+//@EntityListeners(value={MyEntityListener.class,UserEntityListener.class})
+//@EntityListeners(value={AuditingEntityListener.class, UserEntityListener.class})
+@EntityListeners(value={UserEntityListener.class})
+public class User extends BaseEntity /*implements Auditable*/{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name=&quot;id&quot;)
+    private Long id;
+    @NonNull
+    @Column(name=&quot;name&quot;)
+    private String name;
+    @NonNull
+    @Column(name=&quot;email&quot;)
+    private String email;
+
+    @Column(name=&quot;active&quot;)
+    private boolean active;
+
+    @Transient
+    private String testData;
+
+    //enum
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name=&quot;user_id&quot;,insertable = false,updatable = false)
+    private List&lt;UserHistory&gt; userHistories=new ArrayList&lt;&gt;();
+}</code></pre><p id="43291920-6519-4717-9157-ca1bd1be3a54" class="">이렇게 되면 이 매개체에 대해서 User는 함부로 건드리지 못하게 되어, 미연의 상황을 방지할 수 있게 된다!→ 나중에 트랜잭션에서 관리하는 것과 연결해서 공부할 필요가 있음!</p><p id="0fdb7975-bf5a-45b2-9b98-c070772feefa" class="">
+</p><p id="21907a55-e0d9-492a-894b-e508f5355a49" class="">이렇게 read-only로 만든 일은 jpa의 자동 설정으로 인해 발생할 수 있는 상황을 미연에 막기 위함이다!</p><p id="d6974fb0-3c83-44bc-a93d-1a6465010573" class="">
+</p></div></article></body></html>
