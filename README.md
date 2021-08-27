@@ -631,6 +631,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Spring/JPA/Entity/RelationShip/%5BSpring%20JPA%5DOneToOne%20%EA%B4%80%EA%B3%84.md" target="_blank">
 		[Spring JPA]일대일 연관관계, 그리고 주의해야 할 순환참조
 	</a></li>
+	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/RelationShip/[Spring]OneToMany relationship.html" target="_blank">
+		[Spring JPA]일대다 연관관계
+	</a></li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
