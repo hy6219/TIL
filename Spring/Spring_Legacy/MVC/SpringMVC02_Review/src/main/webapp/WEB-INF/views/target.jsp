@@ -1,0 +1,36 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<table border="1">
+		<tr>
+			<th>제목</th>
+			<td>${target.myTitle }</td>
+		</tr>
+		<tr>
+			<th>작성자</th>
+			<td>${target.myName}</td>
+		</tr>
+		<tr>
+			<th>내용</th>
+			<td>
+				<textarea cols="30" rows="30">
+					${target.myContent }
+				</textarea>
+			</td>	
+		</tr>
+		<tr>
+			<td colspan="2">
+			<input type="button" value="수정" onclick="location.href='updateForm.do?myNo=${target.myNo}';"/>
+			<input type="button" value="삭제" onclick="location.href='delete.do?myNo=${target.myNo}';"/>
+			<input type="button" value="목록" onclick="location.href='list.do';">
+			</td>
+		</tr>		
+	</table>
+</body>
+</html>
