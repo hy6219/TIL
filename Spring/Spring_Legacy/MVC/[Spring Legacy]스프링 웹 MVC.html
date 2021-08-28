@@ -1,0 +1,1487 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>[스프링]Spring MVC 흐름 및 설정 with Spring STS Legacy Project</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="a8a2d0ce-fd0c-464a-8d06-ec95c39098f6" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🌺</span></div><h1 class="page-title">[스프링]Spring MVC 흐름 및 설정 with Spring STS Legacy Project</h1></header><div class="page-body"><nav id="5e1a23de-e5ad-4659-bb1f-e47dec087755" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#affd22cd-db3b-4915-a27f-cf423fb97b8d">01. 스프링 MVC  기본기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d4ad2427-b892-48ad-9f2b-22efeb0f5a4b">01-1. 스프링 MVC 웹 요청 처리 과정</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4e4e766b-07f8-4734-9656-b9d6688e274a">01-2. 마이바티스의 동작 구조</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#0b593297-d2fb-4ebd-9a75-d867ca92e7d5">02. 스프링 MVC 설정</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2ad8d96b-a5c8-4b9d-abfb-65034080e6f7">02-1. 외부 라이브러리 의존성 추가</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d747ead0-8c93-4651-994d-0bada5bd8507">02-2. <code>src/main/resources/</code>mybatis 경로를 지정하고, board-mapper.xml을 만들기(매핑)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#610a3aa9-750a-48cb-8b62-09b828be0916">02-3. <code>src/main/resources/</code>mybatis 경로를 지정하고, db.properties(db연결 정보) 만들기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a3da5648-a04b-4385-aad3-ecd0a42168d9">02-4. sql파일(이전에 언급한 부분)을 txt로 src/main/webapp/WEB-INF/spring/sqls 하위에 저장해두기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6187253d-c60d-4980-867e-7f1c66d00477">02-5. boardDto만 먼저 만들어두기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f249411-ae5c-4852-a12f-db726327a351">02-6. <code>src/main/webapp/WEB-INF/spring</code> /sqls 경로를 지정하고, mapper 정보(board-mapper.xml)와 VO객체의 별칭 지정하여 저장해둘 configuration 파일 저장하기-config.xml</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f23099e-9da1-4dd2-a231-a1b06cd055bd">02-7. dataSource를 기반으로 SqlSession을 가져오고, mapper&amp;별칭를 설정한 정보(config.xml)를 담은 <code>SqlSessionTemplate</code>을 설정하는 <code>root-context.xml</code> 관리-applicationContext.xml</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dbd56df4-40b0-493a-9346-a450397503ea">02-8. 서버가 구동되면 제일 먼저 읽기 시작할 web.xml에 applicationContext.xml, config.xml등록하고, 서블릿 매핑 정보와 인코딩 필터 추가해주기[webapp 밑에 web.xml이 존재]</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b2cd2dd8-3318-4a14-9c3b-943bf1100b1b">02-9 (설정끝) Dao와 Biz 클래스 만들기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c9aacdef-2495-491a-a611-eec3e7fff9b2">02-9-1. Dao 클래스</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#2e3a8de0-255e-4ba9-b717-4e5c1e58bb6f">02-9-2. Biz 클래스</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#76538276-4349-46ba-86a0-7546e75bf466">02-10. (설정 끝)index.html 페이지를 만들고, 전체글 조회 페이지인 selectList.jsp페이지로 연결시키기</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bae7956a-1d39-4ff9-bfa5-1f22d094a408">02-11. 나머지 CRUD도 비슷한 방식으로 작성해주기(뷰 페이지는 생략)</a></div></nav><p id="5c6f07ef-9a00-479b-baf1-ccfd848c6df2" class="">
+</p><h2 id="affd22cd-db3b-4915-a27f-cf423fb97b8d" class="">01. 스프링 MVC  기본기</h2><h3 id="d4ad2427-b892-48ad-9f2b-22efeb0f5a4b" class="">01-1. 스프링 MVC 웹 요청 처리 과정</h3><figure id="b9d3d1ec-4fc1-42ef-adb8-ecb961ceffde" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20MVC/Spring%20MVC%20%EC%9B%B9%20%EC%9A%94%EC%B2%AD%20%EC%B2%98%EB%A6%AC%20%EA%B3%BC%EC%A0%95.jpg?raw=true"><img style="width:1344px" src="https://github.com/hy6219/TIL/blob/main/Spring/Spring%20MVC/Spring%20MVC%20%EC%9B%B9%20%EC%9A%94%EC%B2%AD%20%EC%B2%98%EB%A6%AC%20%EA%B3%BC%EC%A0%95.jpg?raw=true"/></a></figure><ol type="1" id="6988d759-6b6c-4c45-be19-a850c5ccc561" class="numbered-list" start="1"><li>클라이언트로부터 요청을 받음</li></ol><ol type="1" id="9b4294de-fc3e-4d35-8131-fddc1f171db9" class="numbered-list" start="2"><li>Filter가 먼저 그 요청에 대해서 전후처리를 수행</li></ol><ol type="1" id="9d91100a-4286-47ac-a596-7ee3676e0d33" class="numbered-list" start="3"><li>2과정으로 처리된 요청이 dispatcher servlet을 들르게 됨</li></ol><ol type="1" id="2b187f13-7299-4857-974a-8f22b300f2af" class="numbered-list" start="4"><li>handler mapping으로 요청에 적합한 컨트롤러를 검색(보통은 프론트컨트롤러 패턴으로 되어 있어서 , 매핑된 메서드를 찾는다고 생각하면 편하다)</li></ol><ol type="1" id="e20de85e-a62d-4151-b674-b1f43a27a64b" class="numbered-list" start="5"><li>handler adapter에 의해서 처리요청을 컨트롤러로 전달하고자 함</li></ol><ol type="1" id="2dd4adb9-5052-4751-92b9-ce29e3de57e0" class="numbered-list" start="6"><li>인터셉터가 그 요청을 가로채서, 전후처리를 함</li></ol><ol type="1" id="70eae432-35b0-49b2-929c-be5a69e1d4e2" class="numbered-list" start="7"><li>컨트롤러가 요청을 받아서 서비스단으로 작업을 요청</li></ol><ol type="1" id="f4efae01-8f40-4b06-8349-a0b231e122e9" class="numbered-list" start="8"><li>서비스단은 dao에게 데이터 작업을 요청</li></ol><ol type="1" id="817efaa0-d95d-4dcc-b6ec-4f7dab46caa9" class="numbered-list" start="9"><li>dao(repository)는 dto를 이용해 db와 실질적인 작업을 수행하고 그 결과를 받아서 서비스단에게 전달</li></ol><ol type="1" id="5fbc628f-4f68-487e-a2f8-a6119bab79ef" class="numbered-list" start="10"><li>서비스단은 전달받은 결과를 컨트롤러에게 전달</li></ol><ol type="1" id="9f079ae9-8aca-4542-b0fe-99722c00ffe6" class="numbered-list" start="11"><li>컨트롤러는 알맞은 응답 결과 중 뷰에 대한 부분을 뷰리졸버에게 요청</li></ol><ol type="1" id="494e9ef9-7d6a-4321-bcee-0cb274ec9e57" class="numbered-list" start="12"><li>뷰 리졸버는 전달받은 페이지를 알맞게 반환해줌</li></ol><p id="4a0b3428-6bdc-4ec9-a1d9-82d8df3fb82b" class="">
+</p><h3 id="4e4e766b-07f8-4734-9656-b9d6688e274a" class="">01-2. 마이바티스의 동작 구조</h3><figure id="e43abca6-774b-429d-b08d-0ad2be0354f3" class="image"><a href="https://github.com/hy6219/TIL/blob/main/Spring/Spring_Legacy/MVC/%EB%A7%88%EC%9D%B4%EB%B0%94%ED%8B%B0%EC%8A%A4%20%EB%8F%99%EC%9E%91%20%EC%9B%90%EB%A6%AC.PNG?raw=true"><img style="width:1152px" src="https://github.com/hy6219/TIL/blob/main/Spring/Spring_Legacy/MVC/%EB%A7%88%EC%9D%B4%EB%B0%94%ED%8B%B0%EC%8A%A4%20%EB%8F%99%EC%9E%91%20%EC%9B%90%EB%A6%AC.PNG?raw=true"/></a></figure><p id="1656a7ca-5125-4919-91e9-e7cbeacbd198" class="">스프링과 마이바티스를 연결해서 사용할 때에는 org.mybatis.spring.SqlSessionFactoryBean과 org.mybatis.spring.SqlSessionTemplate을 이용하면 결국에는 SqlSession을 이용해서 mybatis를 간편하게 사용가능하다. 하지만, 그 구조를 정리해보도록 하자</p><p id="1e58849d-6267-4f56-9ac3-42e69153926f" class="">
+</p><p id="b7aa4aab-dd48-4432-aec3-042b259ecad1" class="">🌟 마이바티스에서는 <code>SqlSession</code>을 만들어주어야 쿼리를 사용할 수 있다</p><p id="0e22cca6-e696-4376-80f4-15618e16002c" class="">
+</p><ol type="1" id="fe03b8e0-a311-4728-acc3-588cde1dd144" class="numbered-list" start="1"><li>먼저, 아래의 <a href="">config.xml설정(별칭과 mapper 파일[쿼리, namespace 정보] 정보 정리)</a> 과 같이 환경설정에 필요한 정보를 <code>SessionFactoryBuilder</code>가 참조하여 <code>SessionFactory</code>를 만든다</li></ol><pre id="88659923-c88f-4061-9104-b3a4f0935f92" class="code"><code>String resource = &quot;org/mybatis/example/mybatis-config.xml&quot;;
+InputStream inputStream = Resources.getResourceAsStream(resource);
+SqlSessionFactory sqlSessionFactory =
+  new SqlSessionFactoryBuilder().build(inputStream);</code></pre><p id="fbdc0380-59f8-4276-b2c1-ea4fe11e36a9" class=""><a href="https://mybatis.org/mybatis-3/getting-started.html">https://mybatis.org/mybatis-3/getting-started.html</a></p><p id="ea817268-1c3e-4b9c-ad52-65fb50b65dcc" class="">
+</p><ol type="1" id="cafae663-6977-4c57-9c39-6f6de27b528e" class="numbered-list" start="2"><li>그 다음에는, <code>SessionFactory가 openSession()을 이용해서 SqlSession을 만든다</code></li></ol><ol type="1" id="fe72a773-f82f-43d3-a0f7-14e268e1a768" class="numbered-list" start="3"><li>이 <code>SqlSession을 이용해서 mapper파일에 있는 쿼리를 접근할 수 있는데</code> selectList, insert 등 다양한 메서드들을 활용할 수 있다</li></ol><p id="914f5b5a-f542-45e8-a431-74a832d5744b" class="">
+</p><p id="de20076a-9051-463d-985a-3afb8c59ef3a" class="">
+</p><p id="3636d4c0-6301-49b3-b014-70e9d186b7f3" class="">
+</p><h2 id="0b593297-d2fb-4ebd-9a75-d867ca92e7d5" class="">02. 스프링 MVC 설정</h2><h3 id="2ad8d96b-a5c8-4b9d-abfb-65034080e6f7" class="">02-1. 외부 라이브러리 의존성 추가</h3><ul id="3c47fa2c-de68-4ec3-8b66-79be4536c510" class="bulleted-list"><li>ojdbc6 라이브러리 추가</li></ul><p id="a2eb5c7c-7193-492e-b08f-c9f07a05c848" class="">-groupId가 oracle&gt;&gt;ojdbc6인 것을 선택</p><p id="003886cf-4df3-40b3-9176-cd504d3556b7" class="">-repositories에 url과 id를 추가(Datanucleus)</p><p id="6a94edf0-d870-4fc7-b87e-edfe118d636e" class="">
+</p><ul id="fef70b1f-8b27-4293-aebc-0ab31e6965fe" class="bulleted-list"><li>commons-dbcp 라이브러리 추가</li></ul><p id="b4ce26d2-1a76-423d-8d64-e52340e1de4f" class="">-groupId가 commons-dbcp&gt;&gt;commons-dbcp인 것을 선택</p><p id="07db31c5-e4bd-45d0-bfc9-e8c631104d4a" class="">
+</p><ul id="9efa06dd-4aad-4567-8eb4-8300a339ce17" class="bulleted-list"><li>mybatis 라이브러리 추가</li></ul><p id="6d195a41-af53-400c-8b36-66c9cf869696" class="">-groupId가 org.mybatis&gt;&gt;mybatis인 것을 선택</p><p id="055151db-8185-4a1f-adca-568e0ba9c4b6" class="">
+</p><ul id="d6b7b502-f931-444b-b487-1ae2940e5041" class="bulleted-list"><li>mybatis-spring 라이브러리 추가</li></ul><p id="c3818753-314e-4368-9c25-81ceb5dd2e3f" class="">-groupId가 org.mybatis » mybatis-spring인 것을 선택</p><p id="574e205b-e6b3-418f-9eaa-1a06304af611" class="">
+</p><ul id="fea49b66-e151-4610-a90e-bc30f7866bfb" class="bulleted-list"><li>spring-orm 라이브러리 추가</li></ul><p id="7f016899-78fe-42a6-8f7b-29d53894a37a" class="">-&quot;Spring Object/Relational Mapping&quot;로 이름이 되어 있는 것을 선택</p><p id="4e81a7f8-b9f4-4e76-9c54-1991acb5ff39" class="">버전은 el을 이용해서 ${org.springframework-version}으로 통일시켜주기</p><pre id="6ab381da-8cfc-4c12-83e9-d66e8604579c" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+	&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+	&lt;groupId&gt;com.mvc&lt;/groupId&gt;
+	&lt;artifactId&gt;upgrade&lt;/artifactId&gt;
+	&lt;name&gt;SpringMVC02_Review&lt;/name&gt;
+	&lt;packaging&gt;war&lt;/packaging&gt;
+	&lt;version&gt;1.0.0-BUILD-SNAPSHOT&lt;/version&gt;
+	&lt;repositories&gt;
+		&lt;repository&gt;
+			&lt;id&gt;Datanucleus&lt;/id&gt;
+			&lt;url&gt;http://www.datanucleus.org/downloads/maven2/&lt;/url&gt;
+		&lt;/repository&gt;
+	&lt;/repositories&gt;
+	&lt;properties&gt;
+		&lt;java-version&gt;1.6&lt;/java-version&gt;
+		&lt;org.springframework-version&gt;3.1.1.RELEASE&lt;/org.springframework-version&gt;
+		&lt;org.aspectj-version&gt;1.6.10&lt;/org.aspectj-version&gt;
+		&lt;org.slf4j-version&gt;1.6.6&lt;/org.slf4j-version&gt;
+	&lt;/properties&gt;
+	&lt;dependencies&gt;
+		&lt;!-- Spring --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-context&lt;/artifactId&gt;
+			&lt;version&gt;${org.springframework-version}&lt;/version&gt;
+			&lt;exclusions&gt;
+				&lt;!-- Exclude Commons Logging in favor of SLF4j --&gt;
+				&lt;exclusion&gt;
+					&lt;groupId&gt;commons-logging&lt;/groupId&gt;
+					&lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+				 &lt;/exclusion&gt;
+			&lt;/exclusions&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.springframework&lt;/groupId&gt;
+			&lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+			&lt;version&gt;${org.springframework-version}&lt;/version&gt;
+		&lt;/dependency&gt;
+				
+		&lt;!-- AspectJ --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+			&lt;artifactId&gt;aspectjrt&lt;/artifactId&gt;
+			&lt;version&gt;${org.aspectj-version}&lt;/version&gt;
+		&lt;/dependency&gt;	
+		
+		&lt;!-- Logging --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+			&lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+			&lt;version&gt;${org.slf4j-version}&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+			&lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;
+			&lt;version&gt;${org.slf4j-version}&lt;/version&gt;
+			&lt;scope&gt;runtime&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+			&lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+			&lt;version&gt;${org.slf4j-version}&lt;/version&gt;
+			&lt;scope&gt;runtime&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;log4j&lt;/groupId&gt;
+			&lt;artifactId&gt;log4j&lt;/artifactId&gt;
+			&lt;version&gt;1.2.15&lt;/version&gt;
+			&lt;exclusions&gt;
+				&lt;exclusion&gt;
+					&lt;groupId&gt;javax.mail&lt;/groupId&gt;
+					&lt;artifactId&gt;mail&lt;/artifactId&gt;
+				&lt;/exclusion&gt;
+				&lt;exclusion&gt;
+					&lt;groupId&gt;javax.jms&lt;/groupId&gt;
+					&lt;artifactId&gt;jms&lt;/artifactId&gt;
+				&lt;/exclusion&gt;
+				&lt;exclusion&gt;
+					&lt;groupId&gt;com.sun.jdmk&lt;/groupId&gt;
+					&lt;artifactId&gt;jmxtools&lt;/artifactId&gt;
+				&lt;/exclusion&gt;
+				&lt;exclusion&gt;
+					&lt;groupId&gt;com.sun.jmx&lt;/groupId&gt;
+					&lt;artifactId&gt;jmxri&lt;/artifactId&gt;
+				&lt;/exclusion&gt;
+			&lt;/exclusions&gt;
+			&lt;scope&gt;runtime&lt;/scope&gt;
+		&lt;/dependency&gt;
+
+		&lt;!-- @Inject --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.inject&lt;/groupId&gt;
+			&lt;artifactId&gt;javax.inject&lt;/artifactId&gt;
+			&lt;version&gt;1&lt;/version&gt;
+		&lt;/dependency&gt;
+				
+		&lt;!-- Servlet --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+			&lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+			&lt;version&gt;2.5&lt;/version&gt;
+			&lt;scope&gt;provided&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+			&lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+			&lt;version&gt;2.1&lt;/version&gt;
+			&lt;scope&gt;provided&lt;/scope&gt;
+		&lt;/dependency&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+			&lt;artifactId&gt;jstl&lt;/artifactId&gt;
+			&lt;version&gt;1.2&lt;/version&gt;
+		&lt;/dependency&gt;
+	
+		&lt;!-- Test --&gt;
+		&lt;dependency&gt;
+			&lt;groupId&gt;junit&lt;/groupId&gt;
+			&lt;artifactId&gt;junit&lt;/artifactId&gt;
+			&lt;version&gt;4.7&lt;/version&gt;
+			&lt;scope&gt;test&lt;/scope&gt;
+		&lt;/dependency&gt;     
+		&lt;!-- https://mvnrepository.com/artifact/oracle/ojdbc6 --&gt;
+		&lt;!-- ojdbc6 --&gt;
+		&lt;dependency&gt;
+    		&lt;groupId&gt;oracle&lt;/groupId&gt;
+    		&lt;artifactId&gt;ojdbc6&lt;/artifactId&gt;
+    		&lt;version&gt;11.2.0.3&lt;/version&gt;
+		&lt;/dependency&gt;
+		  &lt;!-- commons-dbcp --&gt;
+		  &lt;!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp --&gt;
+		&lt;dependency&gt;
+    		&lt;groupId&gt;commons-dbcp&lt;/groupId&gt;
+    		&lt;artifactId&gt;commons-dbcp&lt;/artifactId&gt;
+    		&lt;version&gt;1.4&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;!-- mybatis --&gt;
+		&lt;!-- https://mvnrepository.com/artifact/commons-dbcp/commons-dbcp --&gt;
+&lt;!-- https://mvnrepository.com/artifact/org.mybatis/mybatis --&gt;
+		&lt;dependency&gt;
+    		&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+    		&lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+    		&lt;version&gt;3.4.6&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;!-- mybatis-spring --&gt;
+		&lt;!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring --&gt;
+		&lt;dependency&gt;
+    		&lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+    		&lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+    		&lt;version&gt;1.3.2&lt;/version&gt;
+		&lt;/dependency&gt;
+		&lt;!-- spring-orm --&gt;
+		&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-orm --&gt;
+		&lt;dependency&gt;
+    		&lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    		&lt;artifactId&gt;spring-orm&lt;/artifactId&gt;
+    		&lt;version&gt;${org.springframework-version}&lt;/version&gt;
+		&lt;/dependency&gt;   
+	&lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;artifactId&gt;maven-eclipse-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.9&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;additionalProjectnatures&gt;
+                        &lt;projectnature&gt;org.springframework.ide.eclipse.core.springnature&lt;/projectnature&gt;
+                    &lt;/additionalProjectnatures&gt;
+                    &lt;additionalBuildcommands&gt;
+                        &lt;buildcommand&gt;org.springframework.ide.eclipse.core.springbuilder&lt;/buildcommand&gt;
+                    &lt;/additionalBuildcommands&gt;
+                    &lt;downloadSources&gt;true&lt;/downloadSources&gt;
+                    &lt;downloadJavadocs&gt;true&lt;/downloadJavadocs&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.5.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.6&lt;/source&gt;
+                    &lt;target&gt;1.6&lt;/target&gt;
+                    &lt;compilerArgument&gt;-Xlint:all&lt;/compilerArgument&gt;
+                    &lt;showWarnings&gt;true&lt;/showWarnings&gt;
+                    &lt;showDeprecation&gt;true&lt;/showDeprecation&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.codehaus.mojo&lt;/groupId&gt;
+                &lt;artifactId&gt;exec-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.2.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;mainClass&gt;org.test.int1.Main&lt;/mainClass&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre><p id="aca3a05b-6a07-4f79-b147-f3785363f4e2" class="">위에서 붉게 표시된 것은 pom.xml에서 추가된 부분이다</p><p id="0e27977c-df45-4f81-a308-36bbeadb4192" class="">
+</p><h3 id="d747ead0-8c93-4651-994d-0bada5bd8507" class="">02-2. <code>src/main/resources/</code>mybatis 경로를 지정하고, board-mapper.xml을 만들기(매핑)</h3><p id="8617dd4f-5c26-4624-8c86-aed123cd755e" class=""><a href="https://mybatis.org/mybatis-3/ko/getting-started.html">https://mybatis.org/mybatis-3/ko/getting-started.html</a></p><p id="e6882769-3676-4bcc-9320-120fbecae82c" class="">mybatis 시작하기에 들어가서, &quot;매핑된 SQL 구분 살펴보기&quot;를 참고해서 </p><p id="9df5c4c3-012d-4cbd-9fad-3bf7a11edb38" class="">사용하기 편하도록 namespace를 지정하고 쿼리문을 작성해주자</p><p id="27d27bd3-a121-4052-a9da-0a78ed25a143" class="">
+</p><p id="06a364a7-c7f2-4397-8c3b-3dc9ae71cd1b" class="">먼저, 뒤에서 연결된 부분이겠지만, 기존의 vo객체, 즉 dto 객체의 별칭을 &quot;boardDomain&quot;으로 지정해주도록 하겠다</p><p id="8eebdda7-08b9-45ce-8c91-f44a74ca9d68" class="">그리고 만들 테이블인 ARTICLE_BOARD는 아래와 같이 구성할 것이다[이대로 테이블을 먼저 생성하고, STS 사정상 지금 sql실행이 어려워서 sqldeveloper에서 실행하고, 텍스트파일로 쿼리를 기록해둘 것이다:<code>src/main/webapp/WEB-INF/spring</code> /sqls 경로]</p><ul id="ee54dac7-6782-45a5-8893-8fc2690ed6ff" class="bulleted-list"><li>게시글 번호   ←시퀀스로 관리</li></ul><ul id="aab2081c-02dd-42a0-ab8c-06aca5f93c43" class="bulleted-list"><li>게시글 제목</li></ul><ul id="10a1dda3-2231-4557-9364-bb55f536fc3f" class="bulleted-list"><li>게시글 내용</li></ul><ul id="3e22709d-cabd-475f-9280-c8476b55c007" class="bulleted-list"><li>작성자</li></ul><ul id="500ca097-88de-4fd7-85c8-3432161127bf" class="bulleted-list"><li>게시글 작성일</li></ul><pre id="5596dcf6-43ee-44ff-9780-4eee54942987" class="code"><code>DROP SEQUENCE  MYSEQ; --존재하지 않음
+DROP TABLE MYBOARD; --존재하지 않음
+
+DROP SEQUENCE MYNOSEQ;
+DROP TABLE MYBOARD;
+
+CREATE SEQUENCE MYNOSEQ NOCACHE;
+CREATE TABLE MYBOARD(
+    MYNO NUMBER PRIMARY KEY,
+    MYNAME VARCHAR2(1000) NOT NULL,
+    MYTITLE VARCHAR2(2000) NOT NULL,
+    MYCONTENT VARCHAR2(4000) NOT NULL,
+    MYDATE DATE NOT NULL
+);
+
+
+
+INSERT INTO MYBOARD
+VALUES(MYNOSEQ.NEXTVAL, &#x27;관리자&#x27;,&#x27;스프링STS&#x27;, &#x27;SPRING MVC 재밋다&#x27;,SYSDATE);
+
+INSERT INTO MYBOARD
+VALUES(MYNOSEQ.NEXTVAL, &#x27;관리자&#x27;,&#x27;123&#x27;, &#x27;123&#x27;,SYSDATE);
+
+SELECT * FROM MYBOARD ORDER BY MYNO DESC;
+
+COMMIT;</code></pre><pre id="432ea6e3-d436-473f-b257-f2edb6e39f2f" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+  &lt;mapper namespace=&quot;myBoard&quot;&gt;
+  	
+  	&lt;resultMap type=&quot;boardDto&quot; id=&quot;boardMap&quot;&gt;
+  		&lt;result property=&quot;myNo&quot; column=&quot;MYNO&quot;/&gt;
+  		&lt;result property=&quot;myName&quot; column=&quot;MYNAME&quot;/&gt;
+  		&lt;result property=&quot;myTitle&quot; column=&quot;MYTITLE&quot;/&gt;
+  		&lt;result property=&quot;myContent&quot; column=&quot;MYCONTENT&quot;/&gt;
+  		&lt;result property=&quot;myDate&quot; column=&quot;MYDATE&quot;/&gt;
+  	&lt;/resultMap&gt;
+  
+  	&lt;select id=&quot;selectList&quot; resultMap=&quot;boardMap&quot;&gt;
+  		SELECT MYNO, MYNAME, MYTITLE, MYCONTENT,MYDATE FROM MYBOARD
+  	&lt;/select&gt;
+  	
+  	&lt;select id=&quot;selectOne&quot; parameterType=&quot;int&quot; resultType=&quot;boardDto&quot;&gt;
+  	   SELECT MYNO, MYNAME, MYTITLE, MYCONTENT,MYDATE
+  	   FROM MYBOARD
+  	   WHERE MYNO=#{myNo}
+  	&lt;/select&gt;
+  	
+  	&lt;insert id=&quot;insert&quot; parameterType=&quot;boardDto&quot;&gt;
+  		INSERT INTO MYBOARD
+  		VALUES(MYNOSEQ.NEXTVAL,#{myName},#{myTitle},#{myContent},SYSDATE)
+  	&lt;/insert&gt;
+  	
+  	&lt;update id=&quot;update&quot; parameterType=&quot;boardDto&quot;&gt;
+  		UPDATE MYBOARD
+  		SET MYNAME=#{myName}, MYTITLE=#{myTitle},MYCONTENT=#{myContent}
+  		WHERE MYNO=#{myNo} 
+  	&lt;/update&gt;
+  	
+  	&lt;delete id=&quot;delete&quot; parameterType=&quot;int&quot;&gt;
+  		DELETE FROM MYBOARD WHERE MYNO=#{myNo}
+  	&lt;/delete&gt;
+  	
+  &lt;/mapper&gt;</code></pre><p id="7cfe81cc-ce06-4df6-b444-981ff154a2b0" class="">
+</p><h3 id="610a3aa9-750a-48cb-8b62-09b828be0916" class="">02-3. <code>src/main/resources/</code>mybatis 경로를 지정하고, db.properties(db연결 정보) 만들기</h3><p id="5c0d3f5d-50f2-439e-9b70-8436ce29f661" class="">
+</p><pre id="b2d8bad3-469f-4d7f-b495-0d81b40c0310" class="code"><code>driver=oracle.jdbc.driver.OracleDriver
+url=jdbc:oracle:thin:@localhost:1521:xe
+username=KH
+password=KH</code></pre><p id="dee1931a-a657-4e7f-81c6-62559a48b64f" class="">
+</p><h3 id="a3da5648-a04b-4385-aad3-ecd0a42168d9" class="">02-4. sql파일(이전에 언급한 부분)을 txt로 src/main/webapp/WEB-INF/spring/sqls 하위에 저장해두기</h3><p id="7bb759bf-7ddc-4c00-a83a-5e40bd2c3e36" class="">
+</p><p id="0c703231-d46a-434c-bfe6-c59f70cafc6b" class="">🌟 기존 데이터베이스에서 커밋을 해두지 않으면, 교착문제 등이 있어서 조회가 제대로 되지 않을 수 있다!</p><pre id="42269092-ef6b-4878-af06-102007b8a71e" class="code"><code>DROP SEQUENCE  MYSEQ; --존재하지 않음
+DROP TABLE MYBOARD; --존재하지 않음
+
+DROP SEQUENCE MYNOSEQ;
+DROP TABLE MYBOARD;
+
+CREATE SEQUENCE MYNOSEQ NOCACHE;
+CREATE TABLE MYBOARD(
+    MYNO NUMBER PRIMARY KEY,
+    MYNAME VARCHAR2(1000) NOT NULL,
+    MYTITLE VARCHAR2(2000) NOT NULL,
+    MYCONTENT VARCHAR2(4000) NOT NULL,
+    MYDATE DATE NOT NULL
+);
+
+
+
+INSERT INTO MYBOARD
+VALUES(MYNOSEQ.NEXTVAL, &#x27;관리자&#x27;,&#x27;스프링STS&#x27;, &#x27;SPRING MVC 재밋다&#x27;,SYSDATE);
+
+INSERT INTO MYBOARD
+VALUES(MYNOSEQ.NEXTVAL, &#x27;관리자&#x27;,&#x27;123&#x27;, &#x27;123&#x27;,SYSDATE);
+
+SELECT * FROM MYBOARD ORDER BY MYNO DESC;
+
+COMMIT;</code></pre><p id="98e81d7d-8d2e-4cbf-bfb9-edf0717e0da0" class="">
+</p><h3 id="6187253d-c60d-4980-867e-7f1c66d00477" class="">02-5. boardDto만 먼저 만들어두기</h3><pre id="5353094d-26f9-40c0-ac3e-e22d3592041c" class="code"><code>package com.js.test.dto;
+
+import java.util.Date;
+
+
+public class BoardDto {
+	private int myNo;
+	private String myName;
+	private String myTitle;
+	private String myContent;
+	private Date myDate;
+	public BoardDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public BoardDto(int myNo, String myName, String myTitle, String myContent, Date myDate) {
+		super();
+		this.myNo = myNo;
+		this.myName = myName;
+		this.myTitle = myTitle;
+		this.myContent = myContent;
+		this.myDate = myDate;
+	}
+	public int getMyNo() {
+		return myNo;
+	}
+	public void setMyNo(int myNo) {
+		this.myNo = myNo;
+	}
+	public String getMyName() {
+		return myName;
+	}
+	public void setMyName(String myName) {
+		this.myName = myName;
+	}
+	public String getMyTitle() {
+		return myTitle;
+	}
+	public void setMyTitle(String myTitle) {
+		this.myTitle = myTitle;
+	}
+	public String getMyContent() {
+		return myContent;
+	}
+	public void setMyContent(String myContent) {
+		this.myContent = myContent;
+	}
+	public Date getMyDate() {
+		return myDate;
+	}
+	public void setMyDate(Date myDate) {
+		this.myDate = myDate;
+	}
+	@Override
+	public String toString() {
+		return &quot;BoardDto [myNo=&quot; + myNo + &quot;, myName=&quot; + myName + &quot;, myTitle=&quot; + myTitle + &quot;, myContent=&quot; + myContent
+				+ &quot;, myDate=&quot; + myDate + &quot;]&quot;;
+	}
+
+	
+	
+}</code></pre><p id="31f072f3-7ae9-4b35-8bb7-48bf97804a35" class="">
+</p><h3 id="4f249411-ae5c-4852-a12f-db726327a351" class="">02-6. <code>src/main/webapp/WEB-INF/spring</code> /sqls 경로를 지정하고, mapper 정보(board-mapper.xml)와 VO객체의 별칭 지정하여 저장해둘 configuration 파일 저장하기-config.xml</h3><p id="16dfdaf0-cc8c-4c3b-b8c3-f24c2a57bcf4" class=""><a href="https://mybatis.org/mybatis-3/ko/getting-started.html">https://mybatis.org/mybatis-3/ko/getting-started.html</a></p><p id="2e2c9dfa-d3e8-449d-85db-2fe214ce3e2d" class="">위의 링크에서 &quot;XML에서 SqlSessionFactory 빌드하기&quot; 부분을 참조하여 작성하자!</p><pre id="a7cd99ef-06b3-4274-8233-8e4657b5d4a2" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!-- config.xml --&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+  
+  &lt;configuration&gt;
+  	&lt;typeAliases&gt;
+  		&lt;typeAlias type=&quot;com.mvc.upgrade.domain.BoardDomain&quot; alias=&quot;boardDomain&quot;/&gt;
+  	&lt;/typeAliases&gt;
+  	&lt;mappers&gt;
+  		&lt;mapper resource=&quot;/mybatis/board-mapper.xml&quot;/&gt;
+  	&lt;/mappers&gt;
+  &lt;/configuration&gt;</code></pre><p id="b0843a17-801d-4f83-bd9e-8b9924cbc670" class="">
+</p><h3 id="4f23099e-9da1-4dd2-a231-a1b06cd055bd" class="">02-7. dataSource를 기반으로 SqlSession을 가져오고, mapper&amp;별칭를 설정한 정보(config.xml)를 담은 <code>SqlSessionTemplate</code>을 설정하는 <code>root-context.xml</code> 관리-applicationContext.xml</h3><p id="0a6f2aa9-afef-4e32-a4c7-7f1eee101043" class="">편의상, 기존에 &quot;applicationContext.xml을 사용하여 빈 관리를 했던 터라, 이름을 applicationContext.xml로 바꿔주고, <code>src/main/webapp/WEB-INF/spring</code> /appServlet 위치로 위치를 변경해주기</p><ul id="5c9025db-dc2a-4edf-a124-f41a3d823a58" class="bulleted-list"><li>db.properties 위치 저장←org.springframework.beans.factory.config.PropertyPlaceholderConfigurer</li></ul><p id="15a217c6-f89f-4370-a9c9-e04c432a3f0f" class="">-locations setter로 리스트 설정</p><ul id="499711f1-55e2-4c73-8dea-2b0a551b34c9" class="bulleted-list"><li>db.properties에서 연결을 위한 정보를 설정해줘서 dataSource 만들기 ←org.apache.commons.dbcp.BasicDataSource</li></ul><ul id="0d39981b-70d0-4abb-ac24-967ce610a8aa" class="bulleted-list"><li>dataSource와 mapper정보&amp;별칭 설정이 담긴 config,xml(configLocation)을 이용해서 SqlSession 만들기 ←org.mybatis.spring.SqlSessionFactoryBean</li></ul><ul id="7a0e769a-81c5-4527-b391-f1c53d09d0e6" class="bulleted-list"><li>SqlSession을 기반으로 SqlSessionTemplate 만들기←org.mybatis.spring.SqlSessionTemplate</li></ul><pre id="2cfbebba-319e-4a0f-bc1c-47712d09be2f" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+	
+	&lt;!-- Root Context: defines shared resources visible to all other web components --&gt;
+		&lt;!-- db.properties 위치 저장 --&gt;
+		&lt;bean class=&quot;org.springframework.beans.factory.config.PropertyPlaceholderConfigurer&quot;&gt;
+			&lt;property name=&quot;locations&quot;&gt;
+				&lt;list&gt;
+					&lt;value&gt;classpath:mybatis/db.properties&lt;/value&gt;
+				&lt;/list&gt;
+			&lt;/property&gt;
+		&lt;/bean&gt;
+		
+		&lt;!-- dataSource 만들기 --&gt;
+		&lt;bean id=&quot;dataSource&quot; class=&quot;org.apache.commons.dbcp.BasicDataSource&quot;&gt;
+			&lt;property name=&quot;driverClassName&quot; value=&quot;${driver}&quot;/&gt;
+			&lt;property name=&quot;url&quot; value=&quot;${url}&quot;/&gt;
+			&lt;property name=&quot;username&quot; value=&quot;${username}&quot;/&gt;
+			&lt;property name=&quot;password&quot; value=&quot;${password}&quot;/&gt;
+		&lt;/bean&gt;
+		
+		&lt;!-- SqlSession만들기 --&gt;
+		&lt;bean id=&quot;sqlSession&quot; class=&quot;org.mybatis.spring.SqlSessionFactoryBean&quot;&gt;
+			&lt;!-- dataSource --&gt;
+			&lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+			&lt;!-- mapper,typeAliases --&gt;
+			&lt;property name=&quot;configLocation&quot; value=&quot;WEB-INF/spring/sqls/config.xml&quot;/&gt;
+		&lt;/bean&gt;
+		
+		&lt;!-- sqlSessionTemplate만들기--&gt;
+		&lt;bean id=&quot;sqlSessionTemplate&quot; class=&quot;org.mybatis.spring.SqlSessionTemplate&quot;&gt;
+			&lt;constructor-arg ref=&quot;sqlSession&quot;/&gt;
+		&lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p id="668bf19d-e984-4f66-a4d8-0e9cf085266b" class="">
+</p><h3 id="dbd56df4-40b0-493a-9346-a450397503ea" class="">02-8. 서버가 구동되면 제일 먼저 읽기 시작할 web.xml에 applicationContext.xml, config.xml등록하고, 서블릿 매핑 정보와 인코딩 필터 추가해주기[webapp 밑에 web.xml이 존재]</h3><pre id="d7bbe09f-d529-481a-bf65-be8fbe0696f3" class="code"><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;2.5&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+	xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot;&gt;
+
+	&lt;!-- The definition of the Root Spring Container shared by all Servlets and Filters --&gt;
+	&lt;context-param&gt;
+		&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+		&lt;param-value&gt;/WEB-INF/spring/appServlet/applicationContext.xml&lt;/param-value&gt;
+	&lt;/context-param&gt;
+	
+	&lt;!-- Creates the Spring Container shared by all Servlets and Filters --&gt;
+	&lt;listener&gt;
+		&lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+	&lt;/listener&gt;
+
+	&lt;!-- Processes application requests --&gt;
+	&lt;servlet&gt;
+		&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+		&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+			&lt;param-value&gt;/WEB-INF/spring/appServlet/servlet-context.xml&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+	&lt;/servlet&gt;
+		
+	&lt;servlet-mapping&gt;
+		&lt;servlet-name&gt;appServlet&lt;/servlet-name&gt;
+		&lt;url-pattern&gt;*.do&lt;/url-pattern&gt;
+	&lt;/servlet-mapping&gt;
+
+	&lt;filter&gt;
+		&lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+		&lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;encoding&lt;/param-name&gt;
+			&lt;param-value&gt;UTF-8&lt;/param-value&gt;
+		&lt;/init-param&gt;
+		&lt;init-param&gt;
+			&lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+			&lt;param-value&gt;true&lt;/param-value&gt;
+		&lt;/init-param&gt;
+	&lt;/filter&gt;
+	
+	&lt;filter-mapping&gt;
+		&lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+		&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+	&lt;/filter-mapping&gt;
+&lt;/web-app&gt;</code></pre><p id="a1c47516-feb9-4294-93bd-1794ec5f358f" class="">
+</p><h3 id="b2cd2dd8-3318-4a14-9c3b-943bf1100b1b" class="">02-9 (설정끝) Dao와 Biz 클래스 만들기</h3><h3 id="c9aacdef-2495-491a-a611-eec3e7fff9b2" class="">02-9-1. Dao 클래스</h3><pre id="62f0a0bb-8967-435f-b1bd-c0d8395cb22e" class="code"><code>package com.js.test.dao;
+
+import java.util.List;
+
+import com.js.test.dto.BoardDto;
+
+public interface BoardDao {
+	final String NAMESPACE=&quot;myBoard.&quot;;
+	
+	List&lt;BoardDto&gt; selectList();
+	BoardDto 		selectOne(int myNo);
+	int 			insert(BoardDto dto);
+	int				update(BoardDto dto);
+	int				delete(int myNo);
+}</code></pre><pre id="2af87031-62f5-4b47-85a9-628a2a6c1f15" class="code"><code>package com.js.test.dao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.js.test.dto.BoardDto;
+
+@Repository
+public class BoardDaoImpl implements BoardDao{
+
+	@Autowired
+	private SqlSessionTemplate session;
+	
+	@Override
+	public List&lt;BoardDto&gt; selectList() {
+		// TODO Auto-generated method stub
+		List&lt;BoardDto&gt; list= new ArrayList&lt;BoardDto&gt;();
+		
+		try {
+			
+			list=session.selectList(NAMESPACE+&quot;selectList&quot;);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public BoardDto selectOne(int myNo) {
+		// TODO Auto-generated method stub
+		BoardDto dto=new BoardDto();
+		
+		try {
+			dto=session.selectOne(NAMESPACE+&quot;selectOne&quot;,myNo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public int insert(BoardDto dto) {
+		// TODO Auto-generated method stub
+		
+		int resIns=0;
+		
+		try {
+			
+			resIns=session.insert(NAMESPACE+&quot;insert&quot;,dto);
+			
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resIns;
+	}
+
+	@Override
+	public int update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		int resUp=0;
+		
+		try {
+			
+			resUp=session.update(NAMESPACE+&quot;update&quot;,dto);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resUp;
+	}
+
+	@Override
+	public int delete(int myNo) {
+		// TODO Auto-generated method stub
+		int resDel=0;
+		
+		try{
+			resDel=session.delete(NAMESPACE+&quot;delete&quot;,myNo);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return resDel;
+	}
+
+}</code></pre><p id="c66be1b1-b096-401e-b1e1-543898b7d9d6" class="">
+</p><h3 id="2e3a8de0-255e-4ba9-b717-4e5c1e58bb6f" class="">02-9-2. Biz 클래스</h3><pre id="6a69ed9f-917e-4d12-bcec-2326befd63c0" class="code"><code>package com.js.test.biz;
+
+import java.util.List;
+
+import com.js.test.dto.BoardDto;
+
+public interface BoardBiz {
+	List&lt;BoardDto&gt; selectList();
+	BoardDto 		selectOne(int myNo);
+	int 			insert(BoardDto dto);
+	int				update(BoardDto dto);
+	int				delete(int myNo);
+}</code></pre><pre id="b859e161-8450-4a54-a830-ee18678f17e6" class="code"><code>package com.js.test.biz;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.js.test.dao.BoardDao;
+import com.js.test.dto.BoardDto;
+
+@Service
+public class BoardBizImpl implements BoardBiz{
+
+	@Autowired
+	private BoardDao dao;
+	
+	@Override
+	public List&lt;BoardDto&gt; selectList() {
+		// TODO Auto-generated method stub
+		return dao.selectList();
+	}
+
+	@Override
+	public BoardDto selectOne(int myNo) {
+		// TODO Auto-generated method stub
+		return dao.selectOne(myNo);
+	}
+
+	@Override
+	public int insert(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.insert(dto);
+	}
+
+	@Override
+	public int update(BoardDto dto) {
+		// TODO Auto-generated method stub
+		return dao.update(dto);
+	}
+
+	@Override
+	public int delete(int myNo) {
+		// TODO Auto-generated method stub
+		return dao.delete(myNo);
+	}
+
+}</code></pre><p id="02976d99-309c-46ee-af27-9a7da3d6022b" class="">
+</p><h3 id="76538276-4349-46ba-86a0-7546e75bf466" class="">02-10. (설정 끝)index.html 페이지를 만들고, 전체글 조회 페이지인 selectList.jsp페이지로 연결시키기</h3><p id="87ad61ca-4b51-4206-8d86-7af9d63c39f1" class="">
+</p><p id="c7463933-9ef9-4d35-9819-daa987d93f1c" class="">먼저 index.html페이지를 만들어서 전체글 조회 페이지로 연결시키도록 구성해주자</p><p id="cb94cb3e-9ce0-4f82-867f-04488e509596" class=""><code>webapp</code> 밑에 index.html을 두자</p><p id="11599d28-034f-4f21-907b-95b4f900998b" class="">그리고, 이때, 연결되는 중간에 컨트롤러를 거치게 하기 위해서,  list.do로 위치를 지정하고, 컨트롤러에서는 작업 결과를 model에 담고 selectList페이지를 뷰 리졸버에게 넘겨주기를 요청하자</p><pre id="5d0a3f4a-eea2-432b-bbce-9c814ec9867e" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;a href=&quot;list.do&quot;&gt;LIST&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><pre id="b4bf89eb-315b-4575-aac0-5f7ec3766a16" class="code"><code>package com.js.test;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.js.test.biz.BoardBiz;
+import com.js.test.dto.BoardDto;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController {
+	
+	@Autowired
+	private BoardBiz biz;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value=&quot;/list.do&quot;)
+	public String selectList(Model model) {
+		List&lt;BoardDto&gt; list=biz.selectList();
+		logger.info(&quot;[controller]select list &quot;+list);
+		model.addAttribute(&quot;list&quot;, list);
+		
+		return &quot;selectList&quot;;
+	}
+	
+	
+}</code></pre><p id="9ca7fc72-c529-4ca2-88a6-4718f6bf40c7" class="">selectList.jsp 파일은 뷰리졸버가 활용할 수 있도록 하기 위해서 wepapp폴더 하위의 views 폴더에 만들어두자</p><pre id="77f27d3d-98d8-4f5a-bdcd-deb3c184fabf" class="code"><code>&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;
+    pageEncoding=&quot;UTF-8&quot;%&gt;
+&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot; %&gt;
+&lt;% request.setCharacterEncoding(&quot;UTF-8&quot;); %&gt;
+&lt;% response.setContentType(&quot;text/html;charset=UTF-8&quot;); %&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;title&gt;Insert title here&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+	&lt;table border=&quot;1&quot;&gt;
+		&lt;thead&gt;
+			&lt;tr&gt;
+				&lt;th&gt;게시글 번호&lt;/th&gt;
+				&lt;th&gt;작성자&lt;/th&gt;
+				&lt;th&gt;제목&lt;/th&gt;
+				&lt;th&gt;작성일&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			&lt;c:choose&gt;
+				&lt;c:when test=&quot;${empty list }&quot;&gt;
+					&lt;tr&gt;
+						&lt;td colspan=&quot;4&quot;&gt;===작성된 글이 없습니다===&lt;/td&gt;
+					&lt;/tr&gt;
+				&lt;/c:when&gt;
+				&lt;c:otherwise&gt;
+					&lt;c:forEach items=&quot;${list }&quot; var=&quot;iter&quot;&gt;
+						&lt;tr&gt;
+							&lt;td&gt;${iter.myNo}&lt;/td&gt;
+							&lt;td&gt;${iter.myName }&lt;/td&gt;
+							&lt;td&gt;&lt;a href=&quot;detail.do?myNo=${iter.myNo }&quot;&gt;${iter.myTitle }&lt;/a&gt;&lt;/td&gt;
+							&lt;td&gt;${iter.myDate }&lt;/td&gt;
+						&lt;/tr&gt;
+					&lt;/c:forEach&gt;
+				&lt;/c:otherwise&gt;
+			&lt;/c:choose&gt;
+		&lt;/tbody&gt;
+		&lt;tfoot&gt;
+			&lt;tr&gt;
+				&lt;td colspan=&quot;4&quot;&gt;
+					&lt;input type=&quot;button&quot; value=&quot;글 작성&quot; onclick=&quot;location.href=&#x27;insertForm.do&#x27;;&quot;/&gt;
+				&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/tfoot&gt;
+	&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="a2edf126-fd4e-4a7f-a2a8-b326bbd9bc45" class="">
+</p><h3 id="bae7956a-1d39-4ff9-bfa5-1f22d094a408" class="">02-11. 나머지 CRUD도 비슷한 방식으로 작성해주기(뷰 페이지는 생략)</h3><pre id="6816ff05-14ef-47c6-9ea7-d3a0a846b12d" class="code"><code>package com.js.test;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.js.test.biz.BoardBiz;
+import com.js.test.dto.BoardDto;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController {
+	
+	@Autowired
+	private BoardBiz biz;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	@RequestMapping(value=&quot;/list.do&quot;)
+	public String selectList(Model model) {
+		List&lt;BoardDto&gt; list=biz.selectList();
+		logger.info(&quot;[controller]select list &quot;+list);
+		model.addAttribute(&quot;list&quot;, list);
+		
+		return &quot;selectList&quot;;
+	}
+	
+	
+	@RequestMapping(value=&quot;/detail.do&quot;)
+	public String selectOne(Model model, int myNo) {
+		BoardDto dto=biz.selectOne(myNo);
+		logger.info(&quot;[controller]select one &quot;+dto);
+		model.addAttribute(&quot;target&quot;,dto);
+		
+		return &quot;target&quot;;
+	}
+	
+	@RequestMapping(value=&quot;/insertForm.do&quot;)
+	public String insertForm() {
+		logger.info(&quot;[controller]insertForm&quot;);
+		return &quot;insertForm&quot;;
+	}
+	
+	@RequestMapping(value=&quot;/insert.do&quot;,method=RequestMethod.POST)
+	public String insert(HttpServletResponse response, String myName,String myTitle,String myContent) {
+		BoardDto dto=new BoardDto();
+		
+		logger.info(&quot;[controller]insert&quot;);
+		
+		dto.setMyName(myName);
+		dto.setMyTitle(myTitle);
+		dto.setMyContent(myContent);
+		int resIns=biz.insert(dto);
+		
+		if(resIns&gt;0) {
+			return &quot;redirect:list.do&quot;;
+		}else {
+			return &quot;redirect:insertForm.do&quot;;
+		}
+	}
+	
+	@RequestMapping(value=&quot;/updateForm&quot;)
+	public String updateForm(Model model,int myNo) {
+		BoardDto dto=biz.selectOne(myNo);
+		
+		logger.info(&quot;[controller]updateForm-&quot;+dto);
+		
+		model.addAttribute(&quot;update&quot;, dto);
+		
+		return &quot;updateForm&quot;;
+	}
+	
+	@RequestMapping(value=&quot;/update.do&quot;)
+	public String update(BoardDto dto) {
+		int resUp=biz.update(dto);
+		int myNo=dto.getMyNo();
+		
+		logger.info(&quot;[controller]update-&quot;+dto);
+		
+		
+		if(resUp&gt;0) {
+			return &quot;redirect:detail.do?myNo=&quot;+myNo;
+		}else {
+			return &quot;redirect:updateForm.do?myNo=&quot;+myNo;
+		}
+	}
+	
+	
+	@RequestMapping(value=&quot;/delete.do&quot;)
+	public String delete(int myNo) {
+		int resDel=biz.delete(myNo);
+		
+		if(resDel&gt;0) {
+			return &quot;redirect:list.do&quot;;
+		}else {
+			return &quot;redirect:detail.do?myNo=&quot;+myNo;
+		}
+	}
+	
+}</code></pre></div></article></body></html>
