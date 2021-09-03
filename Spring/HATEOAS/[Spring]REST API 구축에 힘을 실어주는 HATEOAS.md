@@ -171,6 +171,14 @@ json 처럼 key-value 형식으로 적어주는데
 
 일단, data-rest 모듈에서 200개 정도의 더미데이터를 넣고 돌려보면, 아래처럼 json 구조같은 데이터들과 함께 링크, 페이지 정보를 확인해볼 수 있다
 
+그런데 기존에 시큐리티 설정을 해주었는데, 그래서 401에러와 함께 "Pleas Sign In"페이지가 나오는데 콘솔을 잘 살펴보면 제공되는 비밀번호가 뜬다
+
+그리고! 기본 username은 "user"로 입력해주면 말끔하게 데이터를 볼 수 있다
+
+![https://github.com/hy6219/TIL/blob/main/Spring/HATEOAS/%EC%8A%A4%ED%94%84%EB%A7%81%20%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%20%EC%84%A4%EC%A0%95%20%EC%8B%9C%20401%EC%97%90%EB%9F%AC%20%EA%B4%80%EB%A0%A8.png?raw=true](https://github.com/hy6219/TIL/blob/main/Spring/HATEOAS/%EC%8A%A4%ED%94%84%EB%A7%81%20%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%20%EC%84%A4%EC%A0%95%20%EC%8B%9C%20401%EC%97%90%EB%9F%AC%20%EA%B4%80%EB%A0%A8.png?raw=true)
+
+![https://github.com/hy6219/TIL/blob/main/Spring/HATEOAS/HATEOAS.gif?raw=true](https://github.com/hy6219/TIL/blob/main/Spring/HATEOAS/HATEOAS.gif?raw=true)
+
 ```java
 {
   "_**embedded**" : {
@@ -259,3 +267,5 @@ json 처럼 key-value 형식으로 적어주는데
   }
 }
 ```
+
+[https://wordbe.tistory.com/entry/Springboot-Security#:~:text=에러메시지 unauthorized 와 함께,이 둘 다 적용된다](https://wordbe.tistory.com/entry/Springboot-Security#:~:text=%EC%97%90%EB%9F%AC%EB%A9%94%EC%8B%9C%EC%A7%80%20unauthorized%20%EC%99%80%20%ED%95%A8%EA%BB%98,%EC%9D%B4%20%EB%91%98%20%EB%8B%A4%20%EC%A0%81%EC%9A%A9%EB%90%9C%EB%8B%A4).
