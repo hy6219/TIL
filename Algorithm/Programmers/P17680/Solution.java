@@ -3,6 +3,7 @@ package programmers.P17680;
 import java.util.Deque;
 import java.util.LinkedList;
 
+//LRU알고리즘
 public class Solution {
 
     public static int solution(int cacheSize, String[] cities) {
