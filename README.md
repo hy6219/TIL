@@ -325,6 +325,9 @@
 	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/Search/BFS/%5B%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%5D%EB%84%88%EB%B9%84%EC%9A%B0%EC%84%A0%ED%83%90%EC%83%89%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98%20BFS.md" target="_blank">
 		[알고리즘]BFS
 	</a></li>
+	<li><a href="https://github.com/hy6219/TIL/blob/main/Algorithm/rhs_algorithm/complete_search/%EC%96%B4%EB%96%BB%EA%B2%8C%EB%93%A0%20%ED%91%BC%EB%8B%A4!%20%EC%99%84%ED%83%90!%20Brute%20Force!.md" target="_blank">
+		[알고리즘]류호석님 강의 핵심정리 및 연습-완전탐색
+	</a></li>
          </ul>
     </li><!--알고리즘 -->
     <!--FE 공부-->
