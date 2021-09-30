@@ -1,9 +1,6 @@
 package baekjoon.boj21922;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -17,7 +14,7 @@ public class Main {
             br=new BufferedReader(new InputStreamReader(System.in));
         }
         public FastReader(String s) throws FileNotFoundException{
-            br=new BufferedReader(new InputStreamReader(System.in));
+            br=new BufferedReader(new FileReader(new File(s)));
         }
         String nextLine(){
             String str="";
