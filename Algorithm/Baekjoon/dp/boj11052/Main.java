@@ -61,9 +61,9 @@ public class Main {
 
 		dp[1]=cards[1];
 
-		//i:�� ���
+		//i:ÃÑ Àå¼ö
 		for(int i=2;i<=N;i++) {
-			//1~N��° ī��
+			//1~N¹øÂ° Ä«µå
 			for(int j=1;j<=i;j++) {
 				dp[i]=Math.max(dp[i], dp[i-j]+cards[j]);
 			}
@@ -82,6 +82,10 @@ public class Main {
 			max=Math.max(max, dp[i]);
 		}
 		//System.out.println("dp: "+Arrays.toString(dp));
+		/*
+		int max=dp[N];로 접근해도 되고! 이게 더 나을 수 있음! 시간면에서!
+		
+		*/
 		System.out.println(max);
 		
 	}
