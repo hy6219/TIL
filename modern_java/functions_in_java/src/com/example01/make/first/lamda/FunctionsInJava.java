@@ -3,12 +3,9 @@ package com.example01.make.first.lamda;
 import org.junit.Test;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.Arrays;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
 
 public class FunctionsInJava {
     @Test
