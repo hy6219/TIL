@@ -16,14 +16,21 @@ public class User {
         this.age = age;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     //인스턴스 메서드
     public void printUserInfo(){
-        System.out.println(this.name+"의 나이: "+this.age);
+        System.out.println(this.getName()+"의 나이: "+this.getAge());
     }
 
     //static method
     public static User from(Person person){
         return new User(person.getName(),person.getAge());
     }
-
 }
