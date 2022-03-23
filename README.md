@@ -640,6 +640,9 @@
 	<li><a href="https://hy6219.github.io/TIL/Spring/JPA/Entity/RelationShip/[Spring]OneToMany relationship.html" target="_blank">
 		[Spring JPA]일대다 연관관계
 	</a></li>
+	<li>
+	     <a href="https://www.notion.so/IoC-990dc4844430484aa0f460b770e607cd">스프링 IoC DI</a>
+	</li>
      </ul>
   </li><!--spring-->
 </ol><!--All END-->
