@@ -1,0 +1,10 @@
+
+`	java:S1120"FDefine and throw a dedicated exception instead of using a generic one.(Ê“Åıÿÿÿÿ
+E
+java:S3740"/Provide the parametrized type for this generic.(¬Öå 
+m
+java:S2737"WAdd logic to this catch clause or eliminate it and rethrow the exception automatically.(ö™û
+N
+java:S18548"8Remove this useless assignment to local variable "home".(«¯é²
+F
+java:S14818")Remove this unused "home" local variable.(«¯é²8Â¥û/
